@@ -55,8 +55,13 @@ public abstract class Screen extends GuiScreen {
   public Screen() {
     this.mc = Minecraft.getMinecraft();
     ScaledResolution scaledResolution = new ScaledResolution(this.mc);
+    //TODO fix guis changing size when changing scale in videosettings
+    System.out.println(scaledResolution.getScaledHeight());
+    System.out.println(scaledResolution.getScaledWidth());
+    System.out.println(scaledResolution.getScaleFactor());
     setWorldAndResolution(this.mc, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
-    this.scaledResolution = scaledResolution;
+//    this.scaledResolution = scaledResolution;
+//    this.scaledResolution = new ScaledResolution()
   }
   
   public Screen(GuiScreen parent) {

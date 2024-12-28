@@ -652,7 +652,7 @@ public class RenderUtils {
     GL11.glPopMatrix();
   }
 
-  public static void drawRoundedRectWithBorder(double x, double y, double x1, double y1, double radius, float borderSize, int borderColor, int color) {
+  public static void drawRoundedRectWithBorder(double x, double y, double x1, double y1, double radius, float borderSize, long borderColor, int color) {
     drawRoundedRect(x, y, x1, y1, radius - 1.0D, color);
     float r = (borderColor >> 16 & 0xFF) / 255.0F;
     float g = (borderColor >> 8 & 0xFF) / 255.0F;

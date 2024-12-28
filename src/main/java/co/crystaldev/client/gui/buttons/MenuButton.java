@@ -68,9 +68,9 @@ public class MenuButton extends Button {
     this.onClick = onClick;
   }
 
-  protected int outlineColor = -1;
+  protected long outlineColor = -1;
 
-  public void setOutlineColor(int outlineColor) {
+  public void setOutlineColor(long outlineColor) {
     this.outlineColor = outlineColor;
   }
 
@@ -81,7 +81,7 @@ public class MenuButton extends Button {
     this.textColor = new FadingColor(this.opts.neutralTextColor, this.opts.hoveredTextColor);
   }
 
-  public MenuButton(int id, int x, int y, int width, int height, String displayText, int outline) {
+  public MenuButton(int id, int x, int y, int width, int height, String displayText, long outline) {
     this(id, x, y, width, height, displayText);
     this.outlineColor = outline;
   }

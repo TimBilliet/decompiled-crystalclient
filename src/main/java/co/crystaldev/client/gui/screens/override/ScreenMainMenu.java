@@ -49,6 +49,7 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
 
   private static final String FORGE_MODS = String.format("%d mod%s loaded, %d mod%s active", lMods, (lMods == 1) ? "" : "s", aMods, (aMods == 1) ? "" : "s");
 
+  private static final long buttonOutlineColor = 0xff1b72f4;
   public ScreenMainMenu() {
     super(Resources.PANORAMA_IMAGES, 256);
   }
@@ -67,23 +68,23 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
     int x = (int)(this.width / getScaledScreen() / 2.0F - (w / 2));
     int x1 = x + w1 + 6;
     int y = this.topButtonY = (int)(this.height / getScaledScreen() / 2.0F - (totalHeight / 2)) + 10 + 30;
-    addButton(new MenuButton(0, x, y, w, h, I18n.format("menu.singleplayer").toUpperCase()) {
+    addButton(new MenuButton(0, x, y, w, h, I18n.format("menu.singleplayer").toUpperCase(), buttonOutlineColor) {
 
         });
     y += h + 6;
-    addButton(new MenuButton(1, x, y, w, h, I18n.format("menu.multiplayer").toUpperCase()) {
+    addButton(new MenuButton(1, x, y, w, h, I18n.format("menu.multiplayer").toUpperCase(), buttonOutlineColor) {
 
         });
     y += h + 6;
-    addButton(new MenuButton(4, x, y, w, h, I18n.format("fml.menu.mods").toUpperCase()) {
+    addButton(new MenuButton(4, x, y, w, h, I18n.format("fml.menu.mods").toUpperCase(), buttonOutlineColor) {
 
         });
     y += h + 6;
     addButton(new MenuButton(2, x, y, w1, h,
-          I18n.format("menu.options").toUpperCase().replaceAll("\\.", "")) {
+          I18n.format("menu.options").toUpperCase().replaceAll("\\.", ""), buttonOutlineColor) {
 
         });
-    addButton(new MenuButton(3, x1, y, w1, h, I18n.format("menu.quit").toUpperCase()) {
+    addButton(new MenuButton(3, x1, y, w1, h, I18n.format("menu.quit").toUpperCase(), buttonOutlineColor) {
 
         });
     x = 5;

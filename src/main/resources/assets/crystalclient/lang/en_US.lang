@@ -1,0 +1,29 @@
+#
+# Crystal Client
+# Developed by Crystal Development, LLC.
+#
+
+
+# Keybindings
+crystalclient.key.open_gui=Open GUI
+crystalclient.key.emote_wheel=Open Emote Wheel
+crystalclient.key.create_waypoint=Create Waypoint
+crystalclient.key.toggle_perspective_mod=Toggle Perspective Mod
+crystalclient.key.toggle_chunk_borders=Toggle Chunk Borders
+crystalclient.key.toggle_cannon_view=Toggle Cannon View
+crystalclient.key.open_adjust_helper_gui=Open GUI
+crystalclient.key.next_adjust=Next Available Adjust
+crystalclient.key.shout_current_adjust=Shout Current Adjust
+crystalclient.key.trace_all_materials=Trace All Materials
+crystalclient.key.toggle_schem_tracers=Toggle Schematic ESP
+crystalclient.key.toggle_schem_auto_bridge=Toggle Schematic Auto Bridge
+crystalclient.key.toggle_group_chat=Toggle Group Chat
+crystalclient.key.shout_current_location=Shout Location
+crystalclient.key.ping_group_location=Ping Location To Group
+crystalclient.key.shout_patchcrumb_location=Shout Location
+crystalclient.key.start_stop_stopwatch=Start/Stop Stopwatch
+crystalclient.key.reset_stopwatch=Reset Stopwatch
+crystalclient.key.start_recording=Start Recording
+crystalclient.key.reset_recording=Reset Recording
+crystalclient.key.previous_frame=Previous Frame
+crystalclient.key.next_frame=Next Frame

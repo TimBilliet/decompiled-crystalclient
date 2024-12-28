@@ -1,0 +1,14 @@
+[
+  {
+    "modid": "crystalclient",
+    "name": "Forge CrystalClient Tim",
+    "description": "",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "updateUrl": "",
+    "authorList": ["Timmeke_"],
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "parent": "block/orientable",
+  "textures": {
+    "top": "blocks/double_chest_top",
+    "side": "blocks/double_chest_side",
+    "back_left": "blocks/double_chest_back_left",
+    "back_right": "blocks/double_chest_back_right",
+    "front_left": "blocks/double_trapped_chest_front_left",
+    "front_right": "blocks/double_trapped_chest_front_right"
+  }
+}

@@ -174,6 +174,8 @@ public class ScrollPane extends Pane {
           minY = button.initialY;
         minY = Math.min(minY, button.initialY);
         maxY = Math.max(maxY, button.initialY + button.height);
+      //heeft niks te maken met het afsnijden van de scrollpane
+//        maxY = 800;
         margin = minY - this.y + marginInc;
       }
     }
@@ -199,8 +201,10 @@ public class ScrollPane extends Pane {
   }
 
   public void addScrollbarToScreen(Screen screen, String attribute, int y) {
+    System.out.println("addscrollbartoscreen");
     screen.removeButton(b -> (b instanceof ScrollBarButton && ((ScrollBarButton)b).getPane().equals(this)));
     ScrollBarButton button = new ScrollBarButton(this, y);
+    System.out.println(scale(screen.getScaledScreen()));
     button.setScissorPane(scale(screen.getScaledScreen()));
     if (attribute != null)
       button.addAttribute(attribute);

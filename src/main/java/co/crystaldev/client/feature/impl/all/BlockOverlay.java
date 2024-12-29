@@ -14,17 +14,11 @@ import co.crystaldev.client.shader.chroma.ChromaScreenShader;
 import co.crystaldev.client.shader.ShaderManager;
 import co.crystaldev.client.util.ColorObject;
 import co.crystaldev.client.util.RenderUtils;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockBarrier;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockDeadBush;
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.block.*;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -58,29 +52,19 @@ public class BlockOverlay extends Module implements IRegistrable {
                 GL11.glLineWidth(this.lineWidth);
                 BlockPos pos = ev.getTarget().getBlockPos();
                 Block b = this.mc.theWorld.getBlockState(pos).getBlock();
-//            b.func_180654_a((IBlockAccess)this.mc.theWorld, pos);
-                b.setBlockBoundsBasedOnState(this.mc.theWorld, pos);
-                //nog problemen mee, nullpointerexc
-                if(b instanceof BlockBush) {
-//                    System.out.println("BLOCKBUSH");
+                Block superBlock = new Block(b.getMaterial());
+                if (!(b instanceof BlockStairs))
+                    superBlock.setBlockBounds((float) b.getBlockBoundsMinX(), (float) b.getBlockBoundsMinY(), (float) b.getBlockBoundsMinZ(), (float) b.getBlockBoundsMaxX(), (float) b.getBlockBoundsMaxY(), (float) b.getBlockBoundsMaxZ());
+                AxisAlignedBB bb = RenderUtils.normalize(superBlock.getCollisionBoundingBox(this.mc.theWorld, pos, null).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D));
+                if (this.color.isChroma())
+                    ShaderManager.getInstance().enableShader(ChromaScreenShader.class);
+                if (this.mode.isSelected("Outline")) {
+                    RenderUtils.setGlColor(this.color, 255);
+                    RenderGlobal.drawSelectionBoundingBox(bb);
                 }
-                if(b instanceof BlockDeadBush) {
-//                    System.out.println("deadbush");
-                }
-                if (b.getCollisionBoundingBox(this.mc.theWorld, pos, b.getDefaultState()) != null) {
-                    AxisAlignedBB bb = RenderUtils.normalize(b.getCollisionBoundingBox(this.mc.theWorld, pos, b.getDefaultState()).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D));
-                    //null added
-                    //AxisAlignedBB bb = RenderUtils.normalize(b.getCollisionBoundingBox((World)this.mc.theWorld, pos, null).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D));
-                    if (this.color.isChroma())
-                        ShaderManager.getInstance().enableShader(ChromaScreenShader.class);
-                    if (this.mode.isSelected("Outline")) {
-                        RenderUtils.setGlColor((Color) this.color, 255);
-                        RenderGlobal.drawSelectionBoundingBox(bb);
-                    }
-                    if (this.mode.isSelected("Fill")) {
-                        RenderUtils.setGlColor((Color) this.color);
-                        RenderUtils.drawFilledBoundingBox(bb);
-                    }
+                if (this.mode.isSelected("Fill")) {
+                    RenderUtils.setGlColor(this.color);
+                    RenderUtils.drawFilledBoundingBox(bb);
                 }
                 ShaderManager.getInstance().disableShader();
                 GL11.glEnable(3553);

@@ -32,7 +32,7 @@ public class MwAPI {
       if (name.equalsIgnoreCase(provider.getName()))
         return provider; 
     } 
-    throw new RuntimeException(String.format("Data provider with name '%s' was not found.", new Object[] { name }));
+    throw new RuntimeException(String.format("Data provider with name '%s' was not found.", name));
   }
   
   public static <P extends IMwDataProvider> P getDataProvider(@NotNull Class<P> clazz) {

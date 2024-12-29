@@ -171,6 +171,12 @@ public class ScreenLoadSchematic extends ScreenSchematicaBase {
           addButton(new MenuButton(-1, x, this.schematicInfo.y + this.schematicInfo.height - 8 - 41, w, h, "Upload to WorldEdit"), b -> {
                 b.addAttribute("schematic_info_entry");
                // b.setOnClick(());
+            b.setOnClick(new Runnable() {
+              @Override
+              public void run() {
+                System.out.println("");
+              }
+            });
               });
         }
         loadedY = this.schematicInfo.y + this.schematicInfo.height - 8 - ((schematic == null) ? 18 : 64);
@@ -181,6 +187,13 @@ public class ScreenLoadSchematic extends ScreenSchematicaBase {
     addButton(new MenuButton(-1, x, loadedY, w, h, "Open Schematic Folder"), b -> {
           b.addAttribute("schematic_info_entry");
           //b.onClick = ();
+//          b.setOnClick(() -> {});
+          b.onClick = new Runnable() {
+            @Override
+            public void run() {
+
+            }
+          };
         });
   }
 
@@ -217,6 +230,7 @@ public class ScreenLoadSchematic extends ScreenSchematicaBase {
       addButton((Button)new SchematicEntryButton(file, x, y, w, h, fileName, file.isDirectory()), b -> {
             b.addAttribute("schematic_entry");
             b.setScissorPane(scissor);
+        System.out.println("schementrybutton");
           });
       y += h + 5;
     }

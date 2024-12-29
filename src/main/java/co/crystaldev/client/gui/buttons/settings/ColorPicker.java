@@ -374,8 +374,6 @@ public class ColorPicker extends SettingButton<ColorObject> {
 //                this.saturation = MathHelper.clamp_int(100 - (mouseX - this.x) * 100 / this.width, 0, 100);
 //                this.brightness = MathHelper.clamp_int((this.height - mouseY - this.y) * 100 / this.height, 0, 100);
                 this.brightness = MathHelper.clamp_int(100 - (mouseY - this.y) * 100 / this.height, 0, 100);
-                System.out.println("heigth " + this.height + " mousey " + mouseY + " this.y " + this.y);
-                System.out.println("brightness: " + this.brightness);
             }
             if (!Mouse.isButtonDown(0) && this.selecting)
                 this.selecting = false;
@@ -384,7 +382,6 @@ public class ColorPicker extends SettingButton<ColorObject> {
 
         public void onInteract(int mouseX, int mouseY, int mouseButton) {
             super.onInteract(mouseX, mouseY, mouseButton);
-            System.out.println("oninteract saturation" + mouseButton);
             if (mouseButton == 0)
                 this.selecting = true;
         }

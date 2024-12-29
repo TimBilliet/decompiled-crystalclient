@@ -36,7 +36,6 @@ public class MacroBuilderButton extends Button {
         this.subButtons.add(this.actionInput = new TextInputField(-1, this.x + this.width / 4, this.y + this.height / 2 - 9, this.width / 2, 18, "Macro Action") {
 
         });
-        System.out.println("new subbutton keyselector:  + x?: " + this.actionInput.width + " width?: " + bWidth);
         this.subButtons.add(this.keySelector = new KeySelectorButton(-1, this.actionInput.x + this.actionInput.width + 4, this.y + this.height / 2 - 9, bWidth, 18, 0));
         this.subButtons.add(this.createButton = new CreateButton(-1, this.keySelector.x + bWidth + 4, this.y + this.height / 2 - 9, bWidth, 18));
         this.background = new FadingColor(this.opts.neutralButtonBackground, this.opts.hoveredButtonBackground);
@@ -128,7 +127,6 @@ public class MacroBuilderButton extends Button {
         public void drawButton(int mouseX, int mouseY, boolean hovered) {
             this.background.fade((hovered || this.selecting));
             this.text.fade((hovered || this.selecting));
-//      System.out.println("hoogte: " + this.height + "breedte: " + this.width);
             RenderUtils.drawRoundedRect(this.x, this.y, (this.x + this.width), (this.y + this.height), 9.0D, this.background.getCurrentColor().getRGB());
 
 //      RenderUtils.drawRoundedRect(this.x, this.y, (this.x + this.width), (this.y + this.height), 9.0D, this.background.getCurrentColor().getRGB());

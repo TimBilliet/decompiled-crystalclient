@@ -17,6 +17,8 @@ import co.crystaldev.client.feature.base.Category;
 import co.crystaldev.client.feature.base.HudModule;
 //import co.crystaldev.client.group.provider.GroupChunkProvider;
 //import co.crystaldev.client.group.provider.GroupMapProvider;
+import co.crystaldev.client.group.provider.GroupChunkProvider;
+import co.crystaldev.client.group.provider.GroupMapProvider;
 import co.crystaldev.client.gui.screens.ScreenMapWriter;
 import co.crystaldev.client.util.enums.AnchorRegion;
 import co.crystaldev.client.util.objects.ModulePosition;
@@ -127,8 +129,8 @@ public class MapWriter extends HudModule implements IRegistrable {
   }
 
   private void onClientInit(InitializationEvent event) {
-//    MwAPI.registerDataProvider("Chunk Highlighting", (IMwDataProvider)new GroupChunkProvider(), true);
-//    MwAPI.registerDataProvider("Group Members", (IMwDataProvider)new GroupMapProvider(), true);
+    MwAPI.registerDataProvider("Chunk Highlighting", new GroupChunkProvider(), true);
+    MwAPI.registerDataProvider("Group Members", new GroupMapProvider(), true);
     this.enabledDataProviders.clear();
     this.enabledDataProviders.addAll(Reference.GSON.fromJson(this.enabledMapwriterProviders, (new TypeToken<HashSet<String>>() {
 

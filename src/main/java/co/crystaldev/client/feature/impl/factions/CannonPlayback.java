@@ -129,7 +129,7 @@ public class CannonPlayback extends HudModuleBackground implements IRegistrable 
     if (this.recording)
       return String.format("Recording (Frame %d/%d - %.2f%c)", new Object[] { Integer.valueOf(this.frames.size()), Integer.valueOf(this.maxTime),
             Double.valueOf(this.frames.size() / this.maxTime * 100.0D), Character.valueOf('%') });
-    System.out.println("nog te implementeren");
+    //TODO implementeren cannonplayback
    // if (this.playback)
    //   return String.format("Frame %d/%d - %d TNT | %d Sand", new Object[] { Integer.valueOf(this.frames.indexOf(this.currentFrame) + 1),
     //        Integer.valueOf(this.frames.size()), Integer.valueOf(Frame.access$000(this.currentFrame)), Integer.valueOf(Frame.access$100(this.currentFrame)) });

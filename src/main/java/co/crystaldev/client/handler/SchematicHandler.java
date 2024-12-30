@@ -40,6 +40,7 @@ public class SchematicHandler {
   }
 
   public void loadSchematic(String dir, String id) {
+    System.out.println("loadschematic");
     for (Schematic schematic : this.loadedSchems) {
       if (schematic.getDir().equals(dir) && schematic.getId().equals(id)) {
         Schematica.proxy.unloadSchematic();

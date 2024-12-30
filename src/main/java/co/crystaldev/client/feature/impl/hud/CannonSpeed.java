@@ -42,14 +42,14 @@ public class CannonSpeed extends HudModuleBackground {
   }
 
   public void updateTime() {
-//    if (Patchcrumbs.getInstance().isUpdated()) {
-//      long ms = System.currentTimeMillis() - Patchcrumbs.getInstance().getLastUpdate();
-//      this.speed = (float)ms / 1000.0F;
-//      Patchcrumbs.getInstance().setUpdated(false);
-//    }
-//    if ((Patchcrumbs.getInstance()).enabled && System.currentTimeMillis() - Patchcrumbs.getInstance().getLastUpdate() >= 30000L) {
-//      Patchcrumbs.getInstance().setLastUpdate(0L);
-//      this.speed = 0.0F;
-//    }
+    if (Patchcrumbs.getInstance().isUpdated()) {
+      long ms = System.currentTimeMillis() - Patchcrumbs.getInstance().getLastUpdate();
+      this.speed = (float)ms / 1000.0F;
+      Patchcrumbs.getInstance().setUpdated(false);
+    }
+    if ((Patchcrumbs.getInstance()).enabled && System.currentTimeMillis() - Patchcrumbs.getInstance().getLastUpdate() >= 30000L) {
+      Patchcrumbs.getInstance().setLastUpdate(0L);
+      this.speed = 0.0F;
+    }
   }
 }

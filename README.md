@@ -2,7 +2,6 @@
 
 ## Things that are currently broken
 - schematica
-- patchcrumbs
 - mapwriter
 - no icons in gui
 - scrollpane isn't cut off in gui

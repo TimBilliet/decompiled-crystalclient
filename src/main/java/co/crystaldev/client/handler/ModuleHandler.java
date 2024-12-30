@@ -150,7 +150,7 @@ public class ModuleHandler implements IRegistrable {
         registerModule(OldHits.class);
         registerModule(PackDisplay.class);
         registerModule(ParticleMultiplier.class);
-//        registerModule(Patchcrumbs.class);
+        registerModule(Patchcrumbs.class);
         registerModule(PerspectiveMod.class);
         registerModule(Ping.class);
         registerModule(PotionCount.class);

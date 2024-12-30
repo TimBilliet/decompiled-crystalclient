@@ -344,13 +344,13 @@ public class Patchcrumbs extends Module implements IRegistrable {
     GlStateManager.scale(-size, -size, -size);
     switch (this.currentCrumb.getDirection()) {
       case NORTH_SOUTH:
-        text = String.format("X: %d %s Y: %d", new Object[] { Integer.valueOf(pos.getX()), VERTICAL_LINE, Integer.valueOf(pos.getY()) });
+        text = String.format("X: %d %s Y: %d", pos.getX(), VERTICAL_LINE, pos.getY());
         break;
       case EAST_WEST:
-        text = String.format("Z: %d %s Y: %d", new Object[] { Integer.valueOf(pos.getZ()), VERTICAL_LINE, Integer.valueOf(pos.getY()) });
+        text = String.format("Z: %d %s Y: %d", pos.getZ(), VERTICAL_LINE, pos.getY());
         break;
       default:
-        text = String.format("X: %d %s Y: %d %s Z: %d", new Object[] { Integer.valueOf(pos.getX()), VERTICAL_LINE, Integer.valueOf(pos.getY()), VERTICAL_LINE, Integer.valueOf(pos.getZ()) });
+        text = String.format("X: %d %s Y: %d %s Z: %d", pos.getX(), VERTICAL_LINE, pos.getY(), VERTICAL_LINE, pos.getZ());
         break;
     }
     int tx = -(this.mc.fontRendererObj.getStringWidth(text) / 2);
@@ -459,7 +459,7 @@ public class Patchcrumbs extends Module implements IRegistrable {
             if (this.currentCrumb == null)
               return;
             BlockPos pos = this.currentCrumb.getPos();
-            String message = String.format("%s[Current Shot] X: %d, Y: %d, Z: %d", new Object[] { this.useFacChat ? "/ff " : "", Integer.valueOf(pos.getX()), Integer.valueOf(pos.getY()), Integer.valueOf(pos.getZ()) });
+            String message = String.format("%s[Current Shot] X: %d, Y: %d, Z: %d", this.useFacChat ? "/ff " : "", pos.getX(), pos.getY(), pos.getZ());
             this.mc.thePlayer.sendChatMessage(message);
           }
         });

@@ -430,9 +430,13 @@ public class Client {
         try {
             Class.forName(classpath);
             return true;
-        } catch (ClassNotFoundException exception) {
+        } catch (Exception ex) {
+            System.out.println("FOUT BIJ ISCLASSLOADED");
             return false;
         }
+//        } catch (ClassNotFoundException exception) {
+//            return false;
+//        }
     }
 
     public static boolean isOptiFineLoaded() {

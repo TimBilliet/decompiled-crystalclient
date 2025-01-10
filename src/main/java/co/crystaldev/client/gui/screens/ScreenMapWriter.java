@@ -266,8 +266,8 @@ public class ScreenMapWriter extends Screen {
     this.viewZStart = this.mapView.getZ();
   }
 
-  public void mouseMovedOrUp(int x, int y, int button) {
-    super.mouseMovedOrUp(x, y, button);
+  public void mouseReleased(int x, int y, int button) {
+    super.mouseReleased(x, y, button);
     float scaledScreen = getScaledScreen();
     int mouseXScaled = (int)(x / scaledScreen);
     int mouseYScaled = (int)(y / scaledScreen);

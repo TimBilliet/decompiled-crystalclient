@@ -33,6 +33,7 @@ public class InputEvent extends Event {
   
   @Cancellable
   public static class Mouse extends InputEvent {
+
     public final int x = org.lwjgl.input.Mouse.getEventX();
     
     public final int y = org.lwjgl.input.Mouse.getEventY();

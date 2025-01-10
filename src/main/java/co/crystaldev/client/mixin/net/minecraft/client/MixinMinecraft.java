@@ -260,9 +260,6 @@ public abstract class MixinMinecraft {
 
   @Inject(method = {"runTick"}, at = {@At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;currentScreen:Lnet/minecraft/client/gui/GuiScreen;", ordinal = 8, shift = At.Shift.BEFORE)})
   public void injectHandleInput(CallbackInfo ci) {
-    if(OverlayHandler.getInstance() == null) {
-      System.out.println("getinstance IS NULL DIT IS WRM HET FAALT");
-    }
     if (OverlayHandler.getInstance().hasOverlay())
       OverlayHandler.getInstance().getCurrentOverlay().handleInput();
   }

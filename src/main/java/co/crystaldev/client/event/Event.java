@@ -23,11 +23,11 @@ public abstract class Event {
   }
   
   public boolean isCancellable() {
-    return getClass().isAnnotationPresent((Class)Cancellable.class);
+    return getClass().isAnnotationPresent(Cancellable.class);
   }
   
   public void setCancelled(boolean cancelled) {
-    if (getClass().isAnnotationPresent((Class)Cancellable.class)) {
+    if (getClass().isAnnotationPresent(Cancellable.class)) {
       this.cancelled = cancelled;
     } else {
       throw new IllegalStateException("Attempted to cancel an non-cancellable event");

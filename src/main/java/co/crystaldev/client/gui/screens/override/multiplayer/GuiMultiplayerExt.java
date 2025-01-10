@@ -262,9 +262,8 @@ public class GuiMultiplayerExt extends GuiScreen {
     this.serverListSelector.mouseClicked(mouseX, mouseY, mouseButton);
   }
 
-  protected void mouseMovedOrUp(int mouseX, int mouseY, int state) {
-    //super.mouseMovedOrUp(mouseX, mouseY, state);
-    super.mouseClickMove(mouseX, mouseY, state, 0);
+  protected void mouseReleased(int mouseX, int mouseY, int state) {
+    super.mouseReleased(mouseX, mouseY, state);
     this.serverListSelector.mouseReleased(mouseX, mouseY, state);
   }
 

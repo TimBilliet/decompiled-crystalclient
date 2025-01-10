@@ -117,8 +117,8 @@ public class ScreenEditLocations extends Screen {
     }
   }
 
-  public void mouseMovedOrUp(int mouseX, int mouseY, int mouseButton) {
-    super.mouseMovedOrUp(mouseX, mouseY, mouseButton);
+  public void mouseReleased(int mouseX, int mouseY, int mouseButton) {
+    super.mouseReleased(mouseX, mouseY, mouseButton);
     if (mouseButton == 0 && this.dragging) {
       this.dragging = false;
       this.snapPositions.clear();
@@ -169,6 +169,7 @@ public class ScreenEditLocations extends Screen {
   }
 
   private void handleModuleMovement(int offsetX, int offsetY, boolean checkForSnapping) {
+    System.out.println("handlemousemovement screenedit");
     if (this.lastDragged != null && ((this.lastDragged.displayWhileDisabled && (ClientOptions.getInstance()).showDisabledModulesInEditHUD) || this.lastDragged.enabled) && (
       !(InfoHud.getInstance()).enabled || InfoHud.getInstance().shouldModuleRender((Module)this.lastDragged))) {
       int snapBackX = 0, snapBackY = 0;

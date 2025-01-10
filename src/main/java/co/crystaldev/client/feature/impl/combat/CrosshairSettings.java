@@ -97,6 +97,7 @@ public class CrosshairSettings extends Module implements IRegistrable {
     y += 7;
     if (this.dot)
       RenderUtils.drawCircle(x, y, this.dotSize, color.getRGB());
+    RenderUtils.drawCircle(200, 200, 10,color.getRGB());
     String currentSelection = (String) this.style.getCurrentSelection();
     if ("Circle".equals(currentSelection)) {
       RenderUtils.drawTorus(x, y, this.gap, this.gap + this.thickness, color.getRGB());

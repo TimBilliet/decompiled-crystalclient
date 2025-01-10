@@ -325,23 +325,19 @@ public abstract class Screen extends GuiScreen {
     } 
   }
   
-  public void mouseMovedOrUp(int mouseX, int mouseY, int mouseButton) {
+  public void mouseReleased(int mouseX, int mouseY, int mouseButton) {
     boolean hasOverlay = hasOverlay();
     if (!hasOverlay) {
       float scaledScreen = getScaledScreen();
       int mouseXScaled = (int)(mouseX / scaledScreen);
       int mouseYScaled = (int)(mouseY / scaledScreen);
-      //mouseMovedOrUp(mouseXScaled, mouseYScaled, mouseButton);
-      //super.mouseMovedOrUp(mouseXScaled, mouseYScaled, mouseButton);
-
-      super.mouseClickMove(mouseX, mouseY, mouseButton , 1);
-      super.mouseReleased(mouseX, mouseY, mouseButton);
+      super.mouseReleased(mouseXScaled, mouseYScaled, mouseButton);
       for (Button button : this.buttons) {
         if (button.visible && !button.removed)
           button.mouseReleased(mouseXScaled, mouseYScaled, mouseButton); 
       } 
     } else {
-      getCurrentOverlay().mouseMovedOrUp(mouseX, mouseY, mouseButton);
+      getCurrentOverlay().mouseReleased(mouseX, mouseY, mouseButton);
     } 
   }
   

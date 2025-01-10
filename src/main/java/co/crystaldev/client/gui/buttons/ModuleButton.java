@@ -69,8 +69,8 @@ public class ModuleButton extends Button {
   public void drawButton(int mouseX, int mouseY, boolean hovered) {
     FadingColor status1, status2;
 
-//    Screen.scissorStart(this.scissorPane);
-    Screen.scissorStart(getScissorPane());
+    Screen.scissorStart(this.scissorPane);
+//    Screen.scissorStart(getScissorPane());
     this.backgroundColor.fade(hovered);
     this.textColor.fade(hovered);
     if (!this.module.forceDisabled) {
@@ -98,8 +98,8 @@ public class ModuleButton extends Button {
         .getRGB());
     this.settingsButton.drawButton(mouseX, mouseY, (this.module.isConfigurable() && this.settingsButton.isHovered(mouseX, mouseY)));
     this.hoistButton.drawButton(mouseX, mouseY, this.hoistButton.isHovered(mouseX, mouseY));
-//    Screen.scissorEnd(this.scissorPane);
-    Screen.scissorEnd(getScissorPane());
+    Screen.scissorEnd(this.scissorPane);
+//    Screen.scissorEnd(getScissorPane());
   }
 
   public void onInteract(int mouseX, int mouseY, int mouseButton) {

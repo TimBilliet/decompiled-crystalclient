@@ -9,3 +9,9 @@
 - waypoint gui not closing when creating a waypoint
 - gui scale (gui is way too big)
 - custom crosshair
+- optifine compatibility
+- alt manager (never worked in the original one anyway)
+
+## How to generate a working jar
+1. Run the task "reobfShadowJar"
+2. You can find the jar file at in build/libs/client-1.0.jar

@@ -22,7 +22,7 @@ public final class GuiUtils {
         return;
       } catch (Exception exception) {}
     } else if (Util.getOSType() == Util.EnumOS.WINDOWS) {
-      String command = String.format("cmd.exe /C start \"Open file\" \"%s\"", new Object[] { s });
+      String command = String.format("cmd.exe /C start \"Open file\" \"%s\"", s);
       try {
         Runtime.getRuntime().exec(command);
         return;
@@ -30,8 +30,8 @@ public final class GuiUtils {
     } 
     try {
       Class<?> cls = Class.forName("java.awt.Desktop");
-      Object desktop = cls.getMethod("getDesktop", new Class[0]).invoke(null, new Object[0]);
-      cls.getMethod("browse", new Class[] { URI.class }).invoke(desktop, new Object[] { file.toURI() });
+      Object desktop = cls.getMethod("getDesktop", new Class[0]).invoke(null);
+      cls.getMethod("browse", new Class[] { URI.class }).invoke(desktop, file.toURI());
     } catch (Throwable t) {
       Sys.openURL("file://" + s);
     } 

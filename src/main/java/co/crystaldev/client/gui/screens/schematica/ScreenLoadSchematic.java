@@ -1,5 +1,6 @@
 package co.crystaldev.client.gui.screens.schematica;
 
+import chylex.respack.gui.GuiUtils;
 import co.crystaldev.client.Client;
 import co.crystaldev.client.Reference;
 import co.crystaldev.client.font.Fonts;
@@ -68,13 +69,13 @@ public class ScreenLoadSchematic extends ScreenSchematicaBase {
     int y = this.schematicInfo.y;
     int w = this.schematicInfo.width - 16;
     int h = 18;
-    addButton((Button)new Label(x + w / 2, y + 5 + Fonts.NUNITO_SEMI_BOLD_18.getStringHeight() / 2, "Schematic Info", 16777215, Fonts.NUNITO_SEMI_BOLD_18));
+    addButton(new Label(x + w / 2, y + 5 + Fonts.NUNITO_SEMI_BOLD_18.getStringHeight() / 2, "Schematic Info", 16777215, Fonts.NUNITO_SEMI_BOLD_18));
     y += 20;
     addButton((Button)new DropdownButton(-1, x, y, w, h, this.loadedSchematic), b -> b.renderLast = true);
     initSchematicInfo();
     int half = this.header.height / 2 - Fonts.NUNITO_SEMI_BOLD_24.getStringHeight() / 2;
     int searchSize = this.header.height - half * 2;
-    addButton((Button)(this.search = new SearchButton(this.header.x + this.header.width - half - searchSize, this.header.y + half, searchSize, searchSize * 6, searchSize)));
+    addButton((this.search = new SearchButton(this.header.x + this.header.width - half - searchSize, this.header.y + half, searchSize, searchSize * 6, searchSize)));
     initSchematics();
   }
 
@@ -98,7 +99,7 @@ public class ScreenLoadSchematic extends ScreenSchematicaBase {
       } else {
         this.selected = entry.getFile();
         if (entry.isDeleteHovered(mouseX, mouseY)) {
-          addOverlay((Screen)new OverlayRemoveSchematic(entry.getFile()));
+          addOverlay(new OverlayRemoveSchematic(entry.getFile()));
         } else if (entry.isLoadHovered(mouseX, mouseY)) {
           loadSchematic();
         } else {
@@ -167,7 +168,6 @@ public class ScreenLoadSchematic extends ScreenSchematicaBase {
               });
           addButton(new MenuButton(-1, x, this.schematicInfo.y + this.schematicInfo.height - 8 - 41, w, h, "Upload to WorldEdit"), b -> {
                 b.addAttribute("schematic_info_entry");
-               // b.setOnClick(());
             b.setOnClick(new Runnable() {
               @Override
               public void run() {
@@ -183,15 +183,10 @@ public class ScreenLoadSchematic extends ScreenSchematicaBase {
     }
     addButton(new MenuButton(-1, x, loadedY, w, h, "Open Schematic Folder"), b -> {
           b.addAttribute("schematic_info_entry");
-          //b.onClick = ();
-//          b.setOnClick(() -> {});
-          b.onClick = new Runnable() {
-            @Override
-            public void run() {
-
-            }
+          b.onClick = () -> {
+              GuiUtils.openFolder(this.currentDirectory);
           };
-        });
+    });
   }
 
   public void initSchematics() {
@@ -227,7 +222,6 @@ public class ScreenLoadSchematic extends ScreenSchematicaBase {
       addButton((Button)new SchematicEntryButton(file, x, y, w, h, fileName, file.isDirectory()), b -> {
             b.addAttribute("schematic_entry");
             b.setScissorPane(scissor);
-        System.out.println("schementrybutton");
           });
       y += h + 5;
     }

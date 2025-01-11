@@ -8,10 +8,8 @@ import co.crystaldev.client.font.Fonts;
 import co.crystaldev.client.gui.Button;
 import co.crystaldev.client.gui.Pane;
 import co.crystaldev.client.gui.Screen;
+import co.crystaldev.client.gui.buttons.*;
 import co.crystaldev.client.gui.buttons.Label;
-import co.crystaldev.client.gui.buttons.MenuButton;
-import co.crystaldev.client.gui.buttons.SimpleColorPicker;
-import co.crystaldev.client.gui.buttons.TextInputField;
 import co.crystaldev.client.gui.buttons.settings.DropdownButton;
 import co.crystaldev.client.network.Packet;
 import co.crystaldev.client.network.socket.client.group.PacketHighlightChunk;
@@ -98,12 +96,12 @@ public class ScreenMapWriter extends Screen {
     int y = this.pane.y + 58;
     int w = this.pane.width - 8;
     int h = 18;
-    addButton((Button)new MenuButton(-1, x, y, w, h, "Settings") {
+    addButton((Button)new MenuButton(0, x, y, w, h, "Settings") {
 
         });
     y += h + 4;
     addButton((Button)new DropdownButton<String>(-1, x, y, w, h, new Dropdown(
-            MwAPI.getRegisteredProviders().stream().map(IMwDataProvider::getName).toArray(x$0 -> new String[x$0]), (Object[])new String[0], true)) {
+            MwAPI.getRegisteredProviders().stream().map(IMwDataProvider::getName).toArray(String[]::new), (Object[])new String[0], true)) {
 
         });
     y += h + 4;
@@ -111,7 +109,7 @@ public class ScreenMapWriter extends Screen {
     y += Fonts.NUNITO_SEMI_BOLD_16.getStringHeight() + 4;
     addButton((Button)(this.colorPicker = new SimpleColorPicker(x + 1, y + 1, w - 2, 10, currentColor)));
     y += 16;
-    addButton((Button)new MenuButton(-1, x, y, w, h, "Clear Chunks") {
+    addButton((Button)new MenuButton(2, x, y, w, h, "Clear Chunks") {
 
         });
     y += h + 4;
@@ -202,6 +200,19 @@ public class ScreenMapWriter extends Screen {
       this.lastdwheel = 0;
     }
     super.handleMouseInput();
+  }
+
+  public void onButtonInteract(Button button, int mouseX, int mouseY, int mouseButton) {
+    System.out.println(button.id);
+    if(button.id == 0 && !(this.mc.currentScreen instanceof ScreenClientOptions)) {
+      this.mc.displayGuiScreen(new ScreenClientOptions(this));
+    } else if (button.id == 2) {
+    //TODO implement chunk clearing functionality
+//      mapWriterMod.chunkManager.close();
+//      mapWriterMod.regionManager.regionFileCache.close();
+//      mapWriterMod.regionManager.close();
+//      mapWriterMod.close();
+    }
   }
 
   public void keyTyped(char character, int key) {

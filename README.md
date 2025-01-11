@@ -2,7 +2,6 @@
 
 ## Things that are currently broken
 - schematica
-- mapwriter
 - scrollpane isn't cut off in gui
 - scrollpane in macro menu
 - gui not resetting when deleting macros

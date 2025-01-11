@@ -283,7 +283,7 @@ public class Client {
         this.commandHandler.registerCommand(new FlyboostCommand());
         this.commandHandler.registerCommand(new SudoCommand());
         this.commandHandler.registerCommand(new FindSandCommand());
-//        this.commandHandler.registerCommand((ICommand)new SchemshareCommand());
+        this.commandHandler.registerCommand((ICommand)new SchemshareCommand());
         this.commandHandler.registerCommand((ICommand)new AdjustHelperCommand());
         this.commandHandler.registerCommand(new ProfileCommand());
         this.commandHandler.registerCommand(new WaypointsCommand());

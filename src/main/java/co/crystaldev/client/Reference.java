@@ -13,7 +13,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 public class Reference {
-    public static final String NAME = "Crystal Client";
+    public static final String NAME = "Timmeke_ Crystal Client";
 
     public static final String ID = "crystalclient";
 
@@ -24,12 +24,6 @@ public class Reference {
     public static final String GIT_COMMIT_ID_ABBR = "37aa61d";
 
     public static final String GIT_BRANCH = "offline";
-
-    public static final String CDN_URL = "https://cdn.crystalclient.net/";
-
-    public static final String STORE_URL = "https://store.crystalclient.net/";
-
-    public static final String DISCORD = "https://discord.gg/mmVWkk93E9";
 
     public static final Gson GSON = (new GsonBuilder())
             .registerTypeAdapter(ColorObject.class, new ColorObject.Adapter())
@@ -54,5 +48,5 @@ public class Reference {
 
     public static final ResourceLocation BLUR_SHADER = new ResourceLocation("shaders/post/menu_blur.json");
 
-    public static final HashSet<String> RESOURCE_DOMAINS = new HashSet<>(Arrays.asList(new String[] { "minecraft", "realms", "crystalclient", "schematica", "mapwriter", "wdl", "emoticons" }));
+    public static final HashSet<String> RESOURCE_DOMAINS = new HashSet<>(Arrays.asList("minecraft", "realms", "crystalclient", "schematica", "mapwriter", "wdl", "emoticons"));
 }

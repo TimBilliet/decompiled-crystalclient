@@ -144,17 +144,14 @@ public class ScreenLoadSchematic extends ScreenSchematicaBase {
                 b.fontRenderer = Fonts.NUNITO_SEMI_BOLD_16;
               });
           y += h;
-          addButton(new SchematicDataEntry(x, y, w, h, "Modified", (new SimpleDateFormat("MM/dd/yyyy")).format(Long.valueOf(creation.toMillis()))), b -> b.addAttribute("schematic_info_entry"));
+          addButton(new SchematicDataEntry(x, y, w, h, "Modified", (new SimpleDateFormat("MM/dd/yyyy")).format(creation.toMillis())), b -> b.addAttribute("schematic_info_entry"));
           y += h;
           int blocks = 0;
-          byte[] arrayOfByte;
-          int i;
-          byte by;
-          for (arrayOfByte = schematic.getByteArray("Blocks"), i = arrayOfByte.length, by = 0; by < i; ) {
-            Byte byte_ = Byte.valueOf(arrayOfByte[by]);
-            if (byte_.byteValue() != 0)
+          byte[] arrayOfByte = schematic.getByteArray("Blocks");
+          for(byte b : arrayOfByte) {
+            if(b!= 0) {
               blocks++;
-            by++;
+            }
           }
           addButton(new SchematicDataEntry(x, y, w, h, "Total Blocks", DECIMAL_FORMAT.format(blocks)), b -> b.addAttribute("schematic_info_entry"));
           y += h;

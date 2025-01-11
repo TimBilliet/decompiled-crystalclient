@@ -262,7 +262,6 @@ public class ClientProxy extends CommonProxy {
   }
 
   public boolean loadSchematic(EntityPlayer player, File directory, String filename) {
-    System.out.println("file " + filename);
     Schematica.getInstance().clearTracerLists();
     currentSchematic.replaceHistory.clear();
     ISchematic schematic = SchematicFormat.readFromFile(directory, filename);

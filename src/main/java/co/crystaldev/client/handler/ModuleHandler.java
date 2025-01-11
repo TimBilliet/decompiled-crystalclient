@@ -226,9 +226,9 @@ public class ModuleHandler implements IRegistrable {
 
     public void onGuiOpen(GuiScreenEvent.Pre event) {
         if (event.gui instanceof net.minecraft.client.gui.GuiScreenResourcePacks) {
-            event.gui = (GuiScreen) new GuiCustomResourcePacks(this.mc.currentScreen);
+            event.gui = new GuiCustomResourcePacks(this.mc.currentScreen);
         } else if (event.gui instanceof net.minecraft.client.gui.GuiMultiplayer) {
-            event.gui = (GuiScreen) new GuiMultiplayerExt(((MixinGuiMultiplayer) event.gui).getParentScreen());
+            event.gui = new GuiMultiplayerExt(((MixinGuiMultiplayer) event.gui).getParentScreen());
         }
     }
 

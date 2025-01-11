@@ -2,7 +2,6 @@
 
 ## Things that currently don't work (yet)
 - schematica (schematica itself works, gui doesn't)
-- schematica progress module
 - scrollpane isn't cut off in gui
 - scrollpane in macro menu
 - gui not resetting when deleting macros

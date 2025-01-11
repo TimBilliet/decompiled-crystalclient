@@ -17,7 +17,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.BlockPos;
-import net.minecraft.util.Vec3i;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -45,12 +44,12 @@ public class SchematicProgress extends HudModuleBackground {
 
   public Tuple<String, String> getInfoHud() {
     update();
-    return new Tuple("Schematic", String.format("%.1f", new Object[] { Float.valueOf(this.progress) }) + "%");
+    return new Tuple("Schematic", String.format("%.1f", this.progress) + "%");
   }
 
   public String getDisplayText() {
     update();
-    return String.format("Schematic: %.1f%c", new Object[] { Float.valueOf(this.progress), Character.valueOf('%') });
+    return String.format("Schematic: %.1f%c", this.progress, '%');
   }
 
   private void update() {
@@ -65,13 +64,13 @@ public class SchematicProgress extends HudModuleBackground {
               this.total = 0;
               this.missing = 0;
               for (MBlockPos pos : BlockPosHelper.getAllInBox(BlockPos.ORIGIN, new BlockPos(world.getWidth() - 1, world.getHeight() - 1, world.getLength() - 1))) {
-                IBlockState blockState = world.getBlockState((BlockPos)pos);
+                IBlockState blockState = world.getBlockState(pos);
                 Block block = blockState.getBlock();
-                if (block == Blocks.air || world.isAirBlock((BlockPos)pos))
+                if (block == Blocks.air || world.isAirBlock(pos))
                   continue;
                 this.total++;
-                mcPos = mcPos.set((Vec3i)world.position.add((Vec3i)pos));
-                IBlockState mcBlockState = worldClient.getBlockState((BlockPos)mcPos);
+                mcPos = mcPos.set(world.position.add(pos));
+                IBlockState mcBlockState = worldClient.getBlockState(mcPos);
                 boolean isPlaced = BlockStateHelper.areBlockStatesEqual(blockState, mcBlockState);
                 if (!isPlaced)
                   this.missing++;
@@ -80,7 +79,7 @@ public class SchematicProgress extends HudModuleBackground {
               if (this.total == 0) {
                 this.progress = 100.0F;
               } else {
-                this.progress = this.missing / this.total * 100.0F;//float
+                this.progress = (float)this.missing / this.total * 100.0F;//float
               }
             });
     } else {
@@ -88,9 +87,3 @@ public class SchematicProgress extends HudModuleBackground {
     }
   }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\feature\impl\hud\SchematicProgress.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

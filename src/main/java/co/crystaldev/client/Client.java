@@ -247,7 +247,7 @@ public class Client {
     public Client() {
         INSTANCE = this;
         CLIENT_RUN_DIRECTORY = new File((this.mc = Minecraft.getMinecraft()).mcDataDir, "crystalclient");
-        Reference.LOGGER.info("{} version {} is being initialized.", new Object[] { "Crystal Client", "1.1.16-projectassfucker" });
+        Reference.LOGGER.info("{} version {} is being initialized.", "Crystal Client", "1.1.16-projectassfucker");
         SplashScreen.setProgress(1, "Registering Modules...");
         EventBus.register(this.moduleHandler = new ModuleHandler());
         SplashScreen.setProgress(2, "Registering Handlers...");
@@ -284,7 +284,7 @@ public class Client {
         this.commandHandler.registerCommand(new SudoCommand());
         this.commandHandler.registerCommand(new FindSandCommand());
 //        this.commandHandler.registerCommand((ICommand)new SchemshareCommand());
-//        this.commandHandler.registerCommand((ICommand)new AdjustHelperCommand());
+        this.commandHandler.registerCommand((ICommand)new AdjustHelperCommand());
         this.commandHandler.registerCommand(new ProfileCommand());
         this.commandHandler.registerCommand(new WaypointsCommand());
         this.commandHandler.registerCommand(new CrashCommand());

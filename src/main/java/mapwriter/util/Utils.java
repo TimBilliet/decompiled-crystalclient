@@ -100,40 +100,42 @@ public class Utils {
     int dz = (chunk.zPosition << 4) + 8 - z;
     return dx * dx + dz * dz;
   }
-  
   public static String getWorldName() {
-    String worldName;//added
+    String worldName = "";
     if (Minecraft.getMinecraft().isIntegratedServerRunning()) {
       IntegratedServer server = Minecraft.getMinecraft().getIntegratedServer();
       worldName = (server != null) ? server.getFolderName() : "sp_world";
     } else {
-      worldName = (Minecraft.getMinecraft().getCurrentServerData()).serverIP;
+      if(Minecraft.getMinecraft().getCurrentServerData() != null) {
+        worldName = (Minecraft.getMinecraft().getCurrentServerData()).serverIP;
+
+      }
       if (!worldName.contains(":")) {
         worldName = worldName + "_25565";
       } else {
         worldName = worldName.replace(":", "_");
-      } 
-    } 
+      }
+    }
     worldName = mungeString(worldName);
     if (worldName.equals(""))
-      worldName = "default"; 
+      worldName = "default";
     return worldName;
   }
   
   public static void openWebLink(URI p_175282_1_) {
     try {
       Class<?> oclass = Class.forName("java.awt.Desktop");
-      Object object = oclass.getMethod("getDesktop", new Class[0]).invoke(null, new Object[0]);
-      oclass.getMethod("browse", new Class[] { URI.class }).invoke(object, new Object[] { p_175282_1_ });
+      Object object = oclass.getMethod("getDesktop", new Class[0]).invoke(null);
+      oclass.getMethod("browse", new Class[] { URI.class }).invoke(object, p_175282_1_);
     } catch (Throwable throwable) {
-      Logging.logError("Couldn't open link %s", new Object[] { Arrays.toString((Object[])throwable.getStackTrace()) });
+      Logging.logError("Couldn't open link %s", Arrays.toString(throwable.getStackTrace()));
     } 
   }
   
   public static String stringArrayToString(String[] arr) {
     StringBuilder builder = new StringBuilder();
     for (String s : arr) {
-      builder.append(I18n.format(s, new Object[0]));
+      builder.append(I18n.format(s));
       builder.append("\n");
     } 
     return builder.toString();
@@ -144,10 +146,10 @@ public class Utils {
     int Width = 1;
     for (int i = 0; i < arr.length; i++) {
       int w2 = 0;
-      String s = I18n.format(arr[i], new Object[0]);
+      String s = I18n.format(arr[i]);
       int w1 = fontRendererObj.getStringWidth(s);
       if (arr2 != null && i < arr2.length) {
-        s = I18n.format(arr2[i], new Object[0]);
+        s = I18n.format(arr2[i]);
         w2 = fontRendererObj.getStringWidth(s);
         w2 += 65;
       } 

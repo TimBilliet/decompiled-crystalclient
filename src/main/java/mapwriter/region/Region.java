@@ -84,7 +84,7 @@ public class Region {
     z = z >> 9 + zoomLevel & 0xFFFF;
     zoomLevel &= 0xFF;
     dimension &= 0xFF;
-    return (long) (dimension << 40L | zoomLevel << 32L | z << 16L | x);
+    return (long) dimension << 40L | (long) zoomLevel << 32L | (long) z << 16L | x;
   }
   
   public int getPixelOffset(int x, int z) {

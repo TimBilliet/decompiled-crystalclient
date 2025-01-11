@@ -66,12 +66,17 @@ public class ColorPicker extends SettingButton<ColorObject> {
 
     private final MenuButton italic;
 
-    protected final FadingColor backgroundColor;
+    protected FadingColor backgroundColor;
 
     protected final FadingColor textColor;
 
     public void setCanBeExpanded(boolean canBeExpanded) {
         this.canBeExpanded = canBeExpanded;
+    }
+
+    public void setBackgroundColorToNonHovering() {
+        this.backgroundColor = new FadingColor(this.opts.neutralButtonBackground, this.opts.neutralButtonBackground);
+
     }
 
     public ColorPicker(int id, int x, int y, int width, int height, String displayText, final ColorObject currentValue, boolean textOptions) {

@@ -1,7 +1,6 @@
 package co.crystaldev.client.gui.screens.screen_overlay;
 
 import co.crystaldev.client.Client;
-import co.crystaldev.client.feature.impl.factions.AdjustHelper;
 import co.crystaldev.client.gui.Button;
 import co.crystaldev.client.gui.buttons.MenuButton;
 import co.crystaldev.client.gui.buttons.NumberInputField;
@@ -47,9 +46,13 @@ public class OverlayEditWaypoint extends ScreenOverlay {
     int w = this.pane.width - 10;
     int w1 = (this.pane.width - 20) / 3;
     int h = 18;
+
     addButton((this.name = new TextInputField(-1, x, y, w, h, "Enter Waypoint Name") {
 
-        }));
+    }));
+    if(waypoint != null) {
+      name.setText(waypoint.getName());
+    }
     y += h + 5;
     addButton((this.x = new NumberInputField(-1, x, y, w1, h, (this.waypoint == null) ? MathHelper.floor_double(this.mc.thePlayer.posX) : this.waypoint.getPos().getX())));
     addButton((this.y = new NumberInputField(-1, x + w1 + 5, y, w1, h, (this.waypoint == null) ? (int)this.mc.thePlayer.posY : this.waypoint.getPos().getY())));
@@ -60,23 +63,13 @@ public class OverlayEditWaypoint extends ScreenOverlay {
     addButton((this.color = new ColorPicker(-1, x, y, w, h, "Color", c, false) {
 
         }));
+    this.color.setCanBeExpanded(false);
+    this.color.setShouldCollapseButtonsBelow(false);
+    this.color.invertExpandedState();
+    this.color.setBackgroundColorToNonHovering();
+
     y += this.color.height + 5;
-    addButton(new MenuButton(-1, x, y, w, h, (this.waypoint == null) ? "Create" : "Apply Edits"), b -> b.setOnClick(new Runnable() {
-      @Override
-      public void run() {
-        System.out.println("TESTRUNNABLE");
-//        System.out.println(x);
-//        if(waypoint == null) {
-//          Waypoint waypoint;
-//          OverlayEditWaypoint.
-//          waypoint = new Waypoint(name.getText(), Client.formatConnectedServerIp(), new BlockPos(), color);
-//        } else {
-//
-//        }
-        closeOverlay();
-        onGuiClosed();
-      }
-    }));
+    addButton(new MenuButton(-1, x, y, w, h, (this.waypoint == null) ? "Create" : "Apply Edits"));
     while (this.pane.y + this.pane.height < y + h + 5)
       this.pane.height++;
     center();
@@ -84,18 +77,16 @@ public class OverlayEditWaypoint extends ScreenOverlay {
   }
 
   public void onButtonInteract(Button button, int mouseX, int mouseY, int mouseButton) {
-//    System.out.println("onbuttoninteract overlayeditwaypoint");
     super.onButtonInteract(button, mouseX, mouseY, mouseButton);
     if(button != null && button.displayText != null) {
-      if(button.displayText.equals("Create")) {
-        System.out.println("CREATE PRESSED");
-
+      if(button.displayText.equals("Create") && !name.getText().isEmpty()) {
           Waypoint waypoint;
           waypoint = new Waypoint(name.getText(), Client.formatConnectedServerIp(), new BlockPos(x.getValue(),y.getValue(),z.getValue()), color.getCurrentValue());
-        WaypointHandler.getInstance().addWaypoint(waypoint.setWorld(Client.getCurrentWorldName()));
-//        this.closeOverlay();
-//        super.closeOverlay();
-      } else if(button.displayText.equals("Apply Edits")) {
+          WaypointHandler.getInstance().addWaypoint(waypoint.setWorld(Client.getCurrentWorldName()));
+      } else if(button.displayText.equals("Apply Edits") && waypoint != null) {
+        waypoint.setName(name.getText());
+        waypoint.setPos(new BlockPos(x.getValue(),y.getValue(),z.getValue()));
+        waypoint.setColor(color.getCurrentValue());
         super.closeOverlay();
       }
     }

@@ -170,23 +170,19 @@ public abstract class Screen extends GuiScreen {
     for (Screen overlay : this.screenOverlays)
       overlay.removeButtons(); 
   }
-  
+
   public static void scissorStart(Pane pane) {
-//    System.out.println("pane is null in scissorstart");
     if (pane != null) {
       int scale = (new ScaledResolution(Minecraft.getMinecraft())).getScaleFactor();
       int x = pane.x;
       int y = pane.y;
       int x1 = pane.x + pane.width;
       int y1 = pane.y + pane.height;
-      System.out.println("y1: " + y1);
 
+      GL11.glScissor(x * scale, (Minecraft.getMinecraft()).displayHeight - y1 * scale, (x1 - x) * scale, (y1 - y) * scale);
 
-      GL11.glScissor(x * scale, 
-          
-          (Minecraft.getMinecraft()).displayHeight - y1 * scale, (x1 - x) * scale, (y1 - y) * scale);
       GL11.glEnable(3089);
-    } 
+    }
   }
   
   public static void scissorEnd(Pane pane) {

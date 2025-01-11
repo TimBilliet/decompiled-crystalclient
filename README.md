@@ -4,7 +4,6 @@
 - schematica
 - mapwriter
 - scrollpane isn't cut off in gui
-- waypoints
 - scrollpane in macro menu
 - gui not resetting when deleting macros
 - gui not resetting when switching cosmetic tabs

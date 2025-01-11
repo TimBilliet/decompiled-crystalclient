@@ -76,7 +76,6 @@ public abstract class Module {
         ResourceLocation resource = new ResourceLocation("crystalclient", "gui/module_icons/" + getSanitizedName() + ".png");
         try {
             Minecraft.getMinecraft().getResourceManager().getResource(resource);
-            System.out.println(resource);
             return resource;
         } catch (IOException ex) {
             System.out.println("foutje bij getIcon resourcelocation " + getSanitizedName());

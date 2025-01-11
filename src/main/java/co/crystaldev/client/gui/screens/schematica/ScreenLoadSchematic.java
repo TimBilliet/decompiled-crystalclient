@@ -183,9 +183,7 @@ public class ScreenLoadSchematic extends ScreenSchematicaBase {
     }
     addButton(new MenuButton(-1, x, loadedY, w, h, "Open Schematic Folder"), b -> {
           b.addAttribute("schematic_info_entry");
-          b.onClick = () -> {
-              GuiUtils.openFolder(this.currentDirectory);
-          };
+          b.onClick = () -> GuiUtils.openFolder(this.currentDirectory);
     });
   }
 

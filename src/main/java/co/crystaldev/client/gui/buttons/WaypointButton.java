@@ -63,8 +63,10 @@ public class WaypointButton extends Button {
   public void onInteract(int mouseX, int mouseY, int mouseButton) {
     super.onInteract(mouseX, mouseY, mouseButton);
     if (this.edit.isHovered(mouseX, mouseY)) {
+      System.out.println("oninteractwaypointbutton new overlayeditwaypoint");
       ((Screen)this.mc.currentScreen).addOverlay((Screen)new OverlayEditWaypoint(this.waypoint));
     } else if (this.remove.isHovered(mouseX, mouseY)) {
+      System.out.println("removewaypoint");
       WaypointHandler.getInstance().removeWaypoint(this.waypoint);
     } else {
       this.waypoint.setVisible(!this.waypoint.isVisible());

@@ -61,7 +61,7 @@ public abstract class Screen extends GuiScreen {
 //    System.out.println(scaledResolution.getScaleFactor());
     setWorldAndResolution(this.mc, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
 //    setWorldAndResolution(this.mc, 1920, 1080);
-//    this.scaledResolution = scaledResolution;
+    this.scaledResolution = scaledResolution;
 //    this.scaledResolution = new ScaledResolution()
 
   }
@@ -136,6 +136,7 @@ public abstract class Screen extends GuiScreen {
   }
   
   public void removeOverlay(Screen overlay) {
+    System.out.println("removeoverlay in screen");
     overlay.onGuiClosed();
     overlay.exited = true;
     this.overlaysToRemove.add(overlay);
@@ -153,6 +154,7 @@ public abstract class Screen extends GuiScreen {
   }
   
   public void removeOverlays() {
+//    System.out.println("removeoverlays");
     if (!this.overlaysToRemove.isEmpty()) {
       this.screenOverlays.removeAll(this.overlaysToRemove);
       this.overlaysToRemove.clear();
@@ -160,6 +162,7 @@ public abstract class Screen extends GuiScreen {
   }
   
   public void removeButtons() {
+//    System.out.println("removebuttons");
     if (!this.buttonsToRemove.isEmpty()) {
       this.buttons.removeAll(this.buttonsToRemove);
       this.buttonsToRemove.clear();
@@ -187,8 +190,9 @@ public abstract class Screen extends GuiScreen {
   }
   
   public static void scissorEnd(Pane pane) {
-    if (pane != null)
-      GL11.glDisable(3089); 
+    if (pane != null) {
+      GL11.glDisable(3089);
+    }
   }
   
   public void setWorldAndResolution(Minecraft mc, int width, int height) {

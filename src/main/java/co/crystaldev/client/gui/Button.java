@@ -124,7 +124,6 @@ public abstract class Button {
   }
   
   public void onInteract(int mouseX, int mouseY, int mouseButton) {
-    System.out.println("ininteract button");
     this.lastClickedMouseX = mouseX;
     this.lastClickedMouseY = mouseY;
     this.lastClickedMouseButton = mouseButton;

@@ -68,7 +68,7 @@ public class RegionManager {
     int n = 1;
     if (h.containsKey(key))
       n = (Integer) h.get(key) + 1;
-    h.put(key, Integer.valueOf(n));
+    h.put(key, n);
     return n;
   }
   

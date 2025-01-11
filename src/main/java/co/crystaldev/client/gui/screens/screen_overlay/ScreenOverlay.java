@@ -35,7 +35,9 @@ public class ScreenOverlay extends Screen {
   }
   
   public void closeOverlay() {
+    System.out.println("closeoverlay");
     if (this.mc.currentScreen instanceof Screen) {
+      System.out.println("instanceofsceren, removeoverlay");
       Screen screen = (Screen)this.mc.currentScreen;
       screen.removeOverlay(this);
     } 

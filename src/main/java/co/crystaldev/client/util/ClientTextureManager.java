@@ -37,22 +37,14 @@ public class ClientTextureManager {
     }
 
     public void bindTextureMipmapped(ResourceLocation resourceLocation) {
-//        MipMapSimpleTexture mipMapSimpleTexture = null;
-//        System.out.println("bindtexturemipmapped");
-        MipMapSimpleTexture mipMapSimpleTexture = new MipMapSimpleTexture(resourceLocation);
+        MipMapSimpleTexture mipMapSimpleTexture;
         ITextureObject textureObj = this.mipMapTextures.get(resourceLocation);
         if (textureObj == null) {
             mipMapSimpleTexture = new MipMapSimpleTexture(resourceLocation);
             loadTextureMipMap(resourceLocation, mipMapSimpleTexture);
+            textureObj = this.mipMapTextures.get(resourceLocation);
         }
-//        if (mipMapSimpleTexture == null) {
-//            System.out.println("mimmaptexture niet ingesteld");
-//      mipMapSimpleTexture = new MipMapSimpleTexture(resourceLocation);
-//      loadTextureMipMap(resourceLocation, mipMapSimpleTexture);
-//        }
-//        if (mipMapSimpleTexture != null) {
-            GlStateManager.bindTexture(mipMapSimpleTexture.getGlTextureId());
-//        }
+        GlStateManager.bindTexture(textureObj.getGlTextureId());
     }
 
     public void bindTexture(ITextureObject texture) {
@@ -87,6 +79,7 @@ public class ClientTextureManager {
             category.addCrashSectionCallable("Texture object class", () -> textureObj.getClass().getName());
             throw new ReportedException(crashReport);
         }
+
         this.mipMapTextures.put(resourceLocation, textureObj);
         return flag;
     }

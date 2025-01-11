@@ -36,7 +36,7 @@ public class Render {
     float c2A = (c2 >> 24 & 0xFF);
     float c2R = (c2 >> 16 & 0xFF);
     float c2G = (c2 >> 8 & 0xFF);
-    float c2B = (c2 >> 0 & 0xFF);
+    float c2B = (c2 & 0xFF);
     int r = (int)(c1R * c2R / 255.0F) & 0xFF;
     int g = (int)(c1G * c2G / 255.0F) & 0xFF;
     int b = (int)(c1B * c2B / 255.0F) & 0xFF;
@@ -109,7 +109,7 @@ public class Render {
     int h = getTextureHeight();
     int depth = GL11.glGetTexLevelParameteri(3553, 0, 32881);
     int format = GL11.glGetTexLevelParameteri(3553, 0, 4099);
-    Logging.log("texture %d parameters: width=%d, height=%d, depth=%d, format=%08x", new Object[] { Integer.valueOf(texture), Integer.valueOf(w), Integer.valueOf(h), Integer.valueOf(depth), Integer.valueOf(format) });
+    Logging.log("texture %d parameters: width=%d, height=%d, depth=%d, format=%08x", texture, w, h, depth, format);
   }
   
   public static int getMaxTextureSize() {
@@ -119,7 +119,7 @@ public class Render {
   public static void drawTexturedRect(double x, double y, double w, double h) {
     drawTexturedRect(x, y, w, h, 0.0D, 0.0D, 1.0D, 1.0D);
   }
-  
+
   public static void drawTexturedRect(double x, double y, double w, double h, double u1, double v1, double u2, double v2) {
     try {
       GlStateManager.enableTexture2D();
@@ -128,16 +128,15 @@ public class Render {
       Tessellator tessellator = Tessellator.getInstance();
       WorldRenderer renderer = tessellator.getWorldRenderer();
       renderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-      //renderer.pos(x + w, y, zDepth).tex(u2, v1).endVertex();
-      renderer.pos(x + w, y, zDepth).tex(u1, v1).endVertex();
+      renderer.pos(x + w, y, zDepth).tex(u2, v1).endVertex();
       renderer.pos(x, y, zDepth).tex(u1, v1).endVertex();
       renderer.pos(x, y + h, zDepth).tex(u1, v2).endVertex();
       renderer.pos(x + w, y + h, zDepth).tex(u2, v2).endVertex();
       tessellator.draw();
       GlStateManager.disableBlend();
     } catch (NullPointerException e) {
-      Logging.log("MwRender.drawTexturedRect: null pointer exception", new Object[0]);
-    } 
+      Logging.log("MwRender.drawTexturedRect: null pointer exception");
+    }
   }
   
   public static void drawArrow(double x, double y, double angle, double length) {
@@ -247,7 +246,7 @@ public class Render {
     FontRenderer fr = mc.fontRendererObj;
     String s = String.format(formatString, args);
     int w = fr.getStringWidth(s);
-    fr.drawStringWithShadow(s, (x - w / 2), y, colour);
+    fr.drawStringWithShadow(s, (x - w / 2.0F), y, colour);//float
   }
   
   public static void setCircularStencil(double x, double y, double r) {

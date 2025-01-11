@@ -201,7 +201,7 @@ public class ScrollPane extends Pane {
   }
 
   public void addScrollbarToScreen(Screen screen, String attribute, int y) {
-    System.out.println("addscrollbartoscreen");
+//    System.out.println("addscrollbartoscreen");
     screen.removeButton(b -> (b instanceof ScrollBarButton && ((ScrollBarButton)b).getPane().equals(this)));
     ScrollBarButton button = new ScrollBarButton(this, y);
     System.out.println(scale(screen.getScaledScreen()));
@@ -210,9 +210,12 @@ public class ScrollPane extends Pane {
       button.addAttribute(attribute);
     if (hasScrollBar())
       for (Button b : screen.buttons) {
-        if (this.scrollIf.test(b) && b.x + b.width >= button.x - 4)
-          while (b.x + b.width > button.x - 7)
+        if (this.scrollIf.test(b) && b.x + b.width >= button.x - 4) {
+          while (b.x + b.width > button.x - 7) {
             b.width--;
+
+          }
+        }
       }
     screen.addButton(button);
   }

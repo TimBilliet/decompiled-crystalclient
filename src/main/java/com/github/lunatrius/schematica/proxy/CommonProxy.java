@@ -1,6 +1,5 @@
 package com.github.lunatrius.schematica.proxy;
 
-//import co.crystaldev.client.Reference;
 import co.crystaldev.client.feature.impl.factions.Schematica;
 import com.github.lunatrius.core.util.MBlockPos;
 import com.github.lunatrius.schematica.api.ISchematic;
@@ -38,7 +37,7 @@ public abstract class CommonProxy {
   public void createFolders() {
     if (!ConfigurationHandler.schematicDirectory.exists() && 
       !ConfigurationHandler.schematicDirectory.mkdirs())
-      Reference.logger.warn("Could not create schematic directory [{}]!", new Object[] { ConfigurationHandler.schematicDirectory.getAbsolutePath() });
+      Reference.logger.warn("Could not create schematic directory [{}]!", ConfigurationHandler.schematicDirectory.getAbsolutePath());
   }
   
   public abstract File getDataDirectory();
@@ -48,7 +47,7 @@ public abstract class CommonProxy {
     File subDirectory = new File(dataDirectory, directory);
     if (!subDirectory.exists() && 
       !subDirectory.mkdirs())
-      Reference.logger.error("Could not create directory [{}]!", new Object[] { subDirectory.getAbsolutePath() }); 
+      Reference.logger.error("Could not create directory [{}]!", subDirectory.getAbsolutePath());
     try {
       return subDirectory.getCanonicalFile();
     } catch (IOException e) {
@@ -82,7 +81,7 @@ public abstract class CommonProxy {
           pos.set(x, y, z);
           localPos.set(localX, localY, localZ);
           try {
-            IBlockState blockState = world.getBlockState((BlockPos)pos);
+            IBlockState blockState = world.getBlockState(pos);
             Block block = blockState.getBlock();
             if (block instanceof BlockDispenser && (Schematica.getInstance()).enabled && (Schematica.getInstance()).dispenserMetaFix) {
               BlockDispenser dispenser = (BlockDispenser)block;
@@ -91,16 +90,16 @@ public abstract class CommonProxy {
                 meta -= 8; 
               blockState = dispenser.getStateFromMeta(meta);
             } 
-            boolean success = schematic.setBlockState((BlockPos)localPos, blockState);
+            boolean success = schematic.setBlockState(localPos, blockState);
             if (success && block.hasTileEntity()) {
-              TileEntity tileEntity = world.getTileEntity((BlockPos)pos);
+              TileEntity tileEntity = world.getTileEntity(pos);
               if (tileEntity != null)
                 try {
                   TileEntity reloadedTileEntity = NBTHelper.reloadTileEntity(tileEntity, minX, minY, minZ);
-                  schematic.setTileEntity((BlockPos)localPos, reloadedTileEntity);
+                  schematic.setTileEntity(localPos, reloadedTileEntity);
                 } catch (NBTConversionException nce) {
                   Reference.logger.error("Error while trying to save tile entity '{}'!", new Object[] { tileEntity, nce });
-                  schematic.setBlockState((BlockPos)localPos, Blocks.bedrock.getDefaultState());
+                  schematic.setBlockState(localPos, Blocks.bedrock.getDefaultState());
                 }  
             } 
           } catch (Exception e) {
@@ -121,7 +120,7 @@ public abstract class CommonProxy {
         Entity reloadedEntity = NBTHelper.reloadEntity(entity, minX, minY, minZ);
         schematic.addEntity(reloadedEntity);
       } catch (NBTConversionException nce) {
-        Reference.logger.error("Error while trying to save entity '{}'!", new Object[] { entity, nce });
+        Reference.logger.error("Error while trying to save entity '{}'!", entity, nce);
       } 
     } 
   }

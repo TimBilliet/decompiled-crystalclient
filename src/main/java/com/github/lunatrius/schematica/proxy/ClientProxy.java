@@ -41,7 +41,7 @@ public class ClientProxy extends CommonProxy {
   
   public static boolean isPendingReset = false;
   
-  public static final List<LoadedSchematic> loadedSchematics = new LinkedList<>(Arrays.asList(new LoadedSchematic[] { new LoadedSchematic(), new LoadedSchematic(), new LoadedSchematic() }));
+  public static final List<LoadedSchematic> loadedSchematics = new LinkedList<>(Arrays.asList(new LoadedSchematic(), new LoadedSchematic(), new LoadedSchematic()));
   
   public static LoadedSchematic currentSchematic = loadedSchematics.get(0);
   

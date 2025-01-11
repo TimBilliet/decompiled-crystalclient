@@ -46,17 +46,17 @@ public class GuiSchematicSave extends GuiScreenBase {
   
   private String filename = "";
   
-  private final String strSaveSelection = I18n.format("schematica.gui.saveselection", new Object[0]);
+  private final String strSaveSelection = I18n.format("schematica.gui.saveselection");
   
-  private final String strX = I18n.format("schematica.gui.x", new Object[0]);
+  private final String strX = I18n.format("schematica.gui.x");
   
-  private final String strY = I18n.format("schematica.gui.y", new Object[0]);
+  private final String strY = I18n.format("schematica.gui.y");
   
-  private final String strZ = I18n.format("schematica.gui.z", new Object[0]);
+  private final String strZ = I18n.format("schematica.gui.z");
   
-  private final String strOn = I18n.format("schematica.gui.on", new Object[0]);
+  private final String strOn = I18n.format("schematica.gui.on");
   
-  private final String strOff = I18n.format("schematica.gui.off", new Object[0]);
+  private final String strOff = I18n.format("schematica.gui.off");
   
   public GuiSchematicSave(GuiScreen guiScreen) {
     super(guiScreen);
@@ -67,7 +67,7 @@ public class GuiSchematicSave extends GuiScreenBase {
     this.centerY = this.height / 2;
     this.buttonList.clear();
     int id = 0;
-    this.btnPointA = new GuiButton(id++, this.centerX - 130, this.centerY - 55, 100, 20, I18n.format("schematica.gui.point.red", new Object[0]));
+    this.btnPointA = new GuiButton(id++, this.centerX - 130, this.centerY - 55, 100, 20, I18n.format("schematica.gui.point.red"));
     this.buttonList.add(this.btnPointA);
     this.numericAX = new GuiNumericField(this.fontRendererObj, id++, this.centerX - 130, this.centerY - 30);
     this.buttonList.add(this.numericAX);
@@ -75,7 +75,7 @@ public class GuiSchematicSave extends GuiScreenBase {
     this.buttonList.add(this.numericAY);
     this.numericAZ = new GuiNumericField(this.fontRendererObj, id++, this.centerX - 130, this.centerY + 20);
     this.buttonList.add(this.numericAZ);
-    this.btnPointB = new GuiButton(id++, this.centerX + 30, this.centerY - 55, 100, 20, I18n.format("schematica.gui.point.blue", new Object[0]));
+    this.btnPointB = new GuiButton(id++, this.centerX + 30, this.centerY - 55, 100, 20, I18n.format("schematica.gui.point.blue"));
     this.buttonList.add(this.btnPointB);
     this.numericBX = new GuiNumericField(this.fontRendererObj, id++, this.centerX + 30, this.centerY - 30);
     this.buttonList.add(this.numericBX);
@@ -87,7 +87,7 @@ public class GuiSchematicSave extends GuiScreenBase {
     this.buttonList.add(this.btnEnable);
     this.tfFilename = new GuiTextField(id++, this.fontRendererObj, this.width - 155, this.height - 29, 100, 18);
     this.textFields.add(this.tfFilename);
-    this.btnSave = new GuiButton(id++, this.width - 50, this.height - 30, 40, 20, I18n.format("schematica.gui.save", new Object[0]));
+    this.btnSave = new GuiButton(id++, this.width - 50, this.height - 30, 40, 20, I18n.format("schematica.gui.save"));
     this.btnSave.enabled = (ClientProxy.isRenderingGuide || ClientProxy.currentSchematic.schematic != null);
     this.buttonList.add(this.btnSave);
     this.tfFilename.setMaxStringLength(1024);
@@ -118,7 +118,7 @@ public class GuiSchematicSave extends GuiScreenBase {
       if (guiButton.id == this.btnPointA.id) {
         ClientProxy.movePointToPlayer(ClientProxy.pointA);
         ClientProxy.updatePoints();
-        setPoint(this.numericAX, this.numericAY, this.numericAZ, (BlockPos)ClientProxy.pointA);
+        setPoint(this.numericAX, this.numericAY, this.numericAZ, ClientProxy.pointA);
       } else if (guiButton.id == this.numericAX.id) {
         ClientProxy.pointA.x = this.numericAX.getValue();
         ClientProxy.updatePoints();
@@ -131,7 +131,7 @@ public class GuiSchematicSave extends GuiScreenBase {
       } else if (guiButton.id == this.btnPointB.id) {
         ClientProxy.movePointToPlayer(ClientProxy.pointB);
         ClientProxy.updatePoints();
-        setPoint(this.numericBX, this.numericBY, this.numericBZ, (BlockPos)ClientProxy.pointB);
+        setPoint(this.numericBX, this.numericBY, this.numericBZ, ClientProxy.pointB);
       } else if (guiButton.id == this.numericBX.id) {
         ClientProxy.pointB.x = this.numericBX.getValue();
         ClientProxy.updatePoints();
@@ -148,7 +148,7 @@ public class GuiSchematicSave extends GuiScreenBase {
       } else if (guiButton.id == this.btnSave.id) {
         String path = this.tfFilename.getText() + ".schematic";
         if (ClientProxy.isRenderingGuide) {
-          if (Schematica.proxy.saveSchematic((EntityPlayer)this.mc.thePlayer, ConfigurationHandler.schematicDirectory, path, (World)this.mc.theWorld, (BlockPos)ClientProxy.pointMin, (BlockPos)ClientProxy.pointMax)) {
+          if (Schematica.proxy.saveSchematic(this.mc.thePlayer, ConfigurationHandler.schematicDirectory, path, (World)this.mc.theWorld, (BlockPos)ClientProxy.pointMin, (BlockPos)ClientProxy.pointMax)) {
             this.filename = "";
             this.tfFilename.setText(this.filename);
           } 

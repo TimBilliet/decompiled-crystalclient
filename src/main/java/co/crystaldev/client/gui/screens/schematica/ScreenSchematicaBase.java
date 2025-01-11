@@ -119,22 +119,22 @@ public class ScreenSchematicaBase extends Screen {
     final boolean flag = ((Minecraft.getMinecraft()).currentScreen != null);
     switch (type) {
       case LOAD_SCHEMATIC:
-        Minecraft.getMinecraft().displayGuiScreen((GuiScreen)new ScreenLoadSchematic() {
+        Minecraft.getMinecraft().displayGuiScreen(new ScreenLoadSchematic() {
 
             });
         return;
       case CONTROL_SCHEMATIC:
-        Minecraft.getMinecraft().displayGuiScreen((GuiScreen)new ScreenSchematicControl() {
+        Minecraft.getMinecraft().displayGuiScreen(new ScreenSchematicControl() {
 
             });
         return;
       case SAVE_SCHEMATIC:
-        Minecraft.getMinecraft().displayGuiScreen((GuiScreen)new ScreenSaveSchematic() {
+        Minecraft.getMinecraft().displayGuiScreen(new ScreenSaveSchematic() {
 
             });
         return;
     }
-    Minecraft.getMinecraft().displayGuiScreen((GuiScreen)new ScreenSchematicaBase(type) {
+    Minecraft.getMinecraft().displayGuiScreen(new ScreenSchematicaBase(type) {
 
         });
   }

@@ -26,7 +26,6 @@ import net.minecraft.client.renderer.chunk.VisGraph;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.renderer.vertex.VertexBuffer;
 import net.minecraft.util.*;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
@@ -59,7 +58,7 @@ public class RenderOverlay extends RenderChunk {
         return;
       } 
       regionRenderCache = new RegionRenderCache(((MixinRenderChunk)this).getWorld(), from.add(-1, -1, -1), to.add(1, 1, 1), 1);
-      generator.setCompiledChunk((CompiledChunk)compiledOverlay);
+      generator.setCompiledChunk(compiledOverlay);
     } finally {
       generator.getLock().unlock();
     } 
@@ -92,7 +91,7 @@ public class RenderOverlay extends RenderChunk {
         if (!isMcAirBlock && isSchAirBlock && (Schematica.getInstance()).highlightAir) {
           render = true;
           color = 12517567;
-          sides = getSides(mcBlock, (World)worldClient, mcPos, sides);
+          sides = getSides(mcBlock, worldClient, mcPos, sides);
         } 
         if (!render) {
           if (ConfigurationHandler.highlight)
@@ -103,26 +102,32 @@ public class RenderOverlay extends RenderChunk {
                   render = true;
                   color = 16711680;
                   if (!(Schematica.getInstance()).trayMode || mcPos.getY() != 253) {
-                    mcBlock.setBlockBoundsBasedOnState((IBlockAccess)worldClient, mcPos);
-                    AxisAlignedBB aabb = mcBlock.getCollisionBoundingBox((World)worldClient, mcPos, null).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
-                    tracers.put(mcPos, new Tuple(RenderType.INCORRECT_BLOCK, aabb));
+                    mcBlock.setBlockBoundsBasedOnState(worldClient, mcPos);
+                    AxisAlignedBB bb = mcBlock.getCollisionBoundingBox(worldClient, mcPos, null);
+                    if(bb != null) {
+                      AxisAlignedBB aabb = bb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
+                      tracers.put(mcPos, new Tuple(RenderType.INCORRECT_BLOCK, aabb));
+                    }
                   } 
                 } 
               } else if (!BlockStateHelper.areBlockStatesEqual(schBlockState, mcBlockState)) {
                 render = true;
                 color = 12541696;
                 if (!(Schematica.getInstance()).trayMode || mcPos.getY() != 253) {
-                  mcBlock.setBlockBoundsBasedOnState((IBlockAccess)worldClient, mcPos);
-                  AxisAlignedBB aabb = mcBlock.getCollisionBoundingBox((World)worldClient, mcPos, null).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
-                  tracers.put(mcPos, new Tuple(RenderType.WRONG_META, aabb));
+                  mcBlock.setBlockBoundsBasedOnState(worldClient, mcPos);
+                  AxisAlignedBB bb = mcBlock.getCollisionBoundingBox(worldClient, mcPos, null);
+                  if(bb!= null) {
+                    AxisAlignedBB aabb = bb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
+                    tracers.put(mcPos, new Tuple(RenderType.WRONG_META, aabb));
+                  }
                 } 
-              } 
+              }
             } else if (!isSchAirBlock) {
               render = true;
               color = 49151;
             }  
           if (render)
-            sides = getSides(schBlock, (World)schematic, pos, sides); 
+            sides = getSides(schBlock, schematic, pos, sides);
         } 
         if (render && sides != 0) {
           if (!compiledOverlay.isLayerStarted(layer)) {
@@ -133,9 +138,12 @@ public class RenderOverlay extends RenderChunk {
             if (ClientProxy.currentSchematic.totalBlocks > 7000) {
               GeometryTessellator.drawCuboid(worldRenderer, pos, sides, 0x3F000000 | color);
             } else {
-              schBlock.setBlockBoundsBasedOnState((IBlockAccess)schematic, pos);
-              AxisAlignedBB aabb = schBlock.getCollisionBoundingBox((World)schematic, pos, null).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
-              GeometryTessellator.drawCuboid(worldRenderer, aabb, sides, 0x3F000000 | color);
+              schBlock.setBlockBoundsBasedOnState(schematic, pos);
+              AxisAlignedBB bb = schBlock.getCollisionBoundingBox(schematic, pos, null);
+              if(bb != null) {
+                AxisAlignedBB aabb = bb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
+                GeometryTessellator.drawCuboid(worldRenderer, aabb, sides, 0x3F000000 | color);
+              }
             } 
             cuboids++;
           } 
@@ -144,17 +152,17 @@ public class RenderOverlay extends RenderChunk {
       } 
       try {
         for (BlockPos pos : BlockPos.getAllInBox(from, to)) {
-          BlockPos mcPos = pos.add((Vec3i)schematic.position);
+          BlockPos mcPos = pos.add(schematic.position);
           if (tracers.containsKey(mcPos)) {
             Tuple<RenderType, AxisAlignedBB> tuple = tracers.get(mcPos);
-            Schematica.getInstance().addTracer(mcPos, (AxisAlignedBB)tuple.getItem2(), (RenderType)tuple.getItem1());
+            Schematica.getInstance().addTracer(mcPos, tuple.getItem2(), tuple.getItem1());
             continue;
           } 
           (Schematica.getInstance()).incorrectBlocks.remove(mcPos);
           (Schematica.getInstance()).wrongMetaBlocks.remove(mcPos);
         } 
         if (compiledOverlay.isLayerStarted(layer))
-          ((MixinRenderChunk)this).callPostRenderBlocks(layer, x, y, z, worldRenderer, (CompiledChunk)compiledOverlay); 
+          ((MixinRenderChunk)this).callPostRenderBlocks(layer, x, y, z, worldRenderer, compiledOverlay);
       } catch (NullPointerException ex) {
         Reference.logger.error("Error batching Schematica chunk render overlay", ex);
       } 
@@ -163,17 +171,17 @@ public class RenderOverlay extends RenderChunk {
   }
   
   private int getSides(Block block, World world, BlockPos pos, int sides) {
-    if (block.shouldSideBeRendered((IBlockAccess)world, pos.offset(EnumFacing.DOWN), EnumFacing.DOWN))
+    if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.DOWN), EnumFacing.DOWN))
       sides |= 0x1; 
-    if (block.shouldSideBeRendered((IBlockAccess)world, pos.offset(EnumFacing.UP), EnumFacing.UP))
+    if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.UP), EnumFacing.UP))
       sides |= 0x2; 
-    if (block.shouldSideBeRendered((IBlockAccess)world, pos.offset(EnumFacing.NORTH), EnumFacing.NORTH))
+    if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.NORTH), EnumFacing.NORTH))
       sides |= 0x4; 
-    if (block.shouldSideBeRendered((IBlockAccess)world, pos.offset(EnumFacing.SOUTH), EnumFacing.SOUTH))
+    if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.SOUTH), EnumFacing.SOUTH))
       sides |= 0x8; 
-    if (block.shouldSideBeRendered((IBlockAccess)world, pos.offset(EnumFacing.WEST), EnumFacing.WEST))
+    if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.WEST), EnumFacing.WEST))
       sides |= 0x10; 
-    if (block.shouldSideBeRendered((IBlockAccess)world, pos.offset(EnumFacing.EAST), EnumFacing.EAST))
+    if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.EAST), EnumFacing.EAST))
       sides |= 0x20; 
     return sides;
   }
@@ -184,9 +192,3 @@ public class RenderOverlay extends RenderChunk {
       this.vertexBuffer.deleteGlBuffers(); 
   }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematica\client\renderer\chunk\overlay\RenderOverlay.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -59,7 +59,7 @@ public class SchematicHandler {
             JsonObject obj = null;
             if (!jsonFile.exists() || !schemFile.exists()) {
               reader = new FileReader(jsonFile);
-              obj = (JsonObject)Reference.GSON.fromJson(reader, JsonObject.class);
+              obj = Reference.GSON.fromJson(reader, JsonObject.class);
               if (!jsonFile.exists() || !(new File(schematicDir, FileUtils.sanitizeFileName(obj.get("name").getAsString()) + ".schematic")).exists()) {
                 Client.sendMessage("Downloading schematic", true);
                 copyURLToFile(new URL(json), jsonFile, 5000, 2000);
@@ -68,7 +68,7 @@ public class SchematicHandler {
             }
             if (obj == null) {
               reader = new FileReader(jsonFile);
-              obj = (JsonObject)Reference.GSON.fromJson(reader, JsonObject.class);
+              obj = Reference.GSON.fromJson(reader, JsonObject.class);
             }
             Schematic downloadedSchem = new Schematic(dir, id, obj);
             if (!schemFile.renameTo(new File(schematicDir, FileUtils.sanitizeFileName(downloadedSchem.getName()) + ".schematic"))) {
@@ -142,9 +142,9 @@ public class SchematicHandler {
               JsonObject jsonObject = new JsonObject();
               jsonObject.addProperty("type", t.getType().toString());
               jsonObject.addProperty("direction", t.getDirection().toString());
-              jsonObject.addProperty("x", Integer.valueOf(t.getX()));
-              jsonObject.addProperty("y", Integer.valueOf(t.getY()));
-              jsonObject.addProperty("z", Integer.valueOf(t.getZ()));
+              jsonObject.addProperty("x", t.getX());
+              jsonObject.addProperty("y", t.getY());
+              jsonObject.addProperty("z", t.getZ());
               transformations.add((JsonElement)jsonObject);
             }
             JsonObject obj = new JsonObject();
@@ -183,9 +183,3 @@ public class SchematicHandler {
     return (INSTANCE == null) ? (INSTANCE = new SchematicHandler()) : INSTANCE;
   }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\handler\SchematicHandler.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

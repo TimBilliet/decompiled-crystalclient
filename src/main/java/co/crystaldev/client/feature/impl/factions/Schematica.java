@@ -535,7 +535,7 @@ public class Schematica extends Module implements IRegistrable {
           try {
             this.accessing = true;
             if (!this.missingBlocks.isEmpty())
-
+              System.out.println("maybe todo in Schematica");
               //this.missingBlocks.removeIf(());
             this.accessing = false;
           } catch (ConcurrentModificationException ex) {

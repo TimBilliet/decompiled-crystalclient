@@ -68,7 +68,6 @@ public class RPCHandler implements IPCListener {
 
   public void updatePresence() {
     try {
-      System.out.println(this.stateLine);
       RichPresence.Builder builder = (new RichPresence.Builder()).setState(this.stateLine).setDetails(this.detailsLine).setStartTimestamp(this.startTimestamp).setLargeImage("image", "by Timmeke_");
       if (this.client != null)
         this.client.sendRichPresence(builder.build());

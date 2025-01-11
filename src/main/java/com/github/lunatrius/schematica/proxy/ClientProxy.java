@@ -236,17 +236,17 @@ public class ClientProxy extends CommonProxy {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("type", t.getType().toString());
         jsonObject.addProperty("direction", t.getDirection().toString());
-        jsonObject.addProperty("x", Integer.valueOf(t.getX()));
-        jsonObject.addProperty("y", Integer.valueOf(t.getY()));
-        jsonObject.addProperty("z", Integer.valueOf(t.getZ()));
+        jsonObject.addProperty("x", t.getX());
+        jsonObject.addProperty("y", t.getY());
+        jsonObject.addProperty("z", t.getZ());
         transformations.add((JsonElement)jsonObject);
       } 
       JsonObject obj = new JsonObject();
       obj.addProperty("name", currentSchematic.currentFile.getName().replaceAll("\\..+", ""));
-      obj.addProperty("uploadedAt", Long.valueOf(System.currentTimeMillis()));
-      obj.addProperty("x", Integer.valueOf(currentSchematic.schematic.position.x));
-      obj.addProperty("y", Integer.valueOf(currentSchematic.schematic.position.y));
-      obj.addProperty("z", Integer.valueOf(currentSchematic.schematic.position.z));
+      obj.addProperty("uploadedAt", System.currentTimeMillis());
+      obj.addProperty("x", currentSchematic.schematic.position.x);
+      obj.addProperty("y", currentSchematic.schematic.position.y);
+      obj.addProperty("z", currentSchematic.schematic.position.z);
       obj.add("transformations", (JsonElement)transformations);
       Schematic schematic = new Schematic(currentSchematic.currentFile, null, currentSchematic.currentFile.getName().split("\\.")[0], obj);
       ClientOptions.getInstance().addSchematicToHistory(schematic);
@@ -260,34 +260,34 @@ public class ClientProxy extends CommonProxy {
     RenderSchematic.INSTANCE.setWorldAndLoadRenderers(null);
     SchematicPrinter.INSTANCE.setSchematic(null);
   }
-  
+
   public boolean loadSchematic(EntityPlayer player, File directory, String filename) {
+    System.out.println("file " + filename);
     Schematica.getInstance().clearTracerLists();
     currentSchematic.replaceHistory.clear();
     ISchematic schematic = SchematicFormat.readFromFile(directory, filename);
     if (schematic == null)
-      return false; 
+      return false;
     currentSchematic.currentFile = new File(directory, filename);
     currentSchematic.transformations.clear();
     try {
       NBTTagCompound compound = SchematicUtil.readTagCompoundFromFile(currentSchematic.currentFile);
-      byte[] arrayOfByte;
-      int i;
-      byte b;
-      for (arrayOfByte = compound.getByteArray("Blocks"), i = arrayOfByte.length, b = 0; b < i; ) {
-        Byte byte_ = Byte.valueOf(arrayOfByte[b]);
-        if (byte_.byteValue() != 0)
-          currentSchematic.totalBlocks++; 
-        b++;
-      } 
+      byte[] arrayOfByte = compound.getByteArray("Blocks");
+      for (byte b : arrayOfByte) {
+        if (b != 0) {
+          currentSchematic.totalBlocks++;
+        }
+      }
     } catch (IOException ex) {
       Reference.logger.error("Unable to read tag compound", ex);
-    } 
+    }
+    System.out.println("reading blocks complete");
     SchematicWorld world = new SchematicWorld(schematic);
-    Reference.logger.debug("Loaded {} [w:{},h:{},l:{}]", new Object[] { filename, Integer.valueOf(world.getWidth()), Integer.valueOf(world.getHeight()), Integer.valueOf(world.getLength()) });
+    Reference.logger.debug("Loaded {} [w:{},h:{},l:{}]", filename, world.getWidth(), world.getHeight(), world.getLength());
     currentSchematic.schematic = world;
     world.isRendering = true;
     this.awaitingChange = true;
+    System.out.println("returning in loadschematic");
     return true;
   }
   
@@ -299,9 +299,3 @@ public class ClientProxy extends CommonProxy {
     return ConfigurationHandler.schematicDirectory;
   }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematica\proxy\ClientProxy.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

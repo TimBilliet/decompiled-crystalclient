@@ -1,7 +1,8 @@
 # Half working decompiled version of crystalclient
 
-## Things that are currently broken
+## Things that currently don't work (yet)
 - schematica
+- schematica progress module
 - scrollpane isn't cut off in gui
 - scrollpane in macro menu
 - gui not resetting when deleting macros
@@ -13,5 +14,5 @@
 - alt manager (never worked in the original one anyway)
 
 ## How to generate a working jar
-1. Run the task "reobfShadowJar"
-2. You can find the jar file at in build/libs/client-1.0.jar
+1. Run the gradle task "reobfShadowJar"
+2. You can find the jar file at build/libs/client-1.0.jar

@@ -83,6 +83,7 @@ public class OverlayEditWaypoint extends ScreenOverlay {
           Waypoint waypoint;
           waypoint = new Waypoint(name.getText(), Client.formatConnectedServerIp(), new BlockPos(x.getValue(),y.getValue(),z.getValue()), color.getCurrentValue());
           WaypointHandler.getInstance().addWaypoint(waypoint.setWorld(Client.getCurrentWorldName()));
+          this.mc.displayGuiScreen(this.parent);
       } else if(button.displayText.equals("Apply Edits") && waypoint != null) {
         waypoint.setName(name.getText());
         waypoint.setPos(new BlockPos(x.getValue(),y.getValue(),z.getValue()));
@@ -92,9 +93,3 @@ public class OverlayEditWaypoint extends ScreenOverlay {
     }
   }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\screens\screen_overlay\OverlayEditWaypoint.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

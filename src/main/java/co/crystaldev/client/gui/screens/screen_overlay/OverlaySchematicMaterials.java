@@ -17,12 +17,9 @@ import com.github.lunatrius.schematica.util.ItemStackSortType;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,7 +45,7 @@ public class OverlaySchematicMaterials extends ScreenOverlay {
     this.content.y += 18;
     this.content.height -= 46;
     this.content.setScrollIf(b -> b.hasAttribute("material_button"));
-    this.blockList = (new BlockList()).getList((EntityPlayer)this.mc.thePlayer, this.schematic, (World)this.mc.theWorld);
+    this.blockList = (new BlockList()).getList(this.mc.thePlayer, this.schematic, this.mc.theWorld);
     this.sortType.sort(this.blockList);
     int x = this.content.x + 5;
     int y = this.content.y + 5;
@@ -65,11 +62,17 @@ public class OverlaySchematicMaterials extends ScreenOverlay {
     x = this.pane.x + 5;
     y = this.pane.y + this.pane.height - 5 - h;
     w = (this.pane.width - 6) / 3 - 4;
-    addButton(new MenuButton(-1, x, y, w, h, "Trace All"), b -> b.setOnClick(null));
+    addButton(new MenuButton(-1, x, y, w, h, "Trace All"), b -> b.setOnClick(()->{
+      Schematica.getInstance().missingBlocks.addAll(Schematica.getInstance().traceAllMaterials());
+    }));
     x += w + 4;
-    addButton(new MenuButton(-1, x, y, w, h, "Un-trace All"), b -> b.setOnClick(null));
+    addButton(new MenuButton(-1, x, y, w, h, "Un-trace All"), b -> b.setOnClick(()->{
+          Schematica.getInstance().clearTracerLists();
+    }));
     x += w + 4;
-    addButton(new MenuButton(-1, x, y, w, h, "Sort"), b -> b.setOnClick(null));
+    addButton(new MenuButton(-1, x, y, w, h, "Sort"), b -> b.setOnClick(()->{
+
+    }));
     this.content.updateMaxScroll(this, 0);
     this.content.addScrollbarToScreen(this);
   }
@@ -105,7 +108,7 @@ public class OverlaySchematicMaterials extends ScreenOverlay {
         BlockList.WrappedItemStack wrappedItemStack = OverlaySchematicMaterials.this.blockList.get(this.id);
         Item item = wrappedItemStack.itemStack.getItem();
         List<MissingSchematicBlock> newMissing = Schematica.getInstance().traceAllMaterials(Block.getBlockFromItem(item)), missing = (Schematica.getInstance()).missingBlocks;
-        missing.addAll((Collection<? extends MissingSchematicBlock>)newMissing.stream().filter(b -> !missing.contains(b)).collect(Collectors.toList()));
+        missing.addAll(newMissing.stream().filter(b -> !missing.contains(b)).collect(Collectors.toList()));
       }
     }
 
@@ -134,9 +137,3 @@ public class OverlaySchematicMaterials extends ScreenOverlay {
     }
   }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\screens\screen_overlay\OverlaySchematicMaterials.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

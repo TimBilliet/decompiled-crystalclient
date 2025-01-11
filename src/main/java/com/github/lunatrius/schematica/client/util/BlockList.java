@@ -25,26 +25,26 @@ public class BlockList {
     List<WrappedItemStack> blockList = new ArrayList<>();
     if (world == null)
       return blockList; 
-    MovingObjectPosition movingObjectPosition = new MovingObjectPosition((Entity)player);
+    MovingObjectPosition movingObjectPosition = new MovingObjectPosition(player);
     MBlockPos mcPos = new MBlockPos();
     for (MBlockPos pos : BlockPosHelper.getAllInBox(BlockPos.ORIGIN, new BlockPos(world.getWidth() - 1, world.getHeight() - 1, world.getLength() - 1))) {
       if (world.isRenderingLayer && pos.getY() != world.renderingLayer)
         continue; 
-      IBlockState blockState = world.getBlockState((BlockPos)pos);
+      IBlockState blockState = world.getBlockState(pos);
       Block block = blockState.getBlock();
-      if (block == Blocks.air || world.isAirBlock((BlockPos)pos))
+      if (block == Blocks.air || world.isAirBlock(pos))
         continue; 
-      mcPos.set((Vec3i)world.position.add((Vec3i)pos));
-      IBlockState mcBlockState = mcWorld.getBlockState((BlockPos)mcPos);
+      mcPos.set(world.position.add(pos));
+      IBlockState mcBlockState = mcWorld.getBlockState(mcPos);
       boolean isPlaced = BlockStateHelper.areBlockStatesEqual(blockState, mcBlockState);
       ItemStack stack = null;
       try {
-        stack = BlockUtils.getPickBlock(block, movingObjectPosition, (World)world, (BlockPos)pos, player);
+        stack = BlockUtils.getPickBlock(block, movingObjectPosition, world, pos, player);
       } catch (Exception e) {
-        Reference.logger.debug("Could not get the pick block for: {}", new Object[] { blockState, e });
+        Reference.logger.debug("Could not get the pick block for: {}", blockState, e);
       } 
       if (stack == null || stack.getItem() == null) {
-        Reference.logger.debug("Could not find the item for: {}", new Object[] { blockState });
+        Reference.logger.debug("Could not find the item for: {}", blockState);
         continue;
       } 
       WrappedItemStack wrappedItemStack = findOrCreateWrappedItemStackFor(blockList, stack);
@@ -94,7 +94,7 @@ public class BlockList {
     
     public String getFormattedAmount() {
       char color = (this.placed < this.total) ? 'c' : 'a';
-      return String.format("\u00A7%c%d\u00A7r/%d", new Object[] { Character.valueOf(color), Integer.valueOf(this.placed), Integer.valueOf(this.total) });
+      return String.format("\u00A7%c%d\u00A7r/%d", color, this.placed, this.total);
     }
   }
 }

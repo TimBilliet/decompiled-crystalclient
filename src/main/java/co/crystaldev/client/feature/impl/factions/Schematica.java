@@ -26,6 +26,7 @@ import co.crystaldev.client.util.objects.Vec3d;
 import co.crystaldev.client.util.type.GlueList;
 import com.github.lunatrius.core.util.BlockPosHelper;
 import com.github.lunatrius.core.util.MBlockPos;
+import com.github.lunatrius.schematica.block.state.BlockStateHelper;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.client.renderer.RenderSchematic;
 import com.github.lunatrius.schematica.client.renderer.chunk.overlay.RenderType;
@@ -488,7 +489,7 @@ public class Schematica extends Module implements IRegistrable {
   }
 
   public List<MissingSchematicBlock> traceAllMaterials() {
-    return traceAllMaterials((Block)null);
+    return traceAllMaterials(null);
   }
 
   public List<MissingSchematicBlock> traceAllMaterials(Block block) {
@@ -535,8 +536,9 @@ public class Schematica extends Module implements IRegistrable {
           try {
             this.accessing = true;
             if (!this.missingBlocks.isEmpty())
-              System.out.println("maybe todo in Schematica");
-              //this.missingBlocks.removeIf(());
+            if(mc.theWorld != null) {
+              this.missingBlocks.removeIf(a-> BlockStateHelper.areBlockStatesEqual(mc.theWorld.getBlockState(a.getMcPos()),a.getSchBlockState()));
+            }
             this.accessing = false;
           } catch (ConcurrentModificationException ex) {
             Reference.LOGGER.error("Unable to remove items from array", ex);

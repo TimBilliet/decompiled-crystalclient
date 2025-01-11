@@ -38,6 +38,8 @@ public class NumberInputField extends TextInputField {
     this.stepDown = new ResourceButton(-1, this.x + this.width - bSize, this.y + bSize, bSize, bSize, Resources.CHEVRON_DOWN);
     this.stepDown.drawBackground = false;
     this.stepDown.iconSize = bSize;
+    this.stepUp.drawBackground = false;
+    this.stepUp.iconSize = bSize;
     this.stepUp.iconColor.setColor2(this.opts.mainColor);
     this.stepDown.iconColor.setColor2(this.opts.mainColor);
   }

@@ -1,7 +1,7 @@
 # Half working decompiled version of crystalclient
 
 ## Things that currently don't work (yet)
-- schematica (schematica itself works, gui doesn't)
+- schematica material sorting
 - scrollpane isn't cut off in gui
 - scrollpane in macro menu
 - gui not resetting when deleting macros

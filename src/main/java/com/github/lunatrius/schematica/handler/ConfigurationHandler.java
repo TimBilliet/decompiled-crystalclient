@@ -97,7 +97,7 @@ public class ConfigurationHandler {
   private static void setSlot(int slot, boolean state) {
     swapSlots[slot] = state;
     if (swapSlots[slot])
-      swapSlotsQueue.offer(Integer.valueOf(slot)); 
+      swapSlotsQueue.offer(slot);
   }
   
   @SubscribeEvent

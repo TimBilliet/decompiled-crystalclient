@@ -86,7 +86,6 @@ public class ScreenLogin extends ScreenPanorama {
         }
       });
     this.microsoftButton.onClick = (() -> {
-      System.out.println("clicking");
 //        if (Reflector.isOptiFineLoaded()) {
           System.out.println("launcherProtocol.openMicrosoftWindow()");
           this.microsoftButton.displayText = "Sign-in window opened";

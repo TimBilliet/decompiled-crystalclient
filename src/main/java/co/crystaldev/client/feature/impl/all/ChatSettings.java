@@ -78,7 +78,7 @@ public class ChatSettings extends Module implements IRegistrable {
       String message = event.message.getUnformattedText();
       if (this.filterEmpty && message.replace(" ", "").trim().isEmpty())
         event.setCancelled(true); 
-      if (event.message.getUnformattedTextForChat().equals(I18n.format("build.tooHigh", new Object[] { "256" }))) {
+      if (event.message.getUnformattedTextForChat().equals(I18n.format("build.tooHigh", "256"))) {
         event.setType((byte)2);
         return;
       } 
@@ -139,7 +139,7 @@ public class ChatSettings extends Module implements IRegistrable {
         break;
       } 
     } 
-    String cmd = String.format("/waypoints tempcreate %s %s %s %s", new Object[] { x, (z == null) ? String.valueOf((int)this.mc.thePlayer.posY + 2) : y, (z == null) ? y : z, sender });
+    String cmd = String.format("/waypoints tempcreate %s %s %s %s", x, (z == null) ? String.valueOf((int)this.mc.thePlayer.posY + 2) : y, (z == null) ? y : z, sender);
     ClickEvent clickEvent = new ClickEvent(ClickEvent.Action.RUN_COMMAND, cmd);
     component.getChatStyle().setChatClickEvent(clickEvent);
     component.getSiblings().forEach(s -> s.getChatStyle().setChatClickEvent(clickEvent));
@@ -194,9 +194,3 @@ public class ChatSettings extends Module implements IRegistrable {
     }
   }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\feature\impl\all\ChatSettings.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

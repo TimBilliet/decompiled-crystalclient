@@ -38,7 +38,6 @@ public class OverlayEditWaypoint extends ScreenOverlay {
   }
 
   public void init() {
-    System.out.println("init overlayeditpayoiuit");
     super.init();
     center();
     int x = this.pane.x + 5;

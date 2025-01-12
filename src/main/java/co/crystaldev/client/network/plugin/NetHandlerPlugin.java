@@ -43,7 +43,6 @@ public class NetHandlerPlugin implements INetHandlerPlugin {
   }
 
   public void handleDisallowedFeatures(PacketDisallowedModules packetIn) {
-    System.out.println("does this ever happen though, handleDisallowed");
     ModuleHandler.getInstance().updateDisallowedModules(packetIn.getDisallowedFeatures());
 //     List<String> disabled = (List<String>)packetIn.getDisallowedFeatures().stream().filter(m -> ModuleHandler.getModules().stream().anyMatch(())).map(m -> WordUtils.capitalizeFully(m.toLowerCase().replace("_", " "))).collect(Collectors.toList());
     List<String> disabled = packetIn.getDisallowedFeatures().stream()
@@ -73,7 +72,6 @@ public class NetHandlerPlugin implements INetHandlerPlugin {
   }
 
   public void handleAddWaypoint(PacketWaypointAdd packetIn) {
-    System.out.println("handleaddwaypoint");
     WaypointHandler.getInstance().addWaypoint(packetIn.getWaypoint());
   }
 

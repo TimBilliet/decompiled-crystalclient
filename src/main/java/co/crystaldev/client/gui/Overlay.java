@@ -153,7 +153,6 @@ public abstract class Overlay {
   }
   
   public void removeButton(Predicate<Button> predicate) {
-    System.out.println("removebuttoninoverlay");
     synchronized (this.buttons) {
       for (Button button : this.buttons) {
         if (predicate.test(button) && !button.removed)

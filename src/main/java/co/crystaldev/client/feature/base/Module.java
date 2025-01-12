@@ -78,7 +78,6 @@ public abstract class Module {
             Minecraft.getMinecraft().getResourceManager().getResource(resource);
             return resource;
         } catch (IOException ex) {
-            System.out.println("foutje bij getIcon resourcelocation " + getSanitizedName());
             return null;
         }
     }

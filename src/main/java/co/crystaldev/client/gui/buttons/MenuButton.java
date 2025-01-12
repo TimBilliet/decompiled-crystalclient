@@ -110,7 +110,6 @@ public class MenuButton extends Button {
   }
 
   public void onInteract(int mouseX, int mouseY, int mouseButton) {
-    System.out.println("oninteractmenubutton");
     if (this.onClick != null && this.enabled)
       this.onClick.run();
   }

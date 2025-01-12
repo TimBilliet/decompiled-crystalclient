@@ -31,7 +31,6 @@ public abstract class MixinGuiIngame {
   
   @Inject(method = {"<init>"}, at = {@At("RETURN")})
   public void injectCustomTabOverlay(Minecraft mcIn, CallbackInfo ci) {
-    System.out.println("customtab");
     this.overlayPlayerList = new ScreenPlayerTabOverlay(mcIn, (GuiIngame)(Object)this);
   }
   

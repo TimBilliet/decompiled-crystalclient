@@ -22,7 +22,6 @@ public class ScreenWaypoints extends ScreenBase {
     int y = this.content.y + 5;
     final Pane scissor = this.content.scale(getScaledScreen());
     int index = 0;
-    System.out.println("len: "+ WaypointHandler.getInstance().getRegisteredWaypoints().size() + ",list: "+ WaypointHandler.getInstance().getRegisteredWaypoints());
     for (Waypoint waypoint : WaypointHandler.getInstance().getRegisteredWaypoints()) {
       if (!waypoint.isCanBeDeleted() || waypoint.getDuration() > -1L)
         continue;

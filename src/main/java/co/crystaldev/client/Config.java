@@ -99,7 +99,7 @@ public class Config {
             return;
         try {
             FileWriter writer = new FileWriter(configFile);
-            writer.write(Reference.GSON_PRETTY.toJson((JsonElement)obj));
+            writer.write(Reference.GSON_PRETTY.toJson(obj));
             writer.close();
         } catch (IOException ex) {
             Reference.LOGGER.error("Unable to write to config file " + configFile.getAbsolutePath(), ex);
@@ -140,15 +140,12 @@ public class Config {
                                     field.set(object, color);
                                 } catch (Exception e) {
                                     e.printStackTrace();
-//                                    System.out.println("FOUTJE BIJ JSON SHIT");
-//                                    ColorObject color = new ColorObject()
-//                                    field.set(object, new ColorObject(255, 255, 255, 255, false, false, false, false));
                                 }
                             } else if (annotation instanceof Position) {
-                                ModulePosition pos = (ModulePosition)Reference.GSON.fromJson((JsonElement)base.get(formatted).getAsJsonObject(), ModulePosition.class);
+                                ModulePosition pos = Reference.GSON.fromJson(base.get(formatted).getAsJsonObject(), ModulePosition.class);
                                 field.set(object, pos);
                             } else if (annotation instanceof DropdownMenu) {
-                                Dropdown<?> dropdown = (Dropdown)Reference.GSON.fromJson((JsonElement)base.get(formatted).getAsJsonObject(), Dropdown.class);
+                                Dropdown<?> dropdown = Reference.GSON.fromJson(base.get(formatted).getAsJsonObject(), Dropdown.class);
                                 dropdown.copy((DropdownMenu)annotation);
                                 field.set(object, dropdown);
                             }
@@ -173,7 +170,7 @@ public class Config {
     public JsonObject saveObjectToJson(Object object) {
         JsonObject obj = null;
         int attempts = 0;
-        while (obj == null || !FileUtils.isValidJson(Reference.GSON.toJson((JsonElement)obj))) {
+        while (obj == null || !FileUtils.isValidJson(Reference.GSON.toJson(obj))) {
             obj = _saveObjectToJson(object);
             if (attempts > 10) {
                 Reference.LOGGER.info("Unable to save object to JSON object, Class: {}, toString: {}", object
@@ -208,17 +205,17 @@ public class Config {
                             obj.addProperty(name, (String)field.get(object));
                         } else if (annotation instanceof Colour) {
                             ColorObject c = (ColorObject)field.get(object);
-                            obj.add(name, (JsonElement)Reference.GSON.fromJson(Reference.GSON.toJson(c), JsonObject.class));
+                            obj.add(name, Reference.GSON.fromJson(Reference.GSON.toJson(c), JsonObject.class));
                         } else if (annotation instanceof Position) {
                             ModulePosition pos = (ModulePosition)field.get(object);
-                            obj.add(name, (JsonElement)Reference.GSON.fromJson(Reference.GSON.toJson(pos), JsonObject.class));
+                            obj.add(name, Reference.GSON.fromJson(Reference.GSON.toJson(pos), JsonObject.class));
                         } else if (annotation instanceof DropdownMenu) {
                             Dropdown<?> dropdown = (Dropdown)field.get(object);
                             if (dropdown == null) {
                                 field.set(object, dropdown = new Dropdown((DropdownMenu)annotation));
                                 dropdown.setDefault();
                             }
-                            obj.add(name, (JsonElement)Reference.GSON.fromJson(Reference.GSON.toJson(dropdown, Dropdown.class), JsonObject.class));
+                            obj.add(name, Reference.GSON.fromJson(Reference.GSON.toJson(dropdown, Dropdown.class), JsonObject.class));
                         }
                     }
                 }
@@ -294,19 +291,19 @@ public class Config {
     public boolean isAnnotationInvalid(Annotation a, Object object) {
         List<Class<? extends Annotation>> requires = new ArrayList<>();
         if (a instanceof Toggle) {
-            requires.addAll(Arrays.asList((Class<? extends Annotation>[])((Toggle)a).requires()));
+            requires.addAll(Arrays.asList(((Toggle)a).requires()));
         } else if (a instanceof Colour) {
-            requires.addAll(Arrays.asList((Class<? extends Annotation>[])((Colour)a).requires()));
+            requires.addAll(Arrays.asList(((Colour)a).requires()));
         } else if (a instanceof Selector) {
-            requires.addAll(Arrays.asList((Class<? extends Annotation>[])((Selector)a).requires()));
+            requires.addAll(Arrays.asList(((Selector)a).requires()));
         } else if (a instanceof Property) {
-            requires.addAll(Arrays.asList((Class<? extends Annotation>[])((Property)a).requires()));
+            requires.addAll(Arrays.asList(((Property)a).requires()));
         } else if (a instanceof Slider) {
-            requires.addAll(Arrays.asList((Class<? extends Annotation>[])((Slider)a).requires()));
+            requires.addAll(Arrays.asList(((Slider)a).requires()));
         } else if (a instanceof Keybind) {
-            requires.addAll(Arrays.asList((Class<? extends Annotation>[])((Keybind)a).requires()));
+            requires.addAll(Arrays.asList(((Keybind)a).requires()));
         } else if (a instanceof DropdownMenu) {
-            requires.addAll(Arrays.asList((Class<? extends Annotation>[])((DropdownMenu)a).requires()));
+            requires.addAll(Arrays.asList(((DropdownMenu)a).requires()));
         }
         if (requires.isEmpty())
             return false;

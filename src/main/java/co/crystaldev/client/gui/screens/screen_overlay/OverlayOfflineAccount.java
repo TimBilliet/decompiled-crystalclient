@@ -23,8 +23,7 @@ public class OverlayOfflineAccount extends ScreenOverlay {
     });
     y += h + 5;
     addButton(new MenuButton(0, x, y, w, h, "Add"), b -> b.setOnClick(()-> {
-      System.out.println("clicked");
-      System.out.println(field.getText());
+
     }));
     while (this.pane.y + this.pane.height < y + h + 5)
       this.pane.height++;

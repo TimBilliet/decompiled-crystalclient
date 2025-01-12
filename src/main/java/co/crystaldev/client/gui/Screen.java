@@ -136,7 +136,6 @@ public abstract class Screen extends GuiScreen {
   }
   
   public void removeOverlay(Screen overlay) {
-    System.out.println("removeoverlay in screen");
     overlay.onGuiClosed();
     overlay.exited = true;
     this.overlaysToRemove.add(overlay);
@@ -154,7 +153,6 @@ public abstract class Screen extends GuiScreen {
   }
   
   public void removeOverlays() {
-//    System.out.println("removeoverlays");
     if (!this.overlaysToRemove.isEmpty()) {
       this.screenOverlays.removeAll(this.overlaysToRemove);
       this.overlaysToRemove.clear();
@@ -162,7 +160,6 @@ public abstract class Screen extends GuiScreen {
   }
   
   public void removeButtons() {
-//    System.out.println("removebuttons");
     if (!this.buttonsToRemove.isEmpty()) {
       this.buttons.removeAll(this.buttonsToRemove);
       this.buttonsToRemove.clear();

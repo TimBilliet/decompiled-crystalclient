@@ -203,7 +203,6 @@ public class ScreenMapWriter extends Screen {
   }
 
   public void onButtonInteract(Button button, int mouseX, int mouseY, int mouseButton) {
-    System.out.println(button.id);
     if(button.id == 0 && !(this.mc.currentScreen instanceof ScreenClientOptions)) {
       this.mc.displayGuiScreen(new ScreenClientOptions(this));
     } else if (button.id == 2) {

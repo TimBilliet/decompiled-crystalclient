@@ -219,7 +219,6 @@ public class ClientOptions extends Module implements IRegistrable {
   }
   
   public void loadSchematicHistory() {
-    System.out.println("loadschemhistory");
     this.schematicHistory = new LinkedHashSet<>();
     try {
       for (JsonElement element : Reference.GSON.fromJson(this.schematicHistoryCache, JsonArray.class)) {

@@ -423,7 +423,6 @@ public final class FontRendererHook {
     }
 
     public float renderChar(char ch, boolean italic) {
-        System.out.println("renderchar");
         if (ch == ' ' || ch == ' ') {
             return this.fontRenderer.getUnicodeFlag() ? 4.0F : getCharWidthFloat(ch);
         }

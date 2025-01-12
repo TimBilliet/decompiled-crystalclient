@@ -3,9 +3,9 @@
 ## Things that currently don't work (yet)
 - schematica material sorting & some block transparency
 - gui scale (gui is way too big)
-- custom crosshair
 - optifine compatibility
 - alt manager (never worked in the original one anyway)
+- chat math
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"

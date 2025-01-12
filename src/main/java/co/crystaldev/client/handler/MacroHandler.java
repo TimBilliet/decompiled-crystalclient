@@ -16,7 +16,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -52,7 +51,7 @@ public class MacroHandler implements IRegistrable {
       try {
         this.registeredMacros.clear();
         FileReader fr = new FileReader(macroFile);
-        this.registeredMacros.addAll((Collection<? extends Macro>)Reference.GSON_PRETTY.fromJson(fr, (new TypeToken<LinkedList<Macro>>() {
+        this.registeredMacros.addAll(Reference.GSON_PRETTY.fromJson(fr, (new TypeToken<LinkedList<Macro>>() {
 
               }).getType()));
         fr.close();

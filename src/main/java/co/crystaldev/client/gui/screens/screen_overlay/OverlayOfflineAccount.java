@@ -2,6 +2,7 @@ package co.crystaldev.client.gui.screens.screen_overlay;
 
 import co.crystaldev.client.gui.Button;
 import co.crystaldev.client.gui.buttons.MenuButton;
+import co.crystaldev.client.gui.buttons.NumberInputField;
 import co.crystaldev.client.gui.buttons.TextInputField;
 
 public class OverlayOfflineAccount extends ScreenOverlay {
@@ -15,10 +16,16 @@ public class OverlayOfflineAccount extends ScreenOverlay {
     int y = this.pane.y + 24;
     int w = this.pane.width - 10;
     int h = 18;
-    TextInputField field = new TextInputField(0, x, y, w, h, "Offline Account");
-    addButton((Button)field);
+    TextInputField field;
+    addButton(field=new TextInputField(0, x, y, w, h, "Offline Account"), b->{
+      b.setOnTextInput(a->{
+      });
+    });
     y += h + 5;
-    addButton(new MenuButton(0, x, y, w, h, "Add"), b -> b.setOnClick(null));//mss new runnable
+    addButton(new MenuButton(0, x, y, w, h, "Add"), b -> b.setOnClick(()-> {
+      System.out.println("clicked");
+      System.out.println(field.getText());
+    }));
     while (this.pane.y + this.pane.height < y + h + 5)
       this.pane.height++;
   }

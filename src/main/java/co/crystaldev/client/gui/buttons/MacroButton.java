@@ -40,11 +40,12 @@ public class MacroButton extends Button {
         this.subButtons.add(this.actionInput = new TextInputField(-1, this.x + this.width / 4, this.y + this.height / 2 - 9, this.width / 2, 18, "Macro Action") {
 
         });
+        actionInput.setText(macro.getAction());
         this.subButtons.add(this
                 .keySelector = new MacroBuilderButton.KeySelectorButton(-1, this.actionInput.x + this.actionInput.width + 4, this.y + this.height / 2 - 9, bWidth, 18, this.macro.getKeybinding()));
-        this.subButtons.add(this.removeButton = new MenuButton(-1, this.keySelector.x + bWidth + 4, this.y + this.height / 2 - 9, bWidth, 18, "Delete") {
-
-        });
+        this.subButtons.add(this.removeButton = new MenuButton(-1, this.keySelector.x + bWidth + 4, this.y + this.height / 2 - 9, bWidth, 18, "Delete"));
+        removeButton.fontRenderer = Fonts.NUNITO_SEMI_BOLD_16;
+        removeButton.textColor = new FadingColor(this.opts.secondaryColor, this.opts.secondaryColor);
         this.background = new FadingColor(this.opts.neutralButtonBackground, this.opts.hoveredButtonBackground);
         this.text = new FadingColor(this.opts.neutralTextColor, this.opts.hoveredTextColor);
         this.status = new FadingColor(this.opts.mainDisabled, this.opts.mainColor);
@@ -91,7 +92,8 @@ public class MacroButton extends Button {
         super.onInteract(mouseX, mouseY, mouseButton);
         if (this.removeButton.isHovered(mouseX, mouseY)) {
             MacroHandler.getInstance().deleteMacro(this.macro);
-            ((ScreenMacros) this.mc.currentScreen).initMacros();
+//            ((ScreenMacros) this.mc.currentScreen).initMacros();
+            this.mc.displayGuiScreen(new ScreenMacros());
         } else {
             for (Button button : this.subButtons) {
                 if (button.isHovered(mouseX, mouseY)) {

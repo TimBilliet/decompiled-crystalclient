@@ -86,7 +86,8 @@ public class ScreenLogin extends ScreenPanorama {
         }
       });
     this.microsoftButton.onClick = (() -> {
-        if (Reflector.isOptiFineLoaded()) {
+      System.out.println("clicking");
+//        if (Reflector.isOptiFineLoaded()) {
           System.out.println("launcherProtocol.openMicrosoftWindow()");
           this.microsoftButton.displayText = "Sign-in window opened";
           this.microsoftButton.setEnabled(false);
@@ -94,7 +95,12 @@ public class ScreenLogin extends ScreenPanorama {
           this.thread = new Thread();
           this.thread.setDaemon(true);
           this.thread.start();
-        }
+//      try {
+//        Desktop.getDesktop().browse(new URI(""));
+//      } catch (IOException | URISyntaxException e) {
+//        e.printStackTrace();
+//      }
+//        }
       });
     Keyboard.enableRepeatEvents(true);
   }

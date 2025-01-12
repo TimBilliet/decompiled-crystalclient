@@ -83,7 +83,8 @@ public class MacroBuilderButton extends Button {
         super.onInteract(mouseX, mouseY, mouseButton);
         if (this.createButton.isHovered(mouseX, mouseY) && canCreate()) {
             MacroHandler.getInstance().addMacro(this.nameInput.getText(), this.actionInput.getText(), this.keySelector.keycode);
-            ((ScreenMacros) this.mc.currentScreen).initMacros();
+//            ((ScreenMacros) this.mc.currentScreen).initMacros();
+            mc.displayGuiScreen(new ScreenMacros());
         }
     }
 

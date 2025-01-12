@@ -6,11 +6,13 @@ import co.crystaldev.client.font.FontRenderer;
 import co.crystaldev.client.font.Fonts;
 import co.crystaldev.client.gui.Button;
 import co.crystaldev.client.gui.GuiOptions;
+import co.crystaldev.client.gui.Screen;
 import co.crystaldev.client.gui.ScreenPanorama;
 import co.crystaldev.client.gui.buttons.MenuButton;
 import co.crystaldev.client.gui.buttons.ResourceButton;
 import co.crystaldev.client.gui.ease.Animation;
 import co.crystaldev.client.gui.ease.Easing;
+import co.crystaldev.client.gui.screens.screen_overlay.OverlayOfflineAccount;
 import co.crystaldev.client.util.Reflector;
 import co.crystaldev.client.util.RenderUtils;
 import net.minecraft.client.Minecraft;
@@ -92,6 +94,7 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
       addButton(new ResourceButton(20, x, 5, h, h, Resources.REPLAY_MOD), b -> b.setOnClick(Reflector::openReplayGui));
       x += h;
     }
+//    addButton(new AccountButton(21, x, 5, this));
     addButton(new ResourceButton(21, x, 5, h, h, Resources.ADD_PERSON), b -> {});
   }
 
@@ -104,16 +107,16 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
         checkSession(new GuiMultiplayer(this));
         break;
       case 2:
-        System.out.println("it's happening here screenmainmenu");
-//        this.mc.displayGuiScreen((GuiScreen)new GuiOptions(this, this.mc.gameSettings));
         this.mc.displayGuiScreen(new net.minecraft.client.gui.GuiOptions(this, this.mc.gameSettings));
-        //this.mc.displayGuiScreen(new GuiOptions(this, this.mc.gameSettings));
         break;
       case 3:
         this.mc.shutdown();
         break;
       case 4:
         this.mc.displayGuiScreen(new GuiModList(this));
+        break;
+      case 21:
+        ((Screen)this.mc.currentScreen).addOverlay(new OverlayOfflineAccount());
         break;
     }
   }
@@ -130,7 +133,7 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
     int height = (int)(this.height / scale);
     fontRenderer.drawString(CC_VERSION, 5, height - 5 - fontRenderer.getStringHeight(CC_VERSION), textColor);
     fontRenderer.drawString(FORGE_MODS, 5, height - 5 - fontRenderer.getStringHeight(CC_VERSION) - 5 - fontRenderer.getStringHeight(FORGE_MODS), textColor);
-    fontRenderer.drawString("Copyright Mojang Studios. Do not distribute!", width - fontRenderer.getStringWidth("Copyright Mojang Studios. Do not distribute!") - 5, height - 5 - fontRenderer.getStringHeight("Copyright Mojang Studios. Do not distribute!"), textColor);
+    fontRenderer.drawString(MC_COPYRIGHT, width - fontRenderer.getStringWidth(MC_COPYRIGHT) - 5, height - 5 - fontRenderer.getStringHeight(MC_COPYRIGHT), textColor);
     FontRenderer fr = Fonts.NUNITO_SEMI_BOLD_24;
     int size = 90;
     int y = this.topButtonY - 10 - fr.getStringHeight("CRYSTAL CLIENT");

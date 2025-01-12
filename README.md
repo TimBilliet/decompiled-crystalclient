@@ -3,8 +3,6 @@
 ## Things that currently don't work (yet)
 - schematica material sorting & some block transparency
 - scrollpane isn't cut off in gui
-- scrollpane in macro menu
-- gui not resetting when switching cosmetic tabs
 - gui scale (gui is way too big)
 - custom crosshair
 - optifine compatibility

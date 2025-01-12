@@ -21,11 +21,11 @@ public class AnimatedCloak extends Cosmetic {
       return; 
     try {
       TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
-      this.texture = (ITextureObject)new AnimatedCosmeticTexture(entry);
+      this.texture = new AnimatedCosmeticTexture(entry);
       textureManager.loadTexture(getLocation(), this.texture);
       ((MixinTextureManager)textureManager).getListTickables().add((ITickable)this.texture);
     } catch (Throwable ex) {
-      Reference.LOGGER.error("Unable to fetch resource for cosmetic '{}'", new Object[] { getLocation(), ex });
+      Reference.LOGGER.error("Unable to fetch resource for cosmetic '{}'", getLocation(), ex);
     } 
   }
   

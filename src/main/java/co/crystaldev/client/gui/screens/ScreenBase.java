@@ -164,9 +164,7 @@ public class ScreenBase extends Screen {
     public static void openGui() {
         if (SCREENS.containsKey(type)) {
             try {
-                System.out.println("opengui in screenbase met type");
                 Minecraft.getMinecraft().displayGuiScreen((SCREENS.get(type)).newInstance());
-//        Minecraft.getMinecraft().displayGuiScreen(((Class<GuiScreen>)SCREENS.get(type)).newInstance());
             } catch (InstantiationException | IllegalAccessException ex) {
                 Reference.LOGGER.error("Unable to construct GUI " + type, ex);
             }

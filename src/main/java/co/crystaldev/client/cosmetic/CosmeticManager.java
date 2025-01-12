@@ -65,7 +65,7 @@ public class CosmeticManager implements IRegistrable {
   
   private final Map<UUID, ArrayList<Cosmetic>> loadQueue = new ConcurrentHashMap<>();
   
-  private final List<Cosmetic> ownedCosmetics = (List<Cosmetic>)new GlueList();
+  private final List<Cosmetic> ownedCosmetics = new GlueList<>();
   
   private ScheduledFuture<?> statusUpdateFuture;
   
@@ -171,7 +171,7 @@ public class CosmeticManager implements IRegistrable {
                   cp.setWings(null);
                   continue;
                 case COLOR:
-                  cp.setColor((Cosmetic)COLOR_WHITE);
+                  cp.setColor(COLOR_WHITE);
                   continue;
               } 
               continue;

@@ -9,9 +9,6 @@ import net.minecraft.client.renderer.texture.ITextureObject;
 import org.jetbrains.annotations.Nullable;
 
 public class Cloak extends Cosmetic {
-//  public Cloak(@Nullable CosmeticEntry entry) {
-//    super(entry);
-//  }
   public Cloak(@Nullable CosmeticEntry entry) {
     super(entry);
     if (entry == null)

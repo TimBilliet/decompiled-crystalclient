@@ -105,7 +105,6 @@ public class ScreenCosmetics extends ScreenBase {
       switch (this.nav.getCurrent()) {
         case CLOAK:
           player.setCloak(null);
-          System.out.println("cloak button");
           break;
         case COLOR:
           player.setCloak(CosmeticManager.COLOR_WHITE);
@@ -144,15 +143,15 @@ public class ScreenCosmetics extends ScreenBase {
     int h = 18;
     int x = this.entity.x + this.entity.width / 2 - w / 2;
     int y = this.entity.y + this.entity.height - x - this.entity.x - h + 6;
-    addButton(new MenuResourceButton(-1, x, this.entity.y + x - this.entity.x + 6, w, h, "Store", Resources.SHOPPING_CART, 10) {
-
+    addButton(new MenuResourceButton(-1, x, this.entity.y + x - this.entity.x + 6, w, h, "Store", Resources.SHOPPING_CART, 10), b->{
+      b.addAttribute("cosmetic");
         });
-    addButton(new ToggleButton(-1, x, this.entity.y + x - this.entity.x + 6 + h + 4, w, h, "Display Unowned", (ClientOptions.getInstance()).showUnownedCosmetics) {
-
+    addButton(new ToggleButton(-1, x, this.entity.y + x - this.entity.x + 6 + h + 4, w, h, "Display Unowned", (ClientOptions.getInstance()).showUnownedCosmetics),b-> {
+      b.addAttribute("cosmetic");
         });
-    addButton((this.removeButton = new MenuButton(-1, x, y, w, h, String.format("Disable %s", (this.nav.getCurrent()).getSingularForm())) {
-
-        }));
+    addButton(this.removeButton = new MenuButton(-1, x, y, w, h, String.format("Disable %s", (this.nav.getCurrent()).getSingularForm())), b-> {
+      b.addAttribute("cosmetic");
+        });
     int margin = 20;
     w = (this.cosmetics.width - margin * 4) / 3;
     y = this.cosmetics.y + 5;
@@ -182,18 +181,15 @@ public class ScreenCosmetics extends ScreenBase {
     if (this.nav.getCurrent() != CosmeticType.COLOR)
       unowned.sort(Comparator.comparing(c -> c.getDisplayName().toLowerCase()));
     cosmetics.addAll(unowned);
-    CosmeticPlayer player = CosmeticCache.getInstance().fromPlayer((EntityPlayer)this.mc.thePlayer);
+    CosmeticPlayer player = CosmeticCache.getInstance().fromPlayer(this.mc.thePlayer);
     for (Cosmetic cosmetic : cosmetics) {
       if (cosmetic.getType() == CosmeticType.COLOR && ((Color)cosmetic).getIconColor() == IconColor.WHITE)
         continue;
       if (!this.search.matchesQuery(cosmetic.getDisplayName()))
         continue;
-      final boolean owned = true;
-      if (cosmetic.isHiddenUnlessOwned() && !owned)
-        continue;
       if (cosmetic.getType().equals(this.nav.getCurrent())) {
-        addButton((Button)new CosmeticButton(player, cosmetic, (index == 0) ? x : ((index == 1) ? x1 : x2), y, w, h) {
-
+        addButton(new CosmeticButton(player, cosmetic, (index == 0) ? x : ((index == 1) ? x1 : x2), y, w, h),b-> {
+            b.addAttribute("cosmetic");
             });
         index++;
         if (index == 3) {

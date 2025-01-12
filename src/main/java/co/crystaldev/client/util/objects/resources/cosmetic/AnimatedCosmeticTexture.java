@@ -55,15 +55,15 @@ public class AnimatedCosmeticTexture extends AbstractTexture implements ITickabl
       CosmeticManager.getExecutor().submit(() -> {
             try {
               SimpleResource resource = (SimpleResource)Minecraft.getMinecraft().getResourceManager().getResource(this.location);
-              AnimationMetadataSection animation = (AnimationMetadataSection)resource.getMetadata("animation");
+              AnimationMetadataSection animation = resource.getMetadata("animation");
               this.images = new FrameTexture[animation.getFrameCount()];
               this.frameIndexes = new Integer[animation.getFrameCount()];
               int width = animation.getFrameWidth();
               int height = animation.getFrameHeight();
               BufferedImage image = TextureUtil.readBufferedImage(resource.getInputStream());
               for (int i = 0; i < animation.getFrameCount(); i++) {
-                this.frameIndexes[i] = Integer.valueOf(animation.getFrameIndex(i));
-                int index = Integer.valueOf(animation.getFrameIndex(i)).intValue();
+                this.frameIndexes[i] = animation.getFrameIndex(i);
+                int index = animation.getFrameIndex(i);
                 if (index == i) {
                   int dWidth = (this.texWidth != -1) ? this.texWidth : width;
                   int dHeight = (this.texHeight != -1) ? this.texHeight : height;
@@ -92,7 +92,7 @@ public class AnimatedCosmeticTexture extends AbstractTexture implements ITickabl
       } 
       this.awaitingRegistering = false;
     } 
-    return (this.images == null || this.frameIndexes == null || this.frameIndexes[this.currentIndex] == null) ? null : (ITextureObject)this.images[this.frameIndexes[this.currentIndex].intValue()];
+    return (this.images == null || this.frameIndexes == null || this.frameIndexes[this.currentIndex] == null) ? null : this.images[this.frameIndexes[this.currentIndex]];
   }
   
   public boolean isTextureLoaded() {

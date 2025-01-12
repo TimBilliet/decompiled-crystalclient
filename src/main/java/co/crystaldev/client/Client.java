@@ -261,7 +261,7 @@ public class Client {
         SplashScreen.setProgress(3, "Registering Emoticons...");
         this.emoticons = new Emoticons();
         SplashScreen.setProgress(4, "Registering Cosmetics...");
-//        EventBus.register(CosmeticManager.getInstance());
+        EventBus.register(CosmeticManager.getInstance());
         SplashScreen.setProgress(5, "Loading Configurations...");
         this.config = new Config(new File(new File(CLIENT_RUN_DIRECTORY, "config"), "mods"));
         SplashScreen.setProgress(6, "Registering Loading...");
@@ -283,8 +283,8 @@ public class Client {
         this.commandHandler.registerCommand(new FlyboostCommand());
         this.commandHandler.registerCommand(new SudoCommand());
         this.commandHandler.registerCommand(new FindSandCommand());
-        this.commandHandler.registerCommand((ICommand)new SchemshareCommand());
-        this.commandHandler.registerCommand((ICommand)new AdjustHelperCommand());
+        this.commandHandler.registerCommand(new SchemshareCommand());
+        this.commandHandler.registerCommand(new AdjustHelperCommand());
         this.commandHandler.registerCommand(new ProfileCommand());
         this.commandHandler.registerCommand(new WaypointsCommand());
         this.commandHandler.registerCommand(new CrashCommand());

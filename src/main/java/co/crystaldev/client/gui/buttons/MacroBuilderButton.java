@@ -39,6 +39,7 @@ public class MacroBuilderButton extends Button {
         this.subButtons.add(this.keySelector = new KeySelectorButton(-1, this.actionInput.x + this.actionInput.width + 4, this.y + this.height / 2 - 9, bWidth, 18, 0));
         this.subButtons.add(this.createButton = new CreateButton(-1, this.keySelector.x + bWidth + 4, this.y + this.height / 2 - 9, bWidth, 18));
         this.background = new FadingColor(this.opts.neutralButtonBackground, this.opts.hoveredButtonBackground);
+
     }
 
     public void onUpdate() {

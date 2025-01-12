@@ -53,8 +53,8 @@ public class ScreenModules extends ScreenBase {
       if ((this.navbar.getCurrent() != Category.ALL && module.category != this.navbar.getCurrent()) || (
         !this.search.matchesQuery(module.name) && Stream.<String>of(module.nameAliases).noneMatch(this.search::matchesQuery)))
         continue;
-      addButton(new ModuleButton(module, x + rowIndex * (w + 14), y, w, h) {
-
+      addButton(new ModuleButton(module, x + rowIndex * (w + 14), y, w, h), b-> {
+        b.setScissorPane(scissor);
           });
       rowIndex++;
       if (rowIndex == 3) {

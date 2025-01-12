@@ -149,7 +149,7 @@ public class ScreenCosmetics extends ScreenBase {
     addButton(new ToggleButton(-1, x, this.entity.y + x - this.entity.x + 6 + h + 4, w, h, "Display Unowned", (ClientOptions.getInstance()).showUnownedCosmetics),b-> {
       b.addAttribute("cosmetic");
         });
-    addButton(this.removeButton = new MenuButton(-1, x, y, w, h, String.format("Disable %s", (this.nav.getCurrent()).getSingularForm())), b-> {
+    addButton(this.removeButton = new MenuButton(-1, x, this.entity.height + entity.width, w, h, String.format("Disable %s", (this.nav.getCurrent()).getSingularForm())), b-> {
       b.addAttribute("cosmetic");
         });
     int margin = 20;
@@ -190,6 +190,7 @@ public class ScreenCosmetics extends ScreenBase {
       if (cosmetic.getType().equals(this.nav.getCurrent())) {
         addButton(new CosmeticButton(player, cosmetic, (index == 0) ? x : ((index == 1) ? x1 : x2), y, w, h),b-> {
             b.addAttribute("cosmetic");
+            b.setScissorPane(scissor);
             });
         index++;
         if (index == 3) {

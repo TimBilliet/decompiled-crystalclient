@@ -121,7 +121,7 @@ public class WaypointHandler implements IRegistrable {
           if (!this.queue.isEmpty()) {
             boolean reload = false;
             for (Tuple<EnumActionShift, Waypoint> tuple : this.queue) {
-              Waypoint wp = (Waypoint)tuple.getItem2();
+              Waypoint wp = tuple.getItem2();
               if (tuple.getItem1() == EnumActionShift.ADD) {
                 this.registeredWaypoints.removeIf(wp::equals);
                 this.registeredWaypoints.add(wp);
@@ -133,8 +133,10 @@ public class WaypointHandler implements IRegistrable {
               reload = true;
             }
             saveWaypoints();
-            if (reload && this.mc.currentScreen instanceof ScreenWaypoints)
+            if (reload && this.mc.currentScreen instanceof ScreenWaypoints) {
               ((ScreenWaypoints)this.mc.currentScreen).initWaypoints();
+            }
+
             this.queue.clear();
           }
         });

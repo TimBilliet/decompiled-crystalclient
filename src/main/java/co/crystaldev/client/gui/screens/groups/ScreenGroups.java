@@ -56,7 +56,7 @@ public class ScreenGroups extends ScreenBase {
 
   public void init() {
     super.init();
-    this.nav = new NavigationButton((Enum)GroupCategory.LANDING, this.header.x + this.header.width / 2, this.header.y + this.header.height / 2);
+    this.nav = new NavigationButton(GroupCategory.LANDING, this.header.x + this.header.width / 2, this.header.y + this.header.height / 2);
     this.groups = new ScrollPane(this.content.x + 10, this.content.y, 40, this.content.height - 10);
     this.members = new ScrollPane(this.content.x + this.content.width - 140, this.content.y, 130, this.groups.height);
     this.center = new ScrollPane(this.content.x + this.groups.width + 10, this.content.y, this.members.x - this.groups.x + this.groups.width, this.groups.height);
@@ -170,27 +170,27 @@ public class ScreenGroups extends ScreenBase {
       }
       return;
     }
-//    removeButton(b -> b.hasAttribute("groupSection#noneSelected"));
-//    if (this.buttons.stream().noneMatch(b -> b.equals(this.nav)))
-//      addButton((Button)this.nav);
-//    switch ((GroupCategory)this.nav.getCurrent()) {
-//      case LANDING:
-//        this.section = new SectionLanding((Pane)this.center, (Pane)this.members);
-//        return;
-//      case RANKS:
-//        this.section = new SectionRanks((Pane)this.center, (Pane)this.members);
-//        return;
-//      case SETTINGS:
-//        this.section = new SectionSettings((Pane)this.full);
-//        return;
-//      case SCHEMATICS:
-//        this.section = new SectionSchematics((Pane)this.full);
-//        return;
-//      case USERS:
-//        this.section = new SectionMembers((Pane)this.full);
-//        return;
-//    }
-//    this.section = null;
+    removeButton(b -> b.hasAttribute("groupSection#noneSelected"));
+    if (this.buttons.stream().noneMatch(b -> b.equals(this.nav)))
+      addButton((Button)this.nav);
+    switch ((GroupCategory)this.nav.getCurrent()) {
+      case LANDING:
+        this.section = new SectionLanding((Pane)this.center, (Pane)this.members);
+        return;
+      case RANKS:
+        this.section = new SectionRanks((Pane)this.center, (Pane)this.members);
+        return;
+      case SETTINGS:
+        this.section = new SectionSettings((Pane)this.full);
+        return;
+      case SCHEMATICS:
+        this.section = new SectionSchematics((Pane)this.full);
+        return;
+      case USERS:
+        this.section = new SectionMembers((Pane)this.full);
+        return;
+    }
+    this.section = null;
   }
 
   public void initGroupButtons() {

@@ -105,6 +105,7 @@ public class ScreenCosmetics extends ScreenBase {
       switch (this.nav.getCurrent()) {
         case CLOAK:
           player.setCloak(null);
+          System.out.println("cloak button");
           break;
         case COLOR:
           player.setCloak(CosmeticManager.COLOR_WHITE);

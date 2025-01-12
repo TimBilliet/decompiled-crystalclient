@@ -27,11 +27,11 @@ public class ScreenMacros extends ScreenBase {
     int x = this.content.x + this.content.width / 2 - w / 2;
     int y = this.content.y + 10;
     final Pane scissor = this.content.scale(getScaledScreen());
-    addButton(new MacroBuilderButton(x, y, w, h) {});
+    addButton(new MacroBuilderButton(x, y, w, h),b-> {b.addAttribute("macro_button");});
     y += h + 10;
     for (Macro macro : MacroHandler.getInstance().getRegisteredMacros()) {
-      addButton(new MacroButton(macro, x, y, w, h) {
-
+      addButton(new MacroButton(macro, x, y, w, h),b-> {
+          b.addAttribute("macro_button");
           });
       y += h + 5;
     }

@@ -92,8 +92,7 @@ public class MacroButton extends Button {
         super.onInteract(mouseX, mouseY, mouseButton);
         if (this.removeButton.isHovered(mouseX, mouseY)) {
             MacroHandler.getInstance().deleteMacro(this.macro);
-//            ((ScreenMacros) this.mc.currentScreen).initMacros();
-            this.mc.displayGuiScreen(new ScreenMacros());
+            ((ScreenMacros) this.mc.currentScreen).initMacros();
         } else {
             for (Button button : this.subButtons) {
                 if (button.isHovered(mouseX, mouseY)) {
@@ -113,9 +112,3 @@ public class MacroButton extends Button {
         this.macro.setKeybinding(this.keySelector.getKeycode());
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\buttons\MacroButton.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

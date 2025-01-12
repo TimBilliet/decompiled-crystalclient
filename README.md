@@ -2,7 +2,6 @@
 
 ## Things that currently don't work (yet)
 - schematica material sorting & some block transparency
-- scrollpane isn't cut off in gui
 - gui scale (gui is way too big)
 - custom crosshair
 - optifine compatibility

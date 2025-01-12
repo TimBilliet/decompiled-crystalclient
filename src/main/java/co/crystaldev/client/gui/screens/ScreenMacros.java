@@ -30,7 +30,7 @@ public class ScreenMacros extends ScreenBase {
     addButton(new MacroBuilderButton(x, y, w, h),b-> {
       b.addAttribute("macro_button");
       b.setScissorPane(scissor);
-      ;});
+      });
     y += h + 10;
     for (Macro macro : MacroHandler.getInstance().getRegisteredMacros()) {
       addButton(new MacroButton(macro, x, y, w, h),b-> {

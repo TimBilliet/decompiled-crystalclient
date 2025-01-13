@@ -11,6 +11,7 @@ import co.crystaldev.client.feature.annotations.properties.Toggle;
 import co.crystaldev.client.feature.base.Category;
 import co.crystaldev.client.feature.base.Module;
 import co.crystaldev.client.mixin.accessor.net.minecraft.client.gui.MixinGuiChat;
+import com.sun.corba.se.spi.orbutil.threadpool.NoSuchThreadPoolException;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.network.NetworkPlayerInfo;
@@ -22,6 +23,8 @@ import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
 //import net.objecthunter.exp4j.Expression;
 //import net.objecthunter.exp4j.ExpressionBuilder;
+import net.objecthunter.exp4j.Expression;
+import net.objecthunter.exp4j.ExpressionBuilder;
 import org.apache.commons.lang3.math.NumberUtils;
 
 import java.time.LocalDateTime;
@@ -147,24 +150,26 @@ public class ChatSettings extends Module implements IRegistrable {
 
     public void onClientTick(ClientTickEvent.Post event) {
         if (this.algebra && this.mc.currentScreen instanceof GuiChat) {
-            System.out.println("doin sumb algebra");
-//      GuiChat chatBar = (GuiChat)this.mc.currentScreen;
-//      String text = ((MixinGuiChat)chatBar).getInputField().getText();
-//      char[] operators = { '+', '-', '*', '/', '^', '=', '(' };
-//      for (char operator : operators) {
-//        if (!text.equals(this.lastText) && text.contains(String.valueOf(operator))) {
-//          double result;
-//          this.lastText = text;
-//          try {
-//            Expression exp = (new ExpressionBuilder(text)).build();
-//            result = exp.evaluate();
-//          } catch (Throwable ignored) {
-//            return;
-//          }
-//          Client.sendMessage("&7» " + result, false);
-//          break;
-//        }
-//      }
+            //TODO fix, exp.evaluate fails
+      GuiChat chatBar = (GuiChat)this.mc.currentScreen;
+      String text = ((MixinGuiChat)chatBar).getInputField().getText();
+      char[] operators = { '+', '-', '*', '/', '^', '=', '(' };
+      for (char operator : operators) {
+          System.out.println(text + " lasttext: " + lastText);
+        if (!text.equals(this.lastText) && text.contains(String.valueOf(operator))) {
+          double result;
+          this.lastText = text;
+          try {
+            Expression exp = (new ExpressionBuilder(text)).build();
+            result = exp.evaluate();
+          } catch (Throwable ignored) {
+              System.out.println("throwable");
+            return;
+          }
+          Client.sendMessage("&7» " + result, false);
+          break;
+        }
+      }
         }
     }
 

@@ -1,10 +1,11 @@
 # Half working decompiled version of crystalclient
 
 ## Things that currently don't work (yet)
-- schematica material sorting & some block transparency
+- schematica redstone items transparency
 - optifine compatibility
 - alt manager (never worked in the original one anyway)
 - chat math
+- sometimes there is a crash when downloading a world
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"

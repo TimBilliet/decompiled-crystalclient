@@ -71,7 +71,8 @@ public class OverlaySchematicMaterials extends ScreenOverlay {
         }));
         x += w + 4;
         addButton(new MenuButton(-1, x, y, w, h, "Sort"), b -> b.setOnClick(() -> {
-
+            this.sortType = this.sortType.next();
+            this.sortType.sort(this.blockList);
         }));
         this.content.updateMaxScroll(this, 0);
         this.content.addScrollbarToScreen(this);

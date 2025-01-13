@@ -245,32 +245,26 @@ public class WDLEvents {
     public static void onMapDataLoaded(int mapID, MapData mapData) {
         if (!WDL.downloading)
             return;
-        WDL.newMapDatas.put(Integer.valueOf(mapID), mapData);
-        WDLMessages.chatMessageTranslated(WDLMessageTypes.ON_MAP_SAVED, "wdl.messages.onMapSaved", new Object[]{Integer.valueOf(mapID)});
+        WDL.newMapDatas.put(mapID, mapData);
+        WDLMessages.chatMessageTranslated(WDLMessageTypes.ON_MAP_SAVED, "wdl.messages.onMapSaved", mapID);
     }
 
     public static void onRemoveEntityFromWorld(Entity entity) {
         if (WDL.downloading && entity != null) {
             int threshold = EntityUtils.getEntityTrackDistance(entity);
             if (threshold < 0) {
-                WDLMessages.chatMessageTranslated(WDLMessageTypes.REMOVE_ENTITY, "wdl.messages.removeEntity.allowingRemoveUnrecognizedDistance", new Object[]{entity});
+                WDLMessages.chatMessageTranslated(WDLMessageTypes.REMOVE_ENTITY, "wdl.messages.removeEntity.allowingRemoveUnrecognizedDistance", entity);
                 return;
             }
             double distance = entity.getDistance(WDL.thePlayer.posX, entity.posY, WDL.thePlayer.posZ);
             if (distance > threshold) {
-                WDLMessages.chatMessageTranslated(WDLMessageTypes.REMOVE_ENTITY, "wdl.messages.removeEntity.savingDistance", new Object[]{entity,
-
-                        Double.valueOf(distance), Integer.valueOf(threshold)});
-                entity
-                        .chunkCoordX = MathHelper.floor_double(entity.posX / 16.0D);
-                entity
-                        .chunkCoordZ = MathHelper.floor_double(entity.posZ / 16.0D);
+                WDLMessages.chatMessageTranslated(WDLMessageTypes.REMOVE_ENTITY, "wdl.messages.removeEntity.savingDistance", entity, distance, threshold);
+                entity.chunkCoordX = MathHelper.floor_double(entity.posX / 16.0D);
+                entity.chunkCoordZ = MathHelper.floor_double(entity.posZ / 16.0D);
                 WDL.newEntities.put(new ChunkCoordIntPair(entity.chunkCoordX, entity.chunkCoordZ), entity);
                 return;
             }
-            WDLMessages.chatMessageTranslated(WDLMessageTypes.REMOVE_ENTITY, "wdl.messages.removeEntity.allowingRemoveDistance", new Object[]{entity,
-
-                    Double.valueOf(distance), Integer.valueOf(threshold)});
+            WDLMessages.chatMessageTranslated(WDLMessageTypes.REMOVE_ENTITY, "wdl.messages.removeEntity.allowingRemoveDistance", entity, distance, threshold);
         }
     }
 }

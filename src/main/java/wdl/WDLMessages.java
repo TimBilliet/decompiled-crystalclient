@@ -182,21 +182,19 @@ public class WDLMessages {
         int i;
         for (i = 0; i < args.length; i++) {
             if (args[i] instanceof Entity) {
-                ChatComponentText chatComponentText = null;
+                IChatComponent chatComponentText;
                 Entity e = (Entity) args[i];
                 String entityType = EntityUtils.getEntityType(e);
                 HoverEvent event = null;
                 String customName = null;
                 try {
                     event = e.getDisplayName().getChatStyle().getChatHoverEvent();
-
-                    //if (e.hasCustomInventoryName())
                     if (e.hasCustomName())
                         customName = e.getCustomNameTag();
                 } catch (Exception exception) {
                 }
                 if (customName != null) {
-                    ChatComponentTranslation chatComponentTranslation = new ChatComponentTranslation("wdl.messages.entityTypeAndCustomName", new Object[]{entityType, customName});
+                    chatComponentText = new ChatComponentTranslation("wdl.messages.entityTypeAndCustomName", entityType, customName);
                 } else {
                     chatComponentText = new ChatComponentText(entityType);
                 }

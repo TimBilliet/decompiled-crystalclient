@@ -139,7 +139,7 @@ public abstract class Button {
     if (screen instanceof co.crystaldev.client.gui.screens.override.ScreenMainMenu)
       return 1.0F;
     int s = (new ScaledResolution(Minecraft.getMinecraft())).getScaleFactor();
-    return 1.0F / 0.5F * s;
+    return 1.0F / (0.5F * s);
   }
   
   public boolean isHovered(int mouseX, int mouseY) {

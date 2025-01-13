@@ -55,15 +55,8 @@ public abstract class Screen extends GuiScreen {
   public Screen() {
     this.mc = Minecraft.getMinecraft();
     ScaledResolution scaledResolution = new ScaledResolution(this.mc);
-    //TODO fix guis changing size when changing scale in videosettings
-//    System.out.println(scaledResolution.getScaledHeight());
-//    System.out.println(scaledResolution.getScaledWidth());
-//    System.out.println(scaledResolution.getScaleFactor());
     setWorldAndResolution(this.mc, scaledResolution.getScaledWidth(), scaledResolution.getScaledHeight());
-//    setWorldAndResolution(this.mc, 1920, 1080);
     this.scaledResolution = scaledResolution;
-//    this.scaledResolution = new ScaledResolution()
-
   }
   
   public Screen(GuiScreen parent) {
@@ -114,9 +107,8 @@ public abstract class Screen extends GuiScreen {
   
   public float getScaledScreen() {
     int s = ((this.scaledResolution == null) ? (this.scaledResolution = new ScaledResolution(this.mc)) : this.scaledResolution).getScaleFactor();
-//    s = 0.5;
-    return 1.0F / 0.5F * s;
-//    return 1;
+    return 1.0F/ (0.5F*s);
+//    return 1.0F / 0.5F * s;
   }
   
   public boolean hasOverlay() {

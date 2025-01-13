@@ -10,13 +10,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(targets = {"net.minecraft.client.gui.GuiScreenOptionsSounds$Button"})
 public abstract class MixinGuiScreenOptionsSounds {
-  @Redirect(method = {"mouseDragged(Lnet/minecraft/client/Minecraft;II)V"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/settings/GameSettings;saveOptions()V"))
-  private void cancelSaving(GameSettings instance) {}
-  
-  @Inject(method = {"mouseReleased(II)V"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/audio/SoundHandler;playSound(Lnet/minecraft/client/audio/ISound;)V")})
-  private void saveOptions(int mouseX, int mouseY, CallbackInfo ci) {
-    (Minecraft.getMinecraft()).gameSettings.saveOptions();
-  }
+    @Redirect(method = {"mouseDragged(Lnet/minecraft/client/Minecraft;II)V"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/settings/GameSettings;saveOptions()V"))
+    private void cancelSaving(GameSettings instance) {
+    }
+
+    @Inject(method = {"mouseReleased(II)V"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/audio/SoundHandler;playSound(Lnet/minecraft/client/audio/ISound;)V")})
+    private void saveOptions(int mouseX, int mouseY, CallbackInfo ci) {
+        (Minecraft.getMinecraft()).gameSettings.saveOptions();
+    }
 }
 
 

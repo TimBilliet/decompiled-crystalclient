@@ -16,23 +16,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({BlockSlab.class})
 public abstract class MixinBlockSlab extends Block {
-  public MixinBlockSlab(Material blockMaterialIn, MapColor blockMapColorIn) {
-    super(blockMaterialIn, blockMapColorIn);
-  }
-  
-  @Shadow
-  protected static boolean isSlab(Block blockIn) {
-    return false;
-  }
+    public MixinBlockSlab(Material blockMaterialIn, MapColor blockMapColorIn) {
+        super(blockMaterialIn, blockMapColorIn);
+    }
+
+    @Shadow
+    protected static boolean isSlab(Block blockIn) {
+        return false;
+    }
 //  protected static boolean func_150003_a(Block blockIn) {
 //    return false;
 //  }
-  
-  @Inject(method = {"shouldSideBeRendered"}, cancellable = true, at = {@At("HEAD")})
-  private void disableSlabRendering$shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side, CallbackInfoReturnable<Boolean> cir) {
-    if (NoLag.isEnabled((NoLag.getInstance()).disableSlabRendering) && isSlab(worldIn.getBlockState(pos).getBlock()) && isSlab(worldIn.getBlockState(pos.up()).getBlock()))
-      cir.setReturnValue(shouldSideBeRendered(worldIn, pos, side));
-  }
+
+    @Inject(method = {"shouldSideBeRendered"}, cancellable = true, at = {@At("HEAD")})
+    private void disableSlabRendering$shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side, CallbackInfoReturnable<Boolean> cir) {
+        if (NoLag.isEnabled((NoLag.getInstance()).disableSlabRendering) && isSlab(worldIn.getBlockState(pos).getBlock()) && isSlab(worldIn.getBlockState(pos.up()).getBlock()))
+            cir.setReturnValue(shouldSideBeRendered(worldIn, pos, side));
+    }
 }
 
 

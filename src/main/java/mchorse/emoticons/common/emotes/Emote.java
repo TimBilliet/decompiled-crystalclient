@@ -7,44 +7,47 @@ import net.minecraft.entity.EntityLivingBase;
 import java.util.Random;
 
 public class Emote {
-  public final String name;
-  
-  public int duration;
-  
-  public boolean looping;
-  
-  public String sound;
-  
-  public Random rand = new Random();
-  
-  public Emote(String name, int duration, boolean looping, String sound) {
-    this.name = name;
-    this.duration = duration;
-    this.looping = looping;
-    this.sound = sound;
-  }
-  
-  public void progressAnimation(EntityLivingBase entity, BOBJArmature armature, AnimatorEmoticonsController animator, int tick, float partial) {}
-  
-  public void startAnimation(AnimatorEmoticonsController animator) {}
-  
-  public void stopAnimation(AnimatorEmoticonsController animator) {}
-  
-  public Emote getDynamicEmote() {
-    return this;
-  }
-  
-  public Emote getDynamicEmote(String suffix) {
-    return this;
-  }
-  
-  public String getKey() {
-    return this.name;
-  }
-  
-  public float rand(float factor) {
-    return this.rand.nextFloat() * factor - factor / 2.0F;
-  }
+    public final String name;
+
+    public int duration;
+
+    public boolean looping;
+
+    public String sound;
+
+    public Random rand = new Random();
+
+    public Emote(String name, int duration, boolean looping, String sound) {
+        this.name = name;
+        this.duration = duration;
+        this.looping = looping;
+        this.sound = sound;
+    }
+
+    public void progressAnimation(EntityLivingBase entity, BOBJArmature armature, AnimatorEmoticonsController animator, int tick, float partial) {
+    }
+
+    public void startAnimation(AnimatorEmoticonsController animator) {
+    }
+
+    public void stopAnimation(AnimatorEmoticonsController animator) {
+    }
+
+    public Emote getDynamicEmote() {
+        return this;
+    }
+
+    public Emote getDynamicEmote(String suffix) {
+        return this;
+    }
+
+    public String getKey() {
+        return this.name;
+    }
+
+    public float rand(float factor) {
+        return this.rand.nextFloat() * factor - factor / 2.0F;
+    }
 }
 
 

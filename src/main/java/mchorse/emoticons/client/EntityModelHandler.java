@@ -9,15 +9,15 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class EntityModelHandler {
-  @SubscribeEvent(priority = 0)
-  public void onRenderPlayer(RenderPlayerEvent.Pre event) {
-    EntityPlayer player = event.player;
-    if (player.isSpectator())
-      return; 
-    IUserEmoteData cap = UserEmoticonData.get((Entity)player);
-    if (cap != null && cap.render((EntityLivingBase)player, event.x, event.y, event.z, event.partialTicks))
-      event.setCancelled(true); 
-  }
+    @SubscribeEvent(priority = 0)
+    public void onRenderPlayer(RenderPlayerEvent.Pre event) {
+        EntityPlayer player = event.player;
+        if (player.isSpectator())
+            return;
+        IUserEmoteData cap = UserEmoticonData.get((Entity) player);
+        if (cap != null && cap.render((EntityLivingBase) player, event.x, event.y, event.z, event.partialTicks))
+            event.setCancelled(true);
+    }
 }
 
 

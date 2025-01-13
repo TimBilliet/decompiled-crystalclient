@@ -1,7 +1,7 @@
 package co.crystaldev.client.event;
 
 public interface IRegistrable {
-  void registerEvents();
+    void registerEvents();
 }
 
 

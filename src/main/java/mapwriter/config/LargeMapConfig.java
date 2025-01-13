@@ -3,12 +3,12 @@ package mapwriter.config;
 import co.crystaldev.client.feature.impl.hud.MapWriter;
 
 public class LargeMapConfig extends MapModeConfig {
-  public void loadConfig() {
-    super.loadConfig();
-    this.rotate = (MapWriter.getInstance()).rotate;
-    this.circular = (MapWriter.getInstance()).circular;
-    this.borderMode = (MapWriter.getInstance()).mapBorder;
-  }
+    public void loadConfig() {
+        super.loadConfig();
+        this.rotate = (MapWriter.getInstance()).rotate;
+        this.circular = (MapWriter.getInstance()).circular;
+        this.borderMode = (MapWriter.getInstance()).mapBorder;
+    }
 }
 
 

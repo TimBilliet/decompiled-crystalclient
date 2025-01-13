@@ -9,13 +9,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({GuiGameOver.class})
 public abstract class MixinGuiGameOver {
-  @Shadow
-  private int enableButtonsTimer;
-  
-  @Inject(method = {"initGui"}, at = {@At("HEAD")})
-  private void fixButtonState(CallbackInfo ci) {
-    this.enableButtonsTimer = 0;
-  }
+    @Shadow
+    private int enableButtonsTimer;
+
+    @Inject(method = {"initGui"}, at = {@At("HEAD")})
+    private void fixButtonState(CallbackInfo ci) {
+        this.enableButtonsTimer = 0;
+    }
 }
 
 

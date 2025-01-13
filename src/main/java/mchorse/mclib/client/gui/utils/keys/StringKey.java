@@ -1,23 +1,23 @@
 package mchorse.mclib.client.gui.utils.keys;
 
 public class StringKey implements IKey {
-  public String string;
-  
-  public StringKey(String string) {
-    this.string = string;
-  }
-  
-  public String get() {
-    return this.string;
-  }
-  
-  public void set(String string) {
-    this.string = string;
-  }
-  
-  public String toString() {
-    return this.string;
-  }
+    public String string;
+
+    public StringKey(String string) {
+        this.string = string;
+    }
+
+    public String get() {
+        return this.string;
+    }
+
+    public void set(String string) {
+        this.string = string;
+    }
+
+    public String toString() {
+        return this.string;
+    }
 }
 
 

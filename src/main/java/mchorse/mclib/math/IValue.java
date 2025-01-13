@@ -1,7 +1,7 @@
 package mchorse.mclib.math;
 
 public interface IValue {
-  double get();
+    double get();
 }
 
 

@@ -573,7 +573,7 @@ public class GuiIngameCrystal extends GuiIngameForge {
 
             if (opacity > 0) {
                 GlStateManager.pushMatrix();
-                GlStateManager.translate((float)(width / 2), (height - 68), 0.0F);
+                GlStateManager.translate((float) (width / 2), (height - 68), 0.0F);
                 GlStateManager.enableBlend();
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                 int color = this.recordIsPlaying ? (Color.HSBtoRGB(hue / 50.0F, 0.7F, 0.6F) & 0xFFFFFF) : 16777215;
@@ -606,19 +606,19 @@ public class GuiIngameCrystal extends GuiIngameForge {
             opacity = MathHelper.clamp_int(opacity, 0, 255);
             if (opacity > 8) {
                 GlStateManager.pushMatrix();
-                GlStateManager.translate(((float)width / 2), ((float)height / 2), 0.0F);
+                GlStateManager.translate(((float) width / 2), ((float) height / 2), 0.0F);
                 GlStateManager.enableBlend();
                 GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                 GlStateManager.pushMatrix();
                 GlStateManager.scale(4.0F, 4.0F, 4.0F);
                 int l = opacity << 24 & 0xFF000000;
                 //field_175201_x
-                getFontRenderer().drawString(this.displayedTitle, ((float)-getFontRenderer().getStringWidth(this.displayedTitle) / 2), -10.0F, 0xFFFFFF | l, true);
+                getFontRenderer().drawString(this.displayedTitle, ((float) -getFontRenderer().getStringWidth(this.displayedTitle) / 2), -10.0F, 0xFFFFFF | l, true);
                 GlStateManager.popMatrix();
                 GlStateManager.pushMatrix();
                 GlStateManager.scale(2.0F, 2.0F, 2.0F);
                 //field_175200_y
-                getFontRenderer().drawString(this.displayedSubTitle, ((float)-getFontRenderer().getStringWidth(this.displayedSubTitle) / 2), 5.0F, 0xFFFFFF | l, true);
+                getFontRenderer().drawString(this.displayedSubTitle, ((float) -getFontRenderer().getStringWidth(this.displayedSubTitle) / 2), 5.0F, 0xFFFFFF | l, true);
                 GlStateManager.popMatrix();
                 GlStateManager.disableBlend();
                 GlStateManager.popMatrix();

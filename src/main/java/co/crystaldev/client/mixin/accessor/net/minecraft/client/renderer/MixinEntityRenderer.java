@@ -9,14 +9,14 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin({EntityRenderer.class})
 public interface MixinEntityRenderer {
-  @Accessor("theShaderGroup")
-  ShaderGroup getShaderGroup();
-  
-  @Accessor("theShaderGroup")
-  void setTheShaderGroup(ShaderGroup paramShaderGroup);
-  
-  @Invoker("loadShader")
-  void callLoadShader(ResourceLocation paramResourceLocation);
+    @Accessor("theShaderGroup")
+    ShaderGroup getShaderGroup();
+
+    @Accessor("theShaderGroup")
+    void setTheShaderGroup(ShaderGroup paramShaderGroup);
+
+    @Invoker("loadShader")
+    void callLoadShader(ResourceLocation paramResourceLocation);
 }
 
 

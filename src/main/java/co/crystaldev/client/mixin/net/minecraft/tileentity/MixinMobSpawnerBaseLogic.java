@@ -9,11 +9,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({MobSpawnerBaseLogic.class})
 public abstract class MixinMobSpawnerBaseLogic {
-  @Inject(method = {"updateSpawner"}, cancellable = true, at = {@At("HEAD")})
-  public void updateSpawner(CallbackInfo ci) {
-    if (NoLag.isEnabled((NoLag.getInstance()).disableSpawnerAnimation))
-      ci.cancel(); 
-  }
+    @Inject(method = {"updateSpawner"}, cancellable = true, at = {@At("HEAD")})
+    public void updateSpawner(CallbackInfo ci) {
+        if (NoLag.isEnabled((NoLag.getInstance()).disableSpawnerAnimation))
+            ci.cancel();
+    }
 }
 
 

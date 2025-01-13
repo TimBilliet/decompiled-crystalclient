@@ -10,25 +10,25 @@ import org.spongepowered.asm.mixin.Overwrite;
 
 @Mixin({BlockMobSpawner.class})
 public abstract class MixinBlockMobSpawner extends BlockContainer {
-  protected MixinBlockMobSpawner(Material materialIn) {
-    super(materialIn);
-  }
-  
-  /**
-   * @author
-   */
-  @Overwrite
-  public boolean isOpaqueCube() {
-    return (NoLag.getInstance() != null && NoLag.isEnabled((NoLag.getInstance()).fasterSpawnerRendering));
-  }
-  
-  public EnumWorldBlockLayer getBlockLayer() {
-    return !isOpaqueCube() ? EnumWorldBlockLayer.CUTOUT_MIPPED : EnumWorldBlockLayer.SOLID;
-  }
-  
-  public boolean isVisuallyOpaque() {
-    return false;
-  }
+    protected MixinBlockMobSpawner(Material materialIn) {
+        super(materialIn);
+    }
+
+    /**
+     * @author
+     */
+    @Overwrite
+    public boolean isOpaqueCube() {
+        return (NoLag.getInstance() != null && NoLag.isEnabled((NoLag.getInstance()).fasterSpawnerRendering));
+    }
+
+    public EnumWorldBlockLayer getBlockLayer() {
+        return !isOpaqueCube() ? EnumWorldBlockLayer.CUTOUT_MIPPED : EnumWorldBlockLayer.SOLID;
+    }
+
+    public boolean isVisuallyOpaque() {
+        return false;
+    }
 }
 
 

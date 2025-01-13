@@ -9,8 +9,8 @@ import java.util.WeakHashMap;
 
 @Mixin({BlockRedstoneTorch.class})
 public abstract class MixinBlockRedstoneTorch {
-  @Shadow
-  private static Map toggles = new WeakHashMap<>();
+    @Shadow
+    private static Map toggles = new WeakHashMap<>();
 }
 
 

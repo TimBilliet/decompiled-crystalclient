@@ -8,10 +8,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin({EntityXPOrb.class})
 public abstract class MixinEntityXPOrb {
-  @Redirect(method = {"onUpdate"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/EntityPlayer;getEyeHeight()F"))
-  private float fixOrbHeight(EntityPlayer entityPlayer) {
-    return (float)(entityPlayer.getEyeHeight() / 2.0D);
-  }
+    @Redirect(method = {"onUpdate"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/EntityPlayer;getEyeHeight()F"))
+    private float fixOrbHeight(EntityPlayer entityPlayer) {
+        return (float) (entityPlayer.getEyeHeight() / 2.0D);
+    }
 }
 
 

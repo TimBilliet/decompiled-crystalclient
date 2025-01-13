@@ -4,17 +4,17 @@ import mchorse.mclib.math.IValue;
 import mchorse.mclib.math.functions.Function;
 
 public class Abs extends Function {
-  public Abs(IValue[] values, String name) throws Exception {
-    super(values, name);
-  }
-  
-  public int getRequiredArguments() {
-    return 1;
-  }
-  
-  public double get() {
-    return Math.abs(getArg(0));
-  }
+    public Abs(IValue[] values, String name) throws Exception {
+        super(values, name);
+    }
+
+    public int getRequiredArguments() {
+        return 1;
+    }
+
+    public double get() {
+        return Math.abs(getArg(0));
+    }
 }
 
 

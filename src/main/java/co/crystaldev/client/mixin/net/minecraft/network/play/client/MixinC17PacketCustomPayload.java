@@ -11,14 +11,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({C17PacketCustomPayload.class})
 public abstract class MixinC17PacketCustomPayload {
-  @Shadow
-  private PacketBuffer data;
-  
-  @Inject(method = {"processPacket(Lnet/minecraft/network/play/INetHandlerPlayServer;)V"}, at = {@At("TAIL")})
-  private void releaseData(INetHandlerPlayServer handler, CallbackInfo ci) {
-    if (this.data != null)
-      this.data.release(); 
-  }
+    @Shadow
+    private PacketBuffer data;
+
+    @Inject(method = {"processPacket(Lnet/minecraft/network/play/INetHandlerPlayServer;)V"}, at = {@At("TAIL")})
+    private void releaseData(INetHandlerPlayServer handler, CallbackInfo ci) {
+        if (this.data != null)
+            this.data.release();
+    }
 }
 
 

@@ -4,13 +4,13 @@ import com.google.common.collect.Multimap;
 import net.minecraft.entity.Entity;
 
 public interface ISpecialEntityHandler extends IWDLMod {
-  Multimap<String, String> getSpecialEntities();
-  
-  String getSpecialEntityName(Entity paramEntity);
-  
-  String getSpecialEntityCategory(String paramString);
-  
-  int getSpecialEntityTrackDistance(String paramString);
+    Multimap<String, String> getSpecialEntities();
+
+    String getSpecialEntityName(Entity paramEntity);
+
+    String getSpecialEntityCategory(String paramString);
+
+    int getSpecialEntityTrackDistance(String paramString);
 }
 
 

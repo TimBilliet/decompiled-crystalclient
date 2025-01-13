@@ -9,35 +9,36 @@ import co.crystaldev.client.network.Packet;
 import java.io.IOException;
 
 public class PacketRemoveChunkHighlight extends Packet {
-  private int x;
+    private int x;
 
-  private int z;
+    private int z;
 
-  private String server;
+    private String server;
 
-  public PacketRemoveChunkHighlight(int x, int z) {
-    this.x = x;
-    this.z = z;
-  }
+    public PacketRemoveChunkHighlight(int x, int z) {
+        this.x = x;
+        this.z = z;
+    }
 
-  public PacketRemoveChunkHighlight() {}
+    public PacketRemoveChunkHighlight() {
+    }
 
-  public void write(ByteBufWrapper out) throws IOException {
-    out.writeVarInt(this.x);
-    out.writeVarInt(this.z);
-  }
+    public void write(ByteBufWrapper out) throws IOException {
+        out.writeVarInt(this.x);
+        out.writeVarInt(this.z);
+    }
 
-  public void read(ByteBufWrapper in) throws IOException {
-    this.x = in.readVarInt();
-    this.z = in.readVarInt();
-    this.server = in.readString();
-  }
+    public void read(ByteBufWrapper in) throws IOException {
+        this.x = in.readVarInt();
+        this.z = in.readVarInt();
+        this.server = in.readString();
+    }
 
-  public void process(INetHandler handler) {
-    Group sg = GroupManager.getSelectedGroup();
-    if (sg != null)
-      sg.removeHighlight(this.server, this.x, this.z);
-  }
+    public void process(INetHandler handler) {
+        Group sg = GroupManager.getSelectedGroup();
+        if (sg != null)
+            sg.removeHighlight(this.server, this.x, this.z);
+    }
 }
 
 

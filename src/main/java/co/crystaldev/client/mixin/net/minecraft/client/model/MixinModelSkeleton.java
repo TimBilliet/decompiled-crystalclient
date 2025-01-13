@@ -7,11 +7,11 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin({ModelSkeleton.class})
 public abstract class MixinModelSkeleton extends ModelZombie {
 
-  public void func_178718_a(float scale) {
-    this.bipedRightArm.rotationPointX++;
-    this.bipedRightArm.postRender(scale);
-    this.bipedRightArm.rotationPointX--;
-  }
+    public void func_178718_a(float scale) {
+        this.bipedRightArm.rotationPointX++;
+        this.bipedRightArm.postRender(scale);
+        this.bipedRightArm.rotationPointX--;
+    }
 }
 
 

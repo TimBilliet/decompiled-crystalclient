@@ -12,14 +12,14 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin({RenderChunk.class})
 public interface MixinRenderChunk {
-  @Accessor("world")
-  World getWorld();
-  
-  @Invoker("preRenderBlocks")
-  void callPreRenderBlocks(WorldRenderer paramWorldRenderer, BlockPos paramBlockPos);
-  
-  @Invoker("postRenderBlocks")
-  void callPostRenderBlocks(EnumWorldBlockLayer paramEnumWorldBlockLayer, float paramFloat1, float paramFloat2, float paramFloat3, WorldRenderer paramWorldRenderer, CompiledChunk paramCompiledChunk);
+    @Accessor("world")
+    World getWorld();
+
+    @Invoker("preRenderBlocks")
+    void callPreRenderBlocks(WorldRenderer paramWorldRenderer, BlockPos paramBlockPos);
+
+    @Invoker("postRenderBlocks")
+    void callPostRenderBlocks(EnumWorldBlockLayer paramEnumWorldBlockLayer, float paramFloat1, float paramFloat2, float paramFloat3, WorldRenderer paramWorldRenderer, CompiledChunk paramCompiledChunk);
 }
 
 

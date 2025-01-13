@@ -3,23 +3,23 @@ package co.crystaldev.client.util.objects;
 import net.minecraft.util.BlockPos;
 
 public class Adjust {
-  public BlockPos origin;
-  
-  public BlockPos finish;
-  
-  public int patches;
-  
-  public double patchIndex;
-  
-  public String coordText;
-  
-  public Adjust(BlockPos origin, BlockPos finish, int patches, double patchIndex, String coordText) {
-    this.origin = origin;
-    this.finish = finish;
-    this.patches = patches;
-    this.patchIndex = patchIndex;
-    this.coordText = coordText;
-  }
+    public BlockPos origin;
+
+    public BlockPos finish;
+
+    public int patches;
+
+    public double patchIndex;
+
+    public String coordText;
+
+    public Adjust(BlockPos origin, BlockPos finish, int patches, double patchIndex, String coordText) {
+        this.origin = origin;
+        this.finish = finish;
+        this.patches = patches;
+        this.patchIndex = patchIndex;
+        this.coordText = coordText;
+    }
 }
 
 

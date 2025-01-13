@@ -5,13 +5,13 @@ import mchorse.mclib.utils.files.entries.AbstractEntry;
 import java.util.Comparator;
 
 public class EntrySorter implements Comparator<AbstractEntry> {
-  public int compare(AbstractEntry o1, AbstractEntry o2) {
-    if (o1 instanceof mchorse.mclib.utils.files.entries.FolderEntry && o2 instanceof mchorse.mclib.utils.files.entries.FileEntry)
-      return -1; 
-    if (o1 instanceof mchorse.mclib.utils.files.entries.FileEntry && o2 instanceof mchorse.mclib.utils.files.entries.FolderEntry)
-      return 1; 
-    return o1.title.compareToIgnoreCase(o2.title);
-  }
+    public int compare(AbstractEntry o1, AbstractEntry o2) {
+        if (o1 instanceof mchorse.mclib.utils.files.entries.FolderEntry && o2 instanceof mchorse.mclib.utils.files.entries.FileEntry)
+            return -1;
+        if (o1 instanceof mchorse.mclib.utils.files.entries.FileEntry && o2 instanceof mchorse.mclib.utils.files.entries.FolderEntry)
+            return 1;
+        return o1.title.compareToIgnoreCase(o2.title);
+    }
 }
 
 

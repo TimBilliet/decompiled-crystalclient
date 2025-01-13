@@ -156,7 +156,7 @@ public class NoLag extends Module implements IRegistrable {
 
 //    private final AbstractDoubleList minimalTnt = (AbstractDoubleList)new DoubleArrayList(2048);
 
-//    private final AbstractDoubleList minimalSand = (AbstractDoubleList)new DoubleArrayList(2048);
+    //    private final AbstractDoubleList minimalSand = (AbstractDoubleList)new DoubleArrayList(2048);
     private final List<Double> minimalTnt = new ArrayList<>(2048);
     private final List<Double> minimalSand = new ArrayList<>(2048);
     private long lastClearTime = System.currentTimeMillis();
@@ -210,16 +210,16 @@ public class NoLag extends Module implements IRegistrable {
                 double hash = 0.0D;
                 if (entity instanceof EntityTNTPrimed) {
                     hash = 17.0D;
-                    hash = 31.0D * hash + ((int)entity.posX & 0xFFFFFFFE);
-                    hash = 31.0D * hash + ((int)entity.posZ & 0xFFFFFFFE);
-                    hash = 31.0D * hash + (int)entity.posY;
+                    hash = 31.0D * hash + ((int) entity.posX & 0xFFFFFFFE);
+                    hash = 31.0D * hash + ((int) entity.posZ & 0xFFFFFFFE);
+                    hash = 31.0D * hash + (int) entity.posY;
                     hash = 31.0D * hash + ModuleHandler.getTotalTicks();
-                    hash = 31.0D * hash + ((EntityTNTPrimed)entity).fuse;
+                    hash = 31.0D * hash + ((EntityTNTPrimed) entity).fuse;
                 } else if (entity instanceof net.minecraft.entity.item.EntityFallingBlock) {
                     hash = 23.0D;
-                    hash = 47.0D * hash + ((int)entity.posX & 0xFFFFFFFE);
-                    hash = 47.0D * hash + ((int)entity.posZ & 0xFFFFFFFE);
-                    hash = 47.0D * hash + (int)entity.posY;
+                    hash = 47.0D * hash + ((int) entity.posX & 0xFFFFFFFE);
+                    hash = 47.0D * hash + ((int) entity.posZ & 0xFFFFFFFE);
+                    hash = 47.0D * hash + (int) entity.posY;
                     hash = 47.0D * hash + ModuleHandler.getTotalTicks();
                 }
                 if (Double.doubleToLongBits(hash) != LONG_BITS) {

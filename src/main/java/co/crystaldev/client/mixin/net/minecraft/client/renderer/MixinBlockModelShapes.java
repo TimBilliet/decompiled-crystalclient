@@ -20,24 +20,24 @@ import java.util.Map;
 
 @Mixin({BlockModelShapes.class})
 public abstract class MixinBlockModelShapes {
-  @Shadow
-  public abstract void registerBlockWithStateMapper(Block paramBlock, IStateMapper paramIStateMapper);
-  
-  @Inject(method = {"registerAllBlocks"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/BlockModelShapes;registerBuiltInBlocks([Lnet/minecraft/block/Block;)V", shift = At.Shift.AFTER)})
-  private void registerAllBlocks(CallbackInfo ci) {
-    registerBlockWithStateMapper((Block)Blocks.chest, (IStateMapper)new StateMapperBase() {
-          protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-            Map<IProperty, Comparable> map = Maps.newLinkedHashMap((Map)state.getProperties());
-            return new ModelResourceLocation((ResourceLocation)Block.blockRegistry.getNameForObject(state.getBlock()), getPropertyString(map));
-          }
+    @Shadow
+    public abstract void registerBlockWithStateMapper(Block paramBlock, IStateMapper paramIStateMapper);
+
+    @Inject(method = {"registerAllBlocks"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/BlockModelShapes;registerBuiltInBlocks([Lnet/minecraft/block/Block;)V", shift = At.Shift.AFTER)})
+    private void registerAllBlocks(CallbackInfo ci) {
+        registerBlockWithStateMapper((Block) Blocks.chest, (IStateMapper) new StateMapperBase() {
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                Map<IProperty, Comparable> map = Maps.newLinkedHashMap((Map) state.getProperties());
+                return new ModelResourceLocation((ResourceLocation) Block.blockRegistry.getNameForObject(state.getBlock()), getPropertyString(map));
+            }
         });
-    registerBlockWithStateMapper(Blocks.trapped_chest, (IStateMapper)new StateMapperBase() {
-          protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
-            Map<IProperty, Comparable> map = Maps.newLinkedHashMap((Map)state.getProperties());
-            return new ModelResourceLocation((ResourceLocation)Block.blockRegistry.getNameForObject(state.getBlock()), getPropertyString(map));
-          }
+        registerBlockWithStateMapper(Blocks.trapped_chest, (IStateMapper) new StateMapperBase() {
+            protected ModelResourceLocation getModelResourceLocation(IBlockState state) {
+                Map<IProperty, Comparable> map = Maps.newLinkedHashMap((Map) state.getProperties());
+                return new ModelResourceLocation((ResourceLocation) Block.blockRegistry.getNameForObject(state.getBlock()), getPropertyString(map));
+            }
         });
-  }
+    }
 }
 
 

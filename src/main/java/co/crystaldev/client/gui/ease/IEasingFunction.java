@@ -1,7 +1,7 @@
 package co.crystaldev.client.gui.ease;
 
 public interface IEasingFunction {
-  float getValue(float paramFloat);
+    float getValue(float paramFloat);
 }
 
 

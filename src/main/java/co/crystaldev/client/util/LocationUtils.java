@@ -7,16 +7,16 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.util.Vec3;
 
 public class LocationUtils {
-  public static boolean isBlockInSameChunk(BlockPos posIn, Entity entityIn) {
-    int posChunkX = posIn.getX() >> 4;
-    int posChunkZ = posIn.getZ() >> 4;
-    return (posChunkX == entityIn.chunkCoordX && posChunkZ == entityIn.chunkCoordZ);
-  }
-  
-  public static Vec3 getViewPosition() {
-    float partialTicks = (Client.getTimer()).renderPartialTicks;
-    return Minecraft.getMinecraft().getRenderViewEntity().getPositionEyes(partialTicks);
-  }
+    public static boolean isBlockInSameChunk(BlockPos posIn, Entity entityIn) {
+        int posChunkX = posIn.getX() >> 4;
+        int posChunkZ = posIn.getZ() >> 4;
+        return (posChunkX == entityIn.chunkCoordX && posChunkZ == entityIn.chunkCoordZ);
+    }
+
+    public static Vec3 getViewPosition() {
+        float partialTicks = (Client.getTimer()).renderPartialTicks;
+        return Minecraft.getMinecraft().getRenderViewEntity().getPositionEyes(partialTicks);
+    }
 }
 
 

@@ -6,25 +6,25 @@ import co.crystaldev.client.util.LocationUtils;
 import net.minecraft.util.Vec3;
 
 public class Chroma3DShader extends ChromaShader {
-  private float alpha = 1.0F;
-  
-  public Chroma3DShader() throws Exception {
-    super("chroma_3d");
-  }
-  
-  protected void registerUniforms() {
-    super.registerUniforms();
-    registerUniform(UniformType.VEC3, "playerWorldPosition", () -> {
-          Vec3 viewPosition = LocationUtils.getViewPosition();
-          return new Float[] {(float) viewPosition.xCoord, (float) viewPosition.yCoord, (float) viewPosition.zCoord};
+    private float alpha = 1.0F;
+
+    public Chroma3DShader() throws Exception {
+        super("chroma_3d");
+    }
+
+    protected void registerUniforms() {
+        super.registerUniforms();
+        registerUniform(UniformType.VEC3, "playerWorldPosition", () -> {
+            Vec3 viewPosition = LocationUtils.getViewPosition();
+            return new Float[]{(float) viewPosition.xCoord, (float) viewPosition.yCoord, (float) viewPosition.zCoord};
         });
-    registerUniform(UniformType.FLOAT, "alpha", () -> this.alpha);
-    registerUniform(UniformType.FLOAT, "brightness", () -> (float) (ClientOptions.getInstance()).chromaBrightness);
-  }
-  
-  public void setAlpha(float alpha) {
-    this.alpha = alpha;
-  }
+        registerUniform(UniformType.FLOAT, "alpha", () -> this.alpha);
+        registerUniform(UniformType.FLOAT, "brightness", () -> (float) (ClientOptions.getInstance()).chromaBrightness);
+    }
+
+    public void setAlpha(float alpha) {
+        this.alpha = alpha;
+    }
 }
 
 

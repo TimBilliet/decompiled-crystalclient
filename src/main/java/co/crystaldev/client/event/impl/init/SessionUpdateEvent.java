@@ -4,15 +4,15 @@ import co.crystaldev.client.event.Event;
 import net.minecraft.util.Session;
 
 public class SessionUpdateEvent extends Event {
-  private final Session session;
-  
-  public SessionUpdateEvent(Session session) {
-    this.session = session;
-  }
-  
-  public Session getSession() {
-    return this.session;
-  }
+    private final Session session;
+
+    public SessionUpdateEvent(Session session) {
+        this.session = session;
+    }
+
+    public Session getSession() {
+        return this.session;
+    }
 }
 
 

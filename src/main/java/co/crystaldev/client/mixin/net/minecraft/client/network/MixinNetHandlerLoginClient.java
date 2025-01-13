@@ -15,17 +15,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({NetHandlerLoginClient.class})
 public abstract class MixinNetHandlerLoginClient {
-  @Final
-  @Shadow
-  private NetworkManager networkManager;
-  
-  @Inject(method = {"handleLoginSuccess"}, at = {@At("TAIL")})
-  public void onServerConnect(S02PacketLoginSuccess packetIn, CallbackInfo ci) {
-    (new ServerConnectEvent(this.networkManager)).call();
-  }
-  
-  @Inject(method = {"handleDisconnect"}, at = {@At("TAIL")})
-  public void onServerDisconnect(S00PacketDisconnect packetIn, CallbackInfo ci) {
-    (new ServerDisconnectEvent(this.networkManager)).call();
-  }
+    @Final
+    @Shadow
+    private NetworkManager networkManager;
+
+    @Inject(method = {"handleLoginSuccess"}, at = {@At("TAIL")})
+    public void onServerConnect(S02PacketLoginSuccess packetIn, CallbackInfo ci) {
+        (new ServerConnectEvent(this.networkManager)).call();
+    }
+
+    @Inject(method = {"handleDisconnect"}, at = {@At("TAIL")})
+    public void onServerDisconnect(S00PacketDisconnect packetIn, CallbackInfo ci) {
+        (new ServerDisconnectEvent(this.networkManager)).call();
+    }
 }

@@ -9,21 +9,22 @@ import java.io.IOException;
 
 @ReadOnly
 public class PacketUpdateWorld extends PluginChannelPacket {
-  private String world;
+    private String world;
 
-  public String getWorld() {
-    return this.world;
-  }
+    public String getWorld() {
+        return this.world;
+    }
 
-  public void write(ByteBufWrapper out) throws IOException {}
+    public void write(ByteBufWrapper out) throws IOException {
+    }
 
-  public void read(ByteBufWrapper in) throws IOException {
-    this.world = in.readString();
-  }
+    public void read(ByteBufWrapper in) throws IOException {
+        this.world = in.readString();
+    }
 
-  public void process(NetHandlerPlugin handler) {
-    handler.handleUpdateWorld(this);
-  }
+    public void process(NetHandlerPlugin handler) {
+        handler.handleUpdateWorld(this);
+    }
 }
 
 

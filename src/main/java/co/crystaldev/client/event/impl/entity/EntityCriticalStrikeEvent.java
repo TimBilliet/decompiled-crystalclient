@@ -5,9 +5,9 @@ import net.minecraft.entity.Entity;
 
 @Cancellable
 public class EntityCriticalStrikeEvent extends EntityEvent {
-  public EntityCriticalStrikeEvent(Entity entity) {
-    super(entity);
-  }
+    public EntityCriticalStrikeEvent(Entity entity) {
+        super(entity);
+    }
 }
 
 

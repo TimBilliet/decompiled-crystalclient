@@ -5,14 +5,14 @@ import co.crystaldev.client.event.impl.render.GuiScreenEvent;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 
 public class GuiHandler {
-  public static final GuiHandler INSTANCE = new GuiHandler();
-  
-  @SubscribeEvent
-  public void onGuiOpen(GuiScreenEvent.Pre event) {
-    if (SchematicPrinter.INSTANCE.isPrinting() && 
-      event.gui instanceof net.minecraft.client.gui.inventory.GuiEditSign)
-      event.gui = null; 
-  }
+    public static final GuiHandler INSTANCE = new GuiHandler();
+
+    @SubscribeEvent
+    public void onGuiOpen(GuiScreenEvent.Pre event) {
+        if (SchematicPrinter.INSTANCE.isPrinting() &&
+                event.gui instanceof net.minecraft.client.gui.inventory.GuiEditSign)
+            event.gui = null;
+    }
 }
 
 

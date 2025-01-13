@@ -7,10 +7,10 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin({GuiVideoSettings.class})
 public abstract class MixinGuiVideoSettings extends GuiScreen {
-  public void onGuiClosed() {
-    super.onGuiClosed();
-    ((GameSettingsExt)this.mc.gameSettings).onSettingsGuiClosed();
-  }
+    public void onGuiClosed() {
+        super.onGuiClosed();
+        ((GameSettingsExt) this.mc.gameSettings).onSettingsGuiClosed();
+    }
 }
 
 

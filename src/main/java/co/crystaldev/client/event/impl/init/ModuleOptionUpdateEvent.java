@@ -6,33 +6,33 @@ import co.crystaldev.client.feature.base.Module;
 import java.lang.reflect.Field;
 
 public class ModuleOptionUpdateEvent extends Event {
-  private final Module module;
+    private final Module module;
 
-  private final Field field;
+    private final Field field;
 
-  private final String optionName;
+    private final String optionName;
 
-  public ModuleOptionUpdateEvent(Module module, Field field, String optionName) {
-    this.module = module;
-    this.field = field;
-    this.optionName = optionName;
-  }
+    public ModuleOptionUpdateEvent(Module module, Field field, String optionName) {
+        this.module = module;
+        this.field = field;
+        this.optionName = optionName;
+    }
 
-  public String toString() {
-    return "ModuleOptionUpdateEvent(module=" + getModule() + ", field=" + getField() + ", optionName=" + getOptionName() + ")";
-  }
+    public String toString() {
+        return "ModuleOptionUpdateEvent(module=" + getModule() + ", field=" + getField() + ", optionName=" + getOptionName() + ")";
+    }
 
-  public Module getModule() {
-    return this.module;
-  }
+    public Module getModule() {
+        return this.module;
+    }
 
-  public Field getField() {
-    return this.field;
-  }
+    public Field getField() {
+        return this.field;
+    }
 
-  public String getOptionName() {
-    return this.optionName;
-  }
+    public String getOptionName() {
+        return this.optionName;
+    }
 }
 
 

@@ -32,163 +32,163 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RenderOverlay extends RenderChunk {
-  private final VertexBuffer vertexBuffer;
-  
-  public RenderOverlay(World world, RenderGlobal renderGlobal, BlockPos pos, int index) {
-    super(world, renderGlobal, pos, index);
-    this.vertexBuffer = OpenGlHelper.useVbo() ? new VertexBuffer(DefaultVertexFormats.POSITION_COLOR) : null;
-  }
-  
-  public VertexBuffer getVertexBufferByLayer(int layer) {
-    return this.vertexBuffer;
-  }
-  
-  public void rebuildChunk(float x, float y, float z, ChunkCompileTaskGenerator generator) {
-    RegionRenderCache regionRenderCache;
-    CompiledOverlay compiledOverlay = new CompiledOverlay();
-    BlockPos from = getPosition();
-    BlockPos to = from.add(15, 15, 15);
-    generator.getLock().lock();
-    SchematicWorld schematic = (SchematicWorld)((MixinRenderChunk)this).getWorld();
-    try {
-      if (generator.getStatus() != ChunkCompileTaskGenerator.Status.COMPILING)
-        return; 
-      if (from.getX() < 0 || from.getZ() < 0 || from.getX() >= schematic.getWidth() || from.getZ() >= schematic.getLength()) {
-        generator.setCompiledChunk(CompiledChunk.DUMMY);
-        return;
-      } 
-      regionRenderCache = new RegionRenderCache(((MixinRenderChunk)this).getWorld(), from.add(-1, -1, -1), to.add(1, 1, 1), 1);
-      generator.setCompiledChunk(compiledOverlay);
-    } finally {
-      generator.getLock().unlock();
-    } 
-    VisGraph visgraph = new VisGraph();
-    if (!regionRenderCache.extendedLevelsInChunkCache()) {
-      renderChunksUpdated++;
-      Minecraft mc = Minecraft.getMinecraft();
-      WorldClient worldClient = mc.theWorld;
-      EnumWorldBlockLayer layer = EnumWorldBlockLayer.TRANSLUCENT;
-      WorldRenderer worldRenderer = generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(layer);
-      GeometryTessellator.setStaticDelta(ConfigurationHandler.blockDelta);
-      Map<BlockPos, Tuple<RenderType, AxisAlignedBB>> tracers = new HashMap<>();
-      int cuboids = 0;
-      for (BlockPos pos : BlockPos.getAllInBox(from, to)) {
-        if ((schematic.isRenderingLayer && schematic.renderingLayer != pos.getY()) || !schematic.isInside(pos))
-          continue; 
-        boolean render = false;
-        int sides = 0;
-        int color = 0;
-        IBlockState schBlockState = schematic.getBlockState(pos);
-        Block schBlock = schBlockState.getBlock();
-        if (schBlock.isOpaqueCube())
-          visgraph.func_178606_a(pos);
+    private final VertexBuffer vertexBuffer;
+
+    public RenderOverlay(World world, RenderGlobal renderGlobal, BlockPos pos, int index) {
+        super(world, renderGlobal, pos, index);
+        this.vertexBuffer = OpenGlHelper.useVbo() ? new VertexBuffer(DefaultVertexFormats.POSITION_COLOR) : null;
+    }
+
+    public VertexBuffer getVertexBufferByLayer(int layer) {
+        return this.vertexBuffer;
+    }
+
+    public void rebuildChunk(float x, float y, float z, ChunkCompileTaskGenerator generator) {
+        RegionRenderCache regionRenderCache;
+        CompiledOverlay compiledOverlay = new CompiledOverlay();
+        BlockPos from = getPosition();
+        BlockPos to = from.add(15, 15, 15);
+        generator.getLock().lock();
+        SchematicWorld schematic = (SchematicWorld) ((MixinRenderChunk) this).getWorld();
+        try {
+            if (generator.getStatus() != ChunkCompileTaskGenerator.Status.COMPILING)
+                return;
+            if (from.getX() < 0 || from.getZ() < 0 || from.getX() >= schematic.getWidth() || from.getZ() >= schematic.getLength()) {
+                generator.setCompiledChunk(CompiledChunk.DUMMY);
+                return;
+            }
+            regionRenderCache = new RegionRenderCache(((MixinRenderChunk) this).getWorld(), from.add(-1, -1, -1), to.add(1, 1, 1), 1);
+            generator.setCompiledChunk(compiledOverlay);
+        } finally {
+            generator.getLock().unlock();
+        }
+        VisGraph visgraph = new VisGraph();
+        if (!regionRenderCache.extendedLevelsInChunkCache()) {
+            renderChunksUpdated++;
+            Minecraft mc = Minecraft.getMinecraft();
+            WorldClient worldClient = mc.theWorld;
+            EnumWorldBlockLayer layer = EnumWorldBlockLayer.TRANSLUCENT;
+            WorldRenderer worldRenderer = generator.getRegionRenderCacheBuilder().getWorldRendererByLayer(layer);
+            GeometryTessellator.setStaticDelta(ConfigurationHandler.blockDelta);
+            Map<BlockPos, Tuple<RenderType, AxisAlignedBB>> tracers = new HashMap<>();
+            int cuboids = 0;
+            for (BlockPos pos : BlockPos.getAllInBox(from, to)) {
+                if ((schematic.isRenderingLayer && schematic.renderingLayer != pos.getY()) || !schematic.isInside(pos))
+                    continue;
+                boolean render = false;
+                int sides = 0;
+                int color = 0;
+                IBlockState schBlockState = schematic.getBlockState(pos);
+                Block schBlock = schBlockState.getBlock();
+                if (schBlock.isOpaqueCube())
+                    visgraph.func_178606_a(pos);
 //          visgraph.setOpaqueCube(pos);
-        BlockPos mcPos = pos.add((Vec3i)schematic.position);
-        IBlockState mcBlockState = worldClient.getBlockState(mcPos);
-        Block mcBlock = mcBlockState.getBlock();
-        boolean isSchAirBlock = schematic.isAirBlock(pos);
-        boolean isMcAirBlock = worldClient.isAirBlock(mcPos);
-        if (!isMcAirBlock && isSchAirBlock && (Schematica.getInstance()).highlightAir) {
-          render = true;
-          color = 12517567;
-          sides = getSides(mcBlock, worldClient, mcPos, sides);
-        } 
-        if (!render) {
-          if (ConfigurationHandler.highlight)
-            if (!isMcAirBlock) {
-              if (schBlock != mcBlock) {
-                Material material = mcBlock.getMaterial();
-                if (!(Schematica.getInstance()).highlightInLiquid || (material != Material.water && material != Material.lava)) {
-                  render = true;
-                  color = 16711680;
-                  if (!(Schematica.getInstance()).trayMode || mcPos.getY() != 253) {
-                    mcBlock.setBlockBoundsBasedOnState(worldClient, mcPos);
-                    AxisAlignedBB bb = mcBlock.getCollisionBoundingBox(worldClient, mcPos, null);
-                    if(bb != null) {
-                      AxisAlignedBB aabb = bb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
-                      tracers.put(mcPos, new Tuple(RenderType.INCORRECT_BLOCK, aabb));
+                BlockPos mcPos = pos.add((Vec3i) schematic.position);
+                IBlockState mcBlockState = worldClient.getBlockState(mcPos);
+                Block mcBlock = mcBlockState.getBlock();
+                boolean isSchAirBlock = schematic.isAirBlock(pos);
+                boolean isMcAirBlock = worldClient.isAirBlock(mcPos);
+                if (!isMcAirBlock && isSchAirBlock && (Schematica.getInstance()).highlightAir) {
+                    render = true;
+                    color = 12517567;
+                    sides = getSides(mcBlock, worldClient, mcPos, sides);
+                }
+                if (!render) {
+                    if (ConfigurationHandler.highlight)
+                        if (!isMcAirBlock) {
+                            if (schBlock != mcBlock) {
+                                Material material = mcBlock.getMaterial();
+                                if (!(Schematica.getInstance()).highlightInLiquid || (material != Material.water && material != Material.lava)) {
+                                    render = true;
+                                    color = 16711680;
+                                    if (!(Schematica.getInstance()).trayMode || mcPos.getY() != 253) {
+                                        mcBlock.setBlockBoundsBasedOnState(worldClient, mcPos);
+                                        AxisAlignedBB bb = mcBlock.getCollisionBoundingBox(worldClient, mcPos, null);
+                                        if (bb != null) {
+                                            AxisAlignedBB aabb = bb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
+                                            tracers.put(mcPos, new Tuple(RenderType.INCORRECT_BLOCK, aabb));
+                                        }
+                                    }
+                                }
+                            } else if (!BlockStateHelper.areBlockStatesEqual(schBlockState, mcBlockState)) {
+                                render = true;
+                                color = 12541696;
+                                if (!(Schematica.getInstance()).trayMode || mcPos.getY() != 253) {
+                                    mcBlock.setBlockBoundsBasedOnState(worldClient, mcPos);
+                                    AxisAlignedBB bb = mcBlock.getCollisionBoundingBox(worldClient, mcPos, null);
+                                    if (bb != null) {
+                                        AxisAlignedBB aabb = bb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
+                                        tracers.put(mcPos, new Tuple(RenderType.WRONG_META, aabb));
+                                    }
+                                }
+                            }
+                        } else if (!isSchAirBlock) {
+                            render = true;
+                            color = 49151;
+                        }
+                    if (render)
+                        sides = getSides(schBlock, schematic, pos, sides);
+                }
+                if (render && sides != 0) {
+                    if (!compiledOverlay.isLayerStarted(layer)) {
+                        compiledOverlay.setLayerStarted(layer);
+                        ((MixinRenderChunk) this).callPreRenderBlocks(worldRenderer, from);
                     }
-                  } 
-                } 
-              } else if (!BlockStateHelper.areBlockStatesEqual(schBlockState, mcBlockState)) {
-                render = true;
-                color = 12541696;
-                if (!(Schematica.getInstance()).trayMode || mcPos.getY() != 253) {
-                  mcBlock.setBlockBoundsBasedOnState(worldClient, mcPos);
-                  AxisAlignedBB bb = mcBlock.getCollisionBoundingBox(worldClient, mcPos, null);
-                  if(bb!= null) {
-                    AxisAlignedBB aabb = bb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
-                    tracers.put(mcPos, new Tuple(RenderType.WRONG_META, aabb));
-                  }
-                } 
-              }
-            } else if (!isSchAirBlock) {
-              render = true;
-              color = 49151;
-            }  
-          if (render)
-            sides = getSides(schBlock, schematic, pos, sides);
-        } 
-        if (render && sides != 0) {
-          if (!compiledOverlay.isLayerStarted(layer)) {
-            compiledOverlay.setLayerStarted(layer);
-            ((MixinRenderChunk)this).callPreRenderBlocks(worldRenderer, from);
-          } 
-          if (cuboids <= 2700) {
-            if (ClientProxy.currentSchematic.totalBlocks > 7000) {
-              GeometryTessellator.drawCuboid(worldRenderer, pos, sides, 0x3F000000 | color);
-            } else {
-              schBlock.setBlockBoundsBasedOnState(schematic, pos);
-              AxisAlignedBB bb = schBlock.getCollisionBoundingBox(schematic, pos, null);
-              if(bb != null) {
-                AxisAlignedBB aabb = bb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
-                GeometryTessellator.drawCuboid(worldRenderer, aabb, sides, 0x3F000000 | color);
-              }
-            } 
-            cuboids++;
-          } 
-          compiledOverlay.setLayerUsed(layer);
-        } 
-      } 
-      try {
-        for (BlockPos pos : BlockPos.getAllInBox(from, to)) {
-          BlockPos mcPos = pos.add(schematic.position);
-          if (tracers.containsKey(mcPos)) {
-            Tuple<RenderType, AxisAlignedBB> tuple = tracers.get(mcPos);
-            Schematica.getInstance().addTracer(mcPos, tuple.getItem2(), tuple.getItem1());
-            continue;
-          } 
-          (Schematica.getInstance()).incorrectBlocks.remove(mcPos);
-          (Schematica.getInstance()).wrongMetaBlocks.remove(mcPos);
-        } 
-        if (compiledOverlay.isLayerStarted(layer))
-          ((MixinRenderChunk)this).callPostRenderBlocks(layer, x, y, z, worldRenderer, compiledOverlay);
-      } catch (NullPointerException ex) {
-        Reference.logger.error("Error batching Schematica chunk render overlay", ex);
-      } 
-    } 
-    compiledOverlay.setVisibility(visgraph.computeVisibility());
-  }
-  
-  private int getSides(Block block, World world, BlockPos pos, int sides) {
-    if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.DOWN), EnumFacing.DOWN))
-      sides |= 0x1; 
-    if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.UP), EnumFacing.UP))
-      sides |= 0x2; 
-    if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.NORTH), EnumFacing.NORTH))
-      sides |= 0x4; 
-    if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.SOUTH), EnumFacing.SOUTH))
-      sides |= 0x8; 
-    if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.WEST), EnumFacing.WEST))
-      sides |= 0x10; 
-    if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.EAST), EnumFacing.EAST))
-      sides |= 0x20; 
-    return sides;
-  }
-  
-  public void deleteGlResources() {
-    super.deleteGlResources();
-    if (this.vertexBuffer != null)
-      this.vertexBuffer.deleteGlBuffers(); 
-  }
+                    if (cuboids <= 2700) {
+                        if (ClientProxy.currentSchematic.totalBlocks > 7000) {
+                            GeometryTessellator.drawCuboid(worldRenderer, pos, sides, 0x3F000000 | color);
+                        } else {
+                            schBlock.setBlockBoundsBasedOnState(schematic, pos);
+                            AxisAlignedBB bb = schBlock.getCollisionBoundingBox(schematic, pos, null);
+                            if (bb != null) {
+                                AxisAlignedBB aabb = bb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
+                                GeometryTessellator.drawCuboid(worldRenderer, aabb, sides, 0x3F000000 | color);
+                            }
+                        }
+                        cuboids++;
+                    }
+                    compiledOverlay.setLayerUsed(layer);
+                }
+            }
+            try {
+                for (BlockPos pos : BlockPos.getAllInBox(from, to)) {
+                    BlockPos mcPos = pos.add(schematic.position);
+                    if (tracers.containsKey(mcPos)) {
+                        Tuple<RenderType, AxisAlignedBB> tuple = tracers.get(mcPos);
+                        Schematica.getInstance().addTracer(mcPos, tuple.getItem2(), tuple.getItem1());
+                        continue;
+                    }
+                    (Schematica.getInstance()).incorrectBlocks.remove(mcPos);
+                    (Schematica.getInstance()).wrongMetaBlocks.remove(mcPos);
+                }
+                if (compiledOverlay.isLayerStarted(layer))
+                    ((MixinRenderChunk) this).callPostRenderBlocks(layer, x, y, z, worldRenderer, compiledOverlay);
+            } catch (NullPointerException ex) {
+                Reference.logger.error("Error batching Schematica chunk render overlay", ex);
+            }
+        }
+        compiledOverlay.setVisibility(visgraph.computeVisibility());
+    }
+
+    private int getSides(Block block, World world, BlockPos pos, int sides) {
+        if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.DOWN), EnumFacing.DOWN))
+            sides |= 0x1;
+        if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.UP), EnumFacing.UP))
+            sides |= 0x2;
+        if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.NORTH), EnumFacing.NORTH))
+            sides |= 0x4;
+        if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.SOUTH), EnumFacing.SOUTH))
+            sides |= 0x8;
+        if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.WEST), EnumFacing.WEST))
+            sides |= 0x10;
+        if (block.shouldSideBeRendered(world, pos.offset(EnumFacing.EAST), EnumFacing.EAST))
+            sides |= 0x20;
+        return sides;
+    }
+
+    public void deleteGlResources() {
+        super.deleteGlResources();
+        if (this.vertexBuffer != null)
+            this.vertexBuffer.deleteGlBuffers();
+    }
 }

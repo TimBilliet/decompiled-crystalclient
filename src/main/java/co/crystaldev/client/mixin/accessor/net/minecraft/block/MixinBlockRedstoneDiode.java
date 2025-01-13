@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin({BlockRedstoneDiode.class})
 public interface MixinBlockRedstoneDiode {
-  @Accessor("isRepeaterPowered")
-  boolean getIsRepeaterPowered();
+    @Accessor("isRepeaterPowered")
+    boolean getIsRepeaterPowered();
 }
 
 

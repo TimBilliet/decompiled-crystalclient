@@ -4,7 +4,9 @@ import co.crystaldev.client.font.Fonts;
 import co.crystaldev.client.gui.GuiOptions;
 import co.crystaldev.client.gui.ease.Animation;
 import co.crystaldev.client.gui.ease.Easing;
+
 import java.awt.Color;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
@@ -48,7 +50,7 @@ public class SplashScreen {
                 .getScaledWidth(), sr.getScaledHeight(), 1920.0F, 1080.0F);
         renderProgress(sr);
         if (animation != null) {
-            Gui.drawRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight(), (new Color(0, 0, 0, (int)(255.0F * animation.getValue()))).getRGB());
+            Gui.drawRect(0, 0, sr.getScaledWidth(), sr.getScaledHeight(), (new Color(0, 0, 0, (int) (255.0F * animation.getValue()))).getRGB());
             GlStateManager.resetColor();
         }
         framebuffer.unbindFramebuffer();
@@ -69,8 +71,8 @@ public class SplashScreen {
         double progressBarWidth = progress / 9.0D * sr.getScaledWidth();
         Gui.drawRect(0, sr.getScaledHeight() - 25, sr.getScaledWidth(), sr.getScaledHeight(), (new Color(0, 0, 0, 50)).getRGB());
         Gui.drawRect(0, sr.getScaledHeight() - 3, sr.getScaledWidth(), sr.getScaledHeight(), (new Color(0, 0, 0, 50)).getRGB());
-        Gui.drawRect(0, sr.getScaledHeight() - 3, (int)progressBarWidth, sr.getScaledHeight(), GuiOptions.Theme.DEFAULT.mainColor.getRGB());
-        Fonts.NUNITO_SEMI_BOLD_16.drawCenteredString(text + " (" + (int)(progress / 9.0D * 100.0D) + "%)", sr.getScaledWidth() / 2, sr.getScaledHeight() - 15, 16777215);
+        Gui.drawRect(0, sr.getScaledHeight() - 3, (int) progressBarWidth, sr.getScaledHeight(), GuiOptions.Theme.DEFAULT.mainColor.getRGB());
+        Fonts.NUNITO_SEMI_BOLD_16.drawCenteredString(text + " (" + (int) (progress / 9.0D * 100.0D) + "%)", sr.getScaledWidth() / 2, sr.getScaledHeight() - 15, 16777215);
     }
 
     public static void markComplete() {

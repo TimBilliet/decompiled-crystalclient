@@ -7,27 +7,27 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 
 public class DelayedGuiDisplayTicker {
-  private final GuiScreen guiScreen;
-  
-  private int ticks;
-  
-  private DelayedGuiDisplayTicker(GuiScreen guiScreen, int delay) {
-    this.guiScreen = guiScreen;
-    this.ticks = delay;
-  }
-  
-  @SubscribeEvent
-  public void onClientTick(ClientTickEvent.Pre event) {
-    this.ticks--;
-    if (this.ticks < 0) {
-      Minecraft.getMinecraft().displayGuiScreen(this.guiScreen);
-      EventBus.unregister(this);
-    } 
-  }
-  
-  public static void create(GuiScreen guiScreen, int delay) {
-    EventBus.register(new DelayedGuiDisplayTicker(guiScreen, delay));
-  }
+    private final GuiScreen guiScreen;
+
+    private int ticks;
+
+    private DelayedGuiDisplayTicker(GuiScreen guiScreen, int delay) {
+        this.guiScreen = guiScreen;
+        this.ticks = delay;
+    }
+
+    @SubscribeEvent
+    public void onClientTick(ClientTickEvent.Pre event) {
+        this.ticks--;
+        if (this.ticks < 0) {
+            Minecraft.getMinecraft().displayGuiScreen(this.guiScreen);
+            EventBus.unregister(this);
+        }
+    }
+
+    public static void create(GuiScreen guiScreen, int delay) {
+        EventBus.register(new DelayedGuiDisplayTicker(guiScreen, delay));
+    }
 }
 
 

@@ -18,36 +18,36 @@ import java.util.Iterator;
 
 @Mixin({EntityLivingBase.class})
 public abstract class MixinEntityLivingBase {
-  @Redirect(method = {"onLivingUpdate"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;isInWater()Z"))
-  private boolean EntityLivingBase$isInWater(EntityLivingBase entityLivingBase) {
-    if (entityLivingBase instanceof EntityPlayer)
-      return (!((EntityPlayer)entityLivingBase).capabilities.isFlying && entityLivingBase.isInWater());
-    return entityLivingBase.isInWater();
-  }
+    @Redirect(method = {"onLivingUpdate"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;isInWater()Z"))
+    private boolean EntityLivingBase$isInWater(EntityLivingBase entityLivingBase) {
+        if (entityLivingBase instanceof EntityPlayer)
+            return (!((EntityPlayer) entityLivingBase).capabilities.isFlying && entityLivingBase.isInWater());
+        return entityLivingBase.isInWater();
+    }
 
-  @Redirect(method = {"onLivingUpdate"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;isInLava()Z"))
-  private boolean EntityLivingBase$isInLava(EntityLivingBase entityLivingBase) {
-    if (entityLivingBase instanceof EntityPlayer)
-      return (!((EntityPlayer)entityLivingBase).capabilities.isFlying && entityLivingBase.isInLava());
-    return entityLivingBase.isInLava();
-  }
+    @Redirect(method = {"onLivingUpdate"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/EntityLivingBase;isInLava()Z"))
+    private boolean EntityLivingBase$isInLava(EntityLivingBase entityLivingBase) {
+        if (entityLivingBase instanceof EntityPlayer)
+            return (!((EntityPlayer) entityLivingBase).capabilities.isFlying && entityLivingBase.isInLava());
+        return entityLivingBase.isInLava();
+    }
 
-  @Inject(method = {"updatePotionEffects"}, locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true, at = {@At(value = "INVOKE", target = "Lnet/minecraft/potion/PotionEffect;onUpdate(Lnet/minecraft/entity/EntityLivingBase;)Z")})
-  private void EntityLivingBase$checkPotionEffect(CallbackInfo ci, Iterator<Integer> iterator, Integer integer, PotionEffect potioneffect) {
-    if (potioneffect == null)
-      ci.cancel();
-  }
+    @Inject(method = {"updatePotionEffects"}, locals = LocalCapture.CAPTURE_FAILSOFT, cancellable = true, at = {@At(value = "INVOKE", target = "Lnet/minecraft/potion/PotionEffect;onUpdate(Lnet/minecraft/entity/EntityLivingBase;)Z")})
+    private void EntityLivingBase$checkPotionEffect(CallbackInfo ci, Iterator<Integer> iterator, Integer integer, PotionEffect potioneffect) {
+        if (potioneffect == null)
+            ci.cancel();
+    }
 
-  @Inject(method = {"updatePotionEffects"}, cancellable = true, at = {@At(value = "INVOKE", target = "Lnet/minecraft/world/World;spawnParticle(Lnet/minecraft/util/EnumParticleTypes;DDDDDD[I)V")})
-  private void cleanDisplay(CallbackInfo ci) {
-    if (NoLag.isDisabled((NoLag.getInstance()).showOwnParticles) && (Object)this == (Minecraft.getMinecraft()).thePlayer)
-      ci.cancel();
-  }
+    @Inject(method = {"updatePotionEffects"}, cancellable = true, at = {@At(value = "INVOKE", target = "Lnet/minecraft/world/World;spawnParticle(Lnet/minecraft/util/EnumParticleTypes;DDDDDD[I)V")})
+    private void cleanDisplay(CallbackInfo ci) {
+        if (NoLag.isDisabled((NoLag.getInstance()).showOwnParticles) && (Object) this == (Minecraft.getMinecraft()).thePlayer)
+            ci.cancel();
+    }
 
-  @Inject(method = {"getLook"}, cancellable = true, at = {@At("HEAD")})
-  public void getLook(float partialTicks, CallbackInfoReturnable<Vec3> cir) {
-    EntityLivingBase self = (EntityLivingBase)(Object)this;
-    if (partialTicks != 1.0F && self instanceof EntityPlayer)
-      cir.setReturnValue(self.getLook(1.0F));
-  }
+    @Inject(method = {"getLook"}, cancellable = true, at = {@At("HEAD")})
+    public void getLook(float partialTicks, CallbackInfoReturnable<Vec3> cir) {
+        EntityLivingBase self = (EntityLivingBase) (Object) this;
+        if (partialTicks != 1.0F && self instanceof EntityPlayer)
+            cir.setReturnValue(self.getLook(1.0F));
+    }
 }

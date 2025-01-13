@@ -12,11 +12,11 @@ import java.util.Map;
 
 @Mixin({TextureManager.class})
 public interface MixinTextureManager {
-  @Accessor("listTickables")
-  List<ITickable> getListTickables();
-  
-  @Accessor("mapTextureObjects")
-  Map<ResourceLocation, ITextureObject> getMapTextureObjects();
+    @Accessor("listTickables")
+    List<ITickable> getListTickables();
+
+    @Accessor("mapTextureObjects")
+    Map<ResourceLocation, ITextureObject> getMapTextureObjects();
 }
 
 

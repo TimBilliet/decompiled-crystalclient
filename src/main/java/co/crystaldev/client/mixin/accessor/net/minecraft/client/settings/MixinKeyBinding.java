@@ -8,10 +8,10 @@ import java.util.List;
 
 @Mixin({KeyBinding.class})
 public interface MixinKeyBinding {
-  @Accessor
-  static List<KeyBinding> getKeybindArray() {
-    throw new UnsupportedOperationException("Mixin failed to inject!");
-  }
+    @Accessor
+    static List<KeyBinding> getKeybindArray() {
+        throw new UnsupportedOperationException("Mixin failed to inject!");
+    }
 }
 
 

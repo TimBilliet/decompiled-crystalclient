@@ -4,15 +4,15 @@ import mchorse.emoticons.skin_n_bones.api.bobj.BOBJArmature;
 import net.minecraft.entity.EntityLivingBase;
 
 public interface IAnimator {
-  void refresh();
-  
-  void setEmote(ActionPlayback paramActionPlayback);
-  
-  void update(EntityLivingBase paramEntityLivingBase);
-  
-  BOBJArmature useArmature(BOBJArmature paramBOBJArmature);
-  
-  void applyActions(BOBJArmature paramBOBJArmature, float paramFloat);
+    void refresh();
+
+    void setEmote(ActionPlayback paramActionPlayback);
+
+    void update(EntityLivingBase paramEntityLivingBase);
+
+    BOBJArmature useArmature(BOBJArmature paramBOBJArmature);
+
+    void applyActions(BOBJArmature paramBOBJArmature, float paramFloat);
 }
 
 

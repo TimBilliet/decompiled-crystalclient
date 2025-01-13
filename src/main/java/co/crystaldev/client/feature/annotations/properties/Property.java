@@ -5,9 +5,9 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Property {
-  String label();
-  
-  Class<? extends Annotation>[] requires() default {};
+    String label();
+
+    Class<? extends Annotation>[] requires() default {};
 }
 
 

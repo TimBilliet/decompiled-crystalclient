@@ -13,30 +13,30 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({ModelRenderer.class})
 public abstract class MixinModelRenderer {
-  @Shadow
-  private boolean compiled;
-  
-  @Unique
-  private boolean compiledState;
-  
-  @Inject(method = {"render"}, at = {@At("HEAD")})
-  private void resetCompiled(float j, CallbackInfo ci) {
-    if (this.compiledState != NoLag.isEnabled((NoLag.getInstance()).batchModelRendering))
-      this.compiled = false;
-  }
-  
-  @Inject(method = {"compileDisplayList"}, at = {@At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/Tessellator;getWorldRenderer()Lnet/minecraft/client/renderer/WorldRenderer;")})
-  private void beginRendering(CallbackInfo ci) {
-    this.compiledState = NoLag.isEnabled((NoLag.getInstance()).batchModelRendering);
-    if (this.compiledState)
-      Tessellator.getInstance().getWorldRenderer().begin(7, DefaultVertexFormats.OLDMODEL_POSITION_TEX_NORMAL);
-  }
-  
-  @Inject(method = {"compileDisplayList"}, at = {@At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL11;glEndList()V", remap = false)})
-  private void draw(CallbackInfo ci) {
-    if (NoLag.isEnabled((NoLag.getInstance()).batchModelRendering))
-      Tessellator.getInstance().draw();
-  }
+    @Shadow
+    private boolean compiled;
+
+    @Unique
+    private boolean compiledState;
+
+    @Inject(method = {"render"}, at = {@At("HEAD")})
+    private void resetCompiled(float j, CallbackInfo ci) {
+        if (this.compiledState != NoLag.isEnabled((NoLag.getInstance()).batchModelRendering))
+            this.compiled = false;
+    }
+
+    @Inject(method = {"compileDisplayList"}, at = {@At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/Tessellator;getWorldRenderer()Lnet/minecraft/client/renderer/WorldRenderer;")})
+    private void beginRendering(CallbackInfo ci) {
+        this.compiledState = NoLag.isEnabled((NoLag.getInstance()).batchModelRendering);
+        if (this.compiledState)
+            Tessellator.getInstance().getWorldRenderer().begin(7, DefaultVertexFormats.OLDMODEL_POSITION_TEX_NORMAL);
+    }
+
+    @Inject(method = {"compileDisplayList"}, at = {@At(value = "INVOKE", target = "Lorg/lwjgl/opengl/GL11;glEndList()V", remap = false)})
+    private void draw(CallbackInfo ci) {
+        if (NoLag.isEnabled((NoLag.getInstance()).batchModelRendering))
+            Tessellator.getInstance().draw();
+    }
 }
 
 

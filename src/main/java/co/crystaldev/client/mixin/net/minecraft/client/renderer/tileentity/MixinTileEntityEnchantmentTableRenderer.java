@@ -9,11 +9,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({TileEntityEnchantmentTableRenderer.class})
 public abstract class MixinTileEntityEnchantmentTableRenderer {
-  @Inject(method = {"renderTileEntityAt(Lnet/minecraft/tileentity/TileEntityEnchantmentTable;DDDFI)V"}, at = {@At("HEAD")}, cancellable = true)
-  private void cancelRendering(CallbackInfo ci) {
-    if (NoLag.isEnabled((NoLag.getInstance()).disableEnchantmentTableBooks))
-      ci.cancel(); 
-  }
+    @Inject(method = {"renderTileEntityAt(Lnet/minecraft/tileentity/TileEntityEnchantmentTable;DDDFI)V"}, at = {@At("HEAD")}, cancellable = true)
+    private void cancelRendering(CallbackInfo ci) {
+        if (NoLag.isEnabled((NoLag.getInstance()).disableEnchantmentTableBooks))
+            ci.cancel();
+    }
 }
 
 

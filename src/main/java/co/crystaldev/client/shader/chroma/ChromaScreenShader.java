@@ -1,9 +1,9 @@
 package co.crystaldev.client.shader.chroma;
 
 public class ChromaScreenShader extends ChromaShader {
-  public ChromaScreenShader() throws Exception {
-    super("chroma_screen");
-  }
+    public ChromaScreenShader() throws Exception {
+        super("chroma_screen");
+    }
 }
 
 

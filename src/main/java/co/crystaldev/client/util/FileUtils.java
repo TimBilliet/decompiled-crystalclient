@@ -2,6 +2,7 @@ package co.crystaldev.client.util;
 
 import co.crystaldev.client.Reference;
 import com.google.gson.JsonObject;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,9 +10,9 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class FileUtils {
-    public static final char[] INVALID_CHARS = new char[] {
+    public static final char[] INVALID_CHARS = new char[]{
             '\\', '/', ':', '*', '?', '"', '<', '>', '|', '[',
-            ']', '\'', ';', '=', ',' };
+            ']', '\'', ';', '=', ','};
 
     public static String sanitizeFileName(String filename) {
         for (char invalidChar : INVALID_CHARS) {

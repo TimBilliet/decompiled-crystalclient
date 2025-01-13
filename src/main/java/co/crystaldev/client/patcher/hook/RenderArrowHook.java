@@ -5,10 +5,10 @@ import co.crystaldev.client.mixin.accessor.net.minecraft.entity.projectile.Mixin
 import net.minecraft.entity.projectile.EntityArrow;
 
 public class RenderArrowHook {
-  public static boolean cancelRendering(EntityArrow entity) {
-    boolean grounded = ((MixinEntityArrow)entity).getInGround();
-    return (NoLag.isEnabled((NoLag.getInstance()).disableGroundArrows) && grounded);
-  }
+    public static boolean cancelRendering(EntityArrow entity) {
+        boolean grounded = ((MixinEntityArrow) entity).getInGround();
+        return (NoLag.isEnabled((NoLag.getInstance()).disableGroundArrows) && grounded);
+    }
 }
 
 

@@ -11,18 +11,18 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin({Chunk.class})
 public abstract class MixinChunk {
-  /**
-   * @author
-   */
-  @Overwrite
-  public IBlockState getBlockState(BlockPos pos) {
-    return ChunkHook.getBlockState((Chunk)(Object)this, pos);
-  }
-  
-  @ModifyArg(method = {"setBlockState"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/chunk/Chunk;relightBlock(III)V", ordinal = 0), index = 1)
-  private int subtractOneFromY(int y) {
-    return y - 1;
-  }
+    /**
+     * @author
+     */
+    @Overwrite
+    public IBlockState getBlockState(BlockPos pos) {
+        return ChunkHook.getBlockState((Chunk) (Object) this, pos);
+    }
+
+    @ModifyArg(method = {"setBlockState"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/chunk/Chunk;relightBlock(III)V", ordinal = 0), index = 1)
+    private int subtractOneFromY(int y) {
+        return y - 1;
+    }
 }
 
 

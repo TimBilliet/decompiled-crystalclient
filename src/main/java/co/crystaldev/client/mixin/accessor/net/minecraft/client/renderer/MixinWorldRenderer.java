@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin({WorldRenderer.class})
 public interface MixinWorldRenderer {
-  @Accessor("isDrawing")
-  boolean isDrawing();
+    @Accessor("isDrawing")
+    boolean isDrawing();
 }
 
 

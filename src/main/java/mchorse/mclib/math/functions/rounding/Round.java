@@ -4,17 +4,17 @@ import mchorse.mclib.math.IValue;
 import mchorse.mclib.math.functions.Function;
 
 public class Round extends Function {
-  public Round(IValue[] values, String name) throws Exception {
-    super(values, name);
-  }
-  
-  public int getRequiredArguments() {
-    return 1;
-  }
-  
-  public double get() {
-    return Math.round(getArg(0));
-  }
+    public Round(IValue[] values, String name) throws Exception {
+        super(values, name);
+    }
+
+    public int getRequiredArguments() {
+        return 1;
+    }
+
+    public double get() {
+        return Math.round(getArg(0));
+    }
 }
 
 

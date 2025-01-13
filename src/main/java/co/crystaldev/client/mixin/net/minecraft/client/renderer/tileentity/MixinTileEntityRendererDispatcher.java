@@ -9,10 +9,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({TileEntityRendererDispatcher.class})
 public abstract class MixinTileEntityRendererDispatcher {
-  @Inject(method = {"renderTileEntity"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/world/World;getCombinedLight(Lnet/minecraft/util/BlockPos;I)I")})
-  private void enableLighting(CallbackInfo ci) {
-    RenderHelper.enableStandardItemLighting();
-  }
+    @Inject(method = {"renderTileEntity"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/world/World;getCombinedLight(Lnet/minecraft/util/BlockPos;I)I")})
+    private void enableLighting(CallbackInfo ci) {
+        RenderHelper.enableStandardItemLighting();
+    }
 }
 
 

@@ -19,29 +19,29 @@ import java.util.Map;
 
 @Mixin({RenderManager.class})
 public abstract class MixinRenderManager {
-  @Shadow
-  public Map<Class<? extends Entity>, Render<? extends Entity>> entityRenderMap;
-  
-  @Inject(method = {"<init>"}, at = {@At("RETURN")})
-  public void onConstruct(TextureManager renderEngineIn, RenderItem itemRendererIn, CallbackInfo ci) {
-    this.entityRenderMap.put(EntityTNTPrimed.class, new RenderTNTPrimed((RenderManager)(Object)this));
-    this.entityRenderMap.put(EntityFallingBlock.class, new RenderFallingBlock((RenderManager)(Object)this));
-  }
-  
-  @Inject(method = {"doRenderEntity"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/Render;doRender(Lnet/minecraft/entity/Entity;DDDFF)V", shift = At.Shift.BEFORE)})
-  public void doRender(CallbackInfoReturnable<Boolean> ci) {
-    GlStateManager.enableDepth();
-  }
-  
-  @Redirect(method = {"cacheActiveRenderInfo"}, at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/entity/RenderManager;playerViewX:F", opcode = 181))
-  private void cacheActiveRenderInfo$playerViewX(RenderManager renderManager, float value) {
-    renderManager.playerViewX = (PerspectiveMod.getInstance()).perspectiveToggled ? (PerspectiveMod.getInstance()).cameraPitch : value;
-  }
-  
-  @Redirect(method = {"cacheActiveRenderInfo"}, at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/entity/RenderManager;playerViewY:F", opcode = 181))
-  private void cacheActiveRenderInfo$playerViewY(RenderManager renderManager, float value) {
-    renderManager.playerViewY = (PerspectiveMod.getInstance()).perspectiveToggled ? (PerspectiveMod.getInstance()).cameraYaw : value;
-  }
+    @Shadow
+    public Map<Class<? extends Entity>, Render<? extends Entity>> entityRenderMap;
+
+    @Inject(method = {"<init>"}, at = {@At("RETURN")})
+    public void onConstruct(TextureManager renderEngineIn, RenderItem itemRendererIn, CallbackInfo ci) {
+        this.entityRenderMap.put(EntityTNTPrimed.class, new RenderTNTPrimed((RenderManager) (Object) this));
+        this.entityRenderMap.put(EntityFallingBlock.class, new RenderFallingBlock((RenderManager) (Object) this));
+    }
+
+    @Inject(method = {"doRenderEntity"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/entity/Render;doRender(Lnet/minecraft/entity/Entity;DDDFF)V", shift = At.Shift.BEFORE)})
+    public void doRender(CallbackInfoReturnable<Boolean> ci) {
+        GlStateManager.enableDepth();
+    }
+
+    @Redirect(method = {"cacheActiveRenderInfo"}, at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/entity/RenderManager;playerViewX:F", opcode = 181))
+    private void cacheActiveRenderInfo$playerViewX(RenderManager renderManager, float value) {
+        renderManager.playerViewX = (PerspectiveMod.getInstance()).perspectiveToggled ? (PerspectiveMod.getInstance()).cameraPitch : value;
+    }
+
+    @Redirect(method = {"cacheActiveRenderInfo"}, at = @At(value = "FIELD", target = "Lnet/minecraft/client/renderer/entity/RenderManager;playerViewY:F", opcode = 181))
+    private void cacheActiveRenderInfo$playerViewY(RenderManager renderManager, float value) {
+        renderManager.playerViewY = (PerspectiveMod.getInstance()).perspectiveToggled ? (PerspectiveMod.getInstance()).cameraYaw : value;
+    }
 }
 
 

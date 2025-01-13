@@ -9,13 +9,13 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin({Minecraft.class})
 public abstract class MixinMinecraft {
-  @Redirect(method = {"runTick"}, at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;getEventDWheel()I"))
-  private int cancelScrollForZoom() {
-    int wheel = Mouse.getEventDWheel();
-    if (Zoom.getInstance() != null && (Zoom.getInstance()).scrollToZoom && (Zoom.getInstance()).zoomed)
-      return 0;
-    return wheel;
-  }
+    @Redirect(method = {"runTick"}, at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Mouse;getEventDWheel()I"))
+    private int cancelScrollForZoom() {
+        int wheel = Mouse.getEventDWheel();
+        if (Zoom.getInstance() != null && (Zoom.getInstance()).scrollToZoom && (Zoom.getInstance()).zoomed)
+            return 0;
+        return wheel;
+    }
 }
 
 

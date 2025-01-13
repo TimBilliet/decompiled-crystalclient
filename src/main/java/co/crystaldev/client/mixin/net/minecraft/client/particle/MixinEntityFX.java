@@ -10,20 +10,20 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin({EntityFX.class})
 public abstract class MixinEntityFX extends Entity {
-  public MixinEntityFX(World worldIn) {
-    super(worldIn);
-  }
-  
-  public void moveEntity(double x, double y, double z) {
-    this.posX += this.motionX;
-    this.posY += this.motionY;
-    this.posZ += this.motionZ;
-  }
-  
-  @Redirect(method = {"renderParticle"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/particle/EntityFX;getBrightnessForRender(F)I"))
-  private int staticParticleColor(EntityFX entityFX, float partialTicks) {
-    return NoLag.isEnabled((NoLag.getInstance()).staticParticleColor) ? 15728880 : entityFX.getBrightnessForRender(partialTicks);
-  }
+    public MixinEntityFX(World worldIn) {
+        super(worldIn);
+    }
+
+    public void moveEntity(double x, double y, double z) {
+        this.posX += this.motionX;
+        this.posY += this.motionY;
+        this.posZ += this.motionZ;
+    }
+
+    @Redirect(method = {"renderParticle"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/particle/EntityFX;getBrightnessForRender(F)I"))
+    private int staticParticleColor(EntityFX entityFX, float partialTicks) {
+        return NoLag.isEnabled((NoLag.getInstance()).staticParticleColor) ? 15728880 : entityFX.getBrightnessForRender(partialTicks);
+    }
 }
 
 

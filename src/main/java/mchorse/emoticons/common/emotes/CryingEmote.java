@@ -8,17 +8,17 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumParticleTypes;
 
 public class CryingEmote extends Emote {
-  public CryingEmote(String name, int duration, boolean looping, String sound) {
-    super(name, duration, looping, sound);
-  }
-  
-  public void progressAnimation(EntityLivingBase entity, BOBJArmature armature, AnimatorEmoticonsController animator, int tick, float partial) {
-    if (tick % 2 == 0) {
-      BOBJBone hand = (BOBJBone)armature.bones.get("head");
-      Vector4f result = animator.calcPosition(entity, hand, 0.0F, 0.5F, 0.35F, partial);
-      entity.worldObj.spawnParticle(EnumParticleTypes.WATER_DROP, result.x, result.y, result.z, 1.0D, -1.0D, 1.0D, new int[0]);
-    } 
-  }
+    public CryingEmote(String name, int duration, boolean looping, String sound) {
+        super(name, duration, looping, sound);
+    }
+
+    public void progressAnimation(EntityLivingBase entity, BOBJArmature armature, AnimatorEmoticonsController animator, int tick, float partial) {
+        if (tick % 2 == 0) {
+            BOBJBone hand = (BOBJBone) armature.bones.get("head");
+            Vector4f result = animator.calcPosition(entity, hand, 0.0F, 0.5F, 0.35F, partial);
+            entity.worldObj.spawnParticle(EnumParticleTypes.WATER_DROP, result.x, result.y, result.z, 1.0D, -1.0D, 1.0D, new int[0]);
+        }
+    }
 }
 
 

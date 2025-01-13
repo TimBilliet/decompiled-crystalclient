@@ -3,9 +3,9 @@ package co.crystaldev.client.util.objects.partners;
 import net.minecraft.client.multiplayer.ServerData;
 
 public class PartneredServerData extends ServerData {
-  public PartneredServerData(String name, String ip, boolean isLan) {
-    super(name, ip, isLan);
-  }
+    public PartneredServerData(String name, String ip, boolean isLan) {
+        super(name, ip, isLan);
+    }
 }
 
 

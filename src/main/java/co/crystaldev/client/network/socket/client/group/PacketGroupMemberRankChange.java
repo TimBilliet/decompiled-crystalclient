@@ -12,24 +12,25 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class PacketGroupMemberRankChange extends Packet {
-  private UUID uuid;
+    private UUID uuid;
 
-  private Rank rank;
+    private Rank rank;
 
-  public void write(ByteBufWrapper out) throws IOException {}
-
-  public void read(ByteBufWrapper in) throws IOException {
-    this.uuid = in.readUUID();
-    this.rank = Rank.fromString(in.readString());
-  }
-
-  public void process(INetHandler handler) {
-    Group group = GroupManager.getSelectedGroup();
-    if (group != null) {
-      group.getMember(this.uuid).setRank(this.rank);
-      ScreenGroups.updateMembers();
+    public void write(ByteBufWrapper out) throws IOException {
     }
-  }
+
+    public void read(ByteBufWrapper in) throws IOException {
+        this.uuid = in.readUUID();
+        this.rank = Rank.fromString(in.readString());
+    }
+
+    public void process(INetHandler handler) {
+        Group group = GroupManager.getSelectedGroup();
+        if (group != null) {
+            group.getMember(this.uuid).setRank(this.rank);
+            ScreenGroups.updateMembers();
+        }
+    }
 }
 
 

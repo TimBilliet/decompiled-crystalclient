@@ -6,7 +6,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public interface IValidPlayerFacing {
-  boolean isValid(IBlockState paramIBlockState, EntityPlayer paramEntityPlayer, BlockPos paramBlockPos, World paramWorld);
+    boolean isValid(IBlockState paramIBlockState, EntityPlayer paramEntityPlayer, BlockPos paramBlockPos, World paramWorld);
 }
 
 

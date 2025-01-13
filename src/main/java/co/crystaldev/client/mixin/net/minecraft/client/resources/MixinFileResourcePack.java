@@ -10,17 +10,17 @@ import java.io.InputStream;
 
 @Mixin({FileResourcePack.class})
 public abstract class MixinFileResourcePack {
-  @Inject(method = {"getInputStreamByName"}, cancellable = true, at = {@At("HEAD")})
-  private void getInputStreamByName(String name, CallbackInfoReturnable<InputStream> ci) {
-    if (name.contains("crystalclient"))
-      ci.setReturnValue(null); 
-  }
-  
-  @Inject(method = {"hasResourceName"}, cancellable = true, at = {@At("HEAD")})
-  private void hasResourceName(String name, CallbackInfoReturnable<Boolean> ci) {
-    if (name.contains("crystalclient"))
-      ci.setReturnValue(Boolean.valueOf(false)); 
-  }
+    @Inject(method = {"getInputStreamByName"}, cancellable = true, at = {@At("HEAD")})
+    private void getInputStreamByName(String name, CallbackInfoReturnable<InputStream> ci) {
+        if (name.contains("crystalclient"))
+            ci.setReturnValue(null);
+    }
+
+    @Inject(method = {"hasResourceName"}, cancellable = true, at = {@At("HEAD")})
+    private void hasResourceName(String name, CallbackInfoReturnable<Boolean> ci) {
+        if (name.contains("crystalclient"))
+            ci.setReturnValue(Boolean.valueOf(false));
+    }
 }
 
 

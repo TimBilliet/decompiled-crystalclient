@@ -17,53 +17,53 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CommandSchematicUndo extends CommandSchematicaBase {
-  public String getCommandName() {
-    return "schematicaUndo";
-  }
-  
-  public String getCommandUsage(ICommandSender sender) {
-    return I18n.format("/schematicaUndo", new Object[0]);
-  }
-  
-  public List<String> func_180525_a(ICommandSender sender, String[] args, BlockPos pos) {
-    return null;
-  }
-  
-  public List<String> getCommandAliases() {
-    return Arrays.asList(new String[] { "schematicaundo", "schematicundo", "schematicUndo" });
-  }
-  
-  public boolean canCommandSenderUseCommand(ICommandSender obj) {
-    return true;
-  }
-  
-  public boolean isUsernameIndex(String[] strings, int i) {
-    return false;
-  }
-  
-  public int compareTo(ICommand obj) {
-    return 0;
-  }
-  
-  public void processCommand(ICommandSender sender, String[] args) throws CommandException {
-    SchematicWorld schematic = ClientProxy.currentSchematic.schematic;
-    if (schematic == null)
-      throw new CommandException(I18n.format("schematica.command.replace.noSchematic", new Object[0]), new Object[0]); 
-    if (ClientProxy.currentSchematic.replaceHistory.isEmpty())
-      throw new CommandException(I18n.format("There was nothing to undo."));
-    SchematicReplaceAction action = ClientProxy.currentSchematic.replaceHistory.pop();
-    if (action == null)
-      throw new CommandException(I18n.format("There was nothing to undo."));
-    try {
-      BlockStateReplacer.BlockStateInfo replacementInfo = action.getPrevious();
-      BlockStateReplacer replacer = BlockStateReplacer.forBlockState(replacementInfo.block.getDefaultState());
-      int count = schematic.replaceBlocks(action.getUpdatedPositions(), replacer, replacementInfo.stateData);
-      sender.addChatMessage((IChatComponent)new ChatComponentText("Undid replacement of " + count + " blocks."));
-    } catch (Exception e) {
-      Reference.logger.error("Something went wrong!", e);
-      throw new CommandException(e.getMessage(), new Object[0]);
-    } 
-  }
+    public String getCommandName() {
+        return "schematicaUndo";
+    }
+
+    public String getCommandUsage(ICommandSender sender) {
+        return I18n.format("/schematicaUndo", new Object[0]);
+    }
+
+    public List<String> func_180525_a(ICommandSender sender, String[] args, BlockPos pos) {
+        return null;
+    }
+
+    public List<String> getCommandAliases() {
+        return Arrays.asList(new String[]{"schematicaundo", "schematicundo", "schematicUndo"});
+    }
+
+    public boolean canCommandSenderUseCommand(ICommandSender obj) {
+        return true;
+    }
+
+    public boolean isUsernameIndex(String[] strings, int i) {
+        return false;
+    }
+
+    public int compareTo(ICommand obj) {
+        return 0;
+    }
+
+    public void processCommand(ICommandSender sender, String[] args) throws CommandException {
+        SchematicWorld schematic = ClientProxy.currentSchematic.schematic;
+        if (schematic == null)
+            throw new CommandException(I18n.format("schematica.command.replace.noSchematic", new Object[0]), new Object[0]);
+        if (ClientProxy.currentSchematic.replaceHistory.isEmpty())
+            throw new CommandException(I18n.format("There was nothing to undo."));
+        SchematicReplaceAction action = ClientProxy.currentSchematic.replaceHistory.pop();
+        if (action == null)
+            throw new CommandException(I18n.format("There was nothing to undo."));
+        try {
+            BlockStateReplacer.BlockStateInfo replacementInfo = action.getPrevious();
+            BlockStateReplacer replacer = BlockStateReplacer.forBlockState(replacementInfo.block.getDefaultState());
+            int count = schematic.replaceBlocks(action.getUpdatedPositions(), replacer, replacementInfo.stateData);
+            sender.addChatMessage((IChatComponent) new ChatComponentText("Undid replacement of " + count + " blocks."));
+        } catch (Exception e) {
+            Reference.logger.error("Something went wrong!", e);
+            throw new CommandException(e.getMessage(), new Object[0]);
+        }
+    }
 }
 
 

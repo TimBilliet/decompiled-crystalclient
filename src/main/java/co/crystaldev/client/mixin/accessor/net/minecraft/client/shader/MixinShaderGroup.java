@@ -9,8 +9,8 @@ import java.util.List;
 
 @Mixin({ShaderGroup.class})
 public interface MixinShaderGroup {
-  @Accessor("listShaders")
-  List<Shader> getListShaders();
+    @Accessor("listShaders")
+    List<Shader> getListShaders();
 }
 
 

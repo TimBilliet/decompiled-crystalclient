@@ -1,11 +1,11 @@
 package mapwriter.config;
 
 public class ConfigurationHandler {
-  public static void loadConfig() {
-    Config.fullScreenMap.loadConfig();
-    Config.largeMap.loadConfig();
-    Config.smallMap.loadConfig();
-  }
+    public static void loadConfig() {
+        Config.fullScreenMap.loadConfig();
+        Config.largeMap.loadConfig();
+        Config.smallMap.loadConfig();
+    }
 }
 
 

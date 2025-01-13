@@ -6,16 +6,16 @@ import net.minecraft.util.IChatComponent;
 import java.util.function.Consumer;
 
 public class CallbackClickEvent extends ClickEvent {
-  private final Consumer<IChatComponent> consumer;
-  
-  public Consumer<IChatComponent> getConsumer() {
-    return this.consumer;
-  }
-  
-  public CallbackClickEvent(Consumer<IChatComponent> consumer) {
-    super(null, null);
-    this.consumer = consumer;
-  }
+    private final Consumer<IChatComponent> consumer;
+
+    public Consumer<IChatComponent> getConsumer() {
+        return this.consumer;
+    }
+
+    public CallbackClickEvent(Consumer<IChatComponent> consumer) {
+        super(null, null);
+        this.consumer = consumer;
+    }
 }
 
 

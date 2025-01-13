@@ -9,10 +9,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({MovementInputFromOptions.class})
-public abstract class MixinMovementUpdateFromOptions extends MovementInput{
-  @Inject(method = {"updatePlayerMoveState"}, at = {@At("TAIL")})
-  public void updatePlayerMoveState(CallbackInfo ci) {
-    (new MovementInputUpdateEvent(this)).call();
-  }
+public abstract class MixinMovementUpdateFromOptions extends MovementInput {
+    @Inject(method = {"updatePlayerMoveState"}, at = {@At("TAIL")})
+    public void updatePlayerMoveState(CallbackInfo ci) {
+        (new MovementInputUpdateEvent(this)).call();
+    }
 }
 

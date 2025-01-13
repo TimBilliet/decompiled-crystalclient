@@ -13,23 +13,23 @@ import java.io.InputStream;
 
 @Mixin({AbstractResourcePack.class})
 public abstract class MixinAbstractResourcePack {
-  /**
-   * @author Tim
-   */
-  @Overwrite
-  public BufferedImage getPackImage() throws IOException {
-    BufferedImage image = TextureUtil.readBufferedImage(getInputStreamByName("pack.png"));
-    if (image == null)
-      return null; 
-    BufferedImage scaledImage = new BufferedImage(64, 64, 2);
-    Graphics graphics = scaledImage.getGraphics();
-    graphics.drawImage(image, 0, 0, 64, 64, null);
-    graphics.dispose();
-    return scaledImage;
-  }
-  
-  @Shadow
-  protected abstract InputStream getInputStreamByName(String paramString);
+    /**
+     * @author Tim
+     */
+    @Overwrite
+    public BufferedImage getPackImage() throws IOException {
+        BufferedImage image = TextureUtil.readBufferedImage(getInputStreamByName("pack.png"));
+        if (image == null)
+            return null;
+        BufferedImage scaledImage = new BufferedImage(64, 64, 2);
+        Graphics graphics = scaledImage.getGraphics();
+        graphics.drawImage(image, 0, 0, 64, 64, null);
+        graphics.dispose();
+        return scaledImage;
+    }
+
+    @Shadow
+    protected abstract InputStream getInputStreamByName(String paramString);
 }
 
 

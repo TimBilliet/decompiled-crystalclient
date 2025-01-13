@@ -12,14 +12,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({ModelBiped.class})
 public abstract class MixinModelBiped {
-  @Shadow
-  public ModelRenderer bipedRightArm;
-  
-  @Inject(method = {"setRotationAngles"}, at = {@At(value = "FIELD", target = "Lnet/minecraft/client/model/ModelRenderer;rotateAngleY:F", ordinal = 6, shift = At.Shift.AFTER)})
-  public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn, CallbackInfo ci) {
-    if ((OldAnimations.getInstance()).enabled && (OldAnimations.getInstance()).revertBlocking)
-      this.bipedRightArm.rotateAngleY = 0.0F;
-  }
+    @Shadow
+    public ModelRenderer bipedRightArm;
+
+    @Inject(method = {"setRotationAngles"}, at = {@At(value = "FIELD", target = "Lnet/minecraft/client/model/ModelRenderer;rotateAngleY:F", ordinal = 6, shift = At.Shift.AFTER)})
+    public void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn, CallbackInfo ci) {
+        if ((OldAnimations.getInstance()).enabled && (OldAnimations.getInstance()).revertBlocking)
+            this.bipedRightArm.rotateAngleY = 0.0F;
+    }
 }
 
 

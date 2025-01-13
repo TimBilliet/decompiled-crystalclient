@@ -8,8 +8,8 @@ import java.util.List;
 
 @Mixin({GuiOverlayDebug.class})
 public interface MixinGuiOverlayDebug {
-  @Invoker("call")
-  List<String> invokeCall();
+    @Invoker("call")
+    List<String> invokeCall();
 }
 
 

@@ -8,10 +8,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin({TileEntityBannerRenderer.class})
 public abstract class MixinTileEntityBannerRenderer {
-  @Redirect(method = {"renderTileEntityAt(Lnet/minecraft/tileentity/TileEntityBanner;DDDFI)V"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getTotalWorldTime()J"))
-  private long resolveOverflow(World world) {
-    return world.getTotalWorldTime() % 100L;
-  }
+    @Redirect(method = {"renderTileEntityAt(Lnet/minecraft/tileentity/TileEntityBanner;DDDFI)V"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;getTotalWorldTime()J"))
+    private long resolveOverflow(World world) {
+        return world.getTotalWorldTime() % 100L;
+    }
 }
 
 

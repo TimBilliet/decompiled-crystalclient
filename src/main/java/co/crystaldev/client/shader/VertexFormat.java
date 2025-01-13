@@ -5,18 +5,18 @@ import java.util.Collections;
 import java.util.List;
 
 public enum VertexFormat {
-  POSITION(VertexFormatElement.POSITION),
-  POSITION_COLOR(VertexFormatElement.POSITION, VertexFormatElement.COLOR);
-  
-  private final List<VertexFormatElement> vertexFormatElements;
-  
-  VertexFormat(VertexFormatElement... vertexFormatElements) {
-    this.vertexFormatElements = Collections.unmodifiableList(Arrays.asList(vertexFormatElements));
-  }
-  
-  public List<VertexFormatElement> getVertexFormatElements() {
-    return this.vertexFormatElements;
-  }
+    POSITION(VertexFormatElement.POSITION),
+    POSITION_COLOR(VertexFormatElement.POSITION, VertexFormatElement.COLOR);
+
+    private final List<VertexFormatElement> vertexFormatElements;
+
+    VertexFormat(VertexFormatElement... vertexFormatElements) {
+        this.vertexFormatElements = Collections.unmodifiableList(Arrays.asList(vertexFormatElements));
+    }
+
+    public List<VertexFormatElement> getVertexFormatElements() {
+        return this.vertexFormatElements;
+    }
 }
 
 

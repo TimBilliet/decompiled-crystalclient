@@ -9,11 +9,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({GuiAchievement.class})
 public abstract class MixinGuiAchievement {
-  @Inject(method = {"updateAchievementWindow"}, at = {@At("HEAD")}, cancellable = true)
-  private void disableAchievements(CallbackInfo ci) {
-    if ((ClientOptions.getInstance()).disableAchievements)
-      ci.cancel(); 
-  }
+    @Inject(method = {"updateAchievementWindow"}, at = {@At("HEAD")}, cancellable = true)
+    private void disableAchievements(CallbackInfo ci) {
+        if ((ClientOptions.getInstance()).disableAchievements)
+            ci.cancel();
+    }
 }
 
 

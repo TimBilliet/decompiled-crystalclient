@@ -11,41 +11,41 @@ import net.minecraft.world.IWorldAccess;
 import net.minecraft.world.World;
 
 public class WorldHandler {
-  public static WorldHandler INSTANCE = new WorldHandler();
-  
-  @SubscribeEvent
-  public void onShutdown(ShutdownEvent event) {
-    if (ClientProxy.currentSchematic.schematic != null)
-      Schematica.proxy.unloadSchematic(); 
-  }
-  
-  @SubscribeEvent
-  public void onLoad(WorldEvent.Load event) {
-    if (event.world.isRemote && !(event.world instanceof com.github.lunatrius.schematica.client.world.SchematicWorld)) {
-      RenderSchematic.INSTANCE.setWorldAndLoadRenderers(ClientProxy.currentSchematic.schematic);
-      addWorldAccess(event.world, (IWorldAccess)RenderSchematic.INSTANCE);
-    } 
-  }
-  
-  @SubscribeEvent
-  public void onUnload(WorldEvent.Unload event) {
-    if (event.world.isRemote)
-      removeWorldAccess(event.world, (IWorldAccess)RenderSchematic.INSTANCE); 
-  }
-  
-  public static void addWorldAccess(World world, IWorldAccess schematic) {
-    if (world != null && schematic != null) {
-      Reference.logger.debug("Adding world access to {}", new Object[] { world });
-      world.addWorldAccess(schematic);
-    } 
-  }
-  
-  public static void removeWorldAccess(World world, IWorldAccess schematic) {
-    if (world != null && schematic != null) {
-      Reference.logger.debug("Removing world access from {}", new Object[] { world });
-      world.removeWorldAccess(schematic);
-    } 
-  }
+    public static WorldHandler INSTANCE = new WorldHandler();
+
+    @SubscribeEvent
+    public void onShutdown(ShutdownEvent event) {
+        if (ClientProxy.currentSchematic.schematic != null)
+            Schematica.proxy.unloadSchematic();
+    }
+
+    @SubscribeEvent
+    public void onLoad(WorldEvent.Load event) {
+        if (event.world.isRemote && !(event.world instanceof com.github.lunatrius.schematica.client.world.SchematicWorld)) {
+            RenderSchematic.INSTANCE.setWorldAndLoadRenderers(ClientProxy.currentSchematic.schematic);
+            addWorldAccess(event.world, (IWorldAccess) RenderSchematic.INSTANCE);
+        }
+    }
+
+    @SubscribeEvent
+    public void onUnload(WorldEvent.Unload event) {
+        if (event.world.isRemote)
+            removeWorldAccess(event.world, (IWorldAccess) RenderSchematic.INSTANCE);
+    }
+
+    public static void addWorldAccess(World world, IWorldAccess schematic) {
+        if (world != null && schematic != null) {
+            Reference.logger.debug("Adding world access to {}", new Object[]{world});
+            world.addWorldAccess(schematic);
+        }
+    }
+
+    public static void removeWorldAccess(World world, IWorldAccess schematic) {
+        if (world != null && schematic != null) {
+            Reference.logger.debug("Removing world access from {}", new Object[]{world});
+            world.removeWorldAccess(schematic);
+        }
+    }
 }
 
 

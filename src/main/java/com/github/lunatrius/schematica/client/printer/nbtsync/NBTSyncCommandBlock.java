@@ -14,25 +14,25 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public class NBTSyncCommandBlock extends NBTSync {
-  public boolean execute(EntityPlayer player, World schematic, BlockPos pos, World mcWorld, BlockPos mcPos) {
-    TileEntity tileEntity = schematic.getTileEntity(pos);
-    TileEntity mcTileEntity = mcWorld.getTileEntity(mcPos);
-    if (tileEntity instanceof TileEntityCommandBlock && mcTileEntity instanceof TileEntityCommandBlock) {
-      CommandBlockLogic commandBlockLogic = ((TileEntityCommandBlock)tileEntity).getCommandBlockLogic();
-      CommandBlockLogic mcCommandBlockLogic = ((TileEntityCommandBlock)mcTileEntity).getCommandBlockLogic();
-      if (!commandBlockLogic.getCommand().equals(mcCommandBlockLogic.getCommand())) {
-        PacketBuffer packetBuffer = new PacketBuffer(Unpooled.buffer());
+    public boolean execute(EntityPlayer player, World schematic, BlockPos pos, World mcWorld, BlockPos mcPos) {
+        TileEntity tileEntity = schematic.getTileEntity(pos);
+        TileEntity mcTileEntity = mcWorld.getTileEntity(mcPos);
+        if (tileEntity instanceof TileEntityCommandBlock && mcTileEntity instanceof TileEntityCommandBlock) {
+            CommandBlockLogic commandBlockLogic = ((TileEntityCommandBlock) tileEntity).getCommandBlockLogic();
+            CommandBlockLogic mcCommandBlockLogic = ((TileEntityCommandBlock) mcTileEntity).getCommandBlockLogic();
+            if (!commandBlockLogic.getCommand().equals(mcCommandBlockLogic.getCommand())) {
+                PacketBuffer packetBuffer = new PacketBuffer(Unpooled.buffer());
 //        packetBuffer.writeByte(mcCommandBlockLogic.getCommandBlockType());
-        packetBuffer.writeByte(mcCommandBlockLogic.getSuccessCount());
+                packetBuffer.writeByte(mcCommandBlockLogic.getSuccessCount());
 //        mcCommandBlockLogic.fillInInfo((ByteBuf)packetBuffer);
-        mcCommandBlockLogic.func_145757_a(packetBuffer);
-        packetBuffer.writeString(commandBlockLogic.getCommand());
-        packetBuffer.writeBoolean(mcCommandBlockLogic.shouldTrackOutput());
-        return sendPacket(new C17PacketCustomPayload("MC|AdvCdm", packetBuffer));
-      } 
-    } 
-    return false;
-  }
+                mcCommandBlockLogic.func_145757_a(packetBuffer);
+                packetBuffer.writeString(commandBlockLogic.getCommand());
+                packetBuffer.writeBoolean(mcCommandBlockLogic.shouldTrackOutput());
+                return sendPacket(new C17PacketCustomPayload("MC|AdvCdm", packetBuffer));
+            }
+        }
+        return false;
+    }
 }
 
 

@@ -10,17 +10,17 @@ import org.spongepowered.asm.mixin.Overwrite;
 
 @Mixin({BlockChest.class})
 public abstract class MixinBlockChest extends BlockContainer {
-  protected MixinBlockChest(Material materialIn) {
-    super(materialIn);
-  }
-  
-  /**
-   * @author
-   */
-  @Overwrite
-  public boolean isOpaqueCube() {
-    return (NoLag.getInstance() != null && NoLag.isEnabled((NoLag.getInstance()).fasterChestRendering));
-  }
+    protected MixinBlockChest(Material materialIn) {
+        super(materialIn);
+    }
+
+    /**
+     * @author
+     */
+    @Overwrite
+    public boolean isOpaqueCube() {
+        return (NoLag.getInstance() != null && NoLag.isEnabled((NoLag.getInstance()).fasterChestRendering));
+    }
 
 //  @Overwrite
 //  public boolean func_149686_d() {
@@ -31,18 +31,18 @@ public abstract class MixinBlockChest extends BlockContainer {
 //  public boolean renderAsNormalBlock() {
 //    return isOpaqueCube();
 //  }
-  
-  /**
-   * @author
-   */
-  @Overwrite
-  public int getRenderType() {
-    return isOpaqueCube() ? 3 : 2;
-  }
-  
-  public EnumWorldBlockLayer getBlockLayer() {
-    return !isOpaqueCube() ? EnumWorldBlockLayer.CUTOUT_MIPPED : EnumWorldBlockLayer.SOLID;
-  }
+
+    /**
+     * @author
+     */
+    @Overwrite
+    public int getRenderType() {
+        return isOpaqueCube() ? 3 : 2;
+    }
+
+    public EnumWorldBlockLayer getBlockLayer() {
+        return !isOpaqueCube() ? EnumWorldBlockLayer.CUTOUT_MIPPED : EnumWorldBlockLayer.SOLID;
+    }
 }
 
 

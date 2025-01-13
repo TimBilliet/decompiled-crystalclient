@@ -5,12 +5,12 @@ import net.minecraft.entity.player.EntityPlayer;
 
 @Cancellable
 public class PlayerChatEvent extends PlayerEvent {
-  public String message;
-  
-  public PlayerChatEvent(EntityPlayer player, String message) {
-    super(player);
-    this.message = message;
-  }
+    public String message;
+
+    public PlayerChatEvent(EntityPlayer player, String message) {
+        super(player);
+        this.message = message;
+    }
 }
 
 

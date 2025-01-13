@@ -7,11 +7,11 @@ import co.crystaldev.client.feature.base.HudModuleBackground;
 
 @ModuleInfo(name = "World Name", description = "Displays the name of the world onscreen", category = Category.HUD)
 public class WorldName extends HudModuleBackground {
-  public String getDisplayText() {
-    if (this.mc.theWorld == null)
-      return "world"; 
-    return Client.getCurrentWorldName();
-  }
+    public String getDisplayText() {
+        if (this.mc.theWorld == null)
+            return "world";
+        return Client.getCurrentWorldName();
+    }
 }
 
 

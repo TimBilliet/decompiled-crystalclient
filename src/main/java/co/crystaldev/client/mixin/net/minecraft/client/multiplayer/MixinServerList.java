@@ -10,10 +10,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({ServerList.class})
 public abstract class MixinServerList {
-  @Inject(method = {"func_147414_b"}, at = {@At("HEAD")})
-  private static void func_147414_b(ServerData serverdata, CallbackInfo ci) {
-    ServerListExt.func_147414_b(serverdata);
-  }
+    @Inject(method = {"func_147414_b"}, at = {@At("HEAD")})
+    private static void func_147414_b(ServerData serverdata, CallbackInfo ci) {
+        ServerListExt.func_147414_b(serverdata);
+    }
 }
 
 

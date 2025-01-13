@@ -9,11 +9,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({OpenGlHelper.class})
 public abstract class MixinOpenGlHelper {
-  @Inject(method = {"setLightmapTextureCoords"}, at = {@At("RETURN")})
-  private static void setLightmapTextureCoords(int target, float p_77475_1_, float p_77475_2_, CallbackInfo ci) {
-    Client.setLastBrightnessX(p_77475_1_);
-    Client.setLastBrightnessY(p_77475_2_);
-  }
+    @Inject(method = {"setLightmapTextureCoords"}, at = {@At("RETURN")})
+    private static void setLightmapTextureCoords(int target, float p_77475_1_, float p_77475_2_, CallbackInfo ci) {
+        Client.setLastBrightnessX(p_77475_1_);
+        Client.setLastBrightnessY(p_77475_2_);
+    }
 }
 
 

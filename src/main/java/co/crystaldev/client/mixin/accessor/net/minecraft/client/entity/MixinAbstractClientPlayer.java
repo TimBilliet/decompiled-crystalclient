@@ -7,8 +7,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin({AbstractClientPlayer.class})
 public interface MixinAbstractClientPlayer {
-  @Invoker("getPlayerInfo")
-  NetworkPlayerInfo invokeGetPlayerInfo();
+    @Invoker("getPlayerInfo")
+    NetworkPlayerInfo invokeGetPlayerInfo();
 }
 
 

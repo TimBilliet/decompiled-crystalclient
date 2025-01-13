@@ -5,13 +5,15 @@ import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.world.World;
 
 public class PlaybackEntityFallingBlock extends EntityFallingBlock {
-  public PlaybackEntityFallingBlock(World world, double x, double y, double z, IBlockState state) {
-    super(world, x, y, z, state);
-  }
-  
-  public void moveEntity(double x, double y, double z) {}
-  
-  public void onUpdate() {}
+    public PlaybackEntityFallingBlock(World world, double x, double y, double z, IBlockState state) {
+        super(world, x, y, z, state);
+    }
+
+    public void moveEntity(double x, double y, double z) {
+    }
+
+    public void onUpdate() {
+    }
 }
 
 

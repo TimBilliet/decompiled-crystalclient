@@ -14,17 +14,18 @@ import co.crystaldev.client.util.RenderUtils;
 import co.crystaldev.client.util.enums.AnchorRegion;
 import co.crystaldev.client.util.enums.ChatColor;
 import co.crystaldev.client.util.objects.ModulePosition;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import net.minecraft.util.MathHelper;
 
 @ModuleInfo(name = "Group Status", description = "View the status of all your teammates onscreen", category = Category.HUD)
 public class GroupStatus
-        extends HudModule
-{
+        extends HudModule {
     @Toggle(label = "Use Boots")
     public boolean showBoots = false;
     @Colour(label = "Header Color", isTextRender = true)
@@ -55,7 +56,7 @@ public class GroupStatus
 
         if (System.currentTimeMillis() - this.lastUpdate > 2500L) {
             this.displayed.clear();
-            this.displayed.addAll((Collection<? extends PlayerStatusUpdate>)GroupManager.getSelectedGroup().getMembers().stream()
+            this.displayed.addAll((Collection<? extends PlayerStatusUpdate>) GroupManager.getSelectedGroup().getMembers().stream()
                     .filter(GroupMember::isOnline)
                     .filter(GroupMember::hasStatus)
                     .map(GroupMember::getStatus)
@@ -101,7 +102,7 @@ public class GroupStatus
         nextX = Math.max(nextX, RenderUtils.drawString(this.showBoots ? "Boots" : "Helmet", x, y, this.headerColor) + 3);
         y += this.mc.fontRendererObj.FONT_HEIGHT + 2;
         for (PlayerStatusUpdate s : this.displayed) {
-            nextX = Math.max(nextX, RenderUtils.drawString(String.format("%.1f", new Object[] { Float.valueOf(MathHelper.clamp_float((this.showBoots ? s.getBoots() : s.getHelmet()) * 100.0F, 0.0F, 100.0F)) }) + '%', x, y, this.textColor) + 3);
+            nextX = Math.max(nextX, RenderUtils.drawString(String.format("%.1f", new Object[]{Float.valueOf(MathHelper.clamp_float((this.showBoots ? s.getBoots() : s.getHelmet()) * 100.0F, 0.0F, 100.0F))}) + '%', x, y, this.textColor) + 3);
             y += this.mc.fontRendererObj.FONT_HEIGHT;
         }
         x = nextX;
@@ -110,7 +111,7 @@ public class GroupStatus
         nextX = Math.max(nextX, RenderUtils.drawString("Health", x, y, this.headerColor) + 3);
         y += this.mc.fontRendererObj.FONT_HEIGHT + 2;
         for (PlayerStatusUpdate s : this.displayed) {
-            nextX = Math.max(nextX, RenderUtils.drawString(String.format("❤ %d", new Object[] { Integer.valueOf(s.getHealth()) }), x, y, this.textColor) + 3);
+            nextX = Math.max(nextX, RenderUtils.drawString(String.format("❤ %d", new Object[]{Integer.valueOf(s.getHealth())}), x, y, this.textColor) + 3);
             y += this.mc.fontRendererObj.FONT_HEIGHT;
         }
         this.width = nextX - renderX;

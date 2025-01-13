@@ -13,17 +13,17 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin({BlockNetherWart.class})
 public abstract class MixinBlockNetherWart extends BlockBush {
-//  public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos) {
-public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
-    CropUtilities.updateWartMaxY(worldIn, pos, worldIn.getBlockState(pos).getBlock());
-    return super.getCollisionBoundingBox(worldIn, pos, state);
+    //  public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos) {
+    public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
+        CropUtilities.updateWartMaxY(worldIn, pos, worldIn.getBlockState(pos).getBlock());
+        return super.getCollisionBoundingBox(worldIn, pos, state);
 //    return super.getCollisionBoundingBox(worldIn, pos);
-  }
-  
-  public MovingObjectPosition collisionRayTrace(World worldIn, BlockPos pos, Vec3 start, Vec3 end) {
-    CropUtilities.updateWartMaxY(worldIn, pos, worldIn.getBlockState(pos).getBlock());
-    return super.collisionRayTrace(worldIn, pos, start, end);
-  }
+    }
+
+    public MovingObjectPosition collisionRayTrace(World worldIn, BlockPos pos, Vec3 start, Vec3 end) {
+        CropUtilities.updateWartMaxY(worldIn, pos, worldIn.getBlockState(pos).getBlock());
+        return super.collisionRayTrace(worldIn, pos, start, end);
+    }
 }
 
 

@@ -3,11 +3,11 @@ package wdl.api;
 import java.util.List;
 
 public interface IEntityAdder extends IWDLMod {
-  List<String> getModEntities();
-  
-  int getDefaultEntityTrackDistance(String paramString);
-  
-  String getEntityCategory(String paramString);
+    List<String> getModEntities();
+
+    int getDefaultEntityTrackDistance(String paramString);
+
+    String getEntityCategory(String paramString);
 }
 
 

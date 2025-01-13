@@ -7,23 +7,23 @@ import co.crystaldev.client.feature.base.Module;
 
 @ModuleInfo(name = "Nametag Editor", description = "Edit entity nameplates", category = Category.ALL)
 public class NametagEditor extends Module {
-  @Toggle(label = "Show Client Logo")
-  public boolean showClientLogo = true;
-  
-  @Toggle(label = "Text Shadow")
-  public boolean textShadow = false;
-  
-  private static NametagEditor INSTANCE;
-  
-  public NametagEditor() {
-    this.enabled = true;
-    this.canBeDisabled = false;
-    INSTANCE = this;
-  }
-  
-  public static NametagEditor getInstance() {
-    return INSTANCE;
-  }
+    @Toggle(label = "Show Client Logo")
+    public boolean showClientLogo = true;
+
+    @Toggle(label = "Text Shadow")
+    public boolean textShadow = false;
+
+    private static NametagEditor INSTANCE;
+
+    public NametagEditor() {
+        this.enabled = true;
+        this.canBeDisabled = false;
+        INSTANCE = this;
+    }
+
+    public static NametagEditor getInstance() {
+        return INSTANCE;
+    }
 }
 
 

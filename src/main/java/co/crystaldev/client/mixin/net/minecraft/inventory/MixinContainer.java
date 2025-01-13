@@ -14,22 +14,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({Container.class})
 public abstract class MixinContainer {
-  @Inject(method = {"putStackInSlot"}, at = {@At("HEAD")})
-  private void playArmorBreakingSound(int slotId, ItemStack stack, CallbackInfo ci) {
-    if (!(Minecraft.getMinecraft()).theWorld.isRemote || stack != null)
-      return; 
-    Container container = (Container)(Object)this;
-    if (slotId >= 5 && slotId <= 8 && container instanceof net.minecraft.inventory.ContainerPlayer) {
-      Slot slot = container.getSlot(slotId);
-      if (slot != null) {
-        ItemStack slotStack = slot.getStack();
-        //getItemDamageForDisplay
-        if (slotStack != null && slotStack.getItem() instanceof net.minecraft.item.ItemArmor && slotStack.getItemDamage() > slotStack.getMaxDamage() - 2)
+    @Inject(method = {"putStackInSlot"}, at = {@At("HEAD")})
+    private void playArmorBreakingSound(int slotId, ItemStack stack, CallbackInfo ci) {
+        if (!(Minecraft.getMinecraft()).theWorld.isRemote || stack != null)
+            return;
+        Container container = (Container) (Object) this;
+        if (slotId >= 5 && slotId <= 8 && container instanceof net.minecraft.inventory.ContainerPlayer) {
+            Slot slot = container.getSlot(slotId);
+            if (slot != null) {
+                ItemStack slotStack = slot.getStack();
+                //getItemDamageForDisplay
+                if (slotStack != null && slotStack.getItem() instanceof net.minecraft.item.ItemArmor && slotStack.getItemDamage() > slotStack.getMaxDamage() - 2)
 //          Minecraft.getMinecraft().getSoundHandler().playSound((ISound)PositionedSoundRecord.func_147673_a(new ResourceLocation("random.break")));
-          Minecraft.getMinecraft().getSoundHandler().playSound((ISound)PositionedSoundRecord.create(new ResourceLocation("random.break")));
-      }
-    } 
-  }
+                    Minecraft.getMinecraft().getSoundHandler().playSound((ISound) PositionedSoundRecord.create(new ResourceLocation("random.break")));
+            }
+        }
+    }
 }
 
 

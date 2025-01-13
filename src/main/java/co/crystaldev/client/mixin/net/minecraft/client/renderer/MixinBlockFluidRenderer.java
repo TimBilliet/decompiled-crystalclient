@@ -7,10 +7,10 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin({BlockFluidRenderer.class})
 public abstract class MixinBlockFluidRenderer {
-  @ModifyConstant(method = {"renderFluid"}, constant = {@Constant(floatValue = 0.001F)})
-  private float fixFluidStitching(float original) {
-    return 0.0F;
-  }
+    @ModifyConstant(method = {"renderFluid"}, constant = {@Constant(floatValue = 0.001F)})
+    private float fixFluidStitching(float original) {
+        return 0.0F;
+    }
 }
 
 

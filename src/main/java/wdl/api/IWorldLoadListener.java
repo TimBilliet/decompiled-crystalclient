@@ -3,7 +3,7 @@ package wdl.api;
 import net.minecraft.client.multiplayer.WorldClient;
 
 public interface IWorldLoadListener extends IWDLMod {
-  void onWorldLoad(WorldClient paramWorldClient, boolean paramBoolean);
+    void onWorldLoad(WorldClient paramWorldClient, boolean paramBoolean);
 }
 
 

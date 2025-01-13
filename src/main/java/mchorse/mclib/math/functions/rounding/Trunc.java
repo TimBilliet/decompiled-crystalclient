@@ -4,18 +4,18 @@ import mchorse.mclib.math.IValue;
 import mchorse.mclib.math.functions.Function;
 
 public class Trunc extends Function {
-  public Trunc(IValue[] values, String name) throws Exception {
-    super(values, name);
-  }
-  
-  public int getRequiredArguments() {
-    return 1;
-  }
-  
-  public double get() {
-    double value = getArg(0);
-    return (value < 0.0D) ? Math.ceil(value) : Math.floor(value);
-  }
+    public Trunc(IValue[] values, String name) throws Exception {
+        super(values, name);
+    }
+
+    public int getRequiredArguments() {
+        return 1;
+    }
+
+    public double get() {
+        double value = getArg(0);
+        return (value < 0.0D) ? Math.ceil(value) : Math.floor(value);
+    }
 }
 
 

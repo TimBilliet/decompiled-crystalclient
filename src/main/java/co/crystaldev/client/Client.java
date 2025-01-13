@@ -138,7 +138,7 @@ public class Client {
 
     private final Config config;
 
-   private final ModuleHandler moduleHandler;
+    private final ModuleHandler moduleHandler;
 
     private final PlayerHandler playerHandler;
 
@@ -293,9 +293,9 @@ public class Client {
             this.commandHandler.registerCommand(new ThumbnailCommand());
             Log4jPatch.patchLogger();
         }
-        for (RenderPlayer render : ((MixinRenderManager)Minecraft.getMinecraft().getRenderManager()).getSkinMap().values()) {
-            ((MixinRendererLivingEntity)render).callAddLayer(new LayerCloak());
-            ((MixinRendererLivingEntity)render).callAddLayer(new LayerWings());
+        for (RenderPlayer render : ((MixinRenderManager) Minecraft.getMinecraft().getRenderManager()).getSkinMap().values()) {
+            ((MixinRendererLivingEntity) render).callAddLayer(new LayerCloak());
+            ((MixinRendererLivingEntity) render).callAddLayer(new LayerWings());
         }
         Reference.LOGGER.info("{} version {} has been initialized.", "Crystal Client", "1.1.16-projectassfucker");
         (new InitializationEvent(this)).call();
@@ -330,10 +330,11 @@ public class Client {
 //        return getWebClient().getHandler();
 //    }
 
-   public static void sendPacket(Packet packet) {}
+    public static void sendPacket(Packet packet) {
+    }
 
     public static void registerKeyBinding(KeyBinding key) {
-        (Minecraft.getMinecraft()).gameSettings.keyBindings = (KeyBinding[])ArrayUtils.add((Object[])(Minecraft.getMinecraft()).gameSettings.keyBindings, key);
+        (Minecraft.getMinecraft()).gameSettings.keyBindings = (KeyBinding[]) ArrayUtils.add((Object[]) (Minecraft.getMinecraft()).gameSettings.keyBindings, key);
     }
 
     public static void sendErrorMessage(String errorMessage, boolean appendPrefix) {
@@ -352,20 +353,20 @@ public class Client {
         Client instance = getInstance();
         if (instance.mc.thePlayer != null) {
             message = ChatColor.translate((appendPrefix ? (getPrefix() + " ") : "") + message);
-            instance.mc.thePlayer.addChatMessage((IChatComponent)new ChatComponentText(message));
+            instance.mc.thePlayer.addChatMessage((IChatComponent) new ChatComponentText(message));
         }
     }
 
     public static String getPrefix() {
-        return ChatColor.translate(String.format("&8<&b&l%s&8>&r", new Object[] { "Crystal Client" }));
+        return ChatColor.translate(String.format("&8<&b&l%s&8>&r", new Object[]{"Crystal Client"}));
     }
 
     public static String getErrorPrefix() {
-        return ChatColor.translate(String.format("&8<&c&l%s&8>&r", new Object[] { "Crystal Client" }));
+        return ChatColor.translate(String.format("&8<&c&l%s&8>&r", new Object[]{"Crystal Client"}));
     }
 
     public static Thread getMainThread() {
-        return ((MixinMinecraft)Minecraft.getMinecraft()).getMcThread();
+        return ((MixinMinecraft) Minecraft.getMinecraft()).getMcThread();
     }
 
     public static boolean isCallingFromMainThread() {
@@ -417,8 +418,8 @@ public class Client {
     }
 
     public static boolean isOnCrystalClient(Entity entity) {//mss niet met interface, wat het nu wel is
-        NetworkPlayerInfo info = (entity instanceof net.minecraft.client.entity.AbstractClientPlayer) ? ((MixinAbstractClientPlayer)entity).invokeGetPlayerInfo() : null;
-        return (info != null && ((NetworkPlayerInfoExt)info).isOnCrystalClient());
+        NetworkPlayerInfo info = (entity instanceof net.minecraft.client.entity.AbstractClientPlayer) ? ((MixinAbstractClientPlayer) entity).invokeGetPlayerInfo() : null;
+        return (info != null && ((NetworkPlayerInfoExt) info).isOnCrystalClient());
     }
 
     public static UUID getUniqueID() {

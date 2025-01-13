@@ -18,39 +18,39 @@ import java.text.DecimalFormat;
 @ConfigurableSize
 @ModuleInfo(name = "Reach Display", description = "Displays your most recent attack reach onscreen", category = Category.HUD)
 public class ReachDisplay extends HudModuleBackground implements IRegistrable {
-  private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
-  
-  private double reach = 0.0D;
-  
-  private long lastAttackTime = 0L;
-  
-  public ReachDisplay() {
-    this.enabled = false;
-    this.hasInfoHud = true;
-    this.position = new ModulePosition(AnchorRegion.TOP_LEFT, 70.0F, 91.0F);
-    this.width = 60;
-    this.height = 18;
-  }
-  
-  public String getDisplayText() {
-    if (System.currentTimeMillis() - this.lastAttackTime > 2000L)
-      this.reach = 0.0D; 
-    return DECIMAL_FORMAT.format(this.reach) + " blocks";
-  }
-  
-  public Tuple<String, String> getInfoHud() {
-    return new Tuple("Reach", getDisplayText());
-  }
-  
-  public void registerEvents() {
-    EventBus.register(this, PlayerEvent.Attack.class, ev -> {
-          if (this.mc.objectMouseOver == null || this.mc.objectMouseOver.typeOfHit != MovingObjectPosition.MovingObjectType.ENTITY)
-            return; 
-          Vec3 eyePos = this.mc.getRenderViewEntity().getPositionEyes(1.0F);
-          this.reach = this.mc.objectMouseOver.hitVec.distanceTo(eyePos);
-          this.lastAttackTime = System.currentTimeMillis();
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
+
+    private double reach = 0.0D;
+
+    private long lastAttackTime = 0L;
+
+    public ReachDisplay() {
+        this.enabled = false;
+        this.hasInfoHud = true;
+        this.position = new ModulePosition(AnchorRegion.TOP_LEFT, 70.0F, 91.0F);
+        this.width = 60;
+        this.height = 18;
+    }
+
+    public String getDisplayText() {
+        if (System.currentTimeMillis() - this.lastAttackTime > 2000L)
+            this.reach = 0.0D;
+        return DECIMAL_FORMAT.format(this.reach) + " blocks";
+    }
+
+    public Tuple<String, String> getInfoHud() {
+        return new Tuple("Reach", getDisplayText());
+    }
+
+    public void registerEvents() {
+        EventBus.register(this, PlayerEvent.Attack.class, ev -> {
+            if (this.mc.objectMouseOver == null || this.mc.objectMouseOver.typeOfHit != MovingObjectPosition.MovingObjectType.ENTITY)
+                return;
+            Vec3 eyePos = this.mc.getRenderViewEntity().getPositionEyes(1.0F);
+            this.reach = this.mc.objectMouseOver.hitVec.distanceTo(eyePos);
+            this.lastAttackTime = System.currentTimeMillis();
         });
-  }
+    }
 }
 
 

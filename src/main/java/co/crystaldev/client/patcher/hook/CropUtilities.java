@@ -12,33 +12,33 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public class CropUtilities {
-  private static final Minecraft mc = Minecraft.getMinecraft();
-  
-  public static final AxisAlignedBB[] CARROT_POTATO_BOX = new AxisAlignedBB[] { new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.4375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D) };
-  
-  public static final AxisAlignedBB[] WHEAT_BOX = new AxisAlignedBB[] { new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D) };
-  
-  public static final AxisAlignedBB[] NETHER_WART_BOX = new AxisAlignedBB[] { new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.6875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D) };
-  
-  public static void updateCropsMaxY(World world, BlockPos pos, Block block) {
-    IBlockState blockState = world.getBlockState(pos);
-    Integer ageValue = blockState.getValue(BlockCrops.AGE);
-    MixinBlock accessor = (MixinBlock)block;
-    if (mc.isIntegratedServerRunning()) {
-      accessor.setMaxY((blockState
-          .getBlock() instanceof net.minecraft.block.BlockPotato || blockState.getBlock() instanceof net.minecraft.block.BlockCarrot) ? 
-          (CARROT_POTATO_BOX[ageValue]).maxY :
-          (WHEAT_BOX[ageValue]).maxY);
-      return;
-    } 
-    accessor.setMaxY(0.25D);
-  }
-  
-  public static void updateWartMaxY(World world, BlockPos pos, Block block) {
-    ((MixinBlock)block).setMaxY(
-        mc.isIntegratedServerRunning() ? 
-        (NETHER_WART_BOX[world.getBlockState(pos).getValue(BlockNetherWart.AGE)]).maxY : 0.25D);
-  }
+    private static final Minecraft mc = Minecraft.getMinecraft();
+
+    public static final AxisAlignedBB[] CARROT_POTATO_BOX = new AxisAlignedBB[]{new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.1875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.4375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5625D, 1.0D)};
+
+    public static final AxisAlignedBB[] WHEAT_BOX = new AxisAlignedBB[]{new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.25D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.375D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.625D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.0D, 1.0D)};
+
+    public static final AxisAlignedBB[] NETHER_WART_BOX = new AxisAlignedBB[]{new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.3125D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.5D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.6875D, 1.0D), new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D)};
+
+    public static void updateCropsMaxY(World world, BlockPos pos, Block block) {
+        IBlockState blockState = world.getBlockState(pos);
+        Integer ageValue = blockState.getValue(BlockCrops.AGE);
+        MixinBlock accessor = (MixinBlock) block;
+        if (mc.isIntegratedServerRunning()) {
+            accessor.setMaxY((blockState
+                    .getBlock() instanceof net.minecraft.block.BlockPotato || blockState.getBlock() instanceof net.minecraft.block.BlockCarrot) ?
+                    (CARROT_POTATO_BOX[ageValue]).maxY :
+                    (WHEAT_BOX[ageValue]).maxY);
+            return;
+        }
+        accessor.setMaxY(0.25D);
+    }
+
+    public static void updateWartMaxY(World world, BlockPos pos, Block block) {
+        ((MixinBlock) block).setMaxY(
+                mc.isIntegratedServerRunning() ?
+                        (NETHER_WART_BOX[world.getBlockState(pos).getValue(BlockNetherWart.AGE)]).maxY : 0.25D);
+    }
 }
 
 

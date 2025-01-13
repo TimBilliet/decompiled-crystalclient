@@ -8,19 +8,19 @@ import co.crystaldev.client.util.ColorObject;
 
 @ModuleInfo(name = "Hit Color", description = "Modify the vanilla Minecraft damage indicator color", category = Category.COMBAT)
 public class HitColor extends Module {
-  @Colour(label = "Color")
-  public ColorObject color = new ColorObject(255, 0, 0, 75);
-  
-  private static HitColor INSTANCE;
-  
-  public HitColor() {
-    INSTANCE = this;
-    this.enabled = false;
-  }
-  
-  public static HitColor getInstance() {
-    return INSTANCE;
-  }
+    @Colour(label = "Color")
+    public ColorObject color = new ColorObject(255, 0, 0, 75);
+
+    private static HitColor INSTANCE;
+
+    public HitColor() {
+        INSTANCE = this;
+        this.enabled = false;
+    }
+
+    public static HitColor getInstance() {
+        return INSTANCE;
+    }
 }
 
 

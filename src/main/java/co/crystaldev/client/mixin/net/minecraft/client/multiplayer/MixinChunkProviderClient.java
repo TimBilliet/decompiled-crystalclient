@@ -11,10 +11,10 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin({ChunkProviderClient.class})
 public abstract class MixinChunkProviderClient {
-  @Inject(method = {"loadChunk"}, locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = {@At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", shift = At.Shift.AFTER)})
-  private void loadChunk(int chunkX, int chunkZ, CallbackInfoReturnable<Chunk> cir, Chunk chunk) {
-    (new ChunkEvent.Load(chunk)).call();
-  }
+    @Inject(method = {"loadChunk"}, locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = {@At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", shift = At.Shift.AFTER)})
+    private void loadChunk(int chunkX, int chunkZ, CallbackInfoReturnable<Chunk> cir, Chunk chunk) {
+        (new ChunkEvent.Load(chunk)).call();
+    }
 }
 
 

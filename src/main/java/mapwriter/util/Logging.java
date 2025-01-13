@@ -3,25 +3,25 @@ package mapwriter.util;
 import co.crystaldev.client.Reference;
 
 public class Logging {
-  public static void logInfo(String s, Object... args) {
-    Reference.LOGGER.info(String.format(s, args));
-  }
-  
-  public static void logWarning(String s, Object... args) {
-    Reference.LOGGER.warn(String.format(s, args));
-  }
-  
-  public static void logError(String s, Object... args) {
-    Reference.LOGGER.error(String.format(s, args));
-  }
-  
-  public static void debug(String s, Object... args) {
-    Reference.LOGGER.debug(String.format(s, args));
-  }
-  
-  public static void log(String s, Object... args) {
-    logInfo(String.format(s, args), new Object[0]);
-  }
+    public static void logInfo(String s, Object... args) {
+        Reference.LOGGER.info(String.format(s, args));
+    }
+
+    public static void logWarning(String s, Object... args) {
+        Reference.LOGGER.warn(String.format(s, args));
+    }
+
+    public static void logError(String s, Object... args) {
+        Reference.LOGGER.error(String.format(s, args));
+    }
+
+    public static void debug(String s, Object... args) {
+        Reference.LOGGER.debug(String.format(s, args));
+    }
+
+    public static void log(String s, Object... args) {
+        logInfo(String.format(s, args), new Object[0]);
+    }
 }
 
 

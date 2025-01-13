@@ -12,15 +12,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({Block.class})
 public abstract class MixinBlock {
-  @Inject(method = {"shouldSideBeRendered"}, cancellable = true, at = {@At("HEAD")})
-  private void shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side, CallbackInfoReturnable<Boolean> cir) {
-    if (NoLag.isEnabled((NoLag.getInstance()).disableSlabRendering) && checkSlab(worldIn, pos))
-      cir.setReturnValue(Boolean.FALSE);
-  }
-  
-  private boolean checkSlab(IBlockAccess world, BlockPos pos) {
-    return (NoLag.isSlab(world.getBlockState(pos).getBlock()) && NoLag.isSlab(world.getBlockState(pos.up()).getBlock()));
-  }
+    @Inject(method = {"shouldSideBeRendered"}, cancellable = true, at = {@At("HEAD")})
+    private void shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side, CallbackInfoReturnable<Boolean> cir) {
+        if (NoLag.isEnabled((NoLag.getInstance()).disableSlabRendering) && checkSlab(worldIn, pos))
+            cir.setReturnValue(Boolean.FALSE);
+    }
+
+    private boolean checkSlab(IBlockAccess world, BlockPos pos) {
+        return (NoLag.isSlab(world.getBlockState(pos).getBlock()) && NoLag.isSlab(world.getBlockState(pos.up()).getBlock()));
+    }
 }
 
 

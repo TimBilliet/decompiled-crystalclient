@@ -3,7 +3,7 @@ package wdl.api;
 import net.minecraft.client.multiplayer.WorldClient;
 
 public interface IChatMessageListener extends IWDLMod {
-  void onChat(WorldClient paramWorldClient, String paramString);
+    void onChat(WorldClient paramWorldClient, String paramString);
 }
 
 

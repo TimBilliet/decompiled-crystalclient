@@ -11,11 +11,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({RenderLiving.class})
 public abstract class MixinRenderLiving<T extends EntityLiving> {
-  @Inject(method = {"shouldRender(Lnet/minecraft/entity/EntityLiving;Lnet/minecraft/client/renderer/culling/ICamera;DDD)Z"}, cancellable = true, at = {@At("HEAD")})
-  public void shouldRender(T livingEntity, ICamera camera, double camX, double camY, double camZ, CallbackInfoReturnable<Boolean> ci) {
-    if (livingEntity instanceof net.minecraft.entity.monster.EntityMob && NoLag.isEnabled((NoLag.getInstance()).hideMobs) && !(livingEntity instanceof net.minecraft.entity.monster.EntityCreeper))
-      ci.setReturnValue(Boolean.FALSE);
-  }
+    @Inject(method = {"shouldRender(Lnet/minecraft/entity/EntityLiving;Lnet/minecraft/client/renderer/culling/ICamera;DDD)Z"}, cancellable = true, at = {@At("HEAD")})
+    public void shouldRender(T livingEntity, ICamera camera, double camX, double camY, double camZ, CallbackInfoReturnable<Boolean> ci) {
+        if (livingEntity instanceof net.minecraft.entity.monster.EntityMob && NoLag.isEnabled((NoLag.getInstance()).hideMobs) && !(livingEntity instanceof net.minecraft.entity.monster.EntityCreeper))
+            ci.setReturnValue(Boolean.FALSE);
+    }
 }
 
 

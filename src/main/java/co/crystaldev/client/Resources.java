@@ -71,9 +71,9 @@ public class Resources {
 
     public static final ResourceLocation BLOCK_COLORS = new ResourceLocation("crystalclient", "misc/mw_block_colors.txt");
 
-    public static final ResourceLocation[] CROSSHAIR_BACKGROUNDS = new ResourceLocation[] { new ResourceLocation("crystalclient", "gui/background/plains.png"), new ResourceLocation("crystalclient", "gui/background/cave.png"), new ResourceLocation("crystalclient", "gui/background/mesa.png") };
+    public static final ResourceLocation[] CROSSHAIR_BACKGROUNDS = new ResourceLocation[]{new ResourceLocation("crystalclient", "gui/background/plains.png"), new ResourceLocation("crystalclient", "gui/background/cave.png"), new ResourceLocation("crystalclient", "gui/background/mesa.png")};
 
     public static final int PANORAMA_RESOLUTION = 256;
 
-    public static final ResourceLocation[] PANORAMA_IMAGES = new ResourceLocation[] { new ResourceLocation("crystalclient", "gui/panorama/panorama_0.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_1.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_2.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_3.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_4.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_5.png") };
+    public static final ResourceLocation[] PANORAMA_IMAGES = new ResourceLocation[]{new ResourceLocation("crystalclient", "gui/panorama/panorama_0.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_1.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_2.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_3.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_4.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_5.png")};
 }

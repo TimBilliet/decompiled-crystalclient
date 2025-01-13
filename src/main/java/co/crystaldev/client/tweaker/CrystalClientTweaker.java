@@ -16,7 +16,8 @@ import java.security.CodeSource;
 import java.util.List;
 
 public class CrystalClientTweaker implements ITweaker {
-    public void acceptOptions(List<String> args, File gameDir, File assetsDir, String profile) {}
+    public void acceptOptions(List<String> args, File gameDir, File assetsDir, String profile) {
+    }
 
     public void injectIntoClassLoader(LaunchClassLoader classLoader) {
         MixinBootstrap.init();
@@ -32,7 +33,8 @@ public class CrystalClientTweaker implements ITweaker {
                 File file = new File(location.toURI());
                 if (file.isFile())
                     CoreModManager.getReparseableCoremods().remove(file.getName());
-            } catch (URISyntaxException uRISyntaxException) {}
+            } catch (URISyntaxException uRISyntaxException) {
+            }
         } else {
             Logger logger = LogManager.getLogger("Offline Crystal Client CoreMod");
             logger.warn("No CodeSource, if this is not a development environment we might run into problems!");

@@ -4,21 +4,21 @@ import co.crystaldev.client.event.impl.player.PlayerEvent;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class PlayerTickEvent extends PlayerEvent {
-  public PlayerTickEvent(EntityPlayer player) {
-    super(player);
-  }
-  
-  public static class Pre extends PlayerTickEvent {
-    public Pre(EntityPlayer player) {
-      super(player);
+    public PlayerTickEvent(EntityPlayer player) {
+        super(player);
     }
-  }
-  
-  public static class Post extends PlayerTickEvent {
-    public Post(EntityPlayer player) {
-      super(player);
+
+    public static class Pre extends PlayerTickEvent {
+        public Pre(EntityPlayer player) {
+            super(player);
+        }
     }
-  }
+
+    public static class Post extends PlayerTickEvent {
+        public Post(EntityPlayer player) {
+            super(player);
+        }
+    }
 }
 
 

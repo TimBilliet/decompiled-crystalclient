@@ -10,14 +10,14 @@ import java.util.Objects;
 
 @Mixin(targets = {"net.minecraft.world.GameRules$Value"})
 public abstract class MixinGameRules {
-  @Shadow
-  private String valueString;
-  
-  @Inject(method = {"setValue(Ljava/lang/String;)V"}, at = {@At("HEAD")}, cancellable = true)
-  private void cancelValueSet(String value, CallbackInfo ci) {
-    if (Objects.equals(this.valueString, value))
-      ci.cancel(); 
-  }
+    @Shadow
+    private String valueString;
+
+    @Inject(method = {"setValue(Ljava/lang/String;)V"}, at = {@At("HEAD")}, cancellable = true)
+    private void cancelValueSet(String value, CallbackInfo ci) {
+        if (Objects.equals(this.valueString, value))
+            ci.cancel();
+    }
 }
 
 

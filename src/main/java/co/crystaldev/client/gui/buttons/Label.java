@@ -7,36 +7,36 @@ import co.crystaldev.client.gui.Screen;
 import co.crystaldev.client.util.RenderUtils;
 
 public class Label extends Button {
-  protected final FontRenderer fontRenderer;
-  
-  protected final int color;
-  
-  protected boolean centered = true;
-  
-  public void setCentered(boolean centered) {
-    this.centered = centered;
-  }
-  
-  public Label(int x, int y, String text, int color, FontRenderer fontRenderer) {
-    super(-1, x, y, 0, 0, text);
-    this.fontRenderer = fontRenderer;
-    this.color = color;
-  }
-  
-  public Label(int x, int y, String text, int color) {
-    this(x, y, text, color, Fonts.NUNITO_REGULAR_20);
-  }
-  
-  public void drawButton(int mouseX, int mouseY, boolean hovered) {
-    Screen.scissorStart(this.scissorPane);
-    RenderUtils.resetColor();
-    if (this.centered) {
-      this.fontRenderer.drawCenteredStringWithShadow(this.displayText, this.x, this.y, this.color);
-    } else {
-      this.fontRenderer.drawStringWithShadow(this.displayText, this.x, this.y, this.color);
-    } 
-    Screen.scissorEnd(this.scissorPane);
-  }
+    protected final FontRenderer fontRenderer;
+
+    protected final int color;
+
+    protected boolean centered = true;
+
+    public void setCentered(boolean centered) {
+        this.centered = centered;
+    }
+
+    public Label(int x, int y, String text, int color, FontRenderer fontRenderer) {
+        super(-1, x, y, 0, 0, text);
+        this.fontRenderer = fontRenderer;
+        this.color = color;
+    }
+
+    public Label(int x, int y, String text, int color) {
+        this(x, y, text, color, Fonts.NUNITO_REGULAR_20);
+    }
+
+    public void drawButton(int mouseX, int mouseY, boolean hovered) {
+        Screen.scissorStart(this.scissorPane);
+        RenderUtils.resetColor();
+        if (this.centered) {
+            this.fontRenderer.drawCenteredStringWithShadow(this.displayText, this.x, this.y, this.color);
+        } else {
+            this.fontRenderer.drawStringWithShadow(this.displayText, this.x, this.y, this.color);
+        }
+        Screen.scissorEnd(this.scissorPane);
+    }
 }
 
 

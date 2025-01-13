@@ -5,7 +5,7 @@ import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.CLASS)
 @interface SuppressFBWarnings {
-  String[] value() default {};
+    String[] value() default {};
 }
 
 

@@ -18,59 +18,60 @@ import net.minecraft.world.WorldServer;
 
 @ModuleInfo(name = "1.7 Visuals", description = "Revert certain visuals and animations to how they were in 1.7", category = Category.COMBAT)
 public class OldAnimations extends Module implements IRegistrable {
-  @Toggle(label = "Punch During Usage")
-  public boolean punchDuringUsage = true;
-  
-  @PageBreak(label = "Animations")
-  @Toggle(label = "Block Hitting")
-  public boolean revertBlocking = true;
-  
-  @Toggle(label = "Rod Position")
-  public boolean revertFishingRod = true;
-  
-  @Toggle(label = "Sneaking")
-  public boolean revertSneaking = true;
-  
-  @Toggle(label = "Health Flash")
-  public boolean revertHealthFlash = true;
-  
-  @Toggle(label = "Camera Shake")
-  public boolean revertCameraShake = false;
-  
-  @PageBreak(label = "Visuals")
-  @Toggle(label = "Red Armor On Hit")
-  public boolean redArmorOnHit = true;
-  
-  private static OldAnimations INSTANCE;
-  
-  public OldAnimations() {
-    INSTANCE = this;
-  }
-  
-  private void swingNoPacket() {
-    EntityPlayerSP self = this.mc.thePlayer;
+    @Toggle(label = "Punch During Usage")
+    public boolean punchDuringUsage = true;
 
-    if (!self.isSwingInProgress || self.swingProgressInt >= ((MixinEntityLivingBase)self).callGetArmSwingAnimationEnd() / 2 || self.swingProgressInt < 0) {
-      self.swingProgressInt = -1;
-      self.isSwingInProgress = true;
-      if (self.worldObj instanceof WorldServer)
-        ((WorldServer)self.worldObj).getEntityTracker().sendToAllTrackingEntity((Entity)self, (Packet)new S0BPacketAnimation((Entity)self, 0)); 
-    } 
-  }
-  
-  public static OldAnimations getInstance() {
-    return INSTANCE;
-  }
-  //veranderd
-  public void registerEvents() {
-    EventBus.register(this, RenderTickEvent.Pre.class, ev -> {
-          if (this.punchDuringUsage) {
-            boolean flag = (this.mc.gameSettings.keyBindAttack.isKeyDown() && this.mc.gameSettings.keyBindUseItem.isKeyDown());
-            if (flag && this.mc.objectMouseOver != null && this.mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && this.mc.thePlayer != null && this.mc.thePlayer.getItemInUseCount() > 0)
-              swingNoPacket(); 
-          } 
+    @PageBreak(label = "Animations")
+    @Toggle(label = "Block Hitting")
+    public boolean revertBlocking = true;
+
+    @Toggle(label = "Rod Position")
+    public boolean revertFishingRod = true;
+
+    @Toggle(label = "Sneaking")
+    public boolean revertSneaking = true;
+
+    @Toggle(label = "Health Flash")
+    public boolean revertHealthFlash = true;
+
+    @Toggle(label = "Camera Shake")
+    public boolean revertCameraShake = false;
+
+    @PageBreak(label = "Visuals")
+    @Toggle(label = "Red Armor On Hit")
+    public boolean redArmorOnHit = true;
+
+    private static OldAnimations INSTANCE;
+
+    public OldAnimations() {
+        INSTANCE = this;
+    }
+
+    private void swingNoPacket() {
+        EntityPlayerSP self = this.mc.thePlayer;
+
+        if (!self.isSwingInProgress || self.swingProgressInt >= ((MixinEntityLivingBase) self).callGetArmSwingAnimationEnd() / 2 || self.swingProgressInt < 0) {
+            self.swingProgressInt = -1;
+            self.isSwingInProgress = true;
+            if (self.worldObj instanceof WorldServer)
+                ((WorldServer) self.worldObj).getEntityTracker().sendToAllTrackingEntity((Entity) self, (Packet) new S0BPacketAnimation((Entity) self, 0));
+        }
+    }
+
+    public static OldAnimations getInstance() {
+        return INSTANCE;
+    }
+
+    //veranderd
+    public void registerEvents() {
+        EventBus.register(this, RenderTickEvent.Pre.class, ev -> {
+            if (this.punchDuringUsage) {
+                boolean flag = (this.mc.gameSettings.keyBindAttack.isKeyDown() && this.mc.gameSettings.keyBindUseItem.isKeyDown());
+                if (flag && this.mc.objectMouseOver != null && this.mc.objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && this.mc.thePlayer != null && this.mc.thePlayer.getItemInUseCount() > 0)
+                    swingNoPacket();
+            }
         });
-  }
+    }
 }
 
 

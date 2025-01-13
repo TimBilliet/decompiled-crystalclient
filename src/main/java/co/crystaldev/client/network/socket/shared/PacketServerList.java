@@ -13,23 +13,25 @@ import java.util.Comparator;
 import java.util.LinkedList;
 
 public class PacketServerList extends Packet {
-  public static LinkedList<PartneredServer> partneredServers = new LinkedList<>();
+    public static LinkedList<PartneredServer> partneredServers = new LinkedList<>();
 
-  public PacketServerList() {
-    partneredServers.clear();
-  }
+    public PacketServerList() {
+        partneredServers.clear();
+    }
 
-  public void write(ByteBufWrapper out) throws IOException {}
+    public void write(ByteBufWrapper out) throws IOException {
+    }
 
-  public void read(ByteBufWrapper in) throws IOException {
-    partneredServers.clear();
-    partneredServers.addAll((Collection<? extends PartneredServer>)Reference.GSON.fromJson(in.readString(), (new TypeToken<LinkedList<PartneredServer>>() {
+    public void read(ByteBufWrapper in) throws IOException {
+        partneredServers.clear();
+        partneredServers.addAll((Collection<? extends PartneredServer>) Reference.GSON.fromJson(in.readString(), (new TypeToken<LinkedList<PartneredServer>>() {
 
-          }).getType()));
-    partneredServers.sort(Comparator.comparing(s -> s.name.toLowerCase()));
-  }
+        }).getType()));
+        partneredServers.sort(Comparator.comparing(s -> s.name.toLowerCase()));
+    }
 
-  public void process(INetHandler handler) {}
+    public void process(INetHandler handler) {
+    }
 }
 
 

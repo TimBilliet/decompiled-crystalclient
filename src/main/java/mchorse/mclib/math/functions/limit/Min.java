@@ -4,17 +4,17 @@ import mchorse.mclib.math.IValue;
 import mchorse.mclib.math.functions.Function;
 
 public class Min extends Function {
-  public Min(IValue[] values, String name) throws Exception {
-    super(values, name);
-  }
-  
-  public int getRequiredArguments() {
-    return 2;
-  }
-  
-  public double get() {
-    return Math.min(getArg(0), getArg(1));
-  }
+    public Min(IValue[] values, String name) throws Exception {
+        super(values, name);
+    }
+
+    public int getRequiredArguments() {
+        return 2;
+    }
+
+    public double get() {
+        return Math.min(getArg(0), getArg(1));
+    }
 }
 
 

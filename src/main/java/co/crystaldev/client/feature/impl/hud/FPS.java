@@ -10,13 +10,13 @@ import net.minecraft.client.Minecraft;
 @ConfigurableSize
 @ModuleInfo(name = "FPS", description = "Displays your current FPS onscreen", category = Category.HUD)
 public class FPS extends HudModuleBackground {
-  public Tuple<String, String> getInfoHud() {
-    return new Tuple("FPS", Integer.toString(Minecraft.getDebugFPS()));
-  }
-  
-  public String getDisplayText() {
-    return Minecraft.getDebugFPS() + " FPS";
-  }
+    public Tuple<String, String> getInfoHud() {
+        return new Tuple("FPS", Integer.toString(Minecraft.getDebugFPS()));
+    }
+
+    public String getDisplayText() {
+        return Minecraft.getDebugFPS() + " FPS";
+    }
 }
 
 

@@ -11,29 +11,29 @@ import net.minecraft.world.storage.ISaveHandler;
 import net.minecraft.world.storage.WorldInfo;
 
 public class WorldDummy extends World {
-  private static WorldDummy instance;
-  
-  protected WorldDummy(ISaveHandler saveHandler, WorldInfo worldInfo, WorldProvider worldProvider, Profiler profiler, boolean client) {
-    super(saveHandler, worldInfo, worldProvider, profiler, client);
-  }
-  
-  protected IChunkProvider createChunkProvider() {
-    return null;
-  }
+    private static WorldDummy instance;
+
+    protected WorldDummy(ISaveHandler saveHandler, WorldInfo worldInfo, WorldProvider worldProvider, Profiler profiler, boolean client) {
+        super(saveHandler, worldInfo, worldProvider, profiler, client);
+    }
+
+    protected IChunkProvider createChunkProvider() {
+        return null;
+    }
 
 
-  protected int getRenderDistanceChunks() {
-    return 0;
-  }
+    protected int getRenderDistanceChunks() {
+        return 0;
+    }
 
-  public static WorldDummy instance() {
-    if (instance == null) {
-      WorldSettings worldSettings = new WorldSettings(0L, WorldSettings.GameType.CREATIVE, false, false, WorldType.FLAT);
-      WorldInfo worldInfo = new WorldInfo(worldSettings, "FakeWorld");
-      instance = new WorldDummy((ISaveHandler)new SaveHandlerSchematic(), worldInfo, new WorldProviderSchematic(), new Profiler(), false);
-    } 
-    return instance;
-  }
+    public static WorldDummy instance() {
+        if (instance == null) {
+            WorldSettings worldSettings = new WorldSettings(0L, WorldSettings.GameType.CREATIVE, false, false, WorldType.FLAT);
+            WorldInfo worldInfo = new WorldInfo(worldSettings, "FakeWorld");
+            instance = new WorldDummy((ISaveHandler) new SaveHandlerSchematic(), worldInfo, new WorldProviderSchematic(), new Profiler(), false);
+        }
+        return instance;
+    }
 }
 
 

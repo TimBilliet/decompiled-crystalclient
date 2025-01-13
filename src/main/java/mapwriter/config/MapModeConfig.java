@@ -3,25 +3,25 @@ package mapwriter.config;
 import co.crystaldev.client.feature.impl.hud.MapWriter;
 
 public class MapModeConfig {
-  public boolean rotate = false;
-  
-  public boolean circular = false;
-  
-  public boolean borderMode = false;
-  
-  public int playerArrowSize = 5;
-  
-  public int markerSize = 5;
-  
-  public int trailMarkerSize = 3;
-  
-  public int alphaPercent = 100;
-  
-  public void loadConfig() {
-    this.playerArrowSize = (MapWriter.getInstance()).playerArrowSize;
-    this.alphaPercent = (MapWriter.getInstance()).backgroundAlpha;
-    this.trailMarkerSize = Math.max(1, this.markerSize - 1);
-  }
+    public boolean rotate = false;
+
+    public boolean circular = false;
+
+    public boolean borderMode = false;
+
+    public int playerArrowSize = 5;
+
+    public int markerSize = 5;
+
+    public int trailMarkerSize = 3;
+
+    public int alphaPercent = 100;
+
+    public void loadConfig() {
+        this.playerArrowSize = (MapWriter.getInstance()).playerArrowSize;
+        this.alphaPercent = (MapWriter.getInstance()).backgroundAlpha;
+        this.trailMarkerSize = Math.max(1, this.markerSize - 1);
+    }
 }
 
 

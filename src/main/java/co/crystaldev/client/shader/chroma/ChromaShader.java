@@ -8,19 +8,19 @@ import co.crystaldev.client.shader.UniformType;
 import net.minecraft.client.Minecraft;
 
 public abstract class ChromaShader extends Shader {
-  public ChromaShader(String shaderName) throws Exception {
-    super(shaderName, shaderName);
-  }
-  
-  protected void registerUniforms() {
-    registerUniform(UniformType.FLOAT, "chromaSize", () -> (ClientOptions.getInstance()).chromaSize * (Minecraft.getMinecraft()).displayWidth / 100.0F);
-    registerUniform(UniformType.FLOAT, "timeOffset", () -> {
-          float ticks = (float)ModuleHandler.getTotalTicks() + (Client.getTimer()).renderPartialTicks;
-          float chromaSpeed = (ClientOptions.getInstance()).chromaSpeed / 360.0F;
-          return ticks * chromaSpeed;
+    public ChromaShader(String shaderName) throws Exception {
+        super(shaderName, shaderName);
+    }
+
+    protected void registerUniforms() {
+        registerUniform(UniformType.FLOAT, "chromaSize", () -> (ClientOptions.getInstance()).chromaSize * (Minecraft.getMinecraft()).displayWidth / 100.0F);
+        registerUniform(UniformType.FLOAT, "timeOffset", () -> {
+            float ticks = (float) ModuleHandler.getTotalTicks() + (Client.getTimer()).renderPartialTicks;
+            float chromaSpeed = (ClientOptions.getInstance()).chromaSpeed / 360.0F;
+            return ticks * chromaSpeed;
         });
-    registerUniform(UniformType.FLOAT, "saturation", () -> (float) (ClientOptions.getInstance()).chromaSaturation);
-  }
+        registerUniform(UniformType.FLOAT, "saturation", () -> (float) (ClientOptions.getInstance()).chromaSaturation);
+    }
 }
 
 

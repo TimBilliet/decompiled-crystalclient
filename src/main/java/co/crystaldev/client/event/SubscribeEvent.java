@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
 public @interface SubscribeEvent {
-  byte priority() default 2;
+    byte priority() default 2;
 }
 
 

@@ -23,6 +23,7 @@ import co.crystaldev.client.util.FileUtils;
 import co.crystaldev.client.util.objects.ModulePosition;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -53,10 +54,10 @@ public class Config {
             File configFile = new File(this.configDir, format(fileName) + ".json");
             if (!configFile.exists()) {
                 if (object instanceof Module)
-                    ((Module)object).configPreInit();
+                    ((Module) object).configPreInit();
                 saveConfig(fileName, object);
                 if (object instanceof Module)
-                    ((Module)object).configPostInit();
+                    ((Module) object).configPostInit();
             } else {
                 JsonObject base;
                 StringBuilder json = new StringBuilder();
@@ -66,7 +67,7 @@ public class Config {
                     Reference.LOGGER.error("Error loading config", ex);
                 }
                 try {
-                    base = (JsonObject)Reference.GSON_PRETTY.fromJson(json.toString(), JsonObject.class);
+                    base = (JsonObject) Reference.GSON_PRETTY.fromJson(json.toString(), JsonObject.class);
                 } catch (RuntimeException ex) {
                     Reference.LOGGER.error("Configuration failed to load (JSON syntax error) - Object: {}", object, ex);
                     configFile.renameTo(new File(this.configDir, format(fileName) + ".json.broken"));
@@ -75,7 +76,7 @@ public class Config {
                 }
                 loadFromJsonObject(base, object);
             }
-        } catch (IllegalArgumentException|NullPointerException|java.io.UncheckedIOException ex) {
+        } catch (IllegalArgumentException | NullPointerException | java.io.UncheckedIOException ex) {
             Reference.LOGGER.error("Exception thrown while loading configuration.", ex);
         }
         saveConfig(fileName, object);
@@ -93,7 +94,7 @@ public class Config {
                 Reference.LOGGER.error("Exception thrown while saving configuration", ex);
             }
         if (object instanceof Module)
-            (new ConfigEvent.ModuleSave.Pre(this, (Module)object)).call();
+            (new ConfigEvent.ModuleSave.Pre(this, (Module) object)).call();
         JsonObject obj = saveObjectToJson(object);
         if (obj == null)
             return;
@@ -105,7 +106,7 @@ public class Config {
             Reference.LOGGER.error("Unable to write to config file " + configFile.getAbsolutePath(), ex);
         }
         if (object instanceof Module)
-            (new ConfigEvent.ModuleSave.Post(this, (Module)object)).call();
+            (new ConfigEvent.ModuleSave.Post(this, (Module) object)).call();
     }
 
     public void loadFromJsonObject(JsonObject base, Object object) {
@@ -114,7 +115,7 @@ public class Config {
 
     public void loadFromJsonObject(String fileName, JsonObject base, Object object) {
         if (object instanceof Module)
-            ((Module)object).configPreInit();
+            ((Module) object).configPreInit();
         try {
             for (Field field : object.getClass().getFields()) {
                 try {
@@ -125,7 +126,7 @@ public class Config {
                             if (annotation instanceof Toggle) {
                                 field.setBoolean(object, base.get(formatted).getAsBoolean());
                             } else if (annotation instanceof Slider) {
-                                if (((Slider)annotation).integers()) {
+                                if (((Slider) annotation).integers()) {
                                     field.setInt(object, base.get(formatted).getAsInt());
                                 } else {
                                     field.setDouble(object, base.get(formatted).getAsDouble());
@@ -146,7 +147,7 @@ public class Config {
                                 field.set(object, pos);
                             } else if (annotation instanceof DropdownMenu) {
                                 Dropdown<?> dropdown = Reference.GSON.fromJson(base.get(formatted).getAsJsonObject(), Dropdown.class);
-                                dropdown.copy((DropdownMenu)annotation);
+                                dropdown.copy((DropdownMenu) annotation);
                                 field.set(object, dropdown);
                             }
                     }
@@ -158,13 +159,13 @@ public class Config {
                             .getName(), (fileName == null) ? "null" : fileName, object.getClass().getName(), ex);
                 }
             }
-        } catch (IllegalArgumentException|NullPointerException|java.io.UncheckedIOException ex) {
+        } catch (IllegalArgumentException | NullPointerException | java.io.UncheckedIOException ex) {
             Reference.LOGGER.error("Exception thrown while loading configuration.", ex);
         }
         if (fileName != null)
             saveConfig(fileName, object);
         if (object instanceof Module)
-            ((Module)object).configPostInit();
+            ((Module) object).configPostInit();
     }
 
     public JsonObject saveObjectToJson(Object object) {
@@ -194,25 +195,25 @@ public class Config {
                         if (annotation instanceof Toggle) {
                             obj.addProperty(name, (Boolean) field.get(object));
                         } else if (annotation instanceof Slider) {
-                            if (((Slider)annotation).integers()) {
+                            if (((Slider) annotation).integers()) {
                                 obj.addProperty(name, (Integer) field.get(object));
                             } else {
                                 obj.addProperty(name, (Double) field.get(object));
                             }
                         } else if (annotation instanceof Selector) {
-                            obj.addProperty(name, (String)field.get(object));
+                            obj.addProperty(name, (String) field.get(object));
                         } else if (annotation instanceof Property) {
-                            obj.addProperty(name, (String)field.get(object));
+                            obj.addProperty(name, (String) field.get(object));
                         } else if (annotation instanceof Colour) {
-                            ColorObject c = (ColorObject)field.get(object);
+                            ColorObject c = (ColorObject) field.get(object);
                             obj.add(name, Reference.GSON.fromJson(Reference.GSON.toJson(c), JsonObject.class));
                         } else if (annotation instanceof Position) {
-                            ModulePosition pos = (ModulePosition)field.get(object);
+                            ModulePosition pos = (ModulePosition) field.get(object);
                             obj.add(name, Reference.GSON.fromJson(Reference.GSON.toJson(pos), JsonObject.class));
                         } else if (annotation instanceof DropdownMenu) {
-                            Dropdown<?> dropdown = (Dropdown)field.get(object);
+                            Dropdown<?> dropdown = (Dropdown) field.get(object);
                             if (dropdown == null) {
-                                field.set(object, dropdown = new Dropdown((DropdownMenu)annotation));
+                                field.set(object, dropdown = new Dropdown((DropdownMenu) annotation));
                                 dropdown.setDefault();
                             }
                             obj.add(name, Reference.GSON.fromJson(Reference.GSON.toJson(dropdown, Dropdown.class), JsonObject.class));
@@ -241,7 +242,7 @@ public class Config {
     public void saveModuleConfig() {
         for (Module module : ModuleHandler.getModules())
             saveModuleConfig(module);
-        saveModuleConfig((Module)ClientOptions.getInstance());
+        saveModuleConfig((Module) ClientOptions.getInstance());
         saveConfig("group_options", GroupOptions.getInstance());
         (new ConfigEvent.Save(this)).call();
     }
@@ -270,40 +271,40 @@ public class Config {
 
     public String getNameFromAnnotation(Annotation a) {
         if (a instanceof Toggle)
-            return ((Toggle)a).label();
+            return ((Toggle) a).label();
         if (a instanceof Colour)
-            return ((Colour)a).label();
+            return ((Colour) a).label();
         if (a instanceof Selector)
-            return ((Selector)a).label();
+            return ((Selector) a).label();
         if (a instanceof Property)
-            return ((Property)a).label();
+            return ((Property) a).label();
         if (a instanceof Slider)
-            return ((Slider)a).label();
+            return ((Slider) a).label();
         if (a instanceof Position)
-            return ((Position)a).cfg();
+            return ((Position) a).cfg();
         if (a instanceof Keybind)
-            return ((Keybind)a).label();
+            return ((Keybind) a).label();
         if (a instanceof DropdownMenu)
-            return ((DropdownMenu)a).label();
+            return ((DropdownMenu) a).label();
         return null;
     }
 
     public boolean isAnnotationInvalid(Annotation a, Object object) {
         List<Class<? extends Annotation>> requires = new ArrayList<>();
         if (a instanceof Toggle) {
-            requires.addAll(Arrays.asList(((Toggle)a).requires()));
+            requires.addAll(Arrays.asList(((Toggle) a).requires()));
         } else if (a instanceof Colour) {
-            requires.addAll(Arrays.asList(((Colour)a).requires()));
+            requires.addAll(Arrays.asList(((Colour) a).requires()));
         } else if (a instanceof Selector) {
-            requires.addAll(Arrays.asList(((Selector)a).requires()));
+            requires.addAll(Arrays.asList(((Selector) a).requires()));
         } else if (a instanceof Property) {
-            requires.addAll(Arrays.asList(((Property)a).requires()));
+            requires.addAll(Arrays.asList(((Property) a).requires()));
         } else if (a instanceof Slider) {
-            requires.addAll(Arrays.asList(((Slider)a).requires()));
+            requires.addAll(Arrays.asList(((Slider) a).requires()));
         } else if (a instanceof Keybind) {
-            requires.addAll(Arrays.asList(((Keybind)a).requires()));
+            requires.addAll(Arrays.asList(((Keybind) a).requires()));
         } else if (a instanceof DropdownMenu) {
-            requires.addAll(Arrays.asList(((DropdownMenu)a).requires()));
+            requires.addAll(Arrays.asList(((DropdownMenu) a).requires()));
         }
         if (requires.isEmpty())
             return false;
@@ -316,7 +317,7 @@ public class Config {
 
     private String getFileNameFromObject(Object obj) {
         if (obj instanceof Module)
-            return format(((Module)obj).name);
+            return format(((Module) obj).name);
         if (obj instanceof GroupOptions)
             return "group_options";
         return null;

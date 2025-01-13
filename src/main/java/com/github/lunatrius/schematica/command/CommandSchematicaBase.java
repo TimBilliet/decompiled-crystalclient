@@ -4,13 +4,13 @@ import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 
 public abstract class CommandSchematicaBase extends CommandBase {
-  public int getRequiredPermissionLevel() {
-    return 0;
-  }
-  
-  public boolean canCommandSenderUseCommand(ICommandSender sender) {
-    return (super.canCommandSenderUseCommand(sender) || (sender instanceof net.minecraft.entity.player.EntityPlayerMP && getRequiredPermissionLevel() <= 0));
-  }
+    public int getRequiredPermissionLevel() {
+        return 0;
+    }
+
+    public boolean canCommandSenderUseCommand(ICommandSender sender) {
+        return (super.canCommandSenderUseCommand(sender) || (sender instanceof net.minecraft.entity.player.EntityPlayerMP && getRequiredPermissionLevel() <= 0));
+    }
 }
 
 

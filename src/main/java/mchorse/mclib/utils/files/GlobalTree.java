@@ -5,19 +5,19 @@ import java.util.Collections;
 import java.util.List;
 
 public class GlobalTree extends FileTree {
-  public static final GlobalTree TREE = new GlobalTree();
-  
-  protected List<FileTree> trees = new ArrayList<>();
-  
-  public void register(FileTree tree) {
-    this.trees.add(tree);
-    this.root.getEntries().add(tree.root);
-    tree.root.parent = this.root;
-  }
-  
-  public List<FileTree> getTrees() {
-    return Collections.unmodifiableList(this.trees);
-  }
+    public static final GlobalTree TREE = new GlobalTree();
+
+    protected List<FileTree> trees = new ArrayList<>();
+
+    public void register(FileTree tree) {
+        this.trees.add(tree);
+        this.root.getEntries().add(tree.root);
+        tree.root.parent = this.root;
+    }
+
+    public List<FileTree> getTrees() {
+        return Collections.unmodifiableList(this.trees);
+    }
 }
 
 

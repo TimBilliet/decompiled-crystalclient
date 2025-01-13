@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
+
 import mchorse.emoticons.common.EmoteAPI;
 import mchorse.emoticons.common.emotes.Emote;
 import mchorse.emoticons.common.emotes.Emotes;
@@ -93,7 +94,7 @@ public class ThumbnailCommand extends AbstractCommand {
         this.gifLocations.clear();
         List<String> filter = new ArrayList<>();
         if (!arguments.isEmpty())
-            filter.addAll((Collection<? extends String>)arguments.getArguments().stream().map(arg -> arg.getAsString().toLowerCase()).collect(Collectors.toList()));
+            filter.addAll((Collection<? extends String>) arguments.getArguments().stream().map(arg -> arg.getAsString().toLowerCase()).collect(Collectors.toList()));
         File dir = new File(Client.getClientRunDirectory(), "generated-thumbnails");
         if (!dir.exists())
             dir.mkdirs();
@@ -206,7 +207,7 @@ public class ThumbnailCommand extends AbstractCommand {
                     }
                 } else {
                     this.completedEmotes.add(next);
-                    EmoteAPI.setEmoteClient(next.getName(), (EntityPlayer)(Minecraft.getMinecraft()).thePlayer);
+                    EmoteAPI.setEmoteClient(next.getName(), (EntityPlayer) (Minecraft.getMinecraft()).thePlayer);
                     this.currentGifFrame = 0;
                 }
             this.currentGifFrame++;
@@ -218,11 +219,11 @@ public class ThumbnailCommand extends AbstractCommand {
             RenderUtils.drawCustomSizedResource(Resources.EMOTE_BACKGROUND, 0, 0, width / 2, height / 2);
             ScreenCosmetics.setRenderingPlayer(true);
             EntityPlayerSP entityPlayerSP = (Minecraft.getMinecraft()).thePlayer;
-            CosmeticPlayer cp = CosmeticCache.getInstance().fromPlayer((EntityPlayer)entityPlayerSP);
+            CosmeticPlayer cp = CosmeticCache.getInstance().fromPlayer((EntityPlayer) entityPlayerSP);
             boolean shouldUpdate = cp.isShouldUpdateCosmetic();
             cp.setShouldUpdateCosmetic(false);
-            RenderUtils.drawEntityOnScreen(width / 4, (int)(width / 2.0D * 0.9375D), (int)(width / 2.0D * 0.46875D), 0.0F, 0.0F,
-                    next.getType().isFront() ? 20 : 200, (EntityLivingBase)entityPlayerSP);
+            RenderUtils.drawEntityOnScreen(width / 4, (int) (width / 2.0D * 0.9375D), (int) (width / 2.0D * 0.46875D), 0.0F, 0.0F,
+                    next.getType().isFront() ? 20 : 200, (EntityLivingBase) entityPlayerSP);
             cp.setShouldUpdateCosmetic(shouldUpdate);
             ScreenCosmetics.setRenderingPlayer(false);
             GL11.glPopMatrix();
@@ -230,7 +231,7 @@ public class ThumbnailCommand extends AbstractCommand {
             setupScreenshot(resolution);
             File completed = screenshot(resolution, "emote_" + next.getName(), next.getType().getInternalName() + "_" + next.getName() + "_" + this.currentGifFrame);
             if (completed != null)
-                ((List<File>)this.gifLocations.computeIfAbsent(next, c -> new ArrayList())).add(completed);
+                ((List<File>) this.gifLocations.computeIfAbsent(next, c -> new ArrayList())).add(completed);
         }
         return false;
     }
@@ -242,7 +243,7 @@ public class ThumbnailCommand extends AbstractCommand {
         RenderUtils.drawRect(0.0F, 0.0F, 512.0F, 512.0F, BACKGROUND_COLOR);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         ScreenCosmetics.setRenderingPlayer(true);
-        CosmeticPlayer player = CosmeticCache.getInstance().fromPlayer((EntityPlayer)(Minecraft.getMinecraft()).thePlayer);
+        CosmeticPlayer player = CosmeticCache.getInstance().fromPlayer((EntityPlayer) (Minecraft.getMinecraft()).thePlayer);
         Cosmetic cloak = player.getCloak(), wings = player.getWings();
         ResourceLocation cape = player.getLocationOfCape();
         player.setLocationOfCape(null);
@@ -259,7 +260,7 @@ public class ThumbnailCommand extends AbstractCommand {
         boolean shouldUpdate = player.isShouldUpdateCosmetic();
         player.setShouldUpdateCosmetic(false);
         RenderUtils.drawEntityOnScreen(256, 480, 240, 0.0F, 0.0F,
-                next.getType().isFront() ? 20 : 200, (EntityLivingBase)(Minecraft.getMinecraft()).thePlayer);
+                next.getType().isFront() ? 20 : 200, (EntityLivingBase) (Minecraft.getMinecraft()).thePlayer);
         player.setShouldUpdateCosmetic(shouldUpdate);
         player.setLocationOfCape(cape);
         player.setCloak(cloak);
@@ -276,7 +277,7 @@ public class ThumbnailCommand extends AbstractCommand {
             handleCosmeticThumbnail(next);
             return true;
         }
-        ICosmeticTexture tex = (ICosmeticTexture)next.getTexture();
+        ICosmeticTexture tex = (ICosmeticTexture) next.getTexture();
         if (!tex.isTextureLoaded())
             try {
                 next.getTexture().loadTexture(Minecraft.getMinecraft().getResourceManager());
@@ -297,7 +298,7 @@ public class ThumbnailCommand extends AbstractCommand {
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         ScreenCosmetics.setRenderingPlayer(true);
         EntityPlayerSP entity = (Minecraft.getMinecraft()).thePlayer;
-        CosmeticPlayer player = CosmeticCache.getInstance().fromPlayer((EntityPlayer)entity);
+        CosmeticPlayer player = CosmeticCache.getInstance().fromPlayer((EntityPlayer) entity);
         Cosmetic cloak = player.getCloak(), wings = player.getWings();
         ResourceLocation cape = player.getLocationOfCape();
         player.setLocationOfCape(null);
@@ -315,8 +316,8 @@ public class ThumbnailCommand extends AbstractCommand {
         }
         boolean shouldUpdate = player.isShouldUpdateCosmetic();
         player.setShouldUpdateCosmetic(false);
-        RenderUtils.drawEntityOnScreen(width / 4, (int)(width / 2.0D * 0.9375D), (int)(width / 2.0D * 0.46875D), 0.0F, 0.0F,
-                next.getType().isFront() ? 20 : 200, (EntityLivingBase)entity);
+        RenderUtils.drawEntityOnScreen(width / 4, (int) (width / 2.0D * 0.9375D), (int) (width / 2.0D * 0.46875D), 0.0F, 0.0F,
+                next.getType().isFront() ? 20 : 200, (EntityLivingBase) entity);
         player.setShouldUpdateCosmetic(shouldUpdate);
         player.setLocationOfCape(cape);
         player.setCloak(cloak);
@@ -328,7 +329,7 @@ public class ThumbnailCommand extends AbstractCommand {
         setupScreenshot(resolution);
         File completed = screenshot(resolution, next.getType().getInternalName() + "_" + next.getName(), next.getType().getInternalName() + "_" + next.getName() + "_" + this.currentGifFrame);
         if (completed != null)
-            ((List<File>)this.gifLocations.computeIfAbsent(next, c -> new ArrayList())).add(completed);
+            ((List<File>) this.gifLocations.computeIfAbsent(next, c -> new ArrayList())).add(completed);
         return false;
     }
 

@@ -8,35 +8,35 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderLightmap extends RendererLivingEntity<EntityLivingBase> {
-  private static RenderLightmap instance;
-  
-  public static void create() {
-    instance = new RenderLightmap(Minecraft.getMinecraft().getRenderManager(), null, 0.0F);
-  }
-  
-  public static boolean canRenderNamePlate(EntityLivingBase entity) {
-    return instance.canRenderName(entity);
-  }
-  
-  public static boolean set(EntityLivingBase entity, float partialTicks) {
-    return instance.setBrightness(entity, partialTicks, true);
-  }
-  
-  public static void unset() {
-    instance.unsetBrightness();
-  }
-  
-  public RenderLightmap(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn) {
-    super(renderManagerIn, modelBaseIn, shadowSizeIn);
-  }
-  
-  protected int getColorMultiplier(EntityLivingBase entitylivingbaseIn, float lightBrightness, float partialTickTime) {
-    return 0;
-  }
-  
-  protected ResourceLocation getEntityTexture(EntityLivingBase entity) {
-    return null;
-  }
+    private static RenderLightmap instance;
+
+    public static void create() {
+        instance = new RenderLightmap(Minecraft.getMinecraft().getRenderManager(), null, 0.0F);
+    }
+
+    public static boolean canRenderNamePlate(EntityLivingBase entity) {
+        return instance.canRenderName(entity);
+    }
+
+    public static boolean set(EntityLivingBase entity, float partialTicks) {
+        return instance.setBrightness(entity, partialTicks, true);
+    }
+
+    public static void unset() {
+        instance.unsetBrightness();
+    }
+
+    public RenderLightmap(RenderManager renderManagerIn, ModelBase modelBaseIn, float shadowSizeIn) {
+        super(renderManagerIn, modelBaseIn, shadowSizeIn);
+    }
+
+    protected int getColorMultiplier(EntityLivingBase entitylivingbaseIn, float lightBrightness, float partialTickTime) {
+        return 0;
+    }
+
+    protected ResourceLocation getEntityTexture(EntityLivingBase entity) {
+        return null;
+    }
 }
 
 

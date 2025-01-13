@@ -5,7 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.storage.SaveHandler;
 
 public interface IPlayerInfoEditor extends IWDLMod {
-  void editPlayerInfo(EntityPlayerSP paramEntityPlayerSP, SaveHandler paramSaveHandler, NBTTagCompound paramNBTTagCompound);
+    void editPlayerInfo(EntityPlayerSP paramEntityPlayerSP, SaveHandler paramSaveHandler, NBTTagCompound paramNBTTagCompound);
 }
 
 

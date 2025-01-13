@@ -11,11 +11,11 @@ import java.util.Set;
 
 @Mixin({World.class})
 public interface MixinWorld {
-  @Accessor("activeChunkSet")
-  Set<ChunkCoordIntPair> getActiveChunkSet();
-  
-  @Accessor("tileEntitiesToBeRemoved")
-  List<TileEntity> getTileEntitiesToBeRemoved();
+    @Accessor("activeChunkSet")
+    Set<ChunkCoordIntPair> getActiveChunkSet();
+
+    @Accessor("tileEntitiesToBeRemoved")
+    List<TileEntity> getTileEntitiesToBeRemoved();
 }
 
 

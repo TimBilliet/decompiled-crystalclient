@@ -5,46 +5,46 @@ import co.crystaldev.client.event.Event;
 import co.crystaldev.client.feature.base.Module;
 
 public class ConfigEvent extends Event {
-  private final Config config;
+    private final Config config;
 
-  public Config getConfig() {
-    return this.config;
-  }
-
-  public ConfigEvent(Config config) {
-    this.config = config;
-  }
-
-  public static class Save extends ConfigEvent {
-    public Save(Config config) {
-      super(config);
-    }
-  }
-
-  public static class ModuleSave extends ConfigEvent {
-    private final Module module;
-
-    public Module getModule() {
-      return this.module;
+    public Config getConfig() {
+        return this.config;
     }
 
-    private ModuleSave(Config config, Module module) {
-      super(config);
-      this.module = module;
+    public ConfigEvent(Config config) {
+        this.config = config;
     }
 
-    public static class Pre extends ModuleSave {
-      public Pre(Config config, Module module) {
-        super(config, module);
-      }
+    public static class Save extends ConfigEvent {
+        public Save(Config config) {
+            super(config);
+        }
     }
 
-    public static class Post extends ModuleSave {
-      public Post(Config config, Module module) {
-        super(config, module);
-      }
+    public static class ModuleSave extends ConfigEvent {
+        private final Module module;
+
+        public Module getModule() {
+            return this.module;
+        }
+
+        private ModuleSave(Config config, Module module) {
+            super(config);
+            this.module = module;
+        }
+
+        public static class Pre extends ModuleSave {
+            public Pre(Config config, Module module) {
+                super(config, module);
+            }
+        }
+
+        public static class Post extends ModuleSave {
+            public Post(Config config, Module module) {
+                super(config, module);
+            }
+        }
     }
-  }
 }
 
 

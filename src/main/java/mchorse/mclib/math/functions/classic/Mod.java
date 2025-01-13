@@ -4,17 +4,17 @@ import mchorse.mclib.math.IValue;
 import mchorse.mclib.math.functions.Function;
 
 public class Mod extends Function {
-  public Mod(IValue[] values, String name) throws Exception {
-    super(values, name);
-  }
-  
-  public int getRequiredArguments() {
-    return 2;
-  }
-  
-  public double get() {
-    return getArg(0) % getArg(1);
-  }
+    public Mod(IValue[] values, String name) throws Exception {
+        super(values, name);
+    }
+
+    public int getRequiredArguments() {
+        return 2;
+    }
+
+    public double get() {
+        return getArg(0) % getArg(1);
+    }
 }
 
 

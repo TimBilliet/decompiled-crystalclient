@@ -6,9 +6,9 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin({GuiLanguage.class})
 public abstract class MixinGuiLanguage extends GuiScreen {
-  public void onGuiClosed() {
-    this.mc.ingameGUI.getChatGUI().refreshChat();
-  }
+    public void onGuiClosed() {
+        this.mc.ingameGUI.getChatGUI().refreshChat();
+    }
 }
 
 

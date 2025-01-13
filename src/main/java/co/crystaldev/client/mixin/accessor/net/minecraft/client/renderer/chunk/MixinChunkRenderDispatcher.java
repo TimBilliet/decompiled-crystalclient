@@ -8,8 +8,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin({ChunkRenderDispatcher.class})
 public interface MixinChunkRenderDispatcher {
-  @Invoker("uploadDisplayList")
-  void callUploadDisplayList(WorldRenderer paramWorldRenderer, int paramInt, RenderChunk paramRenderChunk);
+    @Invoker("uploadDisplayList")
+    void callUploadDisplayList(WorldRenderer paramWorldRenderer, int paramInt, RenderChunk paramRenderChunk);
 }
 
 

@@ -4,6 +4,7 @@ import co.crystaldev.client.gui.ease.Animation;
 import co.crystaldev.client.gui.ease.Easing;
 import co.crystaldev.client.gui.ease.IEasingFunction;
 import co.crystaldev.client.util.ColorObject;
+
 import java.awt.Color;
 
 public class FadingColor implements Cloneable {
@@ -125,14 +126,14 @@ public class FadingColor implements Cloneable {
         if (this.forceUpdate || !isComplete())
             this
 
-                    .currentColor = new Color((int)Math.floor(this.animationRed.getValue()), (int)Math.floor(this.animationGreen.getValue()), (int)Math.floor(this.animationBlue.getValue()), (int)Math.floor(this.animationAlpha.getValue()));
+                    .currentColor = new Color((int) Math.floor(this.animationRed.getValue()), (int) Math.floor(this.animationGreen.getValue()), (int) Math.floor(this.animationBlue.getValue()), (int) Math.floor(this.animationAlpha.getValue()));
     }
 
     public ColorObject getCurrentColorObject() {
         ColorObject color = ColorObject.fromColor(getCurrentColor());
         if (this.color1 instanceof ColorObject && this.color2 instanceof ColorObject) {
-            ColorObject c1 = (ColorObject)this.color1;
-            ColorObject c2 = (ColorObject)this.color2;
+            ColorObject c1 = (ColorObject) this.color1;
+            ColorObject c2 = (ColorObject) this.color2;
             color = new ColorObject(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha(), (c1.isChroma() || c2.isChroma()), (c1.isBold() || c2.isBold()), (c1.isUnderline() || c2.isUnderline()), (c1.isItalic() || c2.isItalic()));
         }
         return color;
@@ -152,7 +153,7 @@ public class FadingColor implements Cloneable {
 
     public FadingColor clone() {
         try {
-            return (FadingColor)super.clone();
+            return (FadingColor) super.clone();
         } catch (CloneNotSupportedException ex) {
             throw new AssertionError();
         }

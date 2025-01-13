@@ -8,11 +8,11 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin({MinecraftServer.class})
 public abstract class MixinMinecraftServer {
-  @ModifyVariable(method = {"addFaviconToStatusResponse"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/network/ServerStatusResponse;setFavicon(Ljava/lang/String;)V", shift = At.Shift.AFTER), ordinal = 1)
-  private ByteBuf releaseByteBuf(ByteBuf buf1) {
-    buf1.release();
-    return buf1;
-  }
+    @ModifyVariable(method = {"addFaviconToStatusResponse"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/network/ServerStatusResponse;setFavicon(Ljava/lang/String;)V", shift = At.Shift.AFTER), ordinal = 1)
+    private ByteBuf releaseByteBuf(ByteBuf buf1) {
+        buf1.release();
+        return buf1;
+    }
 }
 
 

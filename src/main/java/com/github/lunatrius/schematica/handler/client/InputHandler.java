@@ -15,53 +15,53 @@ import net.minecraft.util.Vec3i;
 import net.minecraft.world.World;
 
 public class InputHandler {
-  public static InputHandler INSTANCE;
-  
-  private final Minecraft minecraft = Minecraft.getMinecraft();
-  
-  public InputHandler() {
-    INSTANCE = this;
-  }
-  
-  @SubscribeEvent
-  private void onMouseClick(InputEvent.Mouse event) {
-    handlePickBlock();
-  }
-  
-  private void handlePickBlock() {
-    KeyBinding keyPickBlock = this.minecraft.gameSettings.keyBindPickBlock;
-    if (keyPickBlock.isPressed())
-      try {
-        SchematicWorld schematic = ClientProxy.currentSchematic.schematic;
-        boolean revert = true;
-        if (schematic != null && schematic.isRendering)
-          revert = pickBlock(schematic, ClientProxy.movingObjectPosition); 
-        if (revert)
-          KeyBinding.onTick(keyPickBlock.getKeyCode()); 
-      } catch (Exception e) {
-        Reference.logger.error("Could not pick block!", e);
-      }  
-  }
-  
-  private boolean pickBlock(SchematicWorld schematic, MovingObjectPosition objectMouseOver) {
-    boolean revert = false;
-    if (objectMouseOver != null) {
-      EntityPlayerSP player = this.minecraft.thePlayer;
-      if (objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.MISS)
-        revert = true; 
-      MovingObjectPosition mcObjectMouseOver = this.minecraft.objectMouseOver;
-      if (mcObjectMouseOver != null && mcObjectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK && 
-        mcObjectMouseOver.getBlockPos().subtract((Vec3i)schematic.position).equals(objectMouseOver.getBlockPos()))
-        return true; 
-      if (!Hooks.onPickBlock(objectMouseOver, (EntityPlayer)player, (World)schematic))
-        return revert; 
-      if (player.capabilities.isCreativeMode) {
-        int slot = player.inventoryContainer.inventorySlots.size() - 9 + player.inventory.currentItem;
-        this.minecraft.playerController.sendSlotPacket(player.inventory.getStackInSlot(player.inventory.currentItem), slot);
-      } 
-    } 
-    return revert;
-  }
+    public static InputHandler INSTANCE;
+
+    private final Minecraft minecraft = Minecraft.getMinecraft();
+
+    public InputHandler() {
+        INSTANCE = this;
+    }
+
+    @SubscribeEvent
+    private void onMouseClick(InputEvent.Mouse event) {
+        handlePickBlock();
+    }
+
+    private void handlePickBlock() {
+        KeyBinding keyPickBlock = this.minecraft.gameSettings.keyBindPickBlock;
+        if (keyPickBlock.isPressed())
+            try {
+                SchematicWorld schematic = ClientProxy.currentSchematic.schematic;
+                boolean revert = true;
+                if (schematic != null && schematic.isRendering)
+                    revert = pickBlock(schematic, ClientProxy.movingObjectPosition);
+                if (revert)
+                    KeyBinding.onTick(keyPickBlock.getKeyCode());
+            } catch (Exception e) {
+                Reference.logger.error("Could not pick block!", e);
+            }
+    }
+
+    private boolean pickBlock(SchematicWorld schematic, MovingObjectPosition objectMouseOver) {
+        boolean revert = false;
+        if (objectMouseOver != null) {
+            EntityPlayerSP player = this.minecraft.thePlayer;
+            if (objectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.MISS)
+                revert = true;
+            MovingObjectPosition mcObjectMouseOver = this.minecraft.objectMouseOver;
+            if (mcObjectMouseOver != null && mcObjectMouseOver.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK &&
+                    mcObjectMouseOver.getBlockPos().subtract((Vec3i) schematic.position).equals(objectMouseOver.getBlockPos()))
+                return true;
+            if (!Hooks.onPickBlock(objectMouseOver, (EntityPlayer) player, (World) schematic))
+                return revert;
+            if (player.capabilities.isCreativeMode) {
+                int slot = player.inventoryContainer.inventorySlots.size() - 9 + player.inventory.currentItem;
+                this.minecraft.playerController.sendSlotPacket(player.inventory.getStackInSlot(player.inventory.currentItem), slot);
+            }
+        }
+        return revert;
+    }
 }
 
 

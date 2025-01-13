@@ -9,18 +9,18 @@ import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
 public class BlockUtils {
-  public static ItemStack getPickBlock(Block blockIn, MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player) {
-    return getPickBlock(blockIn, target, world, pos);
-  }
-  
-  public static ItemStack getPickBlock(Block blockIn, MovingObjectPosition target, World world, BlockPos pos) {
-    Item item = blockIn.getItem(world, pos);////
-    if (item == null)
-      return null; 
-    Block block = (item instanceof net.minecraft.item.ItemBlock && !blockIn.isFlowerPot()) ? Block.getBlockFromItem(item) : blockIn;
+    public static ItemStack getPickBlock(Block blockIn, MovingObjectPosition target, World world, BlockPos pos, EntityPlayer player) {
+        return getPickBlock(blockIn, target, world, pos);
+    }
+
+    public static ItemStack getPickBlock(Block blockIn, MovingObjectPosition target, World world, BlockPos pos) {
+        Item item = blockIn.getItem(world, pos);////
+        if (item == null)
+            return null;
+        Block block = (item instanceof net.minecraft.item.ItemBlock && !blockIn.isFlowerPot()) ? Block.getBlockFromItem(item) : blockIn;
 //    return new ItemStack(item, 1, block.func_176222_j(world, pos));
-    return new ItemStack(item, 1, block.getDamageValue(world, pos));
-  }
+        return new ItemStack(item, 1, block.getDamageValue(world, pos));
+    }
 }
 
 

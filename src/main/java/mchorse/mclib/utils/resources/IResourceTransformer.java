@@ -1,11 +1,11 @@
 package mchorse.mclib.utils.resources;
 
 public interface IResourceTransformer {
-  String transformDomain(String paramString1, String paramString2);
-  
-  String transformPath(String paramString1, String paramString2);
-  
-  String transform(String paramString);
+    String transformDomain(String paramString1, String paramString2);
+
+    String transformPath(String paramString1, String paramString2);
+
+    String transform(String paramString);
 }
 
 

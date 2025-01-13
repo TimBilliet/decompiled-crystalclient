@@ -10,14 +10,14 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin({ModelPlayer.class})
 public abstract class MixinModelPlayer extends ModelBiped {
-  @Shadow
-  private boolean smallArms;
-  
-  @ModifyConstant(method = {"<init>"}, constant = {@Constant(floatValue = 2.5F)})
-  private float fixAlexArmPos(float original) {
-    return 2.0F;
-  }
-  
+    @Shadow
+    private boolean smallArms;
+
+    @ModifyConstant(method = {"<init>"}, constant = {@Constant(floatValue = 2.5F)})
+    private float fixAlexArmPos(float original) {
+        return 2.0F;
+    }
+
 
 //  @Overwrite
 //  public void func_178718_a(float scale) {
@@ -29,17 +29,18 @@ public abstract class MixinModelPlayer extends ModelBiped {
 //      this.bipedRightArm.postRender(scale);
 //    }
 //  }
-  /**
-   * @author
-   */
-  @Overwrite
-  public void postRenderArm(float scale) {
-    if (this.smallArms) {
-      this.bipedRightArm.rotationPointX += 0.5F;
-      this.bipedRightArm.postRender(scale);
-      this.bipedRightArm.rotationPointZ -= 0.5F;
-    } else {
-      this.bipedRightArm.postRender(scale);
+
+    /**
+     * @author
+     */
+    @Overwrite
+    public void postRenderArm(float scale) {
+        if (this.smallArms) {
+            this.bipedRightArm.rotationPointX += 0.5F;
+            this.bipedRightArm.postRender(scale);
+            this.bipedRightArm.rotationPointZ -= 0.5F;
+        } else {
+            this.bipedRightArm.postRender(scale);
+        }
     }
-  }
 }

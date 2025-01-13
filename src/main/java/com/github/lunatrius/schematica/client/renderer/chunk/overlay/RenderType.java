@@ -1,7 +1,7 @@
 package com.github.lunatrius.schematica.client.renderer.chunk.overlay;
 
 public enum RenderType {
-  WRONG_META, MISSING_BLOCK, INCORRECT_BLOCK;
+    WRONG_META, MISSING_BLOCK, INCORRECT_BLOCK;
 }
 
 

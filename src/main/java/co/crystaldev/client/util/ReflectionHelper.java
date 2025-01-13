@@ -55,7 +55,7 @@ public class ReflectionHelper {
         try {
             Field f = classToAccess.getDeclaredFields()[fieldIndex];
             f.setAccessible(true);
-            return (T)f.get(instance);
+            return (T) f.get(instance);
         } catch (Exception e) {
             throw new UnableToAccessFieldException(new String[0], e);
         }
@@ -63,7 +63,7 @@ public class ReflectionHelper {
 
     public static <T, E> T getPrivateValue(Class<? super E> classToAccess, E instance, String... fieldNames) {
         try {
-            return (T)findField(classToAccess, fieldNames).get(instance);
+            return (T) findField(classToAccess, fieldNames).get(instance);
         } catch (Exception e) {
             throw new UnableToAccessFieldException(fieldNames, e);
         }
@@ -91,7 +91,7 @@ public class ReflectionHelper {
         Exception err = null;
         for (String className : classNames) {
             try {
-                return (Class)Class.forName(className, false, loader);
+                return (Class) Class.forName(className, false, loader);
             } catch (Exception e) {
                 err = e;
             }
@@ -119,7 +119,7 @@ public class ReflectionHelper {
 
     public static <E> E getFieldValue(Field field, Object obj, Class<? super E> clazz) {
         try {
-            return (E)field.get(obj);
+            return (E) field.get(obj);
         } catch (Exception ex) {
             return null;
         }
@@ -127,7 +127,7 @@ public class ReflectionHelper {
 
     public static <E> E invokeMethod(Method method, Object obj, Object... args) {
         try {
-            return (E)method.invoke(obj, args);
+            return (E) method.invoke(obj, args);
         } catch (Exception ex) {
             return null;
         }

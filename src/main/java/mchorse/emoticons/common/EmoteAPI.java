@@ -8,11 +8,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class EmoteAPI {
-  public static void setEmoteClient(String emote, EntityPlayer player) {
-    IUserEmoteData cap = UserEmoticonData.get((Entity)player);
-    if (cap != null)
-      cap.setEmote(Emotes.get(emote), (EntityLivingBase)player); 
-  }
+    public static void setEmoteClient(String emote, EntityPlayer player) {
+        IUserEmoteData cap = UserEmoticonData.get((Entity) player);
+        if (cap != null)
+            cap.setEmote(Emotes.get(emote), (EntityLivingBase) player);
+    }
 }
 
 

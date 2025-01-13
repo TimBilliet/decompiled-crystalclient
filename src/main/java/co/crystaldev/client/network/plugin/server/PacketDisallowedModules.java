@@ -11,22 +11,23 @@ import java.util.Set;
 
 @ReadOnly
 public class PacketDisallowedModules extends PluginChannelPacket {
-  private final Set<String> disallowedFeatures = new HashSet<>();
+    private final Set<String> disallowedFeatures = new HashSet<>();
 
-  public Set<String> getDisallowedFeatures() {
-    return this.disallowedFeatures;
-  }
+    public Set<String> getDisallowedFeatures() {
+        return this.disallowedFeatures;
+    }
 
-  public void write(ByteBufWrapper out) throws IOException {}
+    public void write(ByteBufWrapper out) throws IOException {
+    }
 
-  public void read(ByteBufWrapper in) throws IOException {
-    for (int i = 0; i < in.readVarInt(); i++)
-      this.disallowedFeatures.add(in.readString());
-  }
+    public void read(ByteBufWrapper in) throws IOException {
+        for (int i = 0; i < in.readVarInt(); i++)
+            this.disallowedFeatures.add(in.readString());
+    }
 
-  public void process(NetHandlerPlugin handler) {
-    handler.handleDisallowedFeatures(this);
-  }
+    public void process(NetHandlerPlugin handler) {
+        handler.handleDisallowedFeatures(this);
+    }
 }
 
 

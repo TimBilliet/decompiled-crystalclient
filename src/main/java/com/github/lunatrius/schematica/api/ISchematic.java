@@ -9,33 +9,33 @@ import net.minecraft.util.BlockPos;
 import java.util.List;
 
 public interface ISchematic {
-  IBlockState getBlockState(BlockPos paramBlockPos);
-  
-  boolean setBlockState(BlockPos paramBlockPos, IBlockState paramIBlockState);
-  
-  TileEntity getTileEntity(BlockPos paramBlockPos);
-  
-  List<TileEntity> getTileEntities();
-  
-  void setTileEntity(BlockPos paramBlockPos, TileEntity paramTileEntity);
-  
-  void removeTileEntity(BlockPos paramBlockPos);
-  
-  List<Entity> getEntities();
-  
-  void addEntity(Entity paramEntity);
-  
-  void removeEntity(Entity paramEntity);
-  
-  ItemStack getIcon();
-  
-  void setIcon(ItemStack paramItemStack);
-  
-  int getWidth();
-  
-  int getLength();
-  
-  int getHeight();
+    IBlockState getBlockState(BlockPos paramBlockPos);
+
+    boolean setBlockState(BlockPos paramBlockPos, IBlockState paramIBlockState);
+
+    TileEntity getTileEntity(BlockPos paramBlockPos);
+
+    List<TileEntity> getTileEntities();
+
+    void setTileEntity(BlockPos paramBlockPos, TileEntity paramTileEntity);
+
+    void removeTileEntity(BlockPos paramBlockPos);
+
+    List<Entity> getEntities();
+
+    void addEntity(Entity paramEntity);
+
+    void removeEntity(Entity paramEntity);
+
+    ItemStack getIcon();
+
+    void setIcon(ItemStack paramItemStack);
+
+    int getWidth();
+
+    int getLength();
+
+    int getHeight();
 }
 
 

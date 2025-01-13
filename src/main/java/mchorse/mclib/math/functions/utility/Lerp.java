@@ -5,17 +5,17 @@ import mchorse.mclib.math.functions.Function;
 import mchorse.mclib.utils.Interpolations;
 
 public class Lerp extends Function {
-  public Lerp(IValue[] values, String name) throws Exception {
-    super(values, name);
-  }
-  
-  public int getRequiredArguments() {
-    return 3;
-  }
-  
-  public double get() {
-    return Interpolations.lerp(getArg(0), getArg(1), getArg(2));
-  }
+    public Lerp(IValue[] values, String name) throws Exception {
+        super(values, name);
+    }
+
+    public int getRequiredArguments() {
+        return 3;
+    }
+
+    public double get() {
+        return Interpolations.lerp(getArg(0), getArg(1), getArg(2));
+    }
 }
 
 

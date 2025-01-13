@@ -9,6 +9,7 @@ import co.crystaldev.client.group.objects.enums.Rank;
 import co.crystaldev.client.gui.screens.groups.ScreenGroups;
 import co.crystaldev.client.gui.screens.groups.SectionSchematics;
 import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -205,7 +206,7 @@ public class Group {
             return;
         for (Map.Entry<String, ChunkHighlightGrid> entry : getHighlightedChunks().entrySet()) {
             if (server.endsWith(entry.getKey())) {
-                ((ChunkHighlightGrid)entry.getValue()).removeChunk(x, z);
+                ((ChunkHighlightGrid) entry.getValue()).removeChunk(x, z);
 //                ((GroupChunkProvider)MwAPI.getDataProvider(GroupChunkProvider.class)).setAwaitingUpdate(true);
                 break;
             }

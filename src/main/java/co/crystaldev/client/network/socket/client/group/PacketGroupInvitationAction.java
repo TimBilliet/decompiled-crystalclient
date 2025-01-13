@@ -12,66 +12,67 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 
 public class PacketGroupInvitationAction extends Packet {
-  private String message;
-  
-  private String inviteCode;
-  
-  private Action action;
-  
-  public PacketGroupInvitationAction() {}
-  
-  public PacketGroupInvitationAction(String inviteCode, Action action) {
-    this.inviteCode = inviteCode;
-    this.action = action;
-  }
-  
-  public void write(ByteBufWrapper out) throws IOException {
-    JsonObject obj = new JsonObject();
-    obj.addProperty("invite", this.inviteCode);
-    obj.addProperty("action", this.action.toString());
-    out.writeString(Reference.GSON.toJson((JsonElement)obj));
-  }
-  
-  public void read(ByteBufWrapper in) throws IOException {
-    JsonObject obj = (JsonObject)Reference.GSON.fromJson(in.readString(), JsonObject.class);
-    this.message = obj.get("message").getAsString();
-    this.action = Action.fromString(obj.get("action").getAsString());
-  }
-  
-  public void process(INetHandler handler) {
-    if (this.action == Action.REQUEST_JOIN) {
+    private String message;
+
+    private String inviteCode;
+
+    private Action action;
+
+    public PacketGroupInvitationAction() {
+    }
+
+    public PacketGroupInvitationAction(String inviteCode, Action action) {
+        this.inviteCode = inviteCode;
+        this.action = action;
+    }
+
+    public void write(ByteBufWrapper out) throws IOException {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("invite", this.inviteCode);
+        obj.addProperty("action", this.action.toString());
+        out.writeString(Reference.GSON.toJson((JsonElement) obj));
+    }
+
+    public void read(ByteBufWrapper in) throws IOException {
+        JsonObject obj = (JsonObject) Reference.GSON.fromJson(in.readString(), JsonObject.class);
+        this.message = obj.get("message").getAsString();
+        this.action = Action.fromString(obj.get("action").getAsString());
+    }
+
+    public void process(INetHandler handler) {
+        if (this.action == Action.REQUEST_JOIN) {
 //      NotificationHandler.addNotification(this.message);
-    } //else if (GroupManager.getSelectedGroup() != null) {
+        } //else if (GroupManager.getSelectedGroup() != null) {
 //      GroupManager.getSelectedGroup().setInviteCode(this.message);
 //    }
-  }
-  
-  public enum Action {
-    REQUEST_JOIN("REQUEST_JOIN"),
-    REQUEST_RESET("REQUEST_RESET");
-    
-    Action(String serializationString) {
-      this.serializationString = serializationString;
     }
-    
-    private final String serializationString;
-    
-    public String getSerializationString() {
-      return this.serializationString;
+
+    public enum Action {
+        REQUEST_JOIN("REQUEST_JOIN"),
+        REQUEST_RESET("REQUEST_RESET");
+
+        Action(String serializationString) {
+            this.serializationString = serializationString;
+        }
+
+        private final String serializationString;
+
+        public String getSerializationString() {
+            return this.serializationString;
+        }
+
+        public String toString() {
+            return this.serializationString;
+        }
+
+        public static Action fromString(String name) {
+            for (Action action : values()) {
+                if (action.getSerializationString().equalsIgnoreCase(name))
+                    return action;
+            }
+            return null;
+        }
     }
-    
-    public String toString() {
-      return this.serializationString;
-    }
-    
-    public static Action fromString(String name) {
-      for (Action action : values()) {
-        if (action.getSerializationString().equalsIgnoreCase(name))
-          return action; 
-      } 
-      return null;
-    }
-  }
 }
 
 

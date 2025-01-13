@@ -10,64 +10,64 @@ import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public final class EnhancedFontRenderer implements Enhancement {
-  private static final List<EnhancedFontRenderer> instances = new ArrayList<>();
+    private static final List<EnhancedFontRenderer> instances = new ArrayList<>();
 
-  private final List<StringHash> obfuscated = new ArrayList<>();
+    private final List<StringHash> obfuscated = new ArrayList<>();
 
-  private final Map<String, Integer> stringWidthCache = new HashMap<>();
+    private final Map<String, Integer> stringWidthCache = new HashMap<>();
 
-  private final Queue<Integer> glRemoval = new ConcurrentLinkedQueue<>();
+    private final Queue<Integer> glRemoval = new ConcurrentLinkedQueue<>();
 
-  private final Cache<StringHash, CachedString> stringCache;
+    private final Cache<StringHash, CachedString> stringCache;
 
-  public EnhancedFontRenderer() {
-    this
+    public EnhancedFontRenderer() {
+        this
 
-      .stringCache = Caffeine.newBuilder().removalListener((key, value, cause) -> {
-          if (value == null)
-            return;
-          this.glRemoval.add(Integer.valueOf(((CachedString)value).getListId()));
+                .stringCache = Caffeine.newBuilder().removalListener((key, value, cause) -> {
+            if (value == null)
+                return;
+            this.glRemoval.add(Integer.valueOf(((CachedString) value).getListId()));
         }).executor(POOL).maximumSize(5000L).build();
-    instances.add(this);
-  }
+        instances.add(this);
+    }
 
-  public static List<EnhancedFontRenderer> getInstances() {
-    return instances;
-  }
+    public static List<EnhancedFontRenderer> getInstances() {
+        return instances;
+    }
 
-  public String getName() {
-    return "Enhanced Font Renderer";
-  }
+    public String getName() {
+        return "Enhanced Font Renderer";
+    }
 
-  public void tick() {
-    this.stringCache.invalidateAll(this.obfuscated);
-    this.obfuscated.clear();
-  }
+    public void tick() {
+        this.stringCache.invalidateAll(this.obfuscated);
+        this.obfuscated.clear();
+    }
 
-  public int getGlList() {
-    Integer poll = this.glRemoval.poll();
-    return (poll == null) ? GLAllocation.generateDisplayLists(1) : poll.intValue();
-  }
+    public int getGlList() {
+        Integer poll = this.glRemoval.poll();
+        return (poll == null) ? GLAllocation.generateDisplayLists(1) : poll.intValue();
+    }
 
-  public CachedString get(StringHash key) {
-    return (CachedString)this.stringCache.getIfPresent(key);
-  }
+    public CachedString get(StringHash key) {
+        return (CachedString) this.stringCache.getIfPresent(key);
+    }
 
-  public void cache(StringHash key, CachedString value) {
-    this.stringCache.put(key, value);
-  }
+    public void cache(StringHash key, CachedString value) {
+        this.stringCache.put(key, value);
+    }
 
-  public Map<String, Integer> getStringWidthCache() {
-    return this.stringWidthCache;
-  }
+    public Map<String, Integer> getStringWidthCache() {
+        return this.stringWidthCache;
+    }
 
-  public void invalidateAll() {
-    this.stringCache.invalidateAll();
-  }
+    public void invalidateAll() {
+        this.stringCache.invalidateAll();
+    }
 
-  public List<StringHash> getObfuscated() {
-    return this.obfuscated;
-  }
+    public List<StringHash> getObfuscated() {
+        return this.obfuscated;
+    }
 }
 
 

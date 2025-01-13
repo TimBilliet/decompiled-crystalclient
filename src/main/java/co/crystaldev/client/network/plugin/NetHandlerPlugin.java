@@ -24,60 +24,60 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class NetHandlerPlugin implements INetHandlerPlugin {
-  private final ClientApiHandler apiHandler;
+    private final ClientApiHandler apiHandler;
 
-  public NetHandlerPlugin(ClientApiHandler apiHandler) {
-    this.apiHandler = apiHandler;
-  }
-
-  public void sendPacket(Packet packet) {
-    if (packet.getClass().isAnnotationPresent(ReadOnly.class))
-      throw new RuntimeException("Packet is read-only.");
-    this.apiHandler.sendMessage(Packet.getPacketBuf(packet));
-  }
-
-  public void handlePacket(byte[] data) {
-    Packet packet = Packet.handle(data);
-    if (packet instanceof PluginChannelPacket && !packet.getClass().isAnnotationPresent(WriteOnly.class))
-      packet.process(this);
-  }
-
-  public void handleDisallowedFeatures(PacketDisallowedModules packetIn) {
-    ModuleHandler.getInstance().updateDisallowedModules(packetIn.getDisallowedFeatures());
-//     List<String> disabled = (List<String>)packetIn.getDisallowedFeatures().stream().filter(m -> ModuleHandler.getModules().stream().anyMatch(())).map(m -> WordUtils.capitalizeFully(m.toLowerCase().replace("_", " "))).collect(Collectors.toList());
-    List<String> disabled = packetIn.getDisallowedFeatures().stream()
-            .filter(m -> ModuleHandler.getModules().stream()
-                    .anyMatch(module -> Boolean.parseBoolean((m))))
-            .map(m -> WordUtils.capitalizeFully(m.toLowerCase().replace("_", " ")))
-            .collect(Collectors.toList());
-    if (!disabled.isEmpty())
-      NotificationHandler.addNotification("The current server has remotely disabled: " + String.join(", ", disabled));
-  }
-
-  public void handleCooldown(PacketCooldown packetIn) {
-    if ((Cooldowns.getInstance()).enabled)
-      Cooldowns.getInstance().addCooldown(packetIn.getItemStack(), packetIn.getDuration());
-  }
-
-  public void handleUpdateWorld(PacketUpdateWorld packetIn) {
-    Client.setCurrentWorld(packetIn.getWorld());
-  }
-
-  public void handleNotification(PacketNotification packetIn) {
-    if (!packetIn.getTitle().isEmpty()) {
-      NotificationHandler.addNotification(packetIn.getTitle(), packetIn.getContent());
-    } else {
-      NotificationHandler.addNotification(packetIn.getContent());
+    public NetHandlerPlugin(ClientApiHandler apiHandler) {
+        this.apiHandler = apiHandler;
     }
-  }
 
-  public void handleAddWaypoint(PacketWaypointAdd packetIn) {
-    WaypointHandler.getInstance().addWaypoint(packetIn.getWaypoint());
-  }
+    public void sendPacket(Packet packet) {
+        if (packet.getClass().isAnnotationPresent(ReadOnly.class))
+            throw new RuntimeException("Packet is read-only.");
+        this.apiHandler.sendMessage(Packet.getPacketBuf(packet));
+    }
 
-  public void handleRemoveWaypoint(PacketWaypointRemove packetIn) {
-    Waypoint waypoint = packetIn.getWaypoint();
-    WaypointHandler.getInstance().removeWaypointIf(wp ->
-        (wp.isServerSided() && wp.getPos().equals(waypoint.getPos()) && wp.getName().equals(waypoint.getName())));
-  }
+    public void handlePacket(byte[] data) {
+        Packet packet = Packet.handle(data);
+        if (packet instanceof PluginChannelPacket && !packet.getClass().isAnnotationPresent(WriteOnly.class))
+            packet.process(this);
+    }
+
+    public void handleDisallowedFeatures(PacketDisallowedModules packetIn) {
+        ModuleHandler.getInstance().updateDisallowedModules(packetIn.getDisallowedFeatures());
+//     List<String> disabled = (List<String>)packetIn.getDisallowedFeatures().stream().filter(m -> ModuleHandler.getModules().stream().anyMatch(())).map(m -> WordUtils.capitalizeFully(m.toLowerCase().replace("_", " "))).collect(Collectors.toList());
+        List<String> disabled = packetIn.getDisallowedFeatures().stream()
+                .filter(m -> ModuleHandler.getModules().stream()
+                        .anyMatch(module -> Boolean.parseBoolean((m))))
+                .map(m -> WordUtils.capitalizeFully(m.toLowerCase().replace("_", " ")))
+                .collect(Collectors.toList());
+        if (!disabled.isEmpty())
+            NotificationHandler.addNotification("The current server has remotely disabled: " + String.join(", ", disabled));
+    }
+
+    public void handleCooldown(PacketCooldown packetIn) {
+        if ((Cooldowns.getInstance()).enabled)
+            Cooldowns.getInstance().addCooldown(packetIn.getItemStack(), packetIn.getDuration());
+    }
+
+    public void handleUpdateWorld(PacketUpdateWorld packetIn) {
+        Client.setCurrentWorld(packetIn.getWorld());
+    }
+
+    public void handleNotification(PacketNotification packetIn) {
+        if (!packetIn.getTitle().isEmpty()) {
+            NotificationHandler.addNotification(packetIn.getTitle(), packetIn.getContent());
+        } else {
+            NotificationHandler.addNotification(packetIn.getContent());
+        }
+    }
+
+    public void handleAddWaypoint(PacketWaypointAdd packetIn) {
+        WaypointHandler.getInstance().addWaypoint(packetIn.getWaypoint());
+    }
+
+    public void handleRemoveWaypoint(PacketWaypointRemove packetIn) {
+        Waypoint waypoint = packetIn.getWaypoint();
+        WaypointHandler.getInstance().removeWaypointIf(wp ->
+                (wp.isServerSided() && wp.getPos().equals(waypoint.getPos()) && wp.getName().equals(waypoint.getName())));
+    }
 }

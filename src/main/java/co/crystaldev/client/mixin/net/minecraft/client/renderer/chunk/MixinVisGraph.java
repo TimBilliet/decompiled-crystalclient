@@ -10,17 +10,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({VisGraph.class})
 public abstract class MixinVisGraph {
-  @Shadow
-  private int field_178611_f;
-  
-  @Inject(method = {"computeVisibility"}, cancellable = true, at = {@At("HEAD")})
-  public void computeVisibility(CallbackInfoReturnable<SetVisibility> ci) {
-    if (4097 - this.field_178611_f < 256) {
-      SetVisibility setVisibility = new SetVisibility();
-      setVisibility.setAllVisible(true);
-      ci.setReturnValue(setVisibility);
-    } 
-  }
+    @Shadow
+    private int field_178611_f;
+
+    @Inject(method = {"computeVisibility"}, cancellable = true, at = {@At("HEAD")})
+    public void computeVisibility(CallbackInfoReturnable<SetVisibility> ci) {
+        if (4097 - this.field_178611_f < 256) {
+            SetVisibility setVisibility = new SetVisibility();
+            setVisibility.setAllVisible(true);
+            ci.setReturnValue(setVisibility);
+        }
+    }
 }
 
 

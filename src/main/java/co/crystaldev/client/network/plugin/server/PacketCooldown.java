@@ -10,28 +10,29 @@ import java.io.IOException;
 
 @ReadOnly
 public class PacketCooldown extends PluginChannelPacket {
-  private ItemStack itemStack;
+    private ItemStack itemStack;
 
-  private long duration;
+    private long duration;
 
-  public ItemStack getItemStack() {
-    return this.itemStack;
-  }
+    public ItemStack getItemStack() {
+        return this.itemStack;
+    }
 
-  public long getDuration() {
-    return this.duration;
-  }
+    public long getDuration() {
+        return this.duration;
+    }
 
-  public void write(ByteBufWrapper out) throws IOException {}
+    public void write(ByteBufWrapper out) throws IOException {
+    }
 
-  public void read(ByteBufWrapper in) throws IOException {
-    this.itemStack = in.readItemStack();
-    this.duration = in.buf().readLong();
-  }
+    public void read(ByteBufWrapper in) throws IOException {
+        this.itemStack = in.readItemStack();
+        this.duration = in.buf().readLong();
+    }
 
-  public void process(NetHandlerPlugin handler) {
-    handler.handleCooldown(this);
-  }
+    public void process(NetHandlerPlugin handler) {
+        handler.handleCooldown(this);
+    }
 }
 
 

@@ -1,13 +1,13 @@
 package mapwriter.region;
 
 public interface IChunk {
-  int getBlockAndMetadata(int paramInt1, int paramInt2, int paramInt3);
-  
-  int getBiome(int paramInt1, int paramInt2);
-  
-  int getLightValue(int paramInt1, int paramInt2, int paramInt3);
-  
-  int getMaxY();
+    int getBlockAndMetadata(int paramInt1, int paramInt2, int paramInt3);
+
+    int getBiome(int paramInt1, int paramInt2);
+
+    int getLightValue(int paramInt1, int paramInt2, int paramInt3);
+
+    int getMaxY();
 }
 
 

@@ -7,27 +7,27 @@ import org.spongepowered.asm.mixin.Unique;
 
 @Mixin({EntityArmorStand.class})
 public abstract class MixinEntityArmorStand implements EntityArmorStandExt {
-  @Unique
-  private boolean crystal$isInBlock = false;
-  
-  @Unique
-  private long crystal$lastBlockCheck = 0L;
-  
-  public void crystal$setIsInBlock(boolean inBlock) {
-    this.crystal$isInBlock = inBlock;
-  }
-  
-  public boolean crystal$isInBlock() {
-    return this.crystal$isInBlock;
-  }
-  
-  public void crystal$setLastBlockCheck(long lastCheck) {
-    this.crystal$lastBlockCheck = lastCheck;
-  }
-  
-  public long crystal$getLastBlockCheck() {
-    return this.crystal$lastBlockCheck;
-  }
+    @Unique
+    private boolean crystal$isInBlock = false;
+
+    @Unique
+    private long crystal$lastBlockCheck = 0L;
+
+    public void crystal$setIsInBlock(boolean inBlock) {
+        this.crystal$isInBlock = inBlock;
+    }
+
+    public boolean crystal$isInBlock() {
+        return this.crystal$isInBlock;
+    }
+
+    public void crystal$setLastBlockCheck(long lastCheck) {
+        this.crystal$lastBlockCheck = lastCheck;
+    }
+
+    public long crystal$getLastBlockCheck() {
+        return this.crystal$lastBlockCheck;
+    }
 }
 
 

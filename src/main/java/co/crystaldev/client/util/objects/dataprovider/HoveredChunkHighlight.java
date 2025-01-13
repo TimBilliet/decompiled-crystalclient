@@ -5,43 +5,43 @@ import mapwriter.api.IMwChunkOverlay;
 import java.awt.*;
 
 public class HoveredChunkHighlight implements IMwChunkOverlay {
-  private final Point coordinates;
+    private final Point coordinates;
 
-  private final int color;
+    private final int color;
 
-  public HoveredChunkHighlight(int x, int z, int color) {
-    this.coordinates = new Point(x, z);
-    this.color = color;
-  }
+    public HoveredChunkHighlight(int x, int z, int color) {
+        this.coordinates = new Point(x, z);
+        this.color = color;
+    }
 
-  public Point getCoordinates() {
-    return this.coordinates;
-  }
+    public Point getCoordinates() {
+        return this.coordinates;
+    }
 
-  public int getColor() {
-    return this.color;
-  }
+    public int getColor() {
+        return this.color;
+    }
 
-  public float getFilling() {
-    return 1.0F;
-  }
+    public float getFilling() {
+        return 1.0F;
+    }
 
-  public void setCoordinates(int x, int z) {
-    this.coordinates.x = x;
-    this.coordinates.y = z;
-  }
+    public void setCoordinates(int x, int z) {
+        this.coordinates.x = x;
+        this.coordinates.y = z;
+    }
 
-  public boolean hasBorder() {
-    return false;
-  }
+    public boolean hasBorder() {
+        return false;
+    }
 
-  public float getBorderWidth() {
-    return 0.0F;
-  }
+    public float getBorderWidth() {
+        return 0.0F;
+    }
 
-  public int getBorderColor() {
-    return 0;
-  }
+    public int getBorderColor() {
+        return 0;
+    }
 }
 
 

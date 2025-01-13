@@ -3,13 +3,13 @@ package com.github.lunatrius.schematica.world;
 import net.minecraft.world.WorldProvider;
 
 public class WorldProviderSchematic extends WorldProvider {
-  public String getDimensionName() {
-    return "Schematic";
-  }
-  
-  public String getInternalNameSuffix() {
-    return "_schematic";
-  }
+    public String getDimensionName() {
+        return "Schematic";
+    }
+
+    public String getInternalNameSuffix() {
+        return "_schematic";
+    }
 }
 
 

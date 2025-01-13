@@ -11,14 +11,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({EntityFallingBlock.class})
 public abstract class MixinEntityFallingBlock extends Entity {
-  public MixinEntityFallingBlock(World worldIn) {
-    super(worldIn);
-  }
-  
-  @Inject(method = {"<init>(Lnet/minecraft/world/World;DDDLnet/minecraft/block/state/IBlockState;)V"}, at = {@At("RETURN")})
-  private void constructor(CallbackInfo ci) {
-    ((EntityExt)this).setInitialYLevel(this.posY);
-  }
+    public MixinEntityFallingBlock(World worldIn) {
+        super(worldIn);
+    }
+
+    @Inject(method = {"<init>(Lnet/minecraft/world/World;DDDLnet/minecraft/block/state/IBlockState;)V"}, at = {@At("RETURN")})
+    private void constructor(CallbackInfo ci) {
+        ((EntityExt) this).setInitialYLevel(this.posY);
+    }
 }
 
 

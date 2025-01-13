@@ -4,9 +4,9 @@ import mapwriter.config.Config;
 import mapwriter.config.MapModeConfig;
 
 public class LargeMapMode extends MapMode {
-  public LargeMapMode() {
-    super((MapModeConfig)Config.largeMap);
-  }
+    public LargeMapMode() {
+        super((MapModeConfig) Config.largeMap);
+    }
 }
 
 

@@ -18,24 +18,24 @@ import java.util.Set;
 
 @Mixin({BlockStateMapper.class})
 public abstract class MixinBlockStateMapper {
-  @Shadow
-  private Set<Block> setBuiltInBlocks;
-  
-  @Shadow
-  private Map<Block, IStateMapper> blockStateMap;
-  
-  /**
-   * @author
-   */
-  @Overwrite(aliases = {"putAllStateModelLocations"})
-  public Map<IBlockState, ModelResourceLocation> putAllStateModelLocations() {
-    Map<IBlockState, ModelResourceLocation> map = Maps.newIdentityHashMap();
-    for (Block block : Block.blockRegistry) {
-      if (block == Blocks.chest || block == Blocks.trapped_chest || !this.setBuiltInBlocks.contains(block))
-        map.putAll(((IStateMapper)Objects.firstNonNull(this.blockStateMap.get(block), new DefaultStateMapper())).putStateModelLocations(block)); 
-    } 
-    return map;
-  }
+    @Shadow
+    private Set<Block> setBuiltInBlocks;
+
+    @Shadow
+    private Map<Block, IStateMapper> blockStateMap;
+
+    /**
+     * @author
+     */
+    @Overwrite(aliases = {"putAllStateModelLocations"})
+    public Map<IBlockState, ModelResourceLocation> putAllStateModelLocations() {
+        Map<IBlockState, ModelResourceLocation> map = Maps.newIdentityHashMap();
+        for (Block block : Block.blockRegistry) {
+            if (block == Blocks.chest || block == Blocks.trapped_chest || !this.setBuiltInBlocks.contains(block))
+                map.putAll(((IStateMapper) Objects.firstNonNull(this.blockStateMap.get(block), new DefaultStateMapper())).putStateModelLocations(block));
+        }
+        return map;
+    }
 }
 
 

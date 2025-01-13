@@ -9,8 +9,8 @@ import java.util.Map;
 
 @Mixin({RenderManager.class})
 public interface MixinRenderManager {
-  @Accessor("skinMap")
-  Map<String, RenderPlayer> getSkinMap();
+    @Accessor("skinMap")
+    Map<String, RenderPlayer> getSkinMap();
 }
 
 

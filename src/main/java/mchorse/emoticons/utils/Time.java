@@ -1,9 +1,9 @@
 package mchorse.emoticons.utils;
 
 public class Time {
-  public static int toTicks(int frames30) {
-    return (int)Math.floor((frames30 / 30.0F * 20.0F));
-  }
+    public static int toTicks(int frames30) {
+        return (int) Math.floor((frames30 / 30.0F * 20.0F));
+    }
 }
 
 

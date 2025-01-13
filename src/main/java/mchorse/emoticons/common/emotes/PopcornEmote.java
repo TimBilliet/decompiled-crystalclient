@@ -11,28 +11,28 @@ import net.minecraft.client.particle.EntityFX;
 import net.minecraft.entity.EntityLivingBase;
 
 public class PopcornEmote extends Emote {
-  public PopcornEmote(String name, int duration, boolean looping, String sound) {
-    super(name, duration, looping, sound);
-  }
-  
-  public void progressAnimation(EntityLivingBase entity, BOBJArmature armature, AnimatorEmoticonsController animator, int tick, float partial) {
-    if (tick == 8 || tick == 32 || tick == 56 || tick == 86) {
-      BOBJBone hand = (BOBJBone)armature.bones.get("low_right_arm.end");
-      Vector4f result = animator.calcPosition(entity, hand, 0.0F, 0.15F, 0.0F, partial);
-      for (int i = 0, c = 15; i < c; i++) {
-        PopcornParticle salt = new PopcornParticle(entity.worldObj, result.x, result.y, result.z, 0.1D);
-        (Minecraft.getMinecraft()).effectRenderer.addEffect((EntityFX)salt);
-      } 
-    } 
-  }
-  
-  public void startAnimation(AnimatorEmoticonsController animator) {
-    ((AnimationMeshConfig)animator.userConfig.meshes.get("popcorn")).visible = true;
-  }
-  
-  public void stopAnimation(AnimatorEmoticonsController animator) {
-    ((AnimationMeshConfig)animator.userConfig.meshes.get("popcorn")).visible = false;
-  }
+    public PopcornEmote(String name, int duration, boolean looping, String sound) {
+        super(name, duration, looping, sound);
+    }
+
+    public void progressAnimation(EntityLivingBase entity, BOBJArmature armature, AnimatorEmoticonsController animator, int tick, float partial) {
+        if (tick == 8 || tick == 32 || tick == 56 || tick == 86) {
+            BOBJBone hand = (BOBJBone) armature.bones.get("low_right_arm.end");
+            Vector4f result = animator.calcPosition(entity, hand, 0.0F, 0.15F, 0.0F, partial);
+            for (int i = 0, c = 15; i < c; i++) {
+                PopcornParticle salt = new PopcornParticle(entity.worldObj, result.x, result.y, result.z, 0.1D);
+                (Minecraft.getMinecraft()).effectRenderer.addEffect((EntityFX) salt);
+            }
+        }
+    }
+
+    public void startAnimation(AnimatorEmoticonsController animator) {
+        ((AnimationMeshConfig) animator.userConfig.meshes.get("popcorn")).visible = true;
+    }
+
+    public void stopAnimation(AnimatorEmoticonsController animator) {
+        ((AnimationMeshConfig) animator.userConfig.meshes.get("popcorn")).visible = false;
+    }
 }
 
 

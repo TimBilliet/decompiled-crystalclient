@@ -6,30 +6,30 @@ import mapwriter.map.mapmode.MapMode;
 import java.util.ArrayList;
 
 public interface IMwDataProvider {
-  ArrayList<IMwChunkOverlay> getChunksOverlay(int paramInt, double paramDouble1, double paramDouble2, double paramDouble3, double paramDouble4, double paramDouble5, double paramDouble6);
-  
-  String getName();
-  
-  void setName(String paramString);
-  
-  String getStatusString(int paramInt1, int paramInt2, int paramInt3, int paramInt4);
-  
-  void onMiddleClick(int paramInt1, int paramInt2, int paramInt3, MapView paramMapView);
-  
-  void onDimensionChanged(int paramInt, MapView paramMapView);
-  
-  void onMapCenterChanged(double paramDouble1, double paramDouble2, MapView paramMapView);
-  
-  void onZoomChanged(int paramInt, MapView paramMapView);
-  
-  void onOverlayActivated(MapView paramMapView);
-  
-  void onOverlayDeactivated(MapView paramMapView);
-  
-  void onDraw(MapView paramMapView, MapMode paramMapMode);
-  
-  @Deprecated
-  boolean onMouseInput(MapView paramMapView, MapMode paramMapMode);
+    ArrayList<IMwChunkOverlay> getChunksOverlay(int paramInt, double paramDouble1, double paramDouble2, double paramDouble3, double paramDouble4, double paramDouble5, double paramDouble6);
+
+    String getName();
+
+    void setName(String paramString);
+
+    String getStatusString(int paramInt1, int paramInt2, int paramInt3, int paramInt4);
+
+    void onMiddleClick(int paramInt1, int paramInt2, int paramInt3, MapView paramMapView);
+
+    void onDimensionChanged(int paramInt, MapView paramMapView);
+
+    void onMapCenterChanged(double paramDouble1, double paramDouble2, MapView paramMapView);
+
+    void onZoomChanged(int paramInt, MapView paramMapView);
+
+    void onOverlayActivated(MapView paramMapView);
+
+    void onOverlayDeactivated(MapView paramMapView);
+
+    void onDraw(MapView paramMapView, MapMode paramMapMode);
+
+    @Deprecated
+    boolean onMouseInput(MapView paramMapView, MapMode paramMapMode);
 }
 
 

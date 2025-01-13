@@ -11,13 +11,14 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin({BlockTripWire.class})
 public abstract class MixinBlockTripWire extends Block {
-  public MixinBlockTripWire(Material blockMaterialIn, MapColor blockMapColorIn) {
-    super(blockMaterialIn, blockMapColorIn);
-  }
-  //func_180662_a
-  public int colorMultiplier(IBlockAccess blockAccess, BlockPos pos, int renderPass) {
-    return (ClientOptions.getInstance()).redString ? 16711680 : super.colorMultiplier(blockAccess, pos, renderPass);//func_180662_a
-  }
+    public MixinBlockTripWire(Material blockMaterialIn, MapColor blockMapColorIn) {
+        super(blockMaterialIn, blockMapColorIn);
+    }
+
+    //func_180662_a
+    public int colorMultiplier(IBlockAccess blockAccess, BlockPos pos, int renderPass) {
+        return (ClientOptions.getInstance()).redString ? 16711680 : super.colorMultiplier(blockAccess, pos, renderPass);//func_180662_a
+    }
 }
 
 

@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin({EntityLivingBase.class})
 public interface MixinEntityLivingBase {
-  @Invoker("getArmSwingAnimationEnd")
-  int callGetArmSwingAnimationEnd();
+    @Invoker("getArmSwingAnimationEnd")
+    int callGetArmSwingAnimationEnd();
 }
 
 

@@ -14,25 +14,25 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({AbstractClientPlayer.class})
 public abstract class MixinAbstractClientPlayer implements AbstractClientPlayerExt {
-  @Unique
-  private CosmeticPlayer crystal$cosmeticPlayer;
+    @Unique
+    private CosmeticPlayer crystal$cosmeticPlayer;
 
-  @Inject(method = {"getLocationCape"}, cancellable = true, at = {@At("HEAD")})
-  public void getLocationCape(CallbackInfoReturnable<ResourceLocation> ci) {
-    ensureCosmeticPlayer();
-    if (this.crystal$cosmeticPlayer != null && (this.crystal$cosmeticPlayer.hasCloak() || this.crystal$cosmeticPlayer.isShouldHideLegacyCosmetics()))
-      ci.setReturnValue(null);
-  }
+    @Inject(method = {"getLocationCape"}, cancellable = true, at = {@At("HEAD")})
+    public void getLocationCape(CallbackInfoReturnable<ResourceLocation> ci) {
+        ensureCosmeticPlayer();
+        if (this.crystal$cosmeticPlayer != null && (this.crystal$cosmeticPlayer.hasCloak() || this.crystal$cosmeticPlayer.isShouldHideLegacyCosmetics()))
+            ci.setReturnValue(null);
+    }
 
-  public CosmeticPlayer crystal$getCosmeticPlayer() {
-    ensureCosmeticPlayer();
-    return this.crystal$cosmeticPlayer;
-  }
+    public CosmeticPlayer crystal$getCosmeticPlayer() {
+        ensureCosmeticPlayer();
+        return this.crystal$cosmeticPlayer;
+    }
 
-  private void ensureCosmeticPlayer() {
-    if (this.crystal$cosmeticPlayer == null)
-      this.crystal$cosmeticPlayer = CosmeticCache.getInstance().fromPlayer((EntityPlayer)(Object)this);
-  }
+    private void ensureCosmeticPlayer() {
+        if (this.crystal$cosmeticPlayer == null)
+            this.crystal$cosmeticPlayer = CosmeticCache.getInstance().fromPlayer((EntityPlayer) (Object) this);
+    }
 }
 
 

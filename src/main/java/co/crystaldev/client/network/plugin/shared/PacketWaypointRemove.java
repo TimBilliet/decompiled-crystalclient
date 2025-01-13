@@ -11,41 +11,41 @@ import net.minecraft.util.BlockPos;
 import java.io.IOException;
 
 public class PacketWaypointRemove extends PluginChannelPacket {
-  private Waypoint waypoint;
+    private Waypoint waypoint;
 
-  public Waypoint getWaypoint() {
-    return this.waypoint;
-  }
+    public Waypoint getWaypoint() {
+        return this.waypoint;
+    }
 
-  public PacketWaypointRemove(Waypoint waypoint) {
-    this.waypoint = waypoint;
-  }
+    public PacketWaypointRemove(Waypoint waypoint) {
+        this.waypoint = waypoint;
+    }
 
-  public PacketWaypointRemove() {
-    this(null);
-  }
+    public PacketWaypointRemove() {
+        this(null);
+    }
 
-  public void write(ByteBufWrapper out) throws IOException {
-    if (this.waypoint == null)
-      return;
-    out.writeString(this.waypoint.getName());
-    out.writeVarInt(this.waypoint.getColor().getRGB());
-    out.writeBool(this.waypoint.getColor().isChroma());
-    out.writeVarInt(this.waypoint.getPos().getX());
-    out.writeVarInt(this.waypoint.getPos().getY());
-    out.writeVarInt(this.waypoint.getPos().getZ());
-  }
+    public void write(ByteBufWrapper out) throws IOException {
+        if (this.waypoint == null)
+            return;
+        out.writeString(this.waypoint.getName());
+        out.writeVarInt(this.waypoint.getColor().getRGB());
+        out.writeBool(this.waypoint.getColor().isChroma());
+        out.writeVarInt(this.waypoint.getPos().getX());
+        out.writeVarInt(this.waypoint.getPos().getY());
+        out.writeVarInt(this.waypoint.getPos().getZ());
+    }
 
-  public void read(ByteBufWrapper in) throws IOException {
-    String name = in.readString();
-    ColorObject color = ColorObject.fromColor(in.readVarInt(), in.readBool());
-    BlockPos pos = new BlockPos(in.readVarInt(), in.readVarInt(), in.readVarInt());
-    this.waypoint = (new Waypoint(name, Client.formatConnectedServerIp(), pos, color)).setServerSided(true);
-  }
+    public void read(ByteBufWrapper in) throws IOException {
+        String name = in.readString();
+        ColorObject color = ColorObject.fromColor(in.readVarInt(), in.readBool());
+        BlockPos pos = new BlockPos(in.readVarInt(), in.readVarInt(), in.readVarInt());
+        this.waypoint = (new Waypoint(name, Client.formatConnectedServerIp(), pos, color)).setServerSided(true);
+    }
 
-  public void process(NetHandlerPlugin handler) {
-    handler.handleRemoveWaypoint(this);
-  }
+    public void process(NetHandlerPlugin handler) {
+        handler.handleRemoveWaypoint(this);
+    }
 }
 
 

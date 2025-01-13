@@ -3,9 +3,9 @@ package wdl.api;
 import net.minecraft.entity.Entity;
 
 public interface IEntityEditor extends IWDLMod {
-  boolean shouldEdit(Entity paramEntity);
-  
-  void editEntity(Entity paramEntity);
+    boolean shouldEdit(Entity paramEntity);
+
+    void editEntity(Entity paramEntity);
 }
 
 

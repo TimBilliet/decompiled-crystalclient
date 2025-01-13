@@ -5,26 +5,27 @@ import co.crystaldev.client.network.plugin.MessageHandler;
 import net.minecraft.network.PacketBuffer;
 
 public class PluginChannelEvent extends Event {
-  public static class Register extends PluginChannelEvent {}
-
-  public static class MessageReceived extends PluginChannelEvent {
-    private final MessageHandler handler;
-
-    private final PacketBuffer buffer;
-
-    public MessageReceived(MessageHandler handler, PacketBuffer buffer) {
-      this.handler = handler;
-      this.buffer = buffer;
+    public static class Register extends PluginChannelEvent {
     }
 
-    public MessageHandler getHandler() {
-      return this.handler;
-    }
+    public static class MessageReceived extends PluginChannelEvent {
+        private final MessageHandler handler;
 
-    public PacketBuffer getBuffer() {
-      return this.buffer;
+        private final PacketBuffer buffer;
+
+        public MessageReceived(MessageHandler handler, PacketBuffer buffer) {
+            this.handler = handler;
+            this.buffer = buffer;
+        }
+
+        public MessageHandler getHandler() {
+            return this.handler;
+        }
+
+        public PacketBuffer getBuffer() {
+            return this.buffer;
+        }
     }
-  }
 }
 
 

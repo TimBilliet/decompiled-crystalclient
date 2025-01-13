@@ -25,161 +25,161 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class ProfileHandler {
-  private static final File profileFile = new File(Client.getClientRunDirectory(), "profiles.json");
+    private static final File profileFile = new File(Client.getClientRunDirectory(), "profiles.json");
 
-  private static ProfileHandler INSTANCE;
+    private static ProfileHandler INSTANCE;
 
-  private Profile DEFAULT_PROFILE;
+    private Profile DEFAULT_PROFILE;
 
-  private final ArrayList<Profile> profiles = new ArrayList<>();
+    private final ArrayList<Profile> profiles = new ArrayList<>();
 
-  public ArrayList<Profile> getProfiles() {
-    return this.profiles;
-  }
+    public ArrayList<Profile> getProfiles() {
+        return this.profiles;
+    }
 
-  private Profile selectedProfile = null;
+    private Profile selectedProfile = null;
 
-  public Profile getSelectedProfile() {
-    return this.selectedProfile;
-  }
+    public Profile getSelectedProfile() {
+        return this.selectedProfile;
+    }
 
-  private Profile lastProfile = null;
+    private Profile lastProfile = null;
 
-  public ProfileHandler() {
-    INSTANCE = this;
-  }
+    public ProfileHandler() {
+        INSTANCE = this;
+    }
 
-  public Profile createNewProfile(String name, boolean autoUseOnServer) {
-    Profile profile = new Profile(name);
-    swapToProfile(profile);
-    this.profiles.add(this.selectedProfile);
-    if (autoUseOnServer)
-      this.selectedProfile.setAutoUseServer(Client.formatConnectedServerIp());
-    return profile;
-  }
-
-  public void swapToProfile(Profile profile) {
-    if (profile == null)
-      profile = this.DEFAULT_PROFILE;
-    if (this.selectedProfile != null)
-      this.selectedProfile.saveCurrentModConfiguration();
-    this.selectedProfile = profile;
-    if (profile != null)
-      profile.loadCurrentModConfiguration();
-  }
-
-  public void swapToProfile(UUID uuid) {
-    for (Profile profile : this.profiles) {
-      if (profile.getId().equals(uuid))
+    public Profile createNewProfile(String name, boolean autoUseOnServer) {
+        Profile profile = new Profile(name);
         swapToProfile(profile);
+        this.profiles.add(this.selectedProfile);
+        if (autoUseOnServer)
+            this.selectedProfile.setAutoUseServer(Client.formatConnectedServerIp());
+        return profile;
     }
-  }
 
-  public void unsetLastProfile() {
-    if (this.lastProfile != null) {
-      this.lastProfile.saveCurrentModConfiguration();
-      this.lastProfile = null;
+    public void swapToProfile(Profile profile) {
+        if (profile == null)
+            profile = this.DEFAULT_PROFILE;
+        if (this.selectedProfile != null)
+            this.selectedProfile.saveCurrentModConfiguration();
+        this.selectedProfile = profile;
+        if (profile != null)
+            profile.loadCurrentModConfiguration();
     }
-  }
 
-  public void removeProfile(Profile profile) {
-    if (this.selectedProfile.equals(profile)) {
-      if (this.lastProfile != null && !this.lastProfile.equals(this.selectedProfile)) {
-        swapToProfile(this.lastProfile);
-      } else {
-        swapToProfile((Profile)null);
-      }
-      this.lastProfile = null;
-    }
-    this.profiles.remove(profile);
-  }
-
-  @SubscribeEvent
-  public void onInitialization(InitializationEvent event) {
-    populateProfiles();
-  }
-
-  @SubscribeEvent(priority = 0)
-  public void onShutdown(ShutdownEvent event) {
-    if (this.lastProfile != null)
-      swapToProfile(this.lastProfile);
-    if (this.selectedProfile != null)
-      this.selectedProfile.saveCurrentModConfiguration();
-    saveProfiles();
-  }
-
-  @SubscribeEvent(priority = 5)
-  public void onServerConnection(ServerConnectEvent event) {
-    for (Profile profile : this.profiles) {
-      if (profile.getAutoUseServer() != null && Objects.equals(Client.formatConnectedServerIp(), profile.getAutoUseServer()) &&
-        !profile.equals(this.selectedProfile)) {
-        this.lastProfile = this.selectedProfile;
-        swapToProfile(profile);
-//        NotificationHandler.addNotification(String.format("Profile '%s' was automatically selected.", new Object[] { profile.getName() }));
-        break;
-      }
-    }
-  }
-
-  @SubscribeEvent
-  public void onServerDisconnect(ServerDisconnectEvent event) {
-    if (this.lastProfile != null) {
-      swapToProfile(this.lastProfile);
-      this.lastProfile = null;
-    }
-  }
-
-  private void populateProfiles() {
-    this.profiles.clear();
-    if (profileFile.exists())
-      try {
-        FileReader fr = new FileReader(profileFile);
-        JsonObject obj = (JsonObject)Reference.GSON_PRETTY.fromJson(fr, JsonObject.class);
-        if (obj.has("available_profiles"))
-          this.profiles.addAll((Collection<? extends Profile>)Reference.GSON.fromJson((JsonElement)obj.getAsJsonArray("available_profiles"), (new TypeToken<ArrayList<Profile>>() {
-
-                }).getType()));
-        if (obj.has("default_profile"))
-          this.DEFAULT_PROFILE = (Profile)Reference.GSON.fromJson(obj.get("default_profile"), Profile.class);
-        if (obj.has("selected_profile")) {
-          UUID id = UUIDTypeAdapter.fromString(obj.get("selected_profile").getAsString());
-          swapToProfile(id);
+    public void swapToProfile(UUID uuid) {
+        for (Profile profile : this.profiles) {
+            if (profile.getId().equals(uuid))
+                swapToProfile(profile);
         }
-        fr.close();
-      } catch (Exception ex) {
-        Reference.LOGGER.error("An exception was thrown while populating profiles.", ex);
-      }
-    if (this.DEFAULT_PROFILE == null)
-      this.DEFAULT_PROFILE = new Profile("__default");
-    if (this.selectedProfile == null)
-      swapToProfile(this.DEFAULT_PROFILE);
-  }
-
-  private void saveProfiles() {
-    JsonObject obj = new JsonObject();
-    if (this.selectedProfile != null)
-      obj.addProperty("selected_profile", UUIDTypeAdapter.fromUUID(this.selectedProfile.getId()));
-    obj.add("available_profiles", (JsonElement)Reference.GSON.fromJson(Reference.GSON.toJson(this.profiles), JsonArray.class));
-    obj.add("default_profile", (JsonElement)Reference.GSON.fromJson(Reference.GSON.toJson(this.DEFAULT_PROFILE), JsonObject.class));
-    if (!this.profiles.isEmpty()) {
-      String json = null;
-      while (json == null || !FileUtils.isValidJson(json))
-        json = Reference.GSON.toJson((JsonElement)obj);
-      try {
-        FileWriter fileWriter = new FileWriter(profileFile);
-        fileWriter.write(json);
-        fileWriter.close();
-      } catch (IOException ex) {
-        Reference.LOGGER.error("An exception was raised while saving to the profiles file.", ex);
-      }
-    } else if (profileFile.exists()) {
-      profileFile.delete();
     }
-  }
 
-  public static ProfileHandler getInstance() {
-    return INSTANCE;
-  }
+    public void unsetLastProfile() {
+        if (this.lastProfile != null) {
+            this.lastProfile.saveCurrentModConfiguration();
+            this.lastProfile = null;
+        }
+    }
+
+    public void removeProfile(Profile profile) {
+        if (this.selectedProfile.equals(profile)) {
+            if (this.lastProfile != null && !this.lastProfile.equals(this.selectedProfile)) {
+                swapToProfile(this.lastProfile);
+            } else {
+                swapToProfile((Profile) null);
+            }
+            this.lastProfile = null;
+        }
+        this.profiles.remove(profile);
+    }
+
+    @SubscribeEvent
+    public void onInitialization(InitializationEvent event) {
+        populateProfiles();
+    }
+
+    @SubscribeEvent(priority = 0)
+    public void onShutdown(ShutdownEvent event) {
+        if (this.lastProfile != null)
+            swapToProfile(this.lastProfile);
+        if (this.selectedProfile != null)
+            this.selectedProfile.saveCurrentModConfiguration();
+        saveProfiles();
+    }
+
+    @SubscribeEvent(priority = 5)
+    public void onServerConnection(ServerConnectEvent event) {
+        for (Profile profile : this.profiles) {
+            if (profile.getAutoUseServer() != null && Objects.equals(Client.formatConnectedServerIp(), profile.getAutoUseServer()) &&
+                    !profile.equals(this.selectedProfile)) {
+                this.lastProfile = this.selectedProfile;
+                swapToProfile(profile);
+//        NotificationHandler.addNotification(String.format("Profile '%s' was automatically selected.", new Object[] { profile.getName() }));
+                break;
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onServerDisconnect(ServerDisconnectEvent event) {
+        if (this.lastProfile != null) {
+            swapToProfile(this.lastProfile);
+            this.lastProfile = null;
+        }
+    }
+
+    private void populateProfiles() {
+        this.profiles.clear();
+        if (profileFile.exists())
+            try {
+                FileReader fr = new FileReader(profileFile);
+                JsonObject obj = (JsonObject) Reference.GSON_PRETTY.fromJson(fr, JsonObject.class);
+                if (obj.has("available_profiles"))
+                    this.profiles.addAll((Collection<? extends Profile>) Reference.GSON.fromJson((JsonElement) obj.getAsJsonArray("available_profiles"), (new TypeToken<ArrayList<Profile>>() {
+
+                    }).getType()));
+                if (obj.has("default_profile"))
+                    this.DEFAULT_PROFILE = (Profile) Reference.GSON.fromJson(obj.get("default_profile"), Profile.class);
+                if (obj.has("selected_profile")) {
+                    UUID id = UUIDTypeAdapter.fromString(obj.get("selected_profile").getAsString());
+                    swapToProfile(id);
+                }
+                fr.close();
+            } catch (Exception ex) {
+                Reference.LOGGER.error("An exception was thrown while populating profiles.", ex);
+            }
+        if (this.DEFAULT_PROFILE == null)
+            this.DEFAULT_PROFILE = new Profile("__default");
+        if (this.selectedProfile == null)
+            swapToProfile(this.DEFAULT_PROFILE);
+    }
+
+    private void saveProfiles() {
+        JsonObject obj = new JsonObject();
+        if (this.selectedProfile != null)
+            obj.addProperty("selected_profile", UUIDTypeAdapter.fromUUID(this.selectedProfile.getId()));
+        obj.add("available_profiles", (JsonElement) Reference.GSON.fromJson(Reference.GSON.toJson(this.profiles), JsonArray.class));
+        obj.add("default_profile", (JsonElement) Reference.GSON.fromJson(Reference.GSON.toJson(this.DEFAULT_PROFILE), JsonObject.class));
+        if (!this.profiles.isEmpty()) {
+            String json = null;
+            while (json == null || !FileUtils.isValidJson(json))
+                json = Reference.GSON.toJson((JsonElement) obj);
+            try {
+                FileWriter fileWriter = new FileWriter(profileFile);
+                fileWriter.write(json);
+                fileWriter.close();
+            } catch (IOException ex) {
+                Reference.LOGGER.error("An exception was raised while saving to the profiles file.", ex);
+            }
+        } else if (profileFile.exists()) {
+            profileFile.delete();
+        }
+    }
+
+    public static ProfileHandler getInstance() {
+        return INSTANCE;
+    }
 }
 
 

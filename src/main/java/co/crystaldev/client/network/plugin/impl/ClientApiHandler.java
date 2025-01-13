@@ -5,15 +5,17 @@ import co.crystaldev.client.network.plugin.NetHandlerPlugin;
 import io.netty.buffer.ByteBuf;
 
 public class ClientApiHandler extends MessageHandler {
-  private final NetHandlerPlugin netHandler = new NetHandlerPlugin(this);
+    private final NetHandlerPlugin netHandler = new NetHandlerPlugin(this);
 
-  public void fromBytes(ByteBuf buf) {
-    this.netHandler.handlePacket(buf.array());
-  }
+    public void fromBytes(ByteBuf buf) {
+        this.netHandler.handlePacket(buf.array());
+    }
 
-  public void toBytes(ByteBuf buf) {}
+    public void toBytes(ByteBuf buf) {
+    }
 
-  public void onMessage() {}
+    public void onMessage() {
+    }
 }
 
 

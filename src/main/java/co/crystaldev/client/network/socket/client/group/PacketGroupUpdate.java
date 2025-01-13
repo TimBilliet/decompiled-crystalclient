@@ -11,28 +11,29 @@ import co.crystaldev.client.network.Packet;
 import java.io.IOException;
 
 public class PacketGroupUpdate extends Packet {
-  private Group selectedGroup;
+    private Group selectedGroup;
 
-  private String id;
+    private String id;
 
-  public PacketGroupUpdate() {}
+    public PacketGroupUpdate() {
+    }
 
-  public PacketGroupUpdate(String id) {
-    this.id = (id == null) ? "null" : id;
-  }
+    public PacketGroupUpdate(String id) {
+        this.id = (id == null) ? "null" : id;
+    }
 
-  public void write(ByteBufWrapper out) throws IOException {
-    out.writeString(this.id);
-  }
+    public void write(ByteBufWrapper out) throws IOException {
+        out.writeString(this.id);
+    }
 
-  public void read(ByteBufWrapper in) throws IOException {
-    this.selectedGroup = (Group)Reference.GSON.fromJson(in.readString(), Group.class);
-  }
+    public void read(ByteBufWrapper in) throws IOException {
+        this.selectedGroup = (Group) Reference.GSON.fromJson(in.readString(), Group.class);
+    }
 
-  public void process(INetHandler handler) {
-    GroupManager.setSelectedGroup(this.selectedGroup);
-    ScreenGroups.updateGroup();
-  }
+    public void process(INetHandler handler) {
+        GroupManager.setSelectedGroup(this.selectedGroup);
+        ScreenGroups.updateGroup();
+    }
 }
 
 

@@ -28,13 +28,13 @@ import java.util.List;
 
 @Mixin({GuiScreen.class})
 public abstract class MixinGuiScreen {
-  @Shadow
-  public int height;
-  
-  @Redirect(method = {"handleKeyboardInput"}, at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventKeyState()Z", remap = false))
-  private boolean checkCharacter() {
-    return ((Keyboard.getEventKey() == 0 && Keyboard.getEventCharacter() >= ' ') || Keyboard.getEventKeyState());
-  }
+    @Shadow
+    public int height;
+
+    @Redirect(method = {"handleKeyboardInput"}, at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventKeyState()Z", remap = false))
+    private boolean checkCharacter() {
+        return ((Keyboard.getEventKey() == 0 && Keyboard.getEventCharacter() >= ' ') || Keyboard.getEventKeyState());
+    }
 
 //  @Inject(method = {"drawHoveringText(Ljava/util/List;IILnet/minecraft/client/gui/FontRenderer;)V"}, locals = LocalCapture.CAPTURE_FAILEXCEPTION,
 //          at = @At(
@@ -45,33 +45,33 @@ public abstract class MixinGuiScreen {
 //  private void handleScrollableTooltips(List<String> textLines, int x, int y, FontRenderer font, CallbackInfo ci, int i, int l1, int i2, int k) {
 //    RenderUtils.doScrollableTooltipTransform(this.height, i2, k);
 //  }
-  
-  @Inject(method = {"handleComponentClick"}, locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true, at = {@At(value = "INVOKE", target = "Lnet/minecraft/event/ClickEvent;getAction()Lnet/minecraft/event/ClickEvent$Action;", ordinal = 0, shift = At.Shift.BEFORE)})
-  protected void handleComponentClick(IChatComponent component, CallbackInfoReturnable<Boolean> ci, ClickEvent clickevent) {
-    if (clickevent instanceof ScreenshotTask.ScreenshotClickEvent) {
-      ScreenshotTask.ScreenshotClickEvent event = (ScreenshotTask.ScreenshotClickEvent)clickevent;
-      if (event.getScreenshotAction() == ScreenshotTask.ScreenshotClickEvent.Action.COPY) {
-        (new Thread(() -> {
-              Toolkit.getDefaultToolkit().getSystemClipboard().setContents((Transferable)new ImageSelection(ScreenshotTask.getCurrentImage()), null);
-              Client.sendMessage("Screenshot has been copied to your clipboard", true);
-            })).start();
-      } else {
-        (new Thread(() -> {
-              if (ScreenshotTask.getCurrentScreenshot().exists()) {
-                ScreenshotTask.getCurrentScreenshot().delete();
-                Client.sendMessage("Screenshot has been deleted", true);
-              } else {
-                Client.sendMessage("Could not delete screenshot (already deleted or moved?)", true);
-              }
-            })).start();
-      }
-      ci.setReturnValue(Boolean.TRUE);
-    } else if (clickevent instanceof CallbackClickEvent) {
-      CallbackClickEvent event = (CallbackClickEvent)clickevent;
-      event.getConsumer().accept(component);
-      ci.setReturnValue(Boolean.TRUE);
+
+    @Inject(method = {"handleComponentClick"}, locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true, at = {@At(value = "INVOKE", target = "Lnet/minecraft/event/ClickEvent;getAction()Lnet/minecraft/event/ClickEvent$Action;", ordinal = 0, shift = At.Shift.BEFORE)})
+    protected void handleComponentClick(IChatComponent component, CallbackInfoReturnable<Boolean> ci, ClickEvent clickevent) {
+        if (clickevent instanceof ScreenshotTask.ScreenshotClickEvent) {
+            ScreenshotTask.ScreenshotClickEvent event = (ScreenshotTask.ScreenshotClickEvent) clickevent;
+            if (event.getScreenshotAction() == ScreenshotTask.ScreenshotClickEvent.Action.COPY) {
+                (new Thread(() -> {
+                    Toolkit.getDefaultToolkit().getSystemClipboard().setContents((Transferable) new ImageSelection(ScreenshotTask.getCurrentImage()), null);
+                    Client.sendMessage("Screenshot has been copied to your clipboard", true);
+                })).start();
+            } else {
+                (new Thread(() -> {
+                    if (ScreenshotTask.getCurrentScreenshot().exists()) {
+                        ScreenshotTask.getCurrentScreenshot().delete();
+                        Client.sendMessage("Screenshot has been deleted", true);
+                    } else {
+                        Client.sendMessage("Could not delete screenshot (already deleted or moved?)", true);
+                    }
+                })).start();
+            }
+            ci.setReturnValue(Boolean.TRUE);
+        } else if (clickevent instanceof CallbackClickEvent) {
+            CallbackClickEvent event = (CallbackClickEvent) clickevent;
+            event.getConsumer().accept(component);
+            ci.setReturnValue(Boolean.TRUE);
+        }
     }
-  }
 }
 
 

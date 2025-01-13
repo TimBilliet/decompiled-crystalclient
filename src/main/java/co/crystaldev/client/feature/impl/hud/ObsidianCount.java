@@ -11,27 +11,27 @@ import net.minecraft.item.ItemStack;
 @ConfigurableSize
 @ModuleInfo(name = "Obsidian Count", description = "Displays the amount of Obsidian in your inventory onscreen", category = Category.HUD)
 public class ObsidianCount extends HudModuleBackground {
-  public String getDisplayText() {
-    return getTotalObsidian() + " obby";
-  }
-  
-  public Tuple<String, String> getInfoHud() {
-    return new Tuple("Obsidian", Integer.toString(getTotalObsidian()));
-  }
-  
-  private int getTotalObsidian() {
-    if (this.mc.thePlayer == null)
-      throw new NullPointerException("The current player has not yet been set"); 
-    int count = 0;
-    for (int i = 1; i < 45; i++) {
-      if (this.mc.thePlayer.inventoryContainer.getSlot(i).getHasStack()) {
-        ItemStack is = this.mc.thePlayer.inventoryContainer.getSlot(i).getStack();
-        if (Block.getIdFromBlock(Block.getBlockFromItem(is.getItem())) == 49)
-          count += is.stackSize; 
-      } 
-    } 
-    return count;
-  }
+    public String getDisplayText() {
+        return getTotalObsidian() + " obby";
+    }
+
+    public Tuple<String, String> getInfoHud() {
+        return new Tuple("Obsidian", Integer.toString(getTotalObsidian()));
+    }
+
+    private int getTotalObsidian() {
+        if (this.mc.thePlayer == null)
+            throw new NullPointerException("The current player has not yet been set");
+        int count = 0;
+        for (int i = 1; i < 45; i++) {
+            if (this.mc.thePlayer.inventoryContainer.getSlot(i).getHasStack()) {
+                ItemStack is = this.mc.thePlayer.inventoryContainer.getSlot(i).getStack();
+                if (Block.getIdFromBlock(Block.getBlockFromItem(is.getItem())) == 49)
+                    count += is.stackSize;
+            }
+        }
+        return count;
+    }
 }
 
 

@@ -1,9 +1,9 @@
 package mapwriter.config;
 
 public class SmallMapConfig extends LargeMapConfig {
-  public void loadConfig() {
-    super.loadConfig();
-  }
+    public void loadConfig() {
+        super.loadConfig();
+    }
 }
 
 

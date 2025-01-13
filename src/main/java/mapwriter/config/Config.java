@@ -1,23 +1,23 @@
 package mapwriter.config;
 
 public class Config {
-  public static boolean linearTextureScaling = true;
-  
-  public static int maxChunkSaveDistSq = 16384;
-  
-  public static int configTextureSize = 2048;
-  
-  public static int overlayModeIndex = 0;
-  
-  public static int overlayZoomLevel = 0;
-  
-  public static int fullScreenZoomLevel = 0;
-  
-  public static LargeMapConfig largeMap = new LargeMapConfig();
-  
-  public static SmallMapConfig smallMap = new SmallMapConfig();
-  
-  public static MapModeConfig fullScreenMap = new MapModeConfig();
+    public static boolean linearTextureScaling = true;
+
+    public static int maxChunkSaveDistSq = 16384;
+
+    public static int configTextureSize = 2048;
+
+    public static int overlayModeIndex = 0;
+
+    public static int overlayZoomLevel = 0;
+
+    public static int fullScreenZoomLevel = 0;
+
+    public static LargeMapConfig largeMap = new LargeMapConfig();
+
+    public static SmallMapConfig smallMap = new SmallMapConfig();
+
+    public static MapModeConfig fullScreenMap = new MapModeConfig();
 }
 
 

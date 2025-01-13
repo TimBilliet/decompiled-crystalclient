@@ -16,26 +16,26 @@ import java.util.List;
 
 @Mixin({GuiOverlayDebug.class})
 public abstract class MixinGuiOverlayDebug {
-  @Shadow
-  @Final
-  private Minecraft mc;
-  
-  @Redirect(method = {"renderDebugInfoLeft"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiOverlayDebug;call()Ljava/util/List;"))
-  private List<String> renderDebugInfoLeft(GuiOverlayDebug instance) {
-    List<String> values = ((co.crystaldev.client.mixin.accessor.net.minecraft.client.gui.MixinGuiOverlayDebug)instance).invokeCall();
-    values.add("");
-    values.add(ChatColor.translate(String.format("&b%s Debug Info", new Object[] { "Crystal Client" })));
-    values.add("Client Version: " + Client.getMinecraftVersion().getVersionString() + "/" + "1.1.16-projectassfucker");
+    @Shadow
+    @Final
+    private Minecraft mc;
+
+    @Redirect(method = {"renderDebugInfoLeft"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiOverlayDebug;call()Ljava/util/List;"))
+    private List<String> renderDebugInfoLeft(GuiOverlayDebug instance) {
+        List<String> values = ((co.crystaldev.client.mixin.accessor.net.minecraft.client.gui.MixinGuiOverlayDebug) instance).invokeCall();
+        values.add("");
+        values.add(ChatColor.translate(String.format("&b%s Debug Info", new Object[]{"Crystal Client"})));
+        values.add("Client Version: " + Client.getMinecraftVersion().getVersionString() + "/" + "1.1.16-projectassfucker");
 //    values.add("Server brand: " + this.mc.thePlayer.getServerBrand());
-    values.add("Server brand: " + this.mc.thePlayer.getClientBrand());
-    values.add("Server TPS: " + String.format("%.2f", new Object[] { Float.valueOf(ModuleHandler.getTps()) }));
-    values.add("");
-    values.add("World name: " + Client.getCurrentWorldName());
-    values.add("Tile Entity Count (Loaded): " + this.mc.theWorld.loadedTileEntityList.size());
-    values.add("Tile Entity Count (Tickable): " + this.mc.theWorld.tickableTileEntities.size());
-    values.add("Tile Entity Count (For removal): " + ((MixinWorld)this.mc.theWorld).getTileEntitiesToBeRemoved().size());
-    return values;
-  }
+        values.add("Server brand: " + this.mc.thePlayer.getClientBrand());
+        values.add("Server TPS: " + String.format("%.2f", new Object[]{Float.valueOf(ModuleHandler.getTps())}));
+        values.add("");
+        values.add("World name: " + Client.getCurrentWorldName());
+        values.add("Tile Entity Count (Loaded): " + this.mc.theWorld.loadedTileEntityList.size());
+        values.add("Tile Entity Count (Tickable): " + this.mc.theWorld.tickableTileEntities.size());
+        values.add("Tile Entity Count (For removal): " + ((MixinWorld) this.mc.theWorld).getTileEntitiesToBeRemoved().size());
+        return values;
+    }
 }
 
 

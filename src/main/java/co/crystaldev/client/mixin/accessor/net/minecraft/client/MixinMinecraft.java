@@ -11,35 +11,35 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin({Minecraft.class})
 public interface MixinMinecraft {
-  @Accessor("mcDefaultResourcePack")
-  DefaultResourcePack getMcDefaultResourcePack();
-  
-  @Accessor("session")
-  void setSession(Session paramSession);
-  
-  @Accessor("mcThread")
-  Thread getMcThread();
-  
-  @Accessor("fullscreen")
-  void setFullScreen(boolean paramBoolean);
-  
-  @Accessor("currentServerData")
-  void setCurrentServerData(ServerData paramServerData);
-  
-  @Accessor("tempDisplayWidth")
-  int getTempDisplayWidth();
-  
-  @Accessor("tempDisplayHeight")
-  int getTempDisplayHeight();
-  
-  @Accessor("modelManager")
-  ModelManager getModelManager();
-  
-  @Invoker("updateFramebufferSize")
-  void callUpdateFramebufferSize();
-  
-  @Invoker("resize")
-  void callResize(int paramInt1, int paramInt2);
+    @Accessor("mcDefaultResourcePack")
+    DefaultResourcePack getMcDefaultResourcePack();
+
+    @Accessor("session")
+    void setSession(Session paramSession);
+
+    @Accessor("mcThread")
+    Thread getMcThread();
+
+    @Accessor("fullscreen")
+    void setFullScreen(boolean paramBoolean);
+
+    @Accessor("currentServerData")
+    void setCurrentServerData(ServerData paramServerData);
+
+    @Accessor("tempDisplayWidth")
+    int getTempDisplayWidth();
+
+    @Accessor("tempDisplayHeight")
+    int getTempDisplayHeight();
+
+    @Accessor("modelManager")
+    ModelManager getModelManager();
+
+    @Invoker("updateFramebufferSize")
+    void callUpdateFramebufferSize();
+
+    @Invoker("resize")
+    void callResize(int paramInt1, int paramInt2);
 }
 
 

@@ -10,17 +10,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({TileEntitySkullRenderer.class})
 public abstract class MixinTileEntitySkullRenderer {
-  @Inject(method = {"renderSkull"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/model/ModelBase;render(Lnet/minecraft/entity/Entity;FFFFFF)V")})
-  private void enableBlending(CallbackInfo ci) {
-    GlStateManager.enableBlend();
-    GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-  }
-  
-  @Inject(method = {"renderTileEntityAt(Lnet/minecraft/tileentity/TileEntitySkull;DDDFI)V"}, at = {@At("HEAD")}, cancellable = true)
-  private void cancelRendering(CallbackInfo ci) {
-    if (NoLag.isEnabled((NoLag.getInstance()).disableSkulls))
-      ci.cancel(); 
-  }
+    @Inject(method = {"renderSkull"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/model/ModelBase;render(Lnet/minecraft/entity/Entity;FFFFFF)V")})
+    private void enableBlending(CallbackInfo ci) {
+        GlStateManager.enableBlend();
+        GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
+    }
+
+    @Inject(method = {"renderTileEntityAt(Lnet/minecraft/tileentity/TileEntitySkull;DDDFI)V"}, at = {@At("HEAD")}, cancellable = true)
+    private void cancelRendering(CallbackInfo ci) {
+        if (NoLag.isEnabled((NoLag.getInstance()).disableSkulls))
+            ci.cancel();
+    }
 }
 
 

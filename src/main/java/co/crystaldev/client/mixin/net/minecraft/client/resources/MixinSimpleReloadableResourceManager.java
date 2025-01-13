@@ -14,11 +14,11 @@ import java.io.IOException;
 
 @Mixin({SimpleReloadableResourceManager.class})
 public abstract class MixinSimpleReloadableResourceManager {
-  @Inject(method = {"getResource"}, at = {@At(value = "INVOKE", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;", shift = At.Shift.AFTER)}, cancellable = true)
-  private void getResource(ResourceLocation location, CallbackInfoReturnable<IResource> ci) throws IOException {
-    if (location instanceof MultiResourceLocation)
-      ci.setReturnValue(RLUtils.getStreamForMultiskin((MultiResourceLocation)location));
-  }
+    @Inject(method = {"getResource"}, at = {@At(value = "INVOKE", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;", shift = At.Shift.AFTER)}, cancellable = true)
+    private void getResource(ResourceLocation location, CallbackInfoReturnable<IResource> ci) throws IOException {
+        if (location instanceof MultiResourceLocation)
+            ci.setReturnValue(RLUtils.getStreamForMultiskin((MultiResourceLocation) location));
+    }
 }
 
 

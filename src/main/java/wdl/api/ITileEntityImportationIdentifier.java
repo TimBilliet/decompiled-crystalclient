@@ -6,7 +6,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.chunk.Chunk;
 
 public interface ITileEntityImportationIdentifier extends IWDLMod {
-  boolean shouldImportTileEntity(String paramString, BlockPos paramBlockPos, Block paramBlock, NBTTagCompound paramNBTTagCompound, Chunk paramChunk);
+    boolean shouldImportTileEntity(String paramString, BlockPos paramBlockPos, Block paramBlock, NBTTagCompound paramNBTTagCompound, Chunk paramChunk);
 }
 
 

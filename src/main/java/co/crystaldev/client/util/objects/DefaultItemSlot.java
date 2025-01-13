@@ -3,20 +3,20 @@ package co.crystaldev.client.util.objects;
 import net.minecraft.item.ItemStack;
 
 public class DefaultItemSlot extends ItemSlot {
-  private final ItemStack itemStack;
-  
-  public ItemStack getItemStack() {
-    return this.itemStack;
-  }
-  
-  public DefaultItemSlot(Type type, ItemStack itemStack) {
-    super(type, -1);
-    this.itemStack = itemStack;
-  }
-  
-  public boolean isPresent() {
-    return (this.itemStack != null);
-  }
+    private final ItemStack itemStack;
+
+    public ItemStack getItemStack() {
+        return this.itemStack;
+    }
+
+    public DefaultItemSlot(Type type, ItemStack itemStack) {
+        super(type, -1);
+        this.itemStack = itemStack;
+    }
+
+    public boolean isPresent() {
+        return (this.itemStack != null);
+    }
 }
 
 

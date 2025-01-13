@@ -9,11 +9,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({NBTTagCompound.class})
 public abstract class MixinNBTTagCompound {
-  @Inject(method = {"setTag"}, at = {@At("HEAD")})
-  private void failFast(String key, NBTBase value, CallbackInfo ci) {
-    if (value == null)
-      throw new IllegalArgumentException(String.format("NBT value with key: %s is invalid", new Object[] { key })); 
-  }
+    @Inject(method = {"setTag"}, at = {@At("HEAD")})
+    private void failFast(String key, NBTBase value, CallbackInfo ci) {
+        if (value == null)
+            throw new IllegalArgumentException(String.format("NBT value with key: %s is invalid", new Object[]{key}));
+    }
 }
 
 

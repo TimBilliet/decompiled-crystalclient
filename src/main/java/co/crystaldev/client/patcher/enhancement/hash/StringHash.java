@@ -3,9 +3,9 @@ package co.crystaldev.client.patcher.enhancement.hash;
 import co.crystaldev.client.patcher.enhancement.hash.impl.AbstractHash;
 
 public class StringHash extends AbstractHash {
-  public StringHash(String text, float red, float green, float blue, float alpha, boolean shadow) {
-    super(new Object[] { text, Float.valueOf(red), Float.valueOf(green), Float.valueOf(blue), Float.valueOf(alpha), Boolean.valueOf(shadow) });
-  }
+    public StringHash(String text, float red, float green, float blue, float alpha, boolean shadow) {
+        super(new Object[]{text, Float.valueOf(red), Float.valueOf(green), Float.valueOf(blue), Float.valueOf(alpha), Boolean.valueOf(shadow)});
+    }
 }
 
 

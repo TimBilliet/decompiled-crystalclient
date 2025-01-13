@@ -30,13 +30,15 @@ public class ForgeCoreMod implements IFMLLoadingPlugin {
                 File file = new File(location.toURI());
                 if (file.isFile())
                     CoreModManager.getReparseableCoremods().remove(file.getName());
-            } catch (URISyntaxException uRISyntaxException) {}
+            } catch (URISyntaxException uRISyntaxException) {
+            }
         } else {
             Logger logger = LogManager.getLogger("Timmeke_ Crystal Client CoreMod");
             logger.warn("No CodeSource, if this is not a development environment we might run into problems!");
             logger.warn(getClass().getProtectionDomain());
         }
     }
+
     public String[] getASMTransformerClass() {
         return new String[0];
     }
@@ -49,7 +51,8 @@ public class ForgeCoreMod implements IFMLLoadingPlugin {
         return null;
     }
 
-    public void injectData(Map<String, Object> data) {}
+    public void injectData(Map<String, Object> data) {
+    }
 
     public String getAccessTransformerClass() {
         return null;

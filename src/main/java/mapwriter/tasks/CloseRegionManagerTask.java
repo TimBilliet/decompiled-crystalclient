@@ -3,21 +3,22 @@ package mapwriter.tasks;
 import mapwriter.region.RegionManager;
 
 public class CloseRegionManagerTask extends Task {
-  private final RegionManager regionManager;
-  
-  public CloseRegionManagerTask(RegionManager regionManager) {
-    this.regionManager = regionManager;
-  }
-  
-  public void run() {
-    this.regionManager.close();
-  }
-  
-  public void onComplete() {}
-  
-  public boolean CheckForDuplicate() {
-    return false;
-  }
+    private final RegionManager regionManager;
+
+    public CloseRegionManagerTask(RegionManager regionManager) {
+        this.regionManager = regionManager;
+    }
+
+    public void run() {
+        this.regionManager.close();
+    }
+
+    public void onComplete() {
+    }
+
+    public boolean CheckForDuplicate() {
+        return false;
+    }
 }
 
 

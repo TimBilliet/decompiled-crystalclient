@@ -7,11 +7,11 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin({GuiIngameForge.class})
 public interface MixinGuiIngameForge {
-  @Accessor(value = "eventParent", remap = false)
-  void setEventParent(RenderGameOverlayEvent paramRenderGameOverlayEvent);
-  
-  @Accessor(value = "eventParent", remap = false)
-  RenderGameOverlayEvent getEventParent();
+    @Accessor(value = "eventParent", remap = false)
+    void setEventParent(RenderGameOverlayEvent paramRenderGameOverlayEvent);
+
+    @Accessor(value = "eventParent", remap = false)
+    RenderGameOverlayEvent getEventParent();
 }
 
 

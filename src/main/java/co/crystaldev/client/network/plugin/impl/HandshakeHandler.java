@@ -4,11 +4,14 @@ import co.crystaldev.client.network.plugin.MessageHandler;
 import io.netty.buffer.ByteBuf;
 
 public class HandshakeHandler extends MessageHandler {
-  public void fromBytes(ByteBuf buf) {}
-  
-  public void toBytes(ByteBuf buf) {}
-  
-  public void onMessage() {}
+    public void fromBytes(ByteBuf buf) {
+    }
+
+    public void toBytes(ByteBuf buf) {
+    }
+
+    public void onMessage() {
+    }
 }
 
 

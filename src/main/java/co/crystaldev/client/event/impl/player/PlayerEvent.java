@@ -6,59 +6,59 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
 
 public class PlayerEvent extends Event {
-  public final EntityPlayer player;
-  
-  protected PlayerEvent(EntityPlayer player) {
-    this.player = player;
-  }
-  
-  public static class LoggedIn extends PlayerEvent {
-    public LoggedIn(EntityPlayer player) {
-      super(player);
+    public final EntityPlayer player;
+
+    protected PlayerEvent(EntityPlayer player) {
+        this.player = player;
     }
-  }
-  
-  public static class LoggedOut extends PlayerEvent {
-    public LoggedOut(EntityPlayer player) {
-      super(player);
+
+    public static class LoggedIn extends PlayerEvent {
+        public LoggedIn(EntityPlayer player) {
+            super(player);
+        }
     }
-  }
-  
-  public static class Attack extends PlayerEvent {
-    public final Entity target;
-    
-    public Attack(EntityPlayer player, Entity target) {
-      super(player);
-      this.target = target;
+
+    public static class LoggedOut extends PlayerEvent {
+        public LoggedOut(EntityPlayer player) {
+            super(player);
+        }
     }
-  }
-  
-  public static class Damage extends PlayerEvent {
-    private final DamageSource source;
-    
-    private final float health;
-    
-    private final float damageAmount;
-    
-    public DamageSource getSource() {
-      return this.source;
+
+    public static class Attack extends PlayerEvent {
+        public final Entity target;
+
+        public Attack(EntityPlayer player, Entity target) {
+            super(player);
+            this.target = target;
+        }
     }
-    
-    public float getHealth() {
-      return this.health;
+
+    public static class Damage extends PlayerEvent {
+        private final DamageSource source;
+
+        private final float health;
+
+        private final float damageAmount;
+
+        public DamageSource getSource() {
+            return this.source;
+        }
+
+        public float getHealth() {
+            return this.health;
+        }
+
+        public float getDamageAmount() {
+            return this.damageAmount;
+        }
+
+        public Damage(EntityPlayer player, DamageSource damageSrc, float health, float damageAmount) {
+            super(player);
+            this.source = damageSrc;
+            this.health = health;
+            this.damageAmount = damageAmount;
+        }
     }
-    
-    public float getDamageAmount() {
-      return this.damageAmount;
-    }
-    
-    public Damage(EntityPlayer player, DamageSource damageSrc, float health, float damageAmount) {
-      super(player);
-      this.source = damageSrc;
-      this.health = health;
-      this.damageAmount = damageAmount;
-    }
-  }
 }
 
 

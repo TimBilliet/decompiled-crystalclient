@@ -13,24 +13,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({ArmorStandRenderer.class})
 public abstract class MixinArmorStandRenderer {
-  @Inject(method = {"canRenderName*"}, cancellable = true, at = {@At("HEAD")})
-  private void canRenderName(EntityArmorStand entity, CallbackInfoReturnable<Boolean> ci) {
-    if (NoLag.isEnabled((NoLag.getInstance()).disableHologramsInBlocks)) {
-      EntityArmorStandExt stand = (EntityArmorStandExt)entity;
-      long currentMs = System.currentTimeMillis();
-      if (currentMs - stand.crystal$getLastBlockCheck() < 10000L) {
-        ci.setReturnValue(!stand.crystal$isInBlock());
-      } else {
-        boolean inBlock = !entity.getEntityWorld().isAirBlock(entity.getPosition());
-        stand.crystal$setIsInBlock(inBlock);
-        stand.crystal$setLastBlockCheck(currentMs);
-        ci.setReturnValue(!inBlock);
-        return;
-      }
+    @Inject(method = {"canRenderName*"}, cancellable = true, at = {@At("HEAD")})
+    private void canRenderName(EntityArmorStand entity, CallbackInfoReturnable<Boolean> ci) {
+        if (NoLag.isEnabled((NoLag.getInstance()).disableHologramsInBlocks)) {
+            EntityArmorStandExt stand = (EntityArmorStandExt) entity;
+            long currentMs = System.currentTimeMillis();
+            if (currentMs - stand.crystal$getLastBlockCheck() < 10000L) {
+                ci.setReturnValue(!stand.crystal$isInBlock());
+            } else {
+                boolean inBlock = !entity.getEntityWorld().isAirBlock(entity.getPosition());
+                stand.crystal$setIsInBlock(inBlock);
+                stand.crystal$setLastBlockCheck(currentMs);
+                ci.setReturnValue(!inBlock);
+                return;
+            }
+        }
+        if ((NoLag.getInstance()).enabled && entity.getDistanceToEntity((Entity) (Minecraft.getMinecraft()).thePlayer) > (NoLag.getInstance()).hologramRenderDistance)
+            ci.setReturnValue(Boolean.FALSE);
     }
-    if ((NoLag.getInstance()).enabled && entity.getDistanceToEntity((Entity)(Minecraft.getMinecraft()).thePlayer) > (NoLag.getInstance()).hologramRenderDistance)
-      ci.setReturnValue(Boolean.FALSE);
-  }
 }
 
 

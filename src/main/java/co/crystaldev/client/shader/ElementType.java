@@ -1,32 +1,32 @@
 package co.crystaldev.client.shader;
 
 public enum ElementType {
-  FLOAT(4, 5126, false),
-  UNSIGNED_BYTE(1, 5121, true);
-  
-  private final int size;
-  
-  private final int glType;
-  
-  private final boolean normalize;
-  
-  ElementType(int size, int glType, boolean normalize) {
-    this.size = size;
-    this.glType = glType;
-    this.normalize = normalize;
-  }
-  
-  public int getSize() {
-    return this.size;
-  }
-  
-  public int getGlType() {
-    return this.glType;
-  }
-  
-  public boolean isNormalize() {
-    return this.normalize;
-  }
+    FLOAT(4, 5126, false),
+    UNSIGNED_BYTE(1, 5121, true);
+
+    private final int size;
+
+    private final int glType;
+
+    private final boolean normalize;
+
+    ElementType(int size, int glType, boolean normalize) {
+        this.size = size;
+        this.glType = glType;
+        this.normalize = normalize;
+    }
+
+    public int getSize() {
+        return this.size;
+    }
+
+    public int getGlType() {
+        return this.glType;
+    }
+
+    public boolean isNormalize() {
+        return this.normalize;
+    }
 }
 
 

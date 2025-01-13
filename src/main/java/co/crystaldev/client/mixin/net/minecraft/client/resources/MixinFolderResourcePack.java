@@ -10,17 +10,17 @@ import java.io.InputStream;
 
 @Mixin({FolderResourcePack.class})
 public abstract class MixinFolderResourcePack {
-  @Inject(method = {"getInputStreamByName"}, cancellable = true, at = {@At("HEAD")})
-  private void getInputStreamByName(String name, CallbackInfoReturnable<InputStream> ci) {
-    if (name.contains("crystalclient") && !((Object)this instanceof co.crystaldev.client.cosmetic.CosmeticResourcePack))
-      ci.setReturnValue(null);
-  }
-  
-  @Inject(method = {"hasResourceName"}, cancellable = true, at = {@At("HEAD")})
-  private void hasResourceName(String name, CallbackInfoReturnable<Boolean> ci) {
-    if (name.contains("crystalclient") && !((Object)this instanceof co.crystaldev.client.cosmetic.CosmeticResourcePack))
-      ci.setReturnValue(Boolean.FALSE);
-  }
+    @Inject(method = {"getInputStreamByName"}, cancellable = true, at = {@At("HEAD")})
+    private void getInputStreamByName(String name, CallbackInfoReturnable<InputStream> ci) {
+        if (name.contains("crystalclient") && !((Object) this instanceof co.crystaldev.client.cosmetic.CosmeticResourcePack))
+            ci.setReturnValue(null);
+    }
+
+    @Inject(method = {"hasResourceName"}, cancellable = true, at = {@At("HEAD")})
+    private void hasResourceName(String name, CallbackInfoReturnable<Boolean> ci) {
+        if (name.contains("crystalclient") && !((Object) this instanceof co.crystaldev.client.cosmetic.CosmeticResourcePack))
+            ci.setReturnValue(Boolean.FALSE);
+    }
 }
 
 

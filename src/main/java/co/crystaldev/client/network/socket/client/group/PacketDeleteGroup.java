@@ -7,11 +7,14 @@ import co.crystaldev.client.network.Packet;
 import java.io.IOException;
 
 public class PacketDeleteGroup extends Packet {
-  public void write(ByteBufWrapper out) throws IOException {}
-  
-  public void read(ByteBufWrapper in) throws IOException {}
-  
-  public void process(INetHandler handler) {}
+    public void write(ByteBufWrapper out) throws IOException {
+    }
+
+    public void read(ByteBufWrapper in) throws IOException {
+    }
+
+    public void process(INetHandler handler) {
+    }
 }
 
 

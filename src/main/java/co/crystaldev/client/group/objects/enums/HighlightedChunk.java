@@ -1,7 +1,7 @@
 package co.crystaldev.client.group.objects.enums;
 
 public enum HighlightedChunk {
-  COLOR, TEXT;
+    COLOR, TEXT;
 }
 
 

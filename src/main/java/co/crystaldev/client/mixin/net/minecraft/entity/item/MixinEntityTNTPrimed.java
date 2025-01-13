@@ -12,21 +12,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({EntityTNTPrimed.class})
 public abstract class MixinEntityTNTPrimed extends Entity {
-  public MixinEntityTNTPrimed(World worldIn) {
-    super(worldIn);
-  }
-  
-  @Inject(method = {"<init>(Lnet/minecraft/world/World;DDDLnet/minecraft/entity/EntityLivingBase;)V"}, at = {@At("RETURN")})
-  private void constructor(CallbackInfo ci) {
-    ((EntityExt)this).setInitialYLevel(this.posY);
-  }
-  
-  @Redirect(method = {"onUpdate"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/item/EntityTNTPrimed;handleWaterMovement()Z"))
-  private boolean onUpdate(EntityTNTPrimed entityTNTPrimed) {
-    if (!entityTNTPrimed.worldObj.isRemote)
-      return entityTNTPrimed.handleWaterMovement(); 
-    return false;
-  }
+    public MixinEntityTNTPrimed(World worldIn) {
+        super(worldIn);
+    }
+
+    @Inject(method = {"<init>(Lnet/minecraft/world/World;DDDLnet/minecraft/entity/EntityLivingBase;)V"}, at = {@At("RETURN")})
+    private void constructor(CallbackInfo ci) {
+        ((EntityExt) this).setInitialYLevel(this.posY);
+    }
+
+    @Redirect(method = {"onUpdate"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/item/EntityTNTPrimed;handleWaterMovement()Z"))
+    private boolean onUpdate(EntityTNTPrimed entityTNTPrimed) {
+        if (!entityTNTPrimed.worldObj.isRemote)
+            return entityTNTPrimed.handleWaterMovement();
+        return false;
+    }
 }
 
 

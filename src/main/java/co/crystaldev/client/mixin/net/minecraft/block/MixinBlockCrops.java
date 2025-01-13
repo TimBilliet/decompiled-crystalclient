@@ -14,15 +14,15 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin({BlockCrops.class})
 public abstract class MixinBlockCrops extends BlockBush {
-  public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
-    CropUtilities.updateCropsMaxY(worldIn, pos, worldIn.getBlockState(pos).getBlock());
-    return super.getCollisionBoundingBox(worldIn, pos, state);
-  }
-  
-  public MovingObjectPosition collisionRayTrace(World worldIn, BlockPos pos, Vec3 start, Vec3 end) {
-    CropUtilities.updateCropsMaxY(worldIn, pos, worldIn.getBlockState(pos).getBlock());
-    return super.collisionRayTrace(worldIn, pos, start, end);
-  }
+    public AxisAlignedBB getCollisionBoundingBox(World worldIn, BlockPos pos, IBlockState state) {
+        CropUtilities.updateCropsMaxY(worldIn, pos, worldIn.getBlockState(pos).getBlock());
+        return super.getCollisionBoundingBox(worldIn, pos, state);
+    }
+
+    public MovingObjectPosition collisionRayTrace(World worldIn, BlockPos pos, Vec3 start, Vec3 end) {
+        CropUtilities.updateCropsMaxY(worldIn, pos, worldIn.getBlockState(pos).getBlock());
+        return super.collisionRayTrace(worldIn, pos, start, end);
+    }
 }
 
 

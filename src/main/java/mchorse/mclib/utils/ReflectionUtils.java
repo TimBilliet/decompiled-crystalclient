@@ -9,34 +9,34 @@ import java.lang.reflect.Modifier;
 import java.util.Map;
 
 public class ReflectionUtils {
-  public static Field TEXTURE_MAP;
-  
-  public static Map<ResourceLocation, ITextureObject> getTextures(TextureManager manager) {
-    if (TEXTURE_MAP == null)
-      setupTextureMapField(manager); 
-    try {
-      return (Map<ResourceLocation, ITextureObject>)TEXTURE_MAP.get(manager);
-    } catch (Exception e) {
-      return null;
-    } 
-  }
-  
-  public static void setupTextureMapField(TextureManager manager) {
-    for (Field field : manager.getClass().getDeclaredFields()) {
-      if (!Modifier.isStatic(field.getModifiers())) {
-        field.setAccessible(true);
+    public static Field TEXTURE_MAP;
+
+    public static Map<ResourceLocation, ITextureObject> getTextures(TextureManager manager) {
+        if (TEXTURE_MAP == null)
+            setupTextureMapField(manager);
         try {
-          Object value = field.get(manager);
-          if (value instanceof Map && ((Map)value).keySet().iterator().next() instanceof ResourceLocation) {
-            TEXTURE_MAP = field;
-            break;
-          } 
+            return (Map<ResourceLocation, ITextureObject>) TEXTURE_MAP.get(manager);
         } catch (Exception e) {
-          e.printStackTrace();
-        } 
-      } 
-    } 
-  }
+            return null;
+        }
+    }
+
+    public static void setupTextureMapField(TextureManager manager) {
+        for (Field field : manager.getClass().getDeclaredFields()) {
+            if (!Modifier.isStatic(field.getModifiers())) {
+                field.setAccessible(true);
+                try {
+                    Object value = field.get(manager);
+                    if (value instanceof Map && ((Map) value).keySet().iterator().next() instanceof ResourceLocation) {
+                        TEXTURE_MAP = field;
+                        break;
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }
 
 

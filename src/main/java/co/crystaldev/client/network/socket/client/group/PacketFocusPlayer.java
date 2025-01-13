@@ -14,36 +14,37 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class PacketFocusPlayer extends Packet {
-  public UUID playerId;
+    public UUID playerId;
 
-  public UUID focusedId;
+    public UUID focusedId;
 
-  public PacketFocusPlayer(UUID focusedId) {
-    this.focusedId = focusedId;
-  }
-
-  public PacketFocusPlayer() {}
-
-  public void write(ByteBufWrapper out) throws IOException {
-    JsonObject obj = new JsonObject();
-    obj.addProperty("focusedId", this.focusedId.toString());
-    out.writeString(Reference.GSON.toJson((JsonElement)obj));
-  }
-
-  public void read(ByteBufWrapper in) throws IOException {
-    JsonObject obj = (JsonObject)Reference.GSON.fromJson(in.readString(), JsonObject.class);
-    this.playerId = UUID.fromString(obj.get("playerId").getAsString());
-    this.focusedId = UUID.fromString(obj.get("focusedId").getAsString());
-  }
-
-  public void process(INetHandler handler) {
-    if (GroupManager.getSelectedGroup() != null) {
-      GroupManager.getSelectedGroup().setFocusedId(this.focusedId);
-      String player = UsernameUtils.usernameFromUUID(this.playerId);
-      String focused = UsernameUtils.usernameFromUUID(this.focusedId);
-      Client.sendMessage("&b" + player + "&f has focused &b" + focused, true);
+    public PacketFocusPlayer(UUID focusedId) {
+        this.focusedId = focusedId;
     }
-  }
+
+    public PacketFocusPlayer() {
+    }
+
+    public void write(ByteBufWrapper out) throws IOException {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("focusedId", this.focusedId.toString());
+        out.writeString(Reference.GSON.toJson((JsonElement) obj));
+    }
+
+    public void read(ByteBufWrapper in) throws IOException {
+        JsonObject obj = (JsonObject) Reference.GSON.fromJson(in.readString(), JsonObject.class);
+        this.playerId = UUID.fromString(obj.get("playerId").getAsString());
+        this.focusedId = UUID.fromString(obj.get("focusedId").getAsString());
+    }
+
+    public void process(INetHandler handler) {
+        if (GroupManager.getSelectedGroup() != null) {
+            GroupManager.getSelectedGroup().setFocusedId(this.focusedId);
+            String player = UsernameUtils.usernameFromUUID(this.playerId);
+            String focused = UsernameUtils.usernameFromUUID(this.focusedId);
+            Client.sendMessage("&b" + player + "&f has focused &b" + focused, true);
+        }
+    }
 }
 
 

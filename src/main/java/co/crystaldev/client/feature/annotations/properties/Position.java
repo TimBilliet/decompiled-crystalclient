@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Position {
-  String cfg() default "position";
+    String cfg() default "position";
 }
 
 

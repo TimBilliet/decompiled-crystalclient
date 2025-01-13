@@ -11,16 +11,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({EffectRenderer.class})
 public abstract class MixinEffectRenderer {
-  @Inject(method = {"addBlockDestroyEffects", "addBlockHitEffects"}, at = {@At("HEAD")}, cancellable = true)
-  private void removeBlockBreakParticles(CallbackInfo ci) {
-    if (NoLag.isEnabled((NoLag.getInstance()).disableBlockBreakParticles))
-      ci.cancel(); 
-  }
-  
-  @ModifyConstant(method = {"addEffect"}, constant = {@Constant(intValue = 4000)})
-  private int injectMaxDisplayedParticleLimit(int original) {
-    return (NoLag.getInstance()).maxDisplayedParticleLimit;
-  }
+    @Inject(method = {"addBlockDestroyEffects", "addBlockHitEffects"}, at = {@At("HEAD")}, cancellable = true)
+    private void removeBlockBreakParticles(CallbackInfo ci) {
+        if (NoLag.isEnabled((NoLag.getInstance()).disableBlockBreakParticles))
+            ci.cancel();
+    }
+
+    @ModifyConstant(method = {"addEffect"}, constant = {@Constant(intValue = 4000)})
+    private int injectMaxDisplayedParticleLimit(int original) {
+        return (NoLag.getInstance()).maxDisplayedParticleLimit;
+    }
 }
 
 

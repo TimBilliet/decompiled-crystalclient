@@ -6,27 +6,27 @@ import co.crystaldev.client.util.RenderUtils;
 import co.crystaldev.client.util.objects.FadingColor;
 
 public class GroupAddButton extends Button {
-  private final FadingColor backgroundColor;
+    private final FadingColor backgroundColor;
 
-  private final FadingColor textColor;
+    private final FadingColor textColor;
 
-  public GroupAddButton(int x, int y, int width, int height) {
-    super(-1, x, y, width, height, "+");
-    this.backgroundColor = new FadingColor(this.opts.neutralButtonBackground, this.opts.hoveredButtonBackground);
-    this.textColor = new FadingColor(this.opts.neutralTextColor, this.opts.hoveredTextColor);
-  }
+    public GroupAddButton(int x, int y, int width, int height) {
+        super(-1, x, y, width, height, "+");
+        this.backgroundColor = new FadingColor(this.opts.neutralButtonBackground, this.opts.hoveredButtonBackground);
+        this.textColor = new FadingColor(this.opts.neutralTextColor, this.opts.hoveredTextColor);
+    }
 
-  public void drawButton(int mouseX, int mouseY, boolean hovered) {
-    Screen.scissorStart(this.scissorPane);
-    this.backgroundColor.fade(hovered);
-    this.textColor.fade(hovered);
-    RenderUtils.drawRoundedRectWithGradientBorder(this.x, this.y, (this.x + this.width), (this.y + this.height), 20.0D, 1.7F, this.opts.mainDisabled
-        .getRGB(), this.opts.secondaryDisabled.getRGB(), this.backgroundColor.getCurrentColor().getRGB());
-    if (this.textColor.getCurrentColor().getAlpha() > 4)
-      this.fontRenderer.drawCenteredString(this.displayText, this.x + this.width / 2, this.y + this.height / 2, this.textColor
-          .getCurrentColor().getRGB());
-    Screen.scissorEnd(this.scissorPane);
-  }
+    public void drawButton(int mouseX, int mouseY, boolean hovered) {
+        Screen.scissorStart(this.scissorPane);
+        this.backgroundColor.fade(hovered);
+        this.textColor.fade(hovered);
+        RenderUtils.drawRoundedRectWithGradientBorder(this.x, this.y, (this.x + this.width), (this.y + this.height), 20.0D, 1.7F, this.opts.mainDisabled
+                .getRGB(), this.opts.secondaryDisabled.getRGB(), this.backgroundColor.getCurrentColor().getRGB());
+        if (this.textColor.getCurrentColor().getAlpha() > 4)
+            this.fontRenderer.drawCenteredString(this.displayText, this.x + this.width / 2, this.y + this.height / 2, this.textColor
+                    .getCurrentColor().getRGB());
+        Screen.scissorEnd(this.scissorPane);
+    }
 }
 
 

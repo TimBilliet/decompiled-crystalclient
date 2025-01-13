@@ -4,17 +4,17 @@ import mchorse.mclib.math.IValue;
 import mchorse.mclib.math.functions.Function;
 
 public class Sin extends Function {
-  public Sin(IValue[] values, String name) throws Exception {
-    super(values, name);
-  }
-  
-  public int getRequiredArguments() {
-    return 1;
-  }
-  
-  public double get() {
-    return Math.sin(getArg(0));
-  }
+    public Sin(IValue[] values, String name) throws Exception {
+        super(values, name);
+    }
+
+    public int getRequiredArguments() {
+        return 1;
+    }
+
+    public double get() {
+        return Math.sin(getArg(0));
+    }
 }
 
 

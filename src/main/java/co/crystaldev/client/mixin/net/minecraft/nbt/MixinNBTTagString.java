@@ -11,23 +11,23 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({NBTTagString.class})
 public abstract class MixinNBTTagString {
-  @Shadow
-  private String data;
-  
-  @Unique
-  private String dataCache;
-  
-  @Inject(method = {"read"}, at = {@At("HEAD")})
-  private void emptyDataCache(CallbackInfo ci) {
-    this.dataCache = null;
-  }
-  
-  @Overwrite
-  public String toString() {
-    if (this.dataCache == null)
-      this.dataCache = "\"" + this.data.replace("\"", "\\\"") + "\""; 
-    return this.dataCache;
-  }
+    @Shadow
+    private String data;
+
+    @Unique
+    private String dataCache;
+
+    @Inject(method = {"read"}, at = {@At("HEAD")})
+    private void emptyDataCache(CallbackInfo ci) {
+        this.dataCache = null;
+    }
+
+    @Overwrite
+    public String toString() {
+        if (this.dataCache == null)
+            this.dataCache = "\"" + this.data.replace("\"", "\\\"") + "\"";
+        return this.dataCache;
+    }
 }
 
 

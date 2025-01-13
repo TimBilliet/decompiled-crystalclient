@@ -9,10 +9,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin({RenderFish.class})
 public abstract class MixinRenderFish {
-  @Redirect(method = {"doRender"}, at = @At(value = "NEW", target = "net/minecraft/util/Vec3"))
-  private Vec3 vec3(double x, double y, double z) {
-    return ((OldAnimations.getInstance()).enabled && (OldAnimations.getInstance()).revertFishingRod) ? new Vec3(-0.5D, 0.03D, 0.8D) : new Vec3(-0.36D, 0.03D, 0.35D);
-  }
+    @Redirect(method = {"doRender"}, at = @At(value = "NEW", target = "net/minecraft/util/Vec3"))
+    private Vec3 vec3(double x, double y, double z) {
+        return ((OldAnimations.getInstance()).enabled && (OldAnimations.getInstance()).revertFishingRod) ? new Vec3(-0.5D, 0.03D, 0.8D) : new Vec3(-0.36D, 0.03D, 0.35D);
+    }
 }
 
 

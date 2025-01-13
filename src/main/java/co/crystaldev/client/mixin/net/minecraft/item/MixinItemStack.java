@@ -9,28 +9,28 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({ItemStack.class})
 public abstract class MixinItemStack {
-  private String displayName;
-  
-  @Redirect(method = {"getTooltip"}, at = @At(value = "INVOKE", target = "Ljava/lang/Integer;toHexString(I)Ljava/lang/String;"))
-  private String fixHexCrash(int i) {
-    return String.format("%06X", new Object[] { Integer.valueOf(i) });
-  }
-  
-  @Inject(method = {"getDisplayName"}, at = {@At("HEAD")}, cancellable = true)
-  private void returnCachedDisplayName(CallbackInfoReturnable<String> cir) {
-    if (this.displayName != null)
-      cir.setReturnValue(this.displayName); 
-  }
-  
-  @Inject(method = {"getDisplayName"}, at = {@At("RETURN")})
-  private void cacheDisplayName(CallbackInfoReturnable<String> cir) {
-    this.displayName = (String)cir.getReturnValue();
-  }
-  
-  @Inject(method = {"setStackDisplayName"}, at = {@At("HEAD")})
-  private void resetCachedDisplayName(String displayName, CallbackInfoReturnable<ItemStack> cir) {
-    this.displayName = null;
-  }
+    private String displayName;
+
+    @Redirect(method = {"getTooltip"}, at = @At(value = "INVOKE", target = "Ljava/lang/Integer;toHexString(I)Ljava/lang/String;"))
+    private String fixHexCrash(int i) {
+        return String.format("%06X", new Object[]{Integer.valueOf(i)});
+    }
+
+    @Inject(method = {"getDisplayName"}, at = {@At("HEAD")}, cancellable = true)
+    private void returnCachedDisplayName(CallbackInfoReturnable<String> cir) {
+        if (this.displayName != null)
+            cir.setReturnValue(this.displayName);
+    }
+
+    @Inject(method = {"getDisplayName"}, at = {@At("RETURN")})
+    private void cacheDisplayName(CallbackInfoReturnable<String> cir) {
+        this.displayName = (String) cir.getReturnValue();
+    }
+
+    @Inject(method = {"setStackDisplayName"}, at = {@At("HEAD")})
+    private void resetCachedDisplayName(String displayName, CallbackInfoReturnable<ItemStack> cir) {
+        this.displayName = null;
+    }
 }
 
 

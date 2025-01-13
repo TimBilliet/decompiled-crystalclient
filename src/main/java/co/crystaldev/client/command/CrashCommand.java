@@ -17,21 +17,21 @@ import net.minecraft.network.play.client.C10PacketCreativeInventoryAction;
 
 @CommandInfo(name = "ccrash", description = "Crash servers lol")
 public class CrashCommand extends AbstractCommand {
-  public void execute(ICommandSender sender, CommandArguments arguments) throws CommandException {
-    if (!this.mc.playerController.isInCreativeMode())
-      throw new CommandException("You must be in creative mode!", new Object[0]); 
-    ItemStack map = new ItemStack((Item)Items.filled_map);
-    try {
-      String tag = "{Decorations:[{id:\"OwOUwU\",type:100b}]}";
-      map.setTagCompound(JsonToNBT.getTagFromJson(tag));
-    } catch (NBTException ex) {
-      Reference.LOGGER.error("Unable to set NBTTag for crash item.", (Throwable)ex);
-      Client.sendErrorMessage((Exception)ex, true);
-      return;
-    } 
-    this.mc.getNetHandler().addToSendQueue((Packet)new C10PacketCreativeInventoryAction(8, map));
-    Client.sendMessage("Crashed " + Client.formatConnectedServerIp() + "!", true);
-  }
+    public void execute(ICommandSender sender, CommandArguments arguments) throws CommandException {
+        if (!this.mc.playerController.isInCreativeMode())
+            throw new CommandException("You must be in creative mode!", new Object[0]);
+        ItemStack map = new ItemStack((Item) Items.filled_map);
+        try {
+            String tag = "{Decorations:[{id:\"OwOUwU\",type:100b}]}";
+            map.setTagCompound(JsonToNBT.getTagFromJson(tag));
+        } catch (NBTException ex) {
+            Reference.LOGGER.error("Unable to set NBTTag for crash item.", (Throwable) ex);
+            Client.sendErrorMessage((Exception) ex, true);
+            return;
+        }
+        this.mc.getNetHandler().addToSendQueue((Packet) new C10PacketCreativeInventoryAction(8, map));
+        Client.sendMessage("Crashed " + Client.formatConnectedServerIp() + "!", true);
+    }
 }
 
 

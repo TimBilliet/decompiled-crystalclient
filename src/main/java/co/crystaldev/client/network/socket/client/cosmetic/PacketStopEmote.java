@@ -13,24 +13,25 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class PacketStopEmote extends Packet {
-  private UUID player;
-  
-  public void write(ByteBufWrapper out) throws IOException {}
-  
-  public void read(ByteBufWrapper in) throws IOException {
-    this.player = in.readUUID();
-  }
-  
-  public void process(INetHandler handler) {
-    if (this.player != null) {
-      WorldClient worldClient = (Minecraft.getMinecraft()).theWorld;
-      if (worldClient != null)
-        for (EntityPlayer player : ((World)worldClient).playerEntities) {
+    private UUID player;
+
+    public void write(ByteBufWrapper out) throws IOException {
+    }
+
+    public void read(ByteBufWrapper in) throws IOException {
+        this.player = in.readUUID();
+    }
+
+    public void process(INetHandler handler) {
+        if (this.player != null) {
+            WorldClient worldClient = (Minecraft.getMinecraft()).theWorld;
+            if (worldClient != null)
+                for (EntityPlayer player : ((World) worldClient).playerEntities) {
 //          if (player.getUniqueID().equals(this.player))
 //            EmoteAPI.setEmoteClient("", player);
-        }  
-    } 
-  }
+                }
+        }
+    }
 }
 
 

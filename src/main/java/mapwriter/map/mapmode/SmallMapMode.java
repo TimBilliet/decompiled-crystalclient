@@ -4,9 +4,9 @@ import mapwriter.config.Config;
 import mapwriter.config.MapModeConfig;
 
 public class SmallMapMode extends MapMode {
-  public SmallMapMode() {
-    super((MapModeConfig)Config.smallMap);
-  }
+    public SmallMapMode() {
+        super((MapModeConfig) Config.smallMap);
+    }
 }
 
 

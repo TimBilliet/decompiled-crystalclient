@@ -4,13 +4,13 @@ import mchorse.emoticons.common.emotes.Emote;
 import net.minecraft.entity.EntityLivingBase;
 
 public interface IUserEmoteData {
-  void setEmote(Emote paramEmote, EntityLivingBase paramEntityLivingBase);
-  
-  Emote getEmote();
-  
-  void update(EntityLivingBase paramEntityLivingBase);
-  
-  boolean render(EntityLivingBase paramEntityLivingBase, double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat);
+    void setEmote(Emote paramEmote, EntityLivingBase paramEntityLivingBase);
+
+    Emote getEmote();
+
+    void update(EntityLivingBase paramEntityLivingBase);
+
+    boolean render(EntityLivingBase paramEntityLivingBase, double paramDouble1, double paramDouble2, double paramDouble3, float paramFloat);
 }
 
 

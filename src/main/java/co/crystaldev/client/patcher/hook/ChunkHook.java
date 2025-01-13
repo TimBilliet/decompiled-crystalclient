@@ -7,15 +7,15 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.storage.ExtendedBlockStorage;
 
 public class ChunkHook {
-  public static IBlockState getBlockState(Chunk chunk, BlockPos pos) {
-    int y = pos.getY();
-    if (y >= 0 && y >> 4 < (chunk.getBlockStorageArray()).length) {
-      ExtendedBlockStorage storage = chunk.getBlockStorageArray()[y >> 4];
-      if (storage != null)
-        return storage.get(pos.getX() & 0xF, y & 0xF, pos.getZ() & 0xF); 
-    } 
-    return Blocks.air.getDefaultState();
-  }
+    public static IBlockState getBlockState(Chunk chunk, BlockPos pos) {
+        int y = pos.getY();
+        if (y >= 0 && y >> 4 < (chunk.getBlockStorageArray()).length) {
+            ExtendedBlockStorage storage = chunk.getBlockStorageArray()[y >> 4];
+            if (storage != null)
+                return storage.get(pos.getX() & 0xF, y & 0xF, pos.getZ() & 0xF);
+        }
+        return Blocks.air.getDefaultState();
+    }
 }
 
 

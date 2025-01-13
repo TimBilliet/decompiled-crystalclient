@@ -9,11 +9,11 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin({RendererLivingEntity.class})
 public interface MixinRendererLivingEntity {
-  @Accessor("mainModel")
-  ModelBase getMainModel();
-  
-  @Invoker("addLayer")
-  boolean callAddLayer(LayerRenderer paramLayerRenderer);
+    @Accessor("mainModel")
+    ModelBase getMainModel();
+
+    @Invoker("addLayer")
+    boolean callAddLayer(LayerRenderer paramLayerRenderer);
 }
 
 

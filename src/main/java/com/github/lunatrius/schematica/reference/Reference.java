@@ -6,17 +6,17 @@ import org.apache.logging.log4j.Logger;
 import java.util.Locale;
 
 public class Reference {
-  public static final String MODID = "Schematica";
-  
-  public static final String MODID_LOWER = "Schematica".toLowerCase(Locale.ENGLISH);
-  
-  public static final String NAME = "Schematica";
-  
-  public static final String VERSION = "1.7.7";
-  
-  public static final String FORGE = "11.15.0.1661";
-  
-  public static Logger logger = LogManager.getLogger("Schematica");
+    public static final String MODID = "Schematica";
+
+    public static final String MODID_LOWER = "Schematica".toLowerCase(Locale.ENGLISH);
+
+    public static final String NAME = "Schematica";
+
+    public static final String VERSION = "1.7.7";
+
+    public static final String FORGE = "11.15.0.1661";
+
+    public static Logger logger = LogManager.getLogger("Schematica");
 }
 
 

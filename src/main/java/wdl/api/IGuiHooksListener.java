@@ -6,9 +6,9 @@ import net.minecraft.inventory.Container;
 import net.minecraft.util.BlockPos;
 
 public interface IGuiHooksListener extends IWDLMod {
-  boolean onBlockGuiClosed(WorldClient paramWorldClient, BlockPos paramBlockPos, Container paramContainer);
-  
-  boolean onEntityGuiClosed(WorldClient paramWorldClient, Entity paramEntity, Container paramContainer);
+    boolean onBlockGuiClosed(WorldClient paramWorldClient, BlockPos paramBlockPos, Container paramContainer);
+
+    boolean onEntityGuiClosed(WorldClient paramWorldClient, Entity paramEntity, Container paramContainer);
 }
 
 

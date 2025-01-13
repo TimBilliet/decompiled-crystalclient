@@ -9,10 +9,10 @@ import java.util.Set;
 
 @Mixin({DefaultResourcePack.class})
 public abstract class MixinDefaultResourcePack {
-  @Overwrite
-  public Set<String> getResourceDomains() {
-    return Reference.RESOURCE_DOMAINS;
-  }
+    @Overwrite
+    public Set<String> getResourceDomains() {
+        return Reference.RESOURCE_DOMAINS;
+    }
 }
 
 

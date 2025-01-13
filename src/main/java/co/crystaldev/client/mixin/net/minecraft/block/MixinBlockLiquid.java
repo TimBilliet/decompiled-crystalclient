@@ -17,22 +17,23 @@ import java.util.Random;
 
 @Mixin({BlockLiquid.class})
 public abstract class MixinBlockLiquid extends Block {
-  public MixinBlockLiquid() {
-    super(Material.air, null);
-  }
-  
-  @Overwrite
-  public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {}
-  
-  @Inject(method = {"getRenderType"}, cancellable = true, at = {@At("HEAD")})
-  public void getRenderType(CallbackInfoReturnable<Integer> cir) {
-    if (NoLag.isEnabled((NoLag.getInstance()).disableLiquids))
-      cir.setReturnValue(Integer.valueOf(-1)); 
-  }
-  
-  public boolean isReplaceable(World world, BlockPos pos) {
-    return true;
-  }
+    public MixinBlockLiquid() {
+        super(Material.air, null);
+    }
+
+    @Overwrite
+    public void randomDisplayTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+    }
+
+    @Inject(method = {"getRenderType"}, cancellable = true, at = {@At("HEAD")})
+    public void getRenderType(CallbackInfoReturnable<Integer> cir) {
+        if (NoLag.isEnabled((NoLag.getInstance()).disableLiquids))
+            cir.setReturnValue(Integer.valueOf(-1));
+    }
+
+    public boolean isReplaceable(World world, BlockPos pos) {
+        return true;
+    }
 }
 
 

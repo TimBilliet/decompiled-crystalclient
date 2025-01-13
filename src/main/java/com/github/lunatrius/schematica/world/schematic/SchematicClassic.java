@@ -4,13 +4,13 @@ import com.github.lunatrius.schematica.api.ISchematic;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class SchematicClassic extends SchematicFormat {
-  public ISchematic readFromNBT(NBTTagCompound tagCompound) {
-    return null;
-  }
-  
-  public boolean writeToNBT(NBTTagCompound tagCompound, ISchematic schematic) {
-    return false;
-  }
+    public ISchematic readFromNBT(NBTTagCompound tagCompound) {
+        return null;
+    }
+
+    public boolean writeToNBT(NBTTagCompound tagCompound, ISchematic schematic) {
+        return false;
+    }
 }
 
 

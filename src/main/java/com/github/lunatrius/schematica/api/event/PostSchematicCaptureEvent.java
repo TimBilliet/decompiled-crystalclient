@@ -4,11 +4,11 @@ import co.crystaldev.client.event.Event;
 import com.github.lunatrius.schematica.api.ISchematic;
 
 public class PostSchematicCaptureEvent extends Event {
-  public final ISchematic schematic;
-  
-  public PostSchematicCaptureEvent(ISchematic schematic) {
-    this.schematic = schematic;
-  }
+    public final ISchematic schematic;
+
+    public PostSchematicCaptureEvent(ISchematic schematic) {
+        this.schematic = schematic;
+    }
 }
 
 

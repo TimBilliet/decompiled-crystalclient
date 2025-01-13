@@ -16,14 +16,14 @@ import java.io.IOException;
 
 @Mixin({AnvilChunkLoader.class})
 public abstract class MixinAnvilChunkLoader {
-//  @Inject(method = {"loadChunk"}, locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = {@At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompressedStreamTools;read(Ljava/io/DataInputStream;)Lnet/minecraft/nbt/NBTTagCompound;", shift = At.Shift.AFTER)})
+    //  @Inject(method = {"loadChunk"}, locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = {@At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompressedStreamTools;read(Ljava/io/DataInputStream;)Lnet/minecraft/nbt/NBTTagCompound;", shift = At.Shift.AFTER)})
 //  private void loadChunk(World worldIn, int x, int z, CallbackInfoReturnable<Chunk> ci, ChunkCoordIntPair chunkcoordintpair, NBTTagCompound nbttagcompound, DataInputStream datainputstream) throws IOException {
 //    datainputstream.close();
 //  }
-  @Inject(method = {"loadChunk__Async"}, locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = {@At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompressedStreamTools;read(Ljava/io/DataInputStream;)Lnet/minecraft/nbt/NBTTagCompound;", shift = At.Shift.AFTER)})
-  private void loadChunk(World worldIn, int x, int z, CallbackInfoReturnable<Chunk> ci, ChunkCoordIntPair chunkcoordintpair, NBTTagCompound nbttagcompound, DataInputStream datainputstream) throws IOException {
-    datainputstream.close();
-  }
+    @Inject(method = {"loadChunk__Async"}, locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = {@At(value = "INVOKE", target = "Lnet/minecraft/nbt/CompressedStreamTools;read(Ljava/io/DataInputStream;)Lnet/minecraft/nbt/NBTTagCompound;", shift = At.Shift.AFTER)})
+    private void loadChunk(World worldIn, int x, int z, CallbackInfoReturnable<Chunk> ci, ChunkCoordIntPair chunkcoordintpair, NBTTagCompound nbttagcompound, DataInputStream datainputstream) throws IOException {
+        datainputstream.close();
+    }
 }
 
 

@@ -12,24 +12,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({InventoryEffectRenderer.class})
 public abstract class MixinInventoryEffectRenderer extends GuiContainer {
-  @Shadow
-  private boolean hasActivePotionEffects;
-  
-  public MixinInventoryEffectRenderer(Container inventorySlotsIn) {
-    super(inventorySlotsIn);
-  }
-  
-  @Inject(method = {"updateActivePotionEffects"}, cancellable = true, at = {@At("HEAD")})
-  protected void updateActivePotionEffects(CallbackInfo ci) {
-    ci.cancel();
-    if (!this.mc.thePlayer.getActivePotionEffects().isEmpty()) {
-      this.guiLeft = !(ClientOptions.getInstance()).inventoryShiftFix ? (160 + (this.width - this.xSize - 200) / 2) : ((this.width - this.xSize) / 2);
-      this.hasActivePotionEffects = true;
-    } else {
-      this.guiLeft = (this.width - this.xSize) / 2;
-      this.hasActivePotionEffects = false;
-    } 
-  }
+    @Shadow
+    private boolean hasActivePotionEffects;
+
+    public MixinInventoryEffectRenderer(Container inventorySlotsIn) {
+        super(inventorySlotsIn);
+    }
+
+    @Inject(method = {"updateActivePotionEffects"}, cancellable = true, at = {@At("HEAD")})
+    protected void updateActivePotionEffects(CallbackInfo ci) {
+        ci.cancel();
+        if (!this.mc.thePlayer.getActivePotionEffects().isEmpty()) {
+            this.guiLeft = !(ClientOptions.getInstance()).inventoryShiftFix ? (160 + (this.width - this.xSize - 200) / 2) : ((this.width - this.xSize) / 2);
+            this.hasActivePotionEffects = true;
+        } else {
+            this.guiLeft = (this.width - this.xSize) / 2;
+            this.hasActivePotionEffects = false;
+        }
+    }
 }
 
 

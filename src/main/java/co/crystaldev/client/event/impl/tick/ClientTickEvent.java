@@ -3,9 +3,11 @@ package co.crystaldev.client.event.impl.tick;
 import co.crystaldev.client.event.Event;
 
 public class ClientTickEvent extends Event {
-  public static class Pre extends Event {}
-  
-  public static class Post extends Event {}
+    public static class Pre extends Event {
+    }
+
+    public static class Post extends Event {
+    }
 }
 
 

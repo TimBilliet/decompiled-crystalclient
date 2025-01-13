@@ -13,44 +13,44 @@ import co.crystaldev.client.util.objects.resources.CachedSkin;
 import org.lwjgl.opengl.GL11;
 
 public class GroupMemberSmallButton extends Button {
-  private final GroupMember member;
+    private final GroupMember member;
 
-  private final CachedSkin skin;
+    private final CachedSkin skin;
 
-  private final FadingColor fadingColor;
+    private final FadingColor fadingColor;
 
-  private final FadingColor textColor;
+    private final FadingColor textColor;
 
-  public GroupMemberSmallButton(GroupMember member, int x, int y, int width, int height) {
-    super(-1, x, y, width, height);
-    this.member = member;
-    this.fadingColor = new FadingColor(this.opts.neutralButtonBackground, this.opts.hoveredButtonBackground);
-    this.textColor = new FadingColor(this.opts.neutralTextColor, this.opts.hoveredTextColor);
-    this.fontRenderer = Fonts.NUNITO_SEMI_BOLD_16;
-    this.skin = SkinCache.getInstance().getCachedSkin(this.member.getUuid());
-  }
+    public GroupMemberSmallButton(GroupMember member, int x, int y, int width, int height) {
+        super(-1, x, y, width, height);
+        this.member = member;
+        this.fadingColor = new FadingColor(this.opts.neutralButtonBackground, this.opts.hoveredButtonBackground);
+        this.textColor = new FadingColor(this.opts.neutralTextColor, this.opts.hoveredTextColor);
+        this.fontRenderer = Fonts.NUNITO_SEMI_BOLD_16;
+        this.skin = SkinCache.getInstance().getCachedSkin(this.member.getUuid());
+    }
 
-  public void drawButton(int mouseX, int mouseY, boolean hovered) {
-    Screen.scissorStart(this.scissorPane);
-    this.fadingColor.fade(hovered);
-    this.textColor.fade(hovered);
-    RenderUtils.drawRoundedRect(this.x, this.y, (this.x + this.width), (this.y + this.height), 8.0D, this.fadingColor
-        .getCurrentColor().getRGB());
-    GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-    RenderUtils.drawCustomSizedResource(this.skin.getResourceLocation(), this.x + 4, this.y + 4, this.height - 8, this.height - 8);
-    String username = UsernameCache.getInstance().getUsername(this.member.getUuid());
-    this.fontRenderer.drawString(username, this.x + 8 + this.height - 8, this.y + this.height / 2 - this.fontRenderer.getStringHeight() / 2, this.textColor
-        .getCurrentColor().getRGB());
-    RenderUtils.drawCircle((this.x + this.width - 6), this.y + this.height / 2.0F, 8.0F,
-        this.member.isOnline() ? this.opts.mainColor.getRGB() : this.opts.mainDisabled.getRGB());
-    Screen.scissorEnd(this.scissorPane);
-  }
+    public void drawButton(int mouseX, int mouseY, boolean hovered) {
+        Screen.scissorStart(this.scissorPane);
+        this.fadingColor.fade(hovered);
+        this.textColor.fade(hovered);
+        RenderUtils.drawRoundedRect(this.x, this.y, (this.x + this.width), (this.y + this.height), 8.0D, this.fadingColor
+                .getCurrentColor().getRGB());
+        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
+        RenderUtils.drawCustomSizedResource(this.skin.getResourceLocation(), this.x + 4, this.y + 4, this.height - 8, this.height - 8);
+        String username = UsernameCache.getInstance().getUsername(this.member.getUuid());
+        this.fontRenderer.drawString(username, this.x + 8 + this.height - 8, this.y + this.height / 2 - this.fontRenderer.getStringHeight() / 2, this.textColor
+                .getCurrentColor().getRGB());
+        RenderUtils.drawCircle((this.x + this.width - 6), this.y + this.height / 2.0F, 8.0F,
+                this.member.isOnline() ? this.opts.mainColor.getRGB() : this.opts.mainDisabled.getRGB());
+        Screen.scissorEnd(this.scissorPane);
+    }
 
-  public void onInteract(int mouseX, int mouseY, int mouseButton) {
-    super.onInteract(mouseX, mouseY, mouseButton);
-    if (mouseButton == 1)
-      ((Screen)this.mc.currentScreen).addOverlay((Screen)new OverlayGroupMemberInteraction(this.member, mouseX, mouseY, 150));
-  }
+    public void onInteract(int mouseX, int mouseY, int mouseButton) {
+        super.onInteract(mouseX, mouseY, mouseButton);
+        if (mouseButton == 1)
+            ((Screen) this.mc.currentScreen).addOverlay((Screen) new OverlayGroupMemberInteraction(this.member, mouseX, mouseY, 150));
+    }
 }
 
 

@@ -7,19 +7,19 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin({CommandHandler.class})
 public abstract class MixinCommandHandler {
-  @ModifyArg(method = {"executeCommand"}, at = @At(value = "INVOKE", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;", remap = false))
-  private Object returnLowerCase(Object s) {
-    if (s instanceof String)
-      return ((String)s).toLowerCase(); 
-    return s;
-  }
-  
-  @ModifyArg(method = {"registerCommand"}, at = @At(value = "INVOKE", target = "Ljava/util/Map;put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;", remap = false), index = 0)
-  private Object putLowerCase(Object s) {
-    if (s instanceof String)
-      return ((String)s).toLowerCase(); 
-    return s;
-  }
+    @ModifyArg(method = {"executeCommand"}, at = @At(value = "INVOKE", target = "Ljava/util/Map;get(Ljava/lang/Object;)Ljava/lang/Object;", remap = false))
+    private Object returnLowerCase(Object s) {
+        if (s instanceof String)
+            return ((String) s).toLowerCase();
+        return s;
+    }
+
+    @ModifyArg(method = {"registerCommand"}, at = @At(value = "INVOKE", target = "Ljava/util/Map;put(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;", remap = false), index = 0)
+    private Object putLowerCase(Object s) {
+        if (s instanceof String)
+            return ((String) s).toLowerCase();
+        return s;
+    }
 }
 
 

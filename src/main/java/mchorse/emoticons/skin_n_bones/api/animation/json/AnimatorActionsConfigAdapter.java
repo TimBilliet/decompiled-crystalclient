@@ -8,20 +8,20 @@ import java.lang.reflect.Type;
 import java.util.Map;
 
 public class AnimatorActionsConfigAdapter implements JsonDeserializer<AnimatorActionsConfig> {
-  public AnimatorActionsConfig deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-    if (!json.isJsonObject())
-      return null; 
-    JsonObject object = json.getAsJsonObject();
-    AnimatorActionsConfig config = new AnimatorActionsConfig();
-    for (Map.Entry<String, JsonElement> entry : (Iterable<Map.Entry<String, JsonElement>>)object.entrySet()) {
-      JsonElement element = entry.getValue();
-      String key = config.toKey(entry.getKey());
-      if (element.isJsonObject())
-        ((JsonObject)element).addProperty("name", key); 
-      config.actions.put(key, context.deserialize(element, ActionConfig.class));
-    } 
-    return config;
-  }
+    public AnimatorActionsConfig deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+        if (!json.isJsonObject())
+            return null;
+        JsonObject object = json.getAsJsonObject();
+        AnimatorActionsConfig config = new AnimatorActionsConfig();
+        for (Map.Entry<String, JsonElement> entry : (Iterable<Map.Entry<String, JsonElement>>) object.entrySet()) {
+            JsonElement element = entry.getValue();
+            String key = config.toKey(entry.getKey());
+            if (element.isJsonObject())
+                ((JsonObject) element).addProperty("name", key);
+            config.actions.put(key, context.deserialize(element, ActionConfig.class));
+        }
+        return config;
+    }
 }
 
 

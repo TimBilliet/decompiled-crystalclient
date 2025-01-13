@@ -5,7 +5,7 @@ import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.util.BlockPos;
 
 public interface IBlockEventListener extends IWDLMod {
-  void onBlockEvent(WorldClient paramWorldClient, BlockPos paramBlockPos, Block paramBlock, int paramInt1, int paramInt2);
+    void onBlockEvent(WorldClient paramWorldClient, BlockPos paramBlockPos, Block paramBlock, int paramInt1, int paramInt2);
 }
 
 

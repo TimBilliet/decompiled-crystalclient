@@ -4,13 +4,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.BlockPos;
 
 public interface ITileEntityEditor extends IWDLMod {
-  boolean shouldEdit(BlockPos paramBlockPos, NBTTagCompound paramNBTTagCompound, TileEntityCreationMode paramTileEntityCreationMode);
-  
-  void editTileEntity(BlockPos paramBlockPos, NBTTagCompound paramNBTTagCompound, TileEntityCreationMode paramTileEntityCreationMode);
-  
-  public enum TileEntityCreationMode {
-    IMPORTED, EXISTING, NEW;
-  }
+    boolean shouldEdit(BlockPos paramBlockPos, NBTTagCompound paramNBTTagCompound, TileEntityCreationMode paramTileEntityCreationMode);
+
+    void editTileEntity(BlockPos paramBlockPos, NBTTagCompound paramNBTTagCompound, TileEntityCreationMode paramTileEntityCreationMode);
+
+    public enum TileEntityCreationMode {
+        IMPORTED, EXISTING, NEW;
+    }
 }
 
 

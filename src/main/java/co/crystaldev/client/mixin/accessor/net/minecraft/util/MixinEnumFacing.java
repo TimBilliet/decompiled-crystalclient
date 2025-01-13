@@ -6,10 +6,10 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin({EnumFacing.class})
 public interface MixinEnumFacing {
-  @Accessor("VALUES")
-  static EnumFacing[] getValues() {
-    throw new AssertionError();
-  }
+    @Accessor("VALUES")
+    static EnumFacing[] getValues() {
+        throw new AssertionError();
+    }
 }
 
 

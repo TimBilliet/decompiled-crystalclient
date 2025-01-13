@@ -11,26 +11,29 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 
 public class PacketUpdateSelectedCosmetic extends Packet {
-  private CosmeticType type;
-  
-  private Cosmetic cosmetic;
-  
-  public PacketUpdateSelectedCosmetic(CosmeticType type, Cosmetic cosmetic) {
-    this.type = type;
-    this.cosmetic = cosmetic;
-  }
-  
-  public PacketUpdateSelectedCosmetic() {}
-  
-  public void write(ByteBufWrapper out) throws IOException {
-    JsonObject obj = new JsonObject();
-    obj.addProperty(this.type.getInternalName(), (this.cosmetic == null) ? "null" : this.cosmetic.getName());
-    out.writeString(Reference.GSON.toJson(obj, JsonObject.class));
-  }
-  
-  public void read(ByteBufWrapper in) throws IOException {}
-  
-  public void process(INetHandler handler) {}
+    private CosmeticType type;
+
+    private Cosmetic cosmetic;
+
+    public PacketUpdateSelectedCosmetic(CosmeticType type, Cosmetic cosmetic) {
+        this.type = type;
+        this.cosmetic = cosmetic;
+    }
+
+    public PacketUpdateSelectedCosmetic() {
+    }
+
+    public void write(ByteBufWrapper out) throws IOException {
+        JsonObject obj = new JsonObject();
+        obj.addProperty(this.type.getInternalName(), (this.cosmetic == null) ? "null" : this.cosmetic.getName());
+        out.writeString(Reference.GSON.toJson(obj, JsonObject.class));
+    }
+
+    public void read(ByteBufWrapper in) throws IOException {
+    }
+
+    public void process(INetHandler handler) {
+    }
 }
 
 

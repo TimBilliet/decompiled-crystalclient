@@ -1,12 +1,12 @@
 package co.crystaldev.client.patcher.enhancement.hash;
 
 public class FastHashedKey {
-  public static int mix64(long input) {
-    input = (input ^ input >> 30L) * -4658895280553007687L;
-    input = (input ^ input >> 27L) * -7723592293110705685L;
-    input ^= input >> 31L;
-    return Long.hashCode(input);
-  }
+    public static int mix64(long input) {
+        input = (input ^ input >> 30L) * -4658895280553007687L;
+        input = (input ^ input >> 27L) * -7723592293110705685L;
+        input ^= input >> 31L;
+        return Long.hashCode(input);
+    }
 }
 
 

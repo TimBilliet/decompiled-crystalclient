@@ -15,19 +15,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({ItemBucket.class})
 public abstract class MixinItemBucket extends Item {
-  @Inject(method = {"<init>"}, at = {@At("RETURN")})
-  public void constructorTail(Block containedBlock, CallbackInfo ci) {
-    this.maxStackSize = 64;
-  }
-  
-  @Inject(method = {"onItemRightClick"}, cancellable = true, at = {@At(value = "INVOKE", target = "Lnet/minecraft/entity/player/EntityPlayer;triggerAchievement(Lnet/minecraft/stats/StatBase;)V", ordinal = 2, shift = At.Shift.AFTER)})
-  public void onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, CallbackInfoReturnable<ItemStack> ci) {
-    if (itemStackIn.stackSize > 1) {
-      if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.bucket)))
-        playerIn.dropPlayerItemWithRandomChoice(new ItemStack(Items.bucket), false); 
-      ci.setReturnValue(new ItemStack(itemStackIn.getItem(), itemStackIn.stackSize - 1));
-    } 
-  }
+    @Inject(method = {"<init>"}, at = {@At("RETURN")})
+    public void constructorTail(Block containedBlock, CallbackInfo ci) {
+        this.maxStackSize = 64;
+    }
+
+    @Inject(method = {"onItemRightClick"}, cancellable = true, at = {@At(value = "INVOKE", target = "Lnet/minecraft/entity/player/EntityPlayer;triggerAchievement(Lnet/minecraft/stats/StatBase;)V", ordinal = 2, shift = At.Shift.AFTER)})
+    public void onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, CallbackInfoReturnable<ItemStack> ci) {
+        if (itemStackIn.stackSize > 1) {
+            if (!playerIn.inventory.addItemStackToInventory(new ItemStack(Items.bucket)))
+                playerIn.dropPlayerItemWithRandomChoice(new ItemStack(Items.bucket), false);
+            ci.setReturnValue(new ItemStack(itemStackIn.getItem(), itemStackIn.stackSize - 1));
+        }
+    }
 }
 
 

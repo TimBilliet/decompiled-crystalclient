@@ -113,23 +113,23 @@ public class CustomScoreboard extends HudModule implements IRegistrable {
         }
     }
 
-private void setDummyScoreboard() {
-    String teamName = ChatColor.translate('&', "&d&lCrystal Client");
-    List<String> scoresToRegister = Arrays.asList(new String[] {
-            "&7&o  https://discord.gg/mmVWkk93E9", "&7 ", "  &f&l* &dDummy: &fScoreboard7", "  &f&l* &dDummy: &fScoreboard6", "  &f&l* &dDummy: &fScoreboard5", "  &f&l* &dDummy: &fScoreboard4", "&f&lAnother Section", "&7 ", "  &f&l* &dDummy: &fScoreboard3", "  &f&l* &dDummy: &fScoreboard2",
-            "  &f&l* &dDummy: &fScoreboard1", "&f&l" +
+    private void setDummyScoreboard() {
+        String teamName = ChatColor.translate('&', "&d&lCrystal Client");
+        List<String> scoresToRegister = Arrays.asList(new String[]{
+                "&7&o  https://discord.gg/mmVWkk93E9", "&7 ", "  &f&l* &dDummy: &fScoreboard7", "  &f&l* &dDummy: &fScoreboard6", "  &f&l* &dDummy: &fScoreboard5", "  &f&l* &dDummy: &fScoreboard4", "&f&lAnother Section", "&7 ", "  &f&l* &dDummy: &fScoreboard3", "  &f&l* &dDummy: &fScoreboard2",
+                "  &f&l* &dDummy: &fScoreboard1", "&f&l" +
 
-            Minecraft.getMinecraft().getSession().getUsername() });
-    Scoreboard dummyScoreboard = new Scoreboard();
-    ScoreObjective objective = dummyScoreboard.addScoreObjective("test", IScoreObjectiveCriteria.DUMMY);
-    objective.setDisplayName(teamName);
-    for (int i = scoresToRegister.size() - 1; i >= 0; i--) {
-        Score score = dummyScoreboard.getValueFromObjective(ChatColor.translate('&', scoresToRegister.get(i)), objective);
-        score.setScorePoints(i);
+                Minecraft.getMinecraft().getSession().getUsername()});
+        Scoreboard dummyScoreboard = new Scoreboard();
+        ScoreObjective objective = dummyScoreboard.addScoreObjective("test", IScoreObjectiveCriteria.DUMMY);
+        objective.setDisplayName(teamName);
+        for (int i = scoresToRegister.size() - 1; i >= 0; i--) {
+            Score score = dummyScoreboard.getValueFromObjective(ChatColor.translate('&', scoresToRegister.get(i)), objective);
+            score.setScorePoints(i);
+        }
+        objective.setRenderType(IScoreObjectiveCriteria.EnumRenderType.INTEGER);
+        this.dummyObjective = objective;
     }
-    objective.setRenderType(IScoreObjectiveCriteria.EnumRenderType.INTEGER);
-    this.dummyObjective = objective;
-}
 
     private ScoreObjective getScoreboard() {
         Scoreboard scoreboard = this.mc.theWorld.getScoreboard();

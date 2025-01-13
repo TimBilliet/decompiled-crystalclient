@@ -1,9 +1,9 @@
 package wdl.api;
 
 public interface IWDLMod {
-  boolean isValidEnvironment(String paramString);
-  
-  String getEnvironmentErrorMessage(String paramString);
+    boolean isValidEnvironment(String paramString);
+
+    String getEnvironmentErrorMessage(String paramString);
 }
 
 

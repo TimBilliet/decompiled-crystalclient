@@ -10,17 +10,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({PacketBuffer.class})
 public abstract class MixinPacketBuffer {
-  @Shadow
-  public abstract String readStringFromBuffer(int paramInt);
-  
-  @Inject(method = {"readChatComponent"}, at = {@At("HEAD")}, cancellable = true)
-  public void readChatComponent(CallbackInfoReturnable<IChatComponent> ci) {
-    String str = readStringFromBuffer(32767);
-    int exploitIndex = str.indexOf("${");
-    if (exploitIndex != -1 && str.lastIndexOf("}") > exploitIndex)
-      str = str.replaceAll("\\$\\{", "\\$\000{"); 
-    ci.setReturnValue(IChatComponent.Serializer.jsonToComponent(str));
-  }
+    @Shadow
+    public abstract String readStringFromBuffer(int paramInt);
+
+    @Inject(method = {"readChatComponent"}, at = {@At("HEAD")}, cancellable = true)
+    public void readChatComponent(CallbackInfoReturnable<IChatComponent> ci) {
+        String str = readStringFromBuffer(32767);
+        int exploitIndex = str.indexOf("${");
+        if (exploitIndex != -1 && str.lastIndexOf("}") > exploitIndex)
+            str = str.replaceAll("\\$\\{", "\\$\000{");
+        ci.setReturnValue(IChatComponent.Serializer.jsonToComponent(str));
+    }
 }
 
 

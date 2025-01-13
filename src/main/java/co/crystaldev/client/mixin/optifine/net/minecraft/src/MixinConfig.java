@@ -12,13 +12,13 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Pseudo
 @Mixin(targets = {"net.minecraft.src.Config"})
 public abstract class MixinConfig {
-  @Inject(method = {"drawFps"}, cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT, remap = false, at = {@At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/RenderGlobal;getCountTileEntitiesRendered()I")})
-  @Dynamic("OptiFine")
-  private static void simplifyFpsCounter(CallbackInfo ci, int fps, String updates, int renderersActive, int entities, int tileEntities) {
-    String fpsStr = fps + " fps, C: " + renderersActive + ", E: " + entities + "+" + tileEntities + ", U: " + updates;
-    (Minecraft.getMinecraft()).fontRendererObj.drawString(fpsStr, 2, 2, -2039584);
-    ci.cancel();
-  }
+    @Inject(method = {"drawFps"}, cancellable = true, locals = LocalCapture.CAPTURE_FAILSOFT, remap = false, at = {@At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/client/renderer/RenderGlobal;getCountTileEntitiesRendered()I")})
+    @Dynamic("OptiFine")
+    private static void simplifyFpsCounter(CallbackInfo ci, int fps, String updates, int renderersActive, int entities, int tileEntities) {
+        String fpsStr = fps + " fps, C: " + renderersActive + ", E: " + entities + "+" + tileEntities + ", U: " + updates;
+        (Minecraft.getMinecraft()).fontRendererObj.drawString(fpsStr, 2, 2, -2039584);
+        ci.cancel();
+    }
 }
 
 

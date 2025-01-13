@@ -6,7 +6,7 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public interface ISchematicRenderChunkFactory extends IRenderChunkFactory {
-  RenderOverlay makeRenderOverlay(World paramWorld, RenderGlobal paramRenderGlobal, BlockPos paramBlockPos, int paramInt);
+    RenderOverlay makeRenderOverlay(World paramWorld, RenderGlobal paramRenderGlobal, BlockPos paramBlockPos, int paramInt);
 }
 
 

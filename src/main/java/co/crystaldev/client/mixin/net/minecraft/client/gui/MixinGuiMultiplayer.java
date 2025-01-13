@@ -10,11 +10,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({GuiMultiplayer.class})
 public abstract class MixinGuiMultiplayer extends GuiScreen {
-  @Inject(method = {"connectToServer"}, at = {@At("HEAD")})
-  private void connectToServer(ServerData server, CallbackInfo ci) {
-    if (this.mc.theWorld != null)
-      this.mc.theWorld.sendQuittingDisconnectingPacket(); 
-  }
+    @Inject(method = {"connectToServer"}, at = {@At("HEAD")})
+    private void connectToServer(ServerData server, CallbackInfo ci) {
+        if (this.mc.theWorld != null)
+            this.mc.theWorld.sendQuittingDisconnectingPacket();
+    }
 }
 
 

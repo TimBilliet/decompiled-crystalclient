@@ -4,20 +4,20 @@ import com.google.gson.annotations.SerializedName;
 import net.minecraft.client.multiplayer.ServerData;
 
 public class PartneredServer {
-  @SerializedName("ip")
-  public final String ip;
-  
-  @SerializedName("name")
-  public final String name;
-  
-  public PartneredServer(String ip, String name) {
-    this.ip = ip;
-    this.name = name;
-  }
-  
-  public ServerData getData() {
-    return new PartneredServerData(this.name, this.ip, false);
-  }
+    @SerializedName("ip")
+    public final String ip;
+
+    @SerializedName("name")
+    public final String name;
+
+    public PartneredServer(String ip, String name) {
+        this.ip = ip;
+        this.name = name;
+    }
+
+    public ServerData getData() {
+        return new PartneredServerData(this.name, this.ip, false);
+    }
 }
 
 

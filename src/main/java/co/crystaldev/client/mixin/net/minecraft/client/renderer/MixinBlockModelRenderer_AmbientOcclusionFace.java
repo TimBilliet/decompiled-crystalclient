@@ -7,10 +7,10 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(targets = {"net.minecraft.client.renderer.BlockModelRenderer$AmbientOcclusionFace"})
 public abstract class MixinBlockModelRenderer_AmbientOcclusionFace {
-  @Redirect(method = {"updateVertexBrightness(Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/block/Block;Lnet/minecraft/util/BlockPos;Lnet/minecraft/util/EnumFacing;[FLjava/util/BitSet;)V"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;isTranslucent()Z"))
-  private boolean updateSmoothLighting(Block block) {
-    return (!block.isVisuallyOpaque() || block.getLightOpacity() == 0);
-  }
+    @Redirect(method = {"updateVertexBrightness(Lnet/minecraft/world/IBlockAccess;Lnet/minecraft/block/Block;Lnet/minecraft/util/BlockPos;Lnet/minecraft/util/EnumFacing;[FLjava/util/BitSet;)V"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/block/Block;isTranslucent()Z"))
+    private boolean updateSmoothLighting(Block block) {
+        return (!block.isVisuallyOpaque() || block.getLightOpacity() == 0);
+    }
 }
 
 

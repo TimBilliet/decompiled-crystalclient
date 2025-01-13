@@ -3,9 +3,9 @@ package wdl.api;
 import net.minecraft.client.gui.GuiScreen;
 
 public interface IWDLModWithGui extends IWDLMod {
-  String getButtonName();
-  
-  void openGui(GuiScreen paramGuiScreen);
+    String getButtonName();
+
+    void openGui(GuiScreen paramGuiScreen);
 }
 
 

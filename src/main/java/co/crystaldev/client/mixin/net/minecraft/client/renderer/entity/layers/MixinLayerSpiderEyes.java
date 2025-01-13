@@ -9,10 +9,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({LayerSpiderEyes.class})
 public abstract class MixinLayerSpiderEyes {
-  @Inject(method = {"doRenderLayer(Lnet/minecraft/entity/monster/EntitySpider;FFFFFFF)V"}, at = {@At("TAIL")})
-  private void fixDepth(CallbackInfo ci) {
-    GlStateManager.depthMask(true);
-  }
+    @Inject(method = {"doRenderLayer(Lnet/minecraft/entity/monster/EntitySpider;FFFFFFF)V"}, at = {@At("TAIL")})
+    private void fixDepth(CallbackInfo ci) {
+        GlStateManager.depthMask(true);
+    }
 }
 
 

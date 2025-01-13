@@ -12,35 +12,35 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class LoadedSchematic {
-  private static final AtomicInteger COUNTER = new AtomicInteger();
-  
-  private final UUID id = UUID.randomUUID();
-  
-  public List<Transformation> transformations = new ArrayList<>();
-  
-  public final Stack<SchematicReplaceAction> replaceHistory = new Stack<>();
-  
-  public final String name = "Schematic " + COUNTER.incrementAndGet();
-  
-  public File currentFile = null;
-  
-  public SchematicWorld schematic = null;
-  
-  public EnumFacing axisFlip = EnumFacing.UP;
-  
-  public EnumFacing axisRotation = EnumFacing.UP;
-  
-  public int totalBlocks = 0;
-  
-  public boolean equals(Object obj) {
-    if (!(obj instanceof LoadedSchematic))
-      return false; 
-    return ((LoadedSchematic)obj).id.equals(this.id);
-  }
-  
-  public String toString() {
-    return this.name;
-  }
+    private static final AtomicInteger COUNTER = new AtomicInteger();
+
+    private final UUID id = UUID.randomUUID();
+
+    public List<Transformation> transformations = new ArrayList<>();
+
+    public final Stack<SchematicReplaceAction> replaceHistory = new Stack<>();
+
+    public final String name = "Schematic " + COUNTER.incrementAndGet();
+
+    public File currentFile = null;
+
+    public SchematicWorld schematic = null;
+
+    public EnumFacing axisFlip = EnumFacing.UP;
+
+    public EnumFacing axisRotation = EnumFacing.UP;
+
+    public int totalBlocks = 0;
+
+    public boolean equals(Object obj) {
+        if (!(obj instanceof LoadedSchematic))
+            return false;
+        return ((LoadedSchematic) obj).id.equals(this.id);
+    }
+
+    public String toString() {
+        return this.name;
+    }
 }
 
 

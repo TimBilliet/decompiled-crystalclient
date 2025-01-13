@@ -7,15 +7,15 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin({RenderGlobal.class})
 public abstract class MixinRenderGlobal implements RenderGlobalExt {
-  @Shadow
-  private int countEntitiesRendered;
+    @Shadow
+    private int countEntitiesRendered;
 
-  @Shadow
-  private int countEntitiesTotal;
+    @Shadow
+    private int countEntitiesTotal;
 
-  public String getHudEntityCount() {
-    return String.format("%s/%s", this.countEntitiesRendered, this.countEntitiesTotal);
-  }
+    public String getHudEntityCount() {
+        return String.format("%s/%s", this.countEntitiesRendered, this.countEntitiesTotal);
+    }
 }
 
 

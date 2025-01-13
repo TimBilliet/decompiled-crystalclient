@@ -11,15 +11,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({GuiScreenResourcePacks.class})
 public abstract class MixinGuiScreenResourcePacks {
-  @Inject(method = {"actionPerformed"}, at = {@At(value = "INVOKE", target = "Ljava/util/Collections;reverse(Ljava/util/List;)V", remap = false)})
-  private void clearHandles(CallbackInfo ci) {
-    ResourcePackRepository repository = Minecraft.getMinecraft().getResourcePackRepository();
-    for (ResourcePackRepository.Entry entry : repository.getRepositoryEntries()) {
-      IResourcePack current = repository.getResourcePackInstance();
-      if (current == null || !entry.getResourcePackName().equals(current.getPackName()))
-        entry.closeResourcePack(); 
-    } 
-  }
+    @Inject(method = {"actionPerformed"}, at = {@At(value = "INVOKE", target = "Ljava/util/Collections;reverse(Ljava/util/List;)V", remap = false)})
+    private void clearHandles(CallbackInfo ci) {
+        ResourcePackRepository repository = Minecraft.getMinecraft().getResourcePackRepository();
+        for (ResourcePackRepository.Entry entry : repository.getRepositoryEntries()) {
+            IResourcePack current = repository.getResourcePackInstance();
+            if (current == null || !entry.getResourcePackName().equals(current.getPackName()))
+                entry.closeResourcePack();
+        }
+    }
 }
 
 

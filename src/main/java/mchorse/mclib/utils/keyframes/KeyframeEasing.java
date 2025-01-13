@@ -1,19 +1,19 @@
 package mchorse.mclib.utils.keyframes;
 
 public enum KeyframeEasing {
-  IN("in"),
-  OUT("out"),
-  INOUT("inout");
-  
-  public final String key;
-  
-  KeyframeEasing(String key) {
-    this.key = key;
-  }
-  
-  public String getKey() {
-    return "mclib.easing." + this.key;
-  }
+    IN("in"),
+    OUT("out"),
+    INOUT("inout");
+
+    public final String key;
+
+    KeyframeEasing(String key) {
+        this.key = key;
+    }
+
+    public String getKey() {
+        return "mclib.easing." + this.key;
+    }
 }
 
 

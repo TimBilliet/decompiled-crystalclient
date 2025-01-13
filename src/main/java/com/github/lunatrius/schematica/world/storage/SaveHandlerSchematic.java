@@ -11,42 +11,46 @@ import net.minecraft.world.storage.WorldInfo;
 import java.io.File;
 
 public class SaveHandlerSchematic implements ISaveHandler {
-  public WorldInfo loadWorldInfo() {
-    return null;
-  }
-  
-  public void checkSessionLock() throws MinecraftException {}
-  
-  public IChunkLoader getChunkLoader(WorldProvider provider) {
-    return null;
-  }
-  
-  public void saveWorldInfoWithPlayer(WorldInfo info, NBTTagCompound compound) {}
-  
-  public void saveWorldInfo(WorldInfo info) {}
+    public WorldInfo loadWorldInfo() {
+        return null;
+    }
 
-  //@Override
-  public IPlayerFileData getPlayerNBTManager() {
-    return null;
-  }
+    public void checkSessionLock() throws MinecraftException {
+    }
 
-  public IPlayerFileData getSaveHandler() {
-    return null;
-  }
-  
-  public void flush() {}
-  
-  public File getWorldDirectory() {
-    return null;
-  }
-  
-  public File getMapFileFromName(String name) {
-    return null;
-  }
-  
-  public String getWorldDirectoryName() {
-    return null;
-  }
+    public IChunkLoader getChunkLoader(WorldProvider provider) {
+        return null;
+    }
+
+    public void saveWorldInfoWithPlayer(WorldInfo info, NBTTagCompound compound) {
+    }
+
+    public void saveWorldInfo(WorldInfo info) {
+    }
+
+    //@Override
+    public IPlayerFileData getPlayerNBTManager() {
+        return null;
+    }
+
+    public IPlayerFileData getSaveHandler() {
+        return null;
+    }
+
+    public void flush() {
+    }
+
+    public File getWorldDirectory() {
+        return null;
+    }
+
+    public File getMapFileFromName(String name) {
+        return null;
+    }
+
+    public String getWorldDirectoryName() {
+        return null;
+    }
 }
 
 

@@ -12,15 +12,15 @@ import java.io.File;
 
 @Mixin({ResourcePackRepository.class})
 public abstract class MixinResourcePackRepository {
-  @Shadow
-  @Final
-  private File dirServerResourcepacks;
-  
-  @Inject(method = {"deleteOldServerResourcesPacks"}, at = {@At("HEAD")})
-  private void deleteOldServerResourcesPacks(CallbackInfo ci) {
-    if (!this.dirServerResourcepacks.exists())
-      this.dirServerResourcepacks.mkdirs(); 
-  }
+    @Shadow
+    @Final
+    private File dirServerResourcepacks;
+
+    @Inject(method = {"deleteOldServerResourcesPacks"}, at = {@At("HEAD")})
+    private void deleteOldServerResourcesPacks(CallbackInfo ci) {
+        if (!this.dirServerResourcepacks.exists())
+            this.dirServerResourcepacks.mkdirs();
+    }
 }
 
 

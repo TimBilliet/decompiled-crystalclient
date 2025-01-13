@@ -7,11 +7,11 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin({S02PacketChat.class})
 public interface MixinS02PacketChat {
-  @Accessor("chatComponent")
-  void setChatComponent(IChatComponent paramIChatComponent);
-  
-  @Accessor("type")
-  void setType(byte paramByte);
+    @Accessor("chatComponent")
+    void setChatComponent(IChatComponent paramIChatComponent);
+
+    @Accessor("type")
+    void setType(byte paramByte);
 }
 
 

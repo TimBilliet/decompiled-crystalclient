@@ -82,7 +82,8 @@ public abstract class Module {
         }
     }
 
-    public void init() {}
+    public void init() {
+    }
 
     public void enable() {
         if (this.forceDisabled)
@@ -144,7 +145,8 @@ public abstract class Module {
         return (this.configurableOptions > 0);
     }
 
-    public void configPreInit() {}
+    public void configPreInit() {
+    }
 
     public void configPostInit() {
         for (Field field : getClass().getFields()) {
@@ -156,7 +158,8 @@ public abstract class Module {
         }
     }
 
-    public void onUpdate() {}
+    public void onUpdate() {
+    }
 
     public Field getFieldFromOption(String option) {
         String sanitizedName = Config.getInstance().format(option);
@@ -200,7 +203,7 @@ public abstract class Module {
 
     public boolean equals(Object object) {
         if (object instanceof Module)
-            return ((Module)object).UNIQUE_ID.equals(this.UNIQUE_ID);
+            return ((Module) object).UNIQUE_ID.equals(this.UNIQUE_ID);
         return false;
     }
 }

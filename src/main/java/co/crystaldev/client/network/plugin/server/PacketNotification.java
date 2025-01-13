@@ -9,28 +9,29 @@ import java.io.IOException;
 
 @ReadOnly
 public class PacketNotification extends PluginChannelPacket {
-  private String title;
+    private String title;
 
-  private String content;
+    private String content;
 
-  public String getTitle() {
-    return this.title;
-  }
+    public String getTitle() {
+        return this.title;
+    }
 
-  public String getContent() {
-    return this.content;
-  }
+    public String getContent() {
+        return this.content;
+    }
 
-  public void write(ByteBufWrapper out) throws IOException {}
+    public void write(ByteBufWrapper out) throws IOException {
+    }
 
-  public void read(ByteBufWrapper in) throws IOException {
-    this.title = (this.title = in.readString()).substring(0, Math.min(this.title.length(), 30));
-    this.content = (this.content = in.readString()).substring(0, Math.min(this.content.length(), 250));
-  }
+    public void read(ByteBufWrapper in) throws IOException {
+        this.title = (this.title = in.readString()).substring(0, Math.min(this.title.length(), 30));
+        this.content = (this.content = in.readString()).substring(0, Math.min(this.content.length(), 250));
+    }
 
-  public void process(NetHandlerPlugin handler) {
-    handler.handleNotification(this);
-  }
+    public void process(NetHandlerPlugin handler) {
+        handler.handleNotification(this);
+    }
 }
 
 

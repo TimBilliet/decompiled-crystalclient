@@ -7,28 +7,28 @@ import co.crystaldev.client.feature.base.Module;
 
 @ModuleInfo(name = "Fullbright", description = "Maxes your gamma", category = Category.ALL)
 public class Fullbright extends Module {
-  private static Fullbright INSTANCE;
-  
-  public Fullbright() {
-    INSTANCE = this;
-    this.enabled = false;
-  }
-  
-  public void enable() {
-    super.enable();
-    if (Client.isCallingFromMainThread())
-      this.mc.renderGlobal.loadRenderers(); 
-  }
-  
-  public void disable() {
-    super.disable();
-    if (Client.isCallingFromMainThread())
-      this.mc.renderGlobal.loadRenderers(); 
-  }
-  
-  public static Fullbright getInstance() {
-    return INSTANCE;
-  }
+    private static Fullbright INSTANCE;
+
+    public Fullbright() {
+        INSTANCE = this;
+        this.enabled = false;
+    }
+
+    public void enable() {
+        super.enable();
+        if (Client.isCallingFromMainThread())
+            this.mc.renderGlobal.loadRenderers();
+    }
+
+    public void disable() {
+        super.disable();
+        if (Client.isCallingFromMainThread())
+            this.mc.renderGlobal.loadRenderers();
+    }
+
+    public static Fullbright getInstance() {
+        return INSTANCE;
+    }
 }
 
 

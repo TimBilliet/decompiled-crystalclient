@@ -6,11 +6,11 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin({EntityPlayerSP.class})
 public interface MixinEntityPlayerSP {
-  @Accessor("sprintToggleTimer")
-  int getSprintToggleTimer();
-  
-  @Accessor("sprintToggleTimer")
-  void setSprintToggleTimer(int paramInt);
+    @Accessor("sprintToggleTimer")
+    int getSprintToggleTimer();
+
+    @Accessor("sprintToggleTimer")
+    void setSprintToggleTimer(int paramInt);
 }
 
 

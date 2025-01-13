@@ -5,8 +5,10 @@ import co.crystaldev.client.Client;
 import co.crystaldev.client.duck.NetworkPlayerInfoExt;
 import co.crystaldev.client.group.objects.enums.Rank;
 import com.google.gson.annotations.SerializedName;
+
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.util.BlockPos;
@@ -81,7 +83,7 @@ public class GroupMember {
         if (System.currentTimeMillis() - this.lastUpdate > 5000L) {
             boolean result = false;
             for (NetworkPlayerInfo player : Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap()) {
-                if (player.getGameProfile().getId().equals(this.uuid) && ((NetworkPlayerInfoExt)player).isOnCrystalClient())
+                if (player.getGameProfile().getId().equals(this.uuid) && ((NetworkPlayerInfoExt) player).isOnCrystalClient())
                     result = true;
             }
             this.lastUpdate = System.currentTimeMillis();
@@ -104,7 +106,8 @@ public class GroupMember {
             this.pingLocation = null;
     }
 
-    public GroupMember() {}
+    public GroupMember() {
+    }
 }
 
 

@@ -14,19 +14,19 @@ import java.util.List;
 
 @Mixin({ServerSelectionList.class})
 public abstract class MixinServerSelectionList {
-  @Shadow
-  @Final
-  private List<ServerListEntryNormal> serverListInternet;
-  
-  @Shadow
-  @Final
-  private GuiListExtended.IGuiListEntry lanScanEntry;
-  
-  @Inject(method = {"getListEntry"}, at = {@At("HEAD")}, cancellable = true)
-  private void resolveIndexOutOfBounds(int index, CallbackInfoReturnable<GuiListExtended.IGuiListEntry> ci) {
-    if (index > this.serverListInternet.size())
-      ci.setReturnValue(this.lanScanEntry); 
-  }
+    @Shadow
+    @Final
+    private List<ServerListEntryNormal> serverListInternet;
+
+    @Shadow
+    @Final
+    private GuiListExtended.IGuiListEntry lanScanEntry;
+
+    @Inject(method = {"getListEntry"}, at = {@At("HEAD")}, cancellable = true)
+    private void resolveIndexOutOfBounds(int index, CallbackInfoReturnable<GuiListExtended.IGuiListEntry> ci) {
+        if (index > this.serverListInternet.size())
+            ci.setReturnValue(this.lanScanEntry);
+    }
 }
 
 

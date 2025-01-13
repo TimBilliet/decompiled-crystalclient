@@ -3,7 +3,7 @@ package wdl.api;
 import net.minecraft.client.multiplayer.WorldClient;
 
 public interface IPluginChannelListener extends IWDLMod {
-  void onPluginChannelPacket(WorldClient paramWorldClient, String paramString, byte[] paramArrayOfbyte);
+    void onPluginChannelPacket(WorldClient paramWorldClient, String paramString, byte[] paramArrayOfbyte);
 }
 
 

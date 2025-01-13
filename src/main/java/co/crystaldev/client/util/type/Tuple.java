@@ -43,12 +43,12 @@ public class Tuple<T1, T2> {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Tuple<T1, T2> other = (Tuple<T1, T2>)obj;
+        Tuple<T1, T2> other = (Tuple<T1, T2>) obj;
         return (hashCode() == other.hashCode());
     }
 
     public String toString() {
-        return String.format("Tuple{item1=%s (%s), item2=%s (%s)}", new Object[] { this.item1, this.item1.getClass().getSimpleName(), this.item2, this.item2.getClass().getSimpleName() });
+        return String.format("Tuple{item1=%s (%s), item2=%s (%s)}", new Object[]{this.item1, this.item1.getClass().getSimpleName(), this.item2, this.item2.getClass().getSimpleName()});
     }
 }
 

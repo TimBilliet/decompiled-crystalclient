@@ -11,10 +11,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({GuiDisconnected.class})
 public abstract class MixinGuiDisconnected {
-  @Inject(method = {"<init>"}, at = {@At("RETURN")})
-  public void constructor(GuiScreen screen, String reasonLocalizationKey, IChatComponent chatComp, CallbackInfo ci) {
-    Client.setCurrentServerIp(null);
-  }
+    @Inject(method = {"<init>"}, at = {@At("RETURN")})
+    public void constructor(GuiScreen screen, String reasonLocalizationKey, IChatComponent chatComp, CallbackInfo ci) {
+        Client.setCurrentServerIp(null);
+    }
 }
 
 

@@ -93,7 +93,7 @@ public class GlueList<T> extends AbstractList<T> implements List<T>, Cloneable, 
             node.elementDataPointer++;
         } else {
             int newLen = node.elementData.length + 1;
-            T[] newElementData = (T[])new Object[newLen];
+            T[] newElementData = (T[]) new Object[newLen];
             int nodeArrIndex = index - node.startingIndex;
             System.arraycopy(node.elementData, nodeArrIndex, newElementData, nodeArrIndex + 1, node.elementDataPointer - nodeArrIndex);
             newElementData[nodeArrIndex] = element;
@@ -130,7 +130,7 @@ public class GlueList<T> extends AbstractList<T> implements List<T>, Cloneable, 
             if (this.initialCapacity >= len) {
                 System.arraycopy(collection, 0, this.last.elementData, 0, len);
             } else {
-                this.last.elementData = Arrays.copyOf((T[])collection, len);
+                this.last.elementData = Arrays.copyOf((T[]) collection, len);
                 this.last.endingIndex = len - 1;
             }
             this.last.elementDataPointer += len;
@@ -415,7 +415,7 @@ public class GlueList<T> extends AbstractList<T> implements List<T>, Cloneable, 
     }
 
     public <T> T[] toArray(T[] a) {
-        return (T[])Arrays.<Object, Object>copyOf(toArray(), this.size, (Class)a.getClass());
+        return (T[]) Arrays.<Object, Object>copyOf(toArray(), this.size, (Class) a.getClass());
     }
 
     public boolean isEmpty() {
@@ -485,7 +485,8 @@ public class GlueList<T> extends AbstractList<T> implements List<T>, Cloneable, 
                 throw new ConcurrentModificationException();
         }
 
-        private Itr() {}
+        private Itr() {
+        }
     }
 
     public ListIterator<T> listIterator(int index) {
@@ -583,7 +584,7 @@ public class GlueList<T> extends AbstractList<T> implements List<T>, Cloneable, 
 
     public Object clone() {
         try {
-            GlueList<T> clone = (GlueList<T>)super.clone();
+            GlueList<T> clone = (GlueList<T>) super.clone();
             clone.first = clone.last = null;
             int capacity = Math.min(2147483639, Math.max(clone.size, Math.max(clone.initialCapacity, 10)));
             Node<T> initNode = new Node<>(null, null, 0, capacity);
@@ -618,7 +619,7 @@ public class GlueList<T> extends AbstractList<T> implements List<T>, Cloneable, 
         s.defaultReadObject();
         int size = s.readInt();
         for (int i = 0; i < size; i++)
-            this.last.add((T)s.readObject());
+            this.last.add((T) s.readObject());
     }
 
     static class Node<T> {
@@ -640,7 +641,7 @@ public class GlueList<T> extends AbstractList<T> implements List<T>, Cloneable, 
             this.pre = pre;
             this.next = next;
             this.listSize = listSize;
-            this.elementData = (T[])new Object[listSize >>> 1];
+            this.elementData = (T[]) new Object[listSize >>> 1];
             this.startingIndex = listSize;
             this.endingIndex = listSize + this.elementData.length - 1;
         }
@@ -656,9 +657,9 @@ public class GlueList<T> extends AbstractList<T> implements List<T>, Cloneable, 
 
         T[] createElementData(int capacity) {
             if (capacity == 0 || capacity == 1)
-                return (T[])new Object[10];
+                return (T[]) new Object[10];
             if (capacity > 1)
-                return (T[])new Object[capacity];
+                return (T[]) new Object[capacity];
             throw new IllegalArgumentException("Illegal Capacity: " + capacity);
         }
 
@@ -671,7 +672,7 @@ public class GlueList<T> extends AbstractList<T> implements List<T>, Cloneable, 
         }
 
         public String toString() {
-            return String.format("[sIndex: %d - eIndex: %d | elementDataPointer: %d | elementDataLength: %d]", new Object[] { Integer.valueOf(this.startingIndex), Integer.valueOf(this.endingIndex), Integer.valueOf(this.elementDataPointer), Integer.valueOf(this.elementData.length) });
+            return String.format("[sIndex: %d - eIndex: %d | elementDataPointer: %d | elementDataLength: %d]", new Object[]{Integer.valueOf(this.startingIndex), Integer.valueOf(this.endingIndex), Integer.valueOf(this.elementDataPointer), Integer.valueOf(this.elementData.length)});
         }
     }
 }

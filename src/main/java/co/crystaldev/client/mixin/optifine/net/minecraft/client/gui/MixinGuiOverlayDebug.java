@@ -8,11 +8,11 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin({GuiOverlayDebug.class})
 public abstract class MixinGuiOverlayDebug {
-  @ModifyArg(method = {"call"}, at = @At(remap = false, value = "INVOKE", target = "Ljava/lang/StringBuffer;insert(ILjava/lang/String;)Ljava/lang/StringBuffer;"))
-  @Dynamic("OptiFine")
-  private String simplifyFpsCounter(String original) {
-    return original.startsWith("/") ? "" : original;
-  }
+    @ModifyArg(method = {"call"}, at = @At(remap = false, value = "INVOKE", target = "Ljava/lang/StringBuffer;insert(ILjava/lang/String;)Ljava/lang/StringBuffer;"))
+    @Dynamic("OptiFine")
+    private String simplifyFpsCounter(String original) {
+        return original.startsWith("/") ? "" : original;
+    }
 }
 
 

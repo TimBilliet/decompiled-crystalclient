@@ -13,43 +13,43 @@ import co.crystaldev.client.util.type.Tuple;
 @ConfigurableSize
 @ModuleInfo(name = "Cannon Speed", description = "View the rate at which your Patchcrumb is changing onscreen", category = Category.HUD)
 public class CannonSpeed extends HudModuleBackground {
-  private float speed = 0.0F;
+    private float speed = 0.0F;
 
-  public CannonSpeed() {
-    this.enabled = false;
-    this.hasInfoHud = true;
-    this.width = 60;
-    this.height = 18;
-    this.position = new ModulePosition(AnchorRegion.TOP_LEFT, 70.0F, 109.0F);
-  }
-
-  public void enable() {
-    NotificationHandler.addNotification("&c&lNOTE: &fThis module is not 100% accurate and depends on server TPS and your ping");
-    super.enable();
-  }
-
-  public Tuple<String, String> getInfoHud() {
-    if ((Patchcrumbs.getInstance()).enabled) {
-      updateTime();
-      return new Tuple<>("Cannon Speed", getDisplayText());
+    public CannonSpeed() {
+        this.enabled = false;
+        this.hasInfoHud = true;
+        this.width = 60;
+        this.height = 18;
+        this.position = new ModulePosition(AnchorRegion.TOP_LEFT, 70.0F, 109.0F);
     }
-    return null;
-  }
 
-  public String getDisplayText() {
-    updateTime();
-    return String.format("%.2f sec", this.speed);
-  }
+    public void enable() {
+        NotificationHandler.addNotification("&c&lNOTE: &fThis module is not 100% accurate and depends on server TPS and your ping");
+        super.enable();
+    }
 
-  public void updateTime() {
-    if (Patchcrumbs.getInstance().isUpdated()) {
-      long ms = System.currentTimeMillis() - Patchcrumbs.getInstance().getLastUpdate();
-      this.speed = (float)ms / 1000.0F;
-      Patchcrumbs.getInstance().setUpdated(false);
+    public Tuple<String, String> getInfoHud() {
+        if ((Patchcrumbs.getInstance()).enabled) {
+            updateTime();
+            return new Tuple<>("Cannon Speed", getDisplayText());
+        }
+        return null;
     }
-    if ((Patchcrumbs.getInstance()).enabled && System.currentTimeMillis() - Patchcrumbs.getInstance().getLastUpdate() >= 30000L) {
-      Patchcrumbs.getInstance().setLastUpdate(0L);
-      this.speed = 0.0F;
+
+    public String getDisplayText() {
+        updateTime();
+        return String.format("%.2f sec", this.speed);
     }
-  }
+
+    public void updateTime() {
+        if (Patchcrumbs.getInstance().isUpdated()) {
+            long ms = System.currentTimeMillis() - Patchcrumbs.getInstance().getLastUpdate();
+            this.speed = (float) ms / 1000.0F;
+            Patchcrumbs.getInstance().setUpdated(false);
+        }
+        if ((Patchcrumbs.getInstance()).enabled && System.currentTimeMillis() - Patchcrumbs.getInstance().getLastUpdate() >= 30000L) {
+            Patchcrumbs.getInstance().setLastUpdate(0L);
+            this.speed = 0.0F;
+        }
+    }
 }

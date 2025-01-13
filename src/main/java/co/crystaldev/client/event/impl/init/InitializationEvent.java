@@ -4,15 +4,15 @@ import co.crystaldev.client.Client;
 import co.crystaldev.client.event.Event;
 
 public class InitializationEvent extends Event {
-  private final Client client;
-  
-  public Client getClient() {
-    return this.client;
-  }
-  
-  public InitializationEvent(Client client) {
-    this.client = client;
-  }
+    private final Client client;
+
+    public Client getClient() {
+        return this.client;
+    }
+
+    public InitializationEvent(Client client) {
+        this.client = client;
+    }
 }
 
 

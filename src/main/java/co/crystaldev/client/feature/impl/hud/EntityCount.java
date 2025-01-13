@@ -10,13 +10,13 @@ import co.crystaldev.client.util.type.Tuple;
 @ConfigurableSize
 @ModuleInfo(name = "Entity Count", description = "Displays the total rendered entity count onscreen", category = Category.HUD)
 public class EntityCount extends HudModuleBackground {
-  public Tuple<String, String> getInfoHud() {
-    return new Tuple("Entities", ((RenderGlobalExt)this.mc.renderGlobal).getHudEntityCount());
-  }
-  
-  public String getDisplayText() {
-    return "E: " + ((RenderGlobalExt)this.mc.renderGlobal).getHudEntityCount();
-  }
+    public Tuple<String, String> getInfoHud() {
+        return new Tuple("Entities", ((RenderGlobalExt) this.mc.renderGlobal).getHudEntityCount());
+    }
+
+    public String getDisplayText() {
+        return "E: " + ((RenderGlobalExt) this.mc.renderGlobal).getHudEntityCount();
+    }
 }
 
 

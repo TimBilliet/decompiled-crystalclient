@@ -7,15 +7,15 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 
 @Mixin({FaceBakery.class})
 public abstract class MixinFaceBakery {
-  @ModifyConstant(method = {"storeVertexData"}, constant = {@Constant(doubleValue = 0.999D)})
-  private double tweak999Weight(double d) {
-    return 1.0D;
-  }
-  
-  @ModifyConstant(method = {"storeVertexData"}, constant = {@Constant(doubleValue = 0.001D)})
-  private double tweak001Weight(double d) {
-    return 0.0D;
-  }
+    @ModifyConstant(method = {"storeVertexData"}, constant = {@Constant(doubleValue = 0.999D)})
+    private double tweak999Weight(double d) {
+        return 1.0D;
+    }
+
+    @ModifyConstant(method = {"storeVertexData"}, constant = {@Constant(doubleValue = 0.001D)})
+    private double tweak001Weight(double d) {
+        return 0.0D;
+    }
 }
 
 

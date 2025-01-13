@@ -1,7 +1,9 @@
 package co.crystaldev.client.gui;
 
 import co.crystaldev.client.util.ColorObject;
+
 import java.awt.Color;
+
 import net.minecraft.util.MathHelper;
 
 public class GuiOptions {
@@ -44,7 +46,7 @@ public class GuiOptions {
     }
 
     public ColorObject getColorObject(Color color, int alpha) {
-        return new ColorObject(color.getRed(), color.getGreen(), color.getBlue(), MathHelper.clamp_int(alpha, 0, 255), (color instanceof ColorObject && ((ColorObject)color)
+        return new ColorObject(color.getRed(), color.getGreen(), color.getBlue(), MathHelper.clamp_int(alpha, 0, 255), (color instanceof ColorObject && ((ColorObject) color)
                 .isChroma()));
     }
 

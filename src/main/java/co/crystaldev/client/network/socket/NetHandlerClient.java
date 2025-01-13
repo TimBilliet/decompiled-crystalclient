@@ -9,23 +9,23 @@ import io.netty.buffer.ByteBuf;
 //import org.java_websocket.exceptions.WebsocketNotConnectedException;
 
 public class NetHandlerClient implements INetHandler {
-  private static NetHandlerClient INSTANCE;
-  
-  public NetHandlerClient() {
-    if (INSTANCE != null)
-      EventBus.unregister(INSTANCE); 
-    INSTANCE = this;
-  }
-  
-  public void sendPacket(Packet packet) {
-    System.out.println("TODO IMPLEMENT");
+    private static NetHandlerClient INSTANCE;
+
+    public NetHandlerClient() {
+        if (INSTANCE != null)
+            EventBus.unregister(INSTANCE);
+        INSTANCE = this;
+    }
+
+    public void sendPacket(Packet packet) {
+        System.out.println("TODO IMPLEMENT");
 //    try {
-      ByteBuf buf = Packet.getPacketBuf(packet);
+        ByteBuf buf = Packet.getPacketBuf(packet);
 //      WebClient.getInstance().send(buf.array());
 //    } catch (WebsocketNotConnectedException ex) {
 //      Client.getInstance().connectToSocket(true);
 //    }
-  }
+    }
 }
 
 

@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
 
 @Mixin({GuiIngame.class})
 public interface MixinGuiIngame {
-  @Invoker("showCrosshair")
-  boolean callShowCrosshair();
+    @Invoker("showCrosshair")
+    boolean callShowCrosshair();
 }
 
 

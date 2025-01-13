@@ -9,17 +9,17 @@ import co.crystaldev.client.network.plugin.shared.PacketWaypointAdd;
 import co.crystaldev.client.network.plugin.shared.PacketWaypointRemove;
 
 public interface INetHandlerPlugin extends INetHandler {
-  void handleDisallowedFeatures(PacketDisallowedModules paramPacketDisallowedModules);
+    void handleDisallowedFeatures(PacketDisallowedModules paramPacketDisallowedModules);
 
-  void handleCooldown(PacketCooldown paramPacketCooldown);
+    void handleCooldown(PacketCooldown paramPacketCooldown);
 
-  void handleUpdateWorld(PacketUpdateWorld paramPacketUpdateWorld);
+    void handleUpdateWorld(PacketUpdateWorld paramPacketUpdateWorld);
 
-  void handleNotification(PacketNotification paramPacketNotification);
+    void handleNotification(PacketNotification paramPacketNotification);
 
-  void handleRemoveWaypoint(PacketWaypointRemove paramPacketWaypointRemove);
+    void handleRemoveWaypoint(PacketWaypointRemove paramPacketWaypointRemove);
 
-  void handleAddWaypoint(PacketWaypointAdd paramPacketWaypointAdd);
+    void handleAddWaypoint(PacketWaypointAdd paramPacketWaypointAdd);
 }
 
 

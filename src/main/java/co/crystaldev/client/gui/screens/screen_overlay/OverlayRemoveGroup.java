@@ -9,34 +9,34 @@ import co.crystaldev.client.gui.buttons.MenuButton;
 import org.apache.commons.lang3.text.WordUtils;
 
 public class OverlayRemoveGroup extends ScreenOverlay {
-  private static final FontRenderer fr = Fonts.NUNITO_REGULAR_16;
+    private static final FontRenderer fr = Fonts.NUNITO_REGULAR_16;
 
-  private final Group group;
+    private final Group group;
 
-  public OverlayRemoveGroup(Group group) {
-    super(0, 0, 200, 10, "Delete group");
-    this.group = group;
-  }
-
-  public void init() {
-    String desc = String.format("Are you sure you wish to delete your group '%s'? This action will result in the group being permanently deleted and is irreversible.", new Object[] { this.group
-          .getName() });
-    int y = this.pane.y + 28;
-    for (String str : WordUtils.wrap(desc, 45).split("\n")) {
-      addButton((Button)new Label(this.pane.x + this.pane.width / 2, y, str, this.opts.neutralTextColor.getRGB(), fr));
-      y += fr.getStringHeight();
+    public OverlayRemoveGroup(Group group) {
+        super(0, 0, 200, 10, "Delete group");
+        this.group = group;
     }
-    y += 2;
-    addButton((Button)new MenuButton(-1, this.pane.x + 5, y, this.pane.width / 2 - 7, 18, "Cancel") {
+
+    public void init() {
+        String desc = String.format("Are you sure you wish to delete your group '%s'? This action will result in the group being permanently deleted and is irreversible.", new Object[]{this.group
+                .getName()});
+        int y = this.pane.y + 28;
+        for (String str : WordUtils.wrap(desc, 45).split("\n")) {
+            addButton((Button) new Label(this.pane.x + this.pane.width / 2, y, str, this.opts.neutralTextColor.getRGB(), fr));
+            y += fr.getStringHeight();
+        }
+        y += 2;
+        addButton((Button) new MenuButton(-1, this.pane.x + 5, y, this.pane.width / 2 - 7, 18, "Cancel") {
 
         });
-    addButton((Button)new MenuButton(-1, this.pane.x + this.pane.width / 2 + 2, y, this.pane.width / 2 - 7, 18, "Remove Group") {
+        addButton((Button) new MenuButton(-1, this.pane.x + this.pane.width / 2 + 2, y, this.pane.width / 2 - 7, 18, "Remove Group") {
 
         });
-    while (this.pane.y + this.pane.height < y + 18 + 5)
-      this.pane.height++;
-    center();
-  }
+        while (this.pane.y + this.pane.height < y + 18 + 5)
+            this.pane.height++;
+        center();
+    }
 }
 
 

@@ -1,27 +1,27 @@
 package mchorse.mclib.client.gui.utils.keys;
 
 public interface IKey {
-  public static final IKey EMPTY = new StringKey("");
-  
-  static IKey lang(String key) {
-    return new LangKey(key);
-  }
-  
-  static IKey format(String key, Object... args) {
-    return (new LangKey(key)).args(args);
-  }
-  
-  static IKey str(String key) {
-    return new StringKey(key);
-  }
-  
-  static IKey comp(IKey... keys) {
-    return new CompoundKey(keys);
-  }
-  
-  String get();
-  
-  void set(String paramString);
+    public static final IKey EMPTY = new StringKey("");
+
+    static IKey lang(String key) {
+        return new LangKey(key);
+    }
+
+    static IKey format(String key, Object... args) {
+        return (new LangKey(key)).args(args);
+    }
+
+    static IKey str(String key) {
+        return new StringKey(key);
+    }
+
+    static IKey comp(IKey... keys) {
+        return new CompoundKey(keys);
+    }
+
+    String get();
+
+    void set(String paramString);
 }
 
 

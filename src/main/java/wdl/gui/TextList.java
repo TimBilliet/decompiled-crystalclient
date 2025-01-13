@@ -7,54 +7,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 class TextList extends GuiListExtended {
-  public final int topMargin;
-  
-  public final int bottomMargin;
-  
-  private final List<IGuiListEntry> entries;
+    public final int topMargin;
 
-  public TextList(Minecraft mc, int width, int height, int topMargin, int bottomMargin) {
-    super(mc, width, height, topMargin, height - bottomMargin, mc.fontRendererObj.FONT_HEIGHT + 1);
-    this.topMargin = topMargin;
-    this.bottomMargin = bottomMargin;
-    this.entries = new ArrayList<>();
-  }
+    public final int bottomMargin;
 
-  public IGuiListEntry getListEntry(int index) {
-    return this.entries.get(index);
-  }
-  
-  protected int getSize() {
-    return this.entries.size();
-  }
-  
-  protected int getScrollBarX() {
-    return this.width - 10;
-  }
-  
-  public int getListWidth() {
-    return this.width - 18;
-  }
-  
-  public void addLine(String text) {
-    List<String> lines = Utils.wordWrap(text, getListWidth());
-    for (String line : lines)
-      this.entries.add(new TextEntry(this.mc, line, 16777215)); 
-  }
-  
-  public void addBlankLine() {
-    this.entries.add(new TextEntry(this.mc, "", 16777215));
-  }
-  
-  public void addLinkLine(String text, String URL) {
-    List<String> lines = Utils.wordWrap(text, getListWidth());
-    for (String line : lines)
-      this.entries.add(new LinkEntry(this.mc, line, URL)); 
-  }
-  
-  public void clearLines() {
-    this.entries.clear();
-  }
+    private final List<IGuiListEntry> entries;
+
+    public TextList(Minecraft mc, int width, int height, int topMargin, int bottomMargin) {
+        super(mc, width, height, topMargin, height - bottomMargin, mc.fontRendererObj.FONT_HEIGHT + 1);
+        this.topMargin = topMargin;
+        this.bottomMargin = bottomMargin;
+        this.entries = new ArrayList<>();
+    }
+
+    public IGuiListEntry getListEntry(int index) {
+        return this.entries.get(index);
+    }
+
+    protected int getSize() {
+        return this.entries.size();
+    }
+
+    protected int getScrollBarX() {
+        return this.width - 10;
+    }
+
+    public int getListWidth() {
+        return this.width - 18;
+    }
+
+    public void addLine(String text) {
+        List<String> lines = Utils.wordWrap(text, getListWidth());
+        for (String line : lines)
+            this.entries.add(new TextEntry(this.mc, line, 16777215));
+    }
+
+    public void addBlankLine() {
+        this.entries.add(new TextEntry(this.mc, "", 16777215));
+    }
+
+    public void addLinkLine(String text, String URL) {
+        List<String> lines = Utils.wordWrap(text, getListWidth());
+        for (String line : lines)
+            this.entries.add(new LinkEntry(this.mc, line, URL));
+    }
+
+    public void clearLines() {
+        this.entries.clear();
+    }
 }
 
 

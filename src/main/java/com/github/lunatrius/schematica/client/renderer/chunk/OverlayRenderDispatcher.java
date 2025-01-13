@@ -13,13 +13,13 @@ import net.minecraft.client.renderer.chunk.RenderChunk;
 import net.minecraft.util.EnumWorldBlockLayer;
 
 public class OverlayRenderDispatcher extends ChunkRenderDispatcher {
-  public ListenableFuture<Object> func_178503_a(EnumWorldBlockLayer layer, WorldRenderer worldRenderer, RenderChunk renderChunk, CompiledChunk compiledChunk) {
-    if (!Minecraft.getMinecraft().isCallingFromMinecraftThread() || OpenGlHelper.useVbo())
-      return super.uploadChunk(layer, worldRenderer, renderChunk, compiledChunk);
-    ((MixinChunkRenderDispatcher)this).callUploadDisplayList(worldRenderer, ((RenderOverlayList)renderChunk).getDisplayList(layer, compiledChunk), renderChunk);
-    worldRenderer.setTranslation(0.0D, 0.0D, 0.0D);
-    return Futures.immediateFuture(null);
-  }
+    public ListenableFuture<Object> func_178503_a(EnumWorldBlockLayer layer, WorldRenderer worldRenderer, RenderChunk renderChunk, CompiledChunk compiledChunk) {
+        if (!Minecraft.getMinecraft().isCallingFromMinecraftThread() || OpenGlHelper.useVbo())
+            return super.uploadChunk(layer, worldRenderer, renderChunk, compiledChunk);
+        ((MixinChunkRenderDispatcher) this).callUploadDisplayList(worldRenderer, ((RenderOverlayList) renderChunk).getDisplayList(layer, compiledChunk), renderChunk);
+        worldRenderer.setTranslation(0.0D, 0.0D, 0.0D);
+        return Futures.immediateFuture(null);
+    }
 }
 
 

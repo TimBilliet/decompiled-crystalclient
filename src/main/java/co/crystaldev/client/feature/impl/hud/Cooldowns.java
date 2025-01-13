@@ -13,6 +13,7 @@ import co.crystaldev.client.util.enums.AnchorRegion;
 import co.crystaldev.client.util.objects.Cooldown;
 import co.crystaldev.client.util.objects.ModulePosition;
 import com.google.common.collect.ImmutableList;
+
 import java.awt.Color;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.Item;
@@ -68,8 +70,8 @@ public class Cooldowns extends HudModuleBackground {
         int x = getRenderX();
         int y = getRenderY();
         drawBackground(x, y, x + this.width, y + this.height);
-        x = (int)(x + 15.0D);
-        y = (int)(y + 15.0D);
+        x = (int) (x + 15.0D);
+        y = (int) (y + 15.0D);
         Iterator<Cooldown> iterator = cooldowns.listIterator();
         while (iterator.hasNext()) {
             Cooldown cooldown = iterator.next();
@@ -81,9 +83,9 @@ public class Cooldowns extends HudModuleBackground {
             RenderUtils.resetColor();
             Fonts.PT_SANS_BOLD_16.drawCenteredString(displayText, x, y + 7, Color.WHITE.getRGB());
             if (vertical) {
-                y = (int)(y + 30.0D);
+                y = (int) (y + 30.0D);
             } else {
-                x = (int)(x + 30.0D);
+                x = (int) (x + 30.0D);
             }
             if (cooldown.isComplete() && !(cooldown instanceof DefaultCooldown))
                 iterator.remove();
@@ -93,7 +95,7 @@ public class Cooldowns extends HudModuleBackground {
     public void addCooldown(ItemStack stack, long duration) {
         if (!this.enabled)
             return;
-        this.activeCooldowns.removeAll((Collection)this.activeCooldowns.stream().filter(c -> c.getItemStack().getIsItemStackEqual(stack)).collect(Collectors.toList()));
+        this.activeCooldowns.removeAll((Collection) this.activeCooldowns.stream().filter(c -> c.getItemStack().getIsItemStackEqual(stack)).collect(Collectors.toList()));
 
 //    this.activeCooldowns.removeAll((Collection)this.activeCooldowns.stream().filter(c -> c.getItemStack().func_179549_c(stack)).collect(Collectors.toList()));
         this.activeCooldowns.add(new Cooldown(stack, duration, System.currentTimeMillis()));

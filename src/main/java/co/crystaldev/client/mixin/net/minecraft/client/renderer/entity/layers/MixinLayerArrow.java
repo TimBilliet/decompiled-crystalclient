@@ -10,17 +10,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({LayerArrow.class})
 public abstract class MixinLayerArrow {
-  @Redirect(method = {"doRenderLayer"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderHelper;disableStandardItemLighting()V"))
-  private void removeDisable() {}
-  
-  @Redirect(method = {"doRenderLayer"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderHelper;enableStandardItemLighting()V"))
-  private void removeEnable() {}
-  
-  @Inject(method = {"doRenderLayer"}, at = {@At("HEAD")}, cancellable = true)
-  private void cancelRendering(CallbackInfo ci) {
-    if (NoLag.isEnabled((NoLag.getInstance()).disableAttachedArrows))
-      ci.cancel(); 
-  }
+    @Redirect(method = {"doRenderLayer"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderHelper;disableStandardItemLighting()V"))
+    private void removeDisable() {
+    }
+
+    @Redirect(method = {"doRenderLayer"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderHelper;enableStandardItemLighting()V"))
+    private void removeEnable() {
+    }
+
+    @Inject(method = {"doRenderLayer"}, at = {@At("HEAD")}, cancellable = true)
+    private void cancelRendering(CallbackInfo ci) {
+        if (NoLag.isEnabled((NoLag.getInstance()).disableAttachedArrows))
+            ci.cancel();
+    }
 }
 
 

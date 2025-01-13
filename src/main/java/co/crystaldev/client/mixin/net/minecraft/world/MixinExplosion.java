@@ -13,41 +13,41 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({Explosion.class})
 public abstract class MixinExplosion {
-  @Final
-  @Shadow
-  private World worldObj;
-  
-  @Final
-  @Shadow
-  private double explosionX;
-  
-  @Final
-  @Shadow
-  private double explosionY;
-  
-  @Final
-  @Shadow
-  private double explosionZ;
-  
-  @Final
-  @Shadow
-  private Entity exploder;
-  
-  @Final
-  @Shadow
-  private float explosionSize;
-  
-  @Final
-  @Shadow
-  private boolean isSmoking;
-  
-  @Final
-  @Shadow
-  private boolean isFlaming;
-  
-  @Inject(method = {"doExplosionB"}, at = {@At("HEAD")})
-  private void doExplosionB(CallbackInfo ci) {
-    (new ExplosionEvent(this.worldObj, this.exploder, this.explosionX, this.explosionY, this.explosionZ, this.explosionSize, this.isSmoking, this.isFlaming)).call();
-  }
+    @Final
+    @Shadow
+    private World worldObj;
+
+    @Final
+    @Shadow
+    private double explosionX;
+
+    @Final
+    @Shadow
+    private double explosionY;
+
+    @Final
+    @Shadow
+    private double explosionZ;
+
+    @Final
+    @Shadow
+    private Entity exploder;
+
+    @Final
+    @Shadow
+    private float explosionSize;
+
+    @Final
+    @Shadow
+    private boolean isSmoking;
+
+    @Final
+    @Shadow
+    private boolean isFlaming;
+
+    @Inject(method = {"doExplosionB"}, at = {@At("HEAD")})
+    private void doExplosionB(CallbackInfo ci) {
+        (new ExplosionEvent(this.worldObj, this.exploder, this.explosionX, this.explosionY, this.explosionZ, this.explosionSize, this.isSmoking, this.isFlaming)).call();
+    }
 }
 

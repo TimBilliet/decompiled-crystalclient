@@ -1,13 +1,13 @@
 package co.crystaldev.client.network;
 
 public interface INetHandler {
-  void sendPacket(Packet paramPacket);
+    void sendPacket(Packet paramPacket);
 
-  default void handlePacket(byte[] data) {
-    Packet packet = Packet.handle(data);
-    if (packet != null)
-      packet.process(this);
-  }
+    default void handlePacket(byte[] data) {
+        Packet packet = Packet.handle(data);
+        if (packet != null)
+            packet.process(this);
+    }
 }
 
 

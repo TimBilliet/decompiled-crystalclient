@@ -12,18 +12,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({RenderPlayer.class})
 public abstract class MixinRenderPlayer {
-  @Inject(method = {"doRender"}, cancellable = true, at = {@At("HEAD")})
-  public void doRenderPre(AbstractClientPlayer entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
-    RenderPlayerEvent.Pre event = new RenderPlayerEvent.Pre((EntityPlayer)entity, (RenderPlayer)(MixinRendererLivingEntity)this, partialTicks, x, y, z);//(MixinRendererLivingEntity)
-    event.call();
-    if (event.isCancelled())
-      ci.cancel();
-  }
-  
-  @Inject(method = {"doRender"}, at = {@At("TAIL")})
-  public void doRenderPost(AbstractClientPlayer entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
-    (new RenderPlayerEvent.Post((EntityPlayer)entity, (RenderPlayer)(MixinRendererLivingEntity)this, partialTicks, x, y, z)).call();//(MixinRendererLivingEntity)
-  }
+    @Inject(method = {"doRender"}, cancellable = true, at = {@At("HEAD")})
+    public void doRenderPre(AbstractClientPlayer entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
+        RenderPlayerEvent.Pre event = new RenderPlayerEvent.Pre((EntityPlayer) entity, (RenderPlayer) (MixinRendererLivingEntity) this, partialTicks, x, y, z);//(MixinRendererLivingEntity)
+        event.call();
+        if (event.isCancelled())
+            ci.cancel();
+    }
+
+    @Inject(method = {"doRender"}, at = {@At("TAIL")})
+    public void doRenderPost(AbstractClientPlayer entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
+        (new RenderPlayerEvent.Post((EntityPlayer) entity, (RenderPlayer) (MixinRendererLivingEntity) this, partialTicks, x, y, z)).call();//(MixinRendererLivingEntity)
+    }
 }
 
 

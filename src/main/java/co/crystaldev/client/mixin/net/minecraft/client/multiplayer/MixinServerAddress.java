@@ -10,21 +10,21 @@ import java.net.IDN;
 
 @Mixin({ServerAddress.class})
 public abstract class MixinServerAddress {
-  @Shadow
-  @Final
-  private String ipAddress;
-  
-  /**
-   * @author
-   */
-  @Overwrite
-  public String getIP() {
-    try {
-      return IDN.toASCII(this.ipAddress);
-    } catch (IllegalArgumentException ex) {
-      return "";
-    } 
-  }
+    @Shadow
+    @Final
+    private String ipAddress;
+
+    /**
+     * @author
+     */
+    @Overwrite
+    public String getIP() {
+        try {
+            return IDN.toASCII(this.ipAddress);
+        } catch (IllegalArgumentException ex) {
+            return "";
+        }
+    }
 }
 
 

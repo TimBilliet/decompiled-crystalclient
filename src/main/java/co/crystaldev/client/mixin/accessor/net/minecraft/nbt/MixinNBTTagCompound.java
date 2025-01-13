@@ -10,10 +10,10 @@ import java.io.IOException;
 
 @Mixin({NBTTagCompound.class})
 public interface MixinNBTTagCompound {
-  @Invoker("writeEntry")
-  static void callWriteEntry(String name, NBTBase data, DataOutput output) throws IOException {
-    throw new AssertionError();
-  }
+    @Invoker("writeEntry")
+    static void callWriteEntry(String name, NBTBase data, DataOutput output) throws IOException {
+        throw new AssertionError();
+    }
 }
 
 

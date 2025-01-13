@@ -9,32 +9,32 @@ import net.minecraft.util.EnumWorldBlockLayer;
 import org.lwjgl.opengl.GL11;
 
 public class SchematicChunkRenderContainerList extends SchematicChunkRenderContainer {
-  public void renderChunkLayer(EnumWorldBlockLayer layer) {
-    if (this.initialized) {
-      for (RenderChunk renderchunk : this.renderChunks) {
-        ListedRenderChunk listedRenderChunk = (ListedRenderChunk)renderchunk;
-        GlStateManager.pushMatrix();
-        preRenderChunk(renderchunk);
-        GL11.glCallList(listedRenderChunk.getDisplayList(layer, listedRenderChunk.getCompiledChunk()));
-        GlStateManager.popMatrix();
-      } 
-      GlStateManager.resetColor();
-      this.renderChunks.clear();
-    } 
-  }
-  
-  public void renderOverlay() {
-    if (this.initialized)
-      for (RenderOverlay renderOverlay : this.renderOverlays) {
-        RenderOverlayList renderOverlayList = (RenderOverlayList)renderOverlay;
-        GlStateManager.pushMatrix();
-        preRenderChunk((RenderChunk)renderOverlay);
-        GL11.glCallList(renderOverlayList.getDisplayList(EnumWorldBlockLayer.TRANSLUCENT, renderOverlayList.getCompiledChunk()));
-        GlStateManager.popMatrix();
-      }  
-    GlStateManager.resetColor();
-    this.renderOverlays.clear();
-  }
+    public void renderChunkLayer(EnumWorldBlockLayer layer) {
+        if (this.initialized) {
+            for (RenderChunk renderchunk : this.renderChunks) {
+                ListedRenderChunk listedRenderChunk = (ListedRenderChunk) renderchunk;
+                GlStateManager.pushMatrix();
+                preRenderChunk(renderchunk);
+                GL11.glCallList(listedRenderChunk.getDisplayList(layer, listedRenderChunk.getCompiledChunk()));
+                GlStateManager.popMatrix();
+            }
+            GlStateManager.resetColor();
+            this.renderChunks.clear();
+        }
+    }
+
+    public void renderOverlay() {
+        if (this.initialized)
+            for (RenderOverlay renderOverlay : this.renderOverlays) {
+                RenderOverlayList renderOverlayList = (RenderOverlayList) renderOverlay;
+                GlStateManager.pushMatrix();
+                preRenderChunk((RenderChunk) renderOverlay);
+                GL11.glCallList(renderOverlayList.getDisplayList(EnumWorldBlockLayer.TRANSLUCENT, renderOverlayList.getCompiledChunk()));
+                GlStateManager.popMatrix();
+            }
+        GlStateManager.resetColor();
+        this.renderOverlays.clear();
+    }
 }
 
 

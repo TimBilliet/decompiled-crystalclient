@@ -12,21 +12,21 @@ import java.nio.IntBuffer;
 
 @Mixin({WorldRenderer.class})
 public abstract class MixinWorldRenderer {
-  @Shadow
-  private IntBuffer rawIntBuffer;
-  
-  @Shadow
-  private VertexFormat vertexFormat;
-  
-  @Inject(method = {"finishDrawing"}, at = {@At(value = "INVOKE", target = "Ljava/nio/ByteBuffer;limit(I)Ljava/nio/Buffer;", remap = false)})
-  private void resetBuffer(CallbackInfo ci) {
-    this.rawIntBuffer.position(0);
-  }
-  
-  @Inject(method = {"endVertex"}, at = {@At("HEAD")})
-  private void adjustBuffer(CallbackInfo ci) {
-    this.rawIntBuffer.position(this.rawIntBuffer.position() + this.vertexFormat.getIntegerSize());
-  }
+    @Shadow
+    private IntBuffer rawIntBuffer;
+
+    @Shadow
+    private VertexFormat vertexFormat;
+
+    @Inject(method = {"finishDrawing"}, at = {@At(value = "INVOKE", target = "Ljava/nio/ByteBuffer;limit(I)Ljava/nio/Buffer;", remap = false)})
+    private void resetBuffer(CallbackInfo ci) {
+        this.rawIntBuffer.position(0);
+    }
+
+    @Inject(method = {"endVertex"}, at = {@At("HEAD")})
+    private void adjustBuffer(CallbackInfo ci) {
+        this.rawIntBuffer.position(this.rawIntBuffer.position() + this.vertexFormat.getIntegerSize());
+    }
 }
 
 

@@ -6,7 +6,7 @@ import net.minecraft.world.storage.SaveHandler;
 import net.minecraft.world.storage.WorldInfo;
 
 public interface IWorldInfoEditor extends IWDLMod {
-  void editWorldInfo(WorldClient paramWorldClient, WorldInfo paramWorldInfo, SaveHandler paramSaveHandler, NBTTagCompound paramNBTTagCompound);
+    void editWorldInfo(WorldClient paramWorldClient, WorldInfo paramWorldInfo, SaveHandler paramSaveHandler, NBTTagCompound paramNBTTagCompound);
 }
 
 

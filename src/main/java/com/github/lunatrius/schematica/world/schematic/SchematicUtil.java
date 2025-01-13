@@ -15,61 +15,62 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public final class SchematicUtil {
-  public static final ItemStack DEFAULT_ICON = new ItemStack((Block)Blocks.grass);
-  
-  public static final RegistryNamespaced<ResourceLocation, Block> BLOCK_REGISTRY = (RegistryNamespaced<ResourceLocation, Block>)Block.blockRegistry;
-  
-  public static final RegistryNamespaced<ResourceLocation, Item> ITEM_REGISTRY = Item.itemRegistry;
-  
-  public static NBTTagCompound readTagCompoundFromFile(File file) throws IOException {
-    try {
-      return CompressedStreamTools.readCompressed(new FileInputStream(file));
-    } catch (Exception ex) {
-      Reference.logger.warn("Failed compressed read, trying normal read...", ex);
-      return CompressedStreamTools.read(file);
-    } 
-  }
-  
-  public static ItemStack getIconFromName(String iconName) {
-    ResourceLocation rl = null;
-    int damage = 0;
-    String[] parts = iconName.split(",");
-    if (parts.length >= 1) {
-      rl = new ResourceLocation(parts[0]);
-      if (parts.length >= 2)
+    public static final ItemStack DEFAULT_ICON = new ItemStack((Block) Blocks.grass);
+
+    public static final RegistryNamespaced<ResourceLocation, Block> BLOCK_REGISTRY = (RegistryNamespaced<ResourceLocation, Block>) Block.blockRegistry;
+
+    public static final RegistryNamespaced<ResourceLocation, Item> ITEM_REGISTRY = Item.itemRegistry;
+
+    public static NBTTagCompound readTagCompoundFromFile(File file) throws IOException {
         try {
-          damage = Integer.parseInt(parts[1]);
-        } catch (NumberFormatException numberFormatException) {} 
-    } 
-    if (rl == null)
-      return DEFAULT_ICON.copy(); 
-    ItemStack block = new ItemStack((Block)BLOCK_REGISTRY.getObject(rl), 1, damage);
-    if (block.getItem() != null)
-      return block; 
-    ItemStack item = new ItemStack((Item)ITEM_REGISTRY.getObject(rl), 1, damage);
-    if (item.getItem() != null)
-      return item; 
-    return DEFAULT_ICON.copy();
-  }
-  
-  public static ItemStack getIconFromNBT(NBTTagCompound tagCompound) {
-    ItemStack icon = DEFAULT_ICON.copy();
-    if (tagCompound != null && tagCompound.hasKey("Icon")) {
-      icon.readFromNBT(tagCompound.getCompoundTag("Icon"));
-      if (icon.getItem() == null)
-        icon = DEFAULT_ICON.copy(); 
-    } 
-    return icon;
-  }
-  
-  public static ItemStack getIconFromFile(File file) {
-    try {
-      return getIconFromNBT(readTagCompoundFromFile(file));
-    } catch (Exception e) {
-      Reference.logger.error("Failed to read schematic icon!", e);
-      return DEFAULT_ICON.copy();
-    } 
-  }
+            return CompressedStreamTools.readCompressed(new FileInputStream(file));
+        } catch (Exception ex) {
+            Reference.logger.warn("Failed compressed read, trying normal read...", ex);
+            return CompressedStreamTools.read(file);
+        }
+    }
+
+    public static ItemStack getIconFromName(String iconName) {
+        ResourceLocation rl = null;
+        int damage = 0;
+        String[] parts = iconName.split(",");
+        if (parts.length >= 1) {
+            rl = new ResourceLocation(parts[0]);
+            if (parts.length >= 2)
+                try {
+                    damage = Integer.parseInt(parts[1]);
+                } catch (NumberFormatException numberFormatException) {
+                }
+        }
+        if (rl == null)
+            return DEFAULT_ICON.copy();
+        ItemStack block = new ItemStack((Block) BLOCK_REGISTRY.getObject(rl), 1, damage);
+        if (block.getItem() != null)
+            return block;
+        ItemStack item = new ItemStack((Item) ITEM_REGISTRY.getObject(rl), 1, damage);
+        if (item.getItem() != null)
+            return item;
+        return DEFAULT_ICON.copy();
+    }
+
+    public static ItemStack getIconFromNBT(NBTTagCompound tagCompound) {
+        ItemStack icon = DEFAULT_ICON.copy();
+        if (tagCompound != null && tagCompound.hasKey("Icon")) {
+            icon.readFromNBT(tagCompound.getCompoundTag("Icon"));
+            if (icon.getItem() == null)
+                icon = DEFAULT_ICON.copy();
+        }
+        return icon;
+    }
+
+    public static ItemStack getIconFromFile(File file) {
+        try {
+            return getIconFromNBT(readTagCompoundFromFile(file));
+        } catch (Exception e) {
+            Reference.logger.error("Failed to read schematic icon!", e);
+            return DEFAULT_ICON.copy();
+        }
+    }
 }
 
 

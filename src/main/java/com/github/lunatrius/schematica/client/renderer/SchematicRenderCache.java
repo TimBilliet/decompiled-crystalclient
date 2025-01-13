@@ -11,21 +11,21 @@ import net.minecraft.util.Vec3i;
 import net.minecraft.world.World;
 
 public class SchematicRenderCache extends RegionRenderCache {
-  private final Minecraft minecraft = Minecraft.getMinecraft();
-  
-  public SchematicRenderCache(World world, BlockPos from, BlockPos to, int subtract) {
-    super(world, from, to, subtract);
-  }
-  
-  public IBlockState getBlockState(BlockPos pos) {
-    if (ClientProxy.currentSchematic.schematic == null)
-      return Blocks.air.getDefaultState(); 
-    BlockPos realPos = pos.add((Vec3i)ClientProxy.currentSchematic.schematic.position);
-    WorldClient worldClient = this.minecraft.theWorld;
-    if (!worldClient.isAirBlock(realPos))
-      return Blocks.air.getDefaultState(); 
-    return super.getBlockState(pos);
-  }
+    private final Minecraft minecraft = Minecraft.getMinecraft();
+
+    public SchematicRenderCache(World world, BlockPos from, BlockPos to, int subtract) {
+        super(world, from, to, subtract);
+    }
+
+    public IBlockState getBlockState(BlockPos pos) {
+        if (ClientProxy.currentSchematic.schematic == null)
+            return Blocks.air.getDefaultState();
+        BlockPos realPos = pos.add((Vec3i) ClientProxy.currentSchematic.schematic.position);
+        WorldClient worldClient = this.minecraft.theWorld;
+        if (!worldClient.isAirBlock(realPos))
+            return Blocks.air.getDefaultState();
+        return super.getBlockState(pos);
+    }
 }
 
 

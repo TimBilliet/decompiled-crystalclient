@@ -9,13 +9,13 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class UserUpdateHandler {
-  @SubscribeEvent
-  public void onUpdateEntity(PlayerTickEvent.Post event) {
-    EntityPlayer player = event.player;
-    IUserEmoteData cap = UserEmoticonData.get((Entity)player);
-    if (cap != null)
-      cap.update((EntityLivingBase)player); 
-  }
+    @SubscribeEvent
+    public void onUpdateEntity(PlayerTickEvent.Post event) {
+        EntityPlayer player = event.player;
+        IUserEmoteData cap = UserEmoticonData.get((Entity) player);
+        if (cap != null)
+            cap.update((EntityLivingBase) player);
+    }
 }
 
 

@@ -9,11 +9,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({RenderEntityItem.class})
 public abstract class MixinRenderEntityItem {
-  @Inject(method = {"func_177078_a"}, at = {@At("HEAD")}, cancellable = true)//getModelCount
-  private void disableStackedItems(CallbackInfoReturnable<Integer> cir) {
-    if (NoLag.isEnabled((NoLag.getInstance()).disableStackedItems))
-      cir.setReturnValue(1);
-  }
+    @Inject(method = {"func_177078_a"}, at = {@At("HEAD")}, cancellable = true)//getModelCount
+    private void disableStackedItems(CallbackInfoReturnable<Integer> cir) {
+        if (NoLag.isEnabled((NoLag.getInstance()).disableStackedItems))
+            cir.setReturnValue(1);
+    }
 }
 
 

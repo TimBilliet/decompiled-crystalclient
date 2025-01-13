@@ -8,17 +8,17 @@ import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class NBTSync {
-  protected final Minecraft minecraft = Minecraft.getMinecraft();
-  
-  public abstract boolean execute(EntityPlayer paramEntityPlayer, World paramWorld1, BlockPos paramBlockPos1, World paramWorld2, BlockPos paramBlockPos2);
-  
-  public final <T extends net.minecraft.network.INetHandler> boolean sendPacket(Packet<T> packet) {
-    NetHandlerPlayClient netHandler = this.minecraft.getNetHandler();
-    if (netHandler == null)
-      return false; 
-    netHandler.addToSendQueue(packet);
-    return true;
-  }
+    protected final Minecraft minecraft = Minecraft.getMinecraft();
+
+    public abstract boolean execute(EntityPlayer paramEntityPlayer, World paramWorld1, BlockPos paramBlockPos1, World paramWorld2, BlockPos paramBlockPos2);
+
+    public final <T extends net.minecraft.network.INetHandler> boolean sendPacket(Packet<T> packet) {
+        NetHandlerPlayClient netHandler = this.minecraft.getNetHandler();
+        if (netHandler == null)
+            return false;
+        netHandler.addToSendQueue(packet);
+        return true;
+    }
 }
 
 

@@ -1,7 +1,6 @@
 package co.crystaldev.client.feature.impl.all;
 
 
-
 import co.crystaldev.client.feature.annotations.properties.ModuleInfo;
 import co.crystaldev.client.feature.annotations.properties.Toggle;
 import co.crystaldev.client.feature.base.Category;
@@ -74,7 +73,7 @@ public class Zoom extends Module {
         if (this.desiredModifier > 600.0F)
             this.desiredModifier = 600.0F;
         if (this.hasScrolled && this.progress < 1.0F) {
-            this.progress += 0.004F * (float)timeSinceLastChange;
+            this.progress += 0.004F * (float) timeSinceLastChange;
             this.progress = (this.progress > 1.0F) ? 1.0F : this.progress;
             return this.currentModifier += (this.desiredModifier - this.currentModifier) * calculateZoomEasing(this.progress);
         }
@@ -89,7 +88,7 @@ public class Zoom extends Module {
             if (this.hasScrolled)
                 return 1.0F;
             if (this.progress < 1.0F) {
-                this.progress += 0.005F * (float)timeSinceLastChange;
+                this.progress += 0.005F * (float) timeSinceLastChange;
                 this.progress = (this.progress > 1.0F) ? 1.0F : this.progress;
                 return 4.0F - 3.0F * calculateZoomEasing(this.progress);
             }
@@ -99,7 +98,7 @@ public class Zoom extends Module {
                 this.progress = 1.0F;
             }
             if (this.progress > 0.0F) {
-                this.progress -= 0.005F * (float)timeSinceLastChange;
+                this.progress -= 0.005F * (float) timeSinceLastChange;
                 this.progress = (this.progress < 0.0F) ? 0.0F : this.progress;
                 float progress = 1.0F - this.progress;
                 float diff = this.scrollToZoom ? (1.0F / this.currentModifier) : 0.25F;

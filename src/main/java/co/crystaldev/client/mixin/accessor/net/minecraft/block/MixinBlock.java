@@ -6,8 +6,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin({Block.class})
 public interface MixinBlock {
-  @Accessor
-  void setMaxY(double paramDouble);
+    @Accessor
+    void setMaxY(double paramDouble);
 }
 
 

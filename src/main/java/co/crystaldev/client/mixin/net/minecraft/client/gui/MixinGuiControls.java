@@ -8,13 +8,13 @@ import org.spongepowered.asm.mixin.Shadow;
 
 @Mixin({GuiControls.class})
 public abstract class MixinGuiControls extends GuiScreen {
-  @Shadow
-  private GameSettings options;
-  
-  public void onGuiClosed() {
-    super.onGuiClosed();
-    this.options.saveOptions();
-  }
+    @Shadow
+    private GameSettings options;
+
+    public void onGuiClosed() {
+        super.onGuiClosed();
+        this.options.saveOptions();
+    }
 }
 
 

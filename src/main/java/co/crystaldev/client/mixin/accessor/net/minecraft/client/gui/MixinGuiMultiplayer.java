@@ -7,8 +7,8 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin({GuiMultiplayer.class})
 public interface MixinGuiMultiplayer {
-  @Accessor("parentScreen")
-  GuiScreen getParentScreen();
+    @Accessor("parentScreen")
+    GuiScreen getParentScreen();
 }
 
 

@@ -1,23 +1,23 @@
 package co.crystaldev.client.shader;
 
 public class UniformType<T> {
-  public static final UniformType<Float> FLOAT = new UniformType(1);
-  
-  public static final UniformType<Integer> INT = new UniformType(1);
-  
-  public static final UniformType<Float[]> VEC2 = new UniformType(2);
-  
-  public static final UniformType<Float[]> VEC3 = new UniformType(3);
-  
-  private final int amount;
-  
-  public int getAmount() {
-    return this.amount;
-  }
-  
-  public UniformType(int amount) {
-    this.amount = amount;
-  }
+    public static final UniformType<Float> FLOAT = new UniformType(1);
+
+    public static final UniformType<Integer> INT = new UniformType(1);
+
+    public static final UniformType<Float[]> VEC2 = new UniformType(2);
+
+    public static final UniformType<Float[]> VEC3 = new UniformType(3);
+
+    private final int amount;
+
+    public int getAmount() {
+        return this.amount;
+    }
+
+    public UniformType(int amount) {
+        this.amount = amount;
+    }
 }
 
 

@@ -10,12 +10,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({TileEntityChestRenderer.class})
 public abstract class MixinTileEntityChestRenderer {
-  @Inject(method = {"renderTileEntityAt(Lnet/minecraft/tileentity/TileEntityChest;DDDFI)V"}, cancellable = true, at = {@At("HEAD")})
-  public void renderTileEntityAt(TileEntityChest block, double x, double y, double z, float partialTicks, int destroyState, CallbackInfo ci) {
-    NoLag instance = NoLag.getInstance();
-    if (NoLag.isEnabled(instance.hideChests) || NoLag.isEnabled(instance.fasterChestRendering))
-      ci.cancel(); 
-  }
+    @Inject(method = {"renderTileEntityAt(Lnet/minecraft/tileentity/TileEntityChest;DDDFI)V"}, cancellable = true, at = {@At("HEAD")})
+    public void renderTileEntityAt(TileEntityChest block, double x, double y, double z, float partialTicks, int destroyState, CallbackInfo ci) {
+        NoLag instance = NoLag.getInstance();
+        if (NoLag.isEnabled(instance.hideChests) || NoLag.isEnabled(instance.fasterChestRendering))
+            ci.cancel();
+    }
 }
 
 

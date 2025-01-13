@@ -10,11 +10,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({S14PacketEntity.class})
 public abstract class MixinS14PacketEntity {
-  @Inject(method = {"getEntity"}, at = {@At("HEAD")}, cancellable = true)
-  public void getEntity(World worldIn, CallbackInfoReturnable<Entity> ci) {
-    if (worldIn == null)
-      ci.setReturnValue(null); 
-  }
+    @Inject(method = {"getEntity"}, at = {@At("HEAD")}, cancellable = true)
+    public void getEntity(World worldIn, CallbackInfoReturnable<Entity> ci) {
+        if (worldIn == null)
+            ci.setReturnValue(null);
+    }
 }
 
 

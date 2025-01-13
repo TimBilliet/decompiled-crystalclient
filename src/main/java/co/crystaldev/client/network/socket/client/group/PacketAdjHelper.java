@@ -21,61 +21,61 @@ import java.util.List;
 import java.util.UUID;
 
 public class PacketAdjHelper extends Packet {
-  private List<Adjust> adjusts;
+    private List<Adjust> adjusts;
 
-  private UUID id;
+    private UUID id;
 
-  public void write(ByteBufWrapper out) throws IOException {
-    JsonArray arr = new JsonArray();
-    for (Adjust adjust : AdjustHelper.getInstance().getBestAdjusts()) {
-      JsonObject obj = new JsonObject();
-      obj.addProperty("originX", Integer.valueOf(adjust.origin.getX()));
-      obj.addProperty("originY", Integer.valueOf(adjust.origin.getY()));
-      obj.addProperty("originZ", Integer.valueOf(adjust.origin.getZ()));
-      obj.addProperty("finishX", Integer.valueOf(adjust.finish.getX()));
-      obj.addProperty("finishY", Integer.valueOf(adjust.finish.getY()));
-      obj.addProperty("finishZ", Integer.valueOf(adjust.finish.getZ()));
-      obj.addProperty("patches", Integer.valueOf(adjust.patches));
-      obj.addProperty("patchIndex", Double.valueOf(adjust.patchIndex));
-      obj.addProperty("coordText", adjust.coordText);
-      arr.add((JsonElement)obj);
+    public void write(ByteBufWrapper out) throws IOException {
+        JsonArray arr = new JsonArray();
+        for (Adjust adjust : AdjustHelper.getInstance().getBestAdjusts()) {
+            JsonObject obj = new JsonObject();
+            obj.addProperty("originX", Integer.valueOf(adjust.origin.getX()));
+            obj.addProperty("originY", Integer.valueOf(adjust.origin.getY()));
+            obj.addProperty("originZ", Integer.valueOf(adjust.origin.getZ()));
+            obj.addProperty("finishX", Integer.valueOf(adjust.finish.getX()));
+            obj.addProperty("finishY", Integer.valueOf(adjust.finish.getY()));
+            obj.addProperty("finishZ", Integer.valueOf(adjust.finish.getZ()));
+            obj.addProperty("patches", Integer.valueOf(adjust.patches));
+            obj.addProperty("patchIndex", Double.valueOf(adjust.patchIndex));
+            obj.addProperty("coordText", adjust.coordText);
+            arr.add((JsonElement) obj);
+        }
+        out.writeString(Reference.GSON.toJson(arr, JsonArray.class));
     }
-    out.writeString(Reference.GSON.toJson(arr, JsonArray.class));
-  }
 
-  public void read(ByteBufWrapper in) throws IOException {
-    this.id = in.readUUID();
-    boolean fromSameServer = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap().stream().anyMatch(pl -> pl.getGameProfile().getId().equals(this.id));
-    if ((Minecraft.getMinecraft()).theWorld != null && fromSameServer) {
-      int index = 0;
-      this.adjusts = new ArrayList<>();
-      for (JsonElement elem : Reference.GSON.fromJson(in.readString(), JsonArray.class)) {
-        if (index >= 10)
-          return;
-        JsonObject obj = (JsonObject)Reference.GSON.fromJson(elem.getAsString(), JsonObject.class);
-        this.adjusts.add(new Adjust(new BlockPos(obj
-                .get("originX").getAsInt(), obj.get("originY").getAsInt(), obj.get("originZ").getAsInt()), new BlockPos(obj
-                .get("finishX").getAsInt(), obj.get("finishY").getAsInt(), obj.get("finishZ").getAsInt()), obj
-              .get("patches").getAsInt(), obj
-              .get("patchIndex").getAsDouble(), obj
-              .get("coordText").getAsString()));
-        index++;
-      }
+    public void read(ByteBufWrapper in) throws IOException {
+        this.id = in.readUUID();
+        boolean fromSameServer = Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap().stream().anyMatch(pl -> pl.getGameProfile().getId().equals(this.id));
+        if ((Minecraft.getMinecraft()).theWorld != null && fromSameServer) {
+            int index = 0;
+            this.adjusts = new ArrayList<>();
+            for (JsonElement elem : Reference.GSON.fromJson(in.readString(), JsonArray.class)) {
+                if (index >= 10)
+                    return;
+                JsonObject obj = (JsonObject) Reference.GSON.fromJson(elem.getAsString(), JsonObject.class);
+                this.adjusts.add(new Adjust(new BlockPos(obj
+                        .get("originX").getAsInt(), obj.get("originY").getAsInt(), obj.get("originZ").getAsInt()), new BlockPos(obj
+                        .get("finishX").getAsInt(), obj.get("finishY").getAsInt(), obj.get("finishZ").getAsInt()), obj
+                        .get("patches").getAsInt(), obj
+                        .get("patchIndex").getAsDouble(), obj
+                        .get("coordText").getAsString()));
+                index++;
+            }
+        }
     }
-  }
 
-  public void process(INetHandler handler) {
-    if ((Minecraft.getMinecraft()).theWorld == null || Minecraft.getMinecraft().getNetHandler() == null ||
-      !(AdjustHelper.getInstance()).enabled || !(GroupOptions.getInstance()).sharedAdjusts || this.adjusts == null || this.adjusts
-      .isEmpty())
-      return;
-    for (NetworkPlayerInfo player : Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap()) {
-      if (player.getGameProfile().getId().equals(this.id)) {
-        Client.sendMessage("Incoming group Adjust Helper set from " + player.getGameProfile().getName(), true);
-        AdjustHelper.getInstance().setAdjusts(this.adjusts);
-      }
+    public void process(INetHandler handler) {
+        if ((Minecraft.getMinecraft()).theWorld == null || Minecraft.getMinecraft().getNetHandler() == null ||
+                !(AdjustHelper.getInstance()).enabled || !(GroupOptions.getInstance()).sharedAdjusts || this.adjusts == null || this.adjusts
+                .isEmpty())
+            return;
+        for (NetworkPlayerInfo player : Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap()) {
+            if (player.getGameProfile().getId().equals(this.id)) {
+                Client.sendMessage("Incoming group Adjust Helper set from " + player.getGameProfile().getName(), true);
+                AdjustHelper.getInstance().setAdjusts(this.adjusts);
+            }
+        }
     }
-  }
 }
 
 

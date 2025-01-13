@@ -6,7 +6,7 @@ import net.minecraft.util.EnumFacing;
 import java.util.List;
 
 public interface IValidBlockFacing {
-  List<EnumFacing> getValidBlockFacings(List<EnumFacing> paramList, IBlockState paramIBlockState);
+    List<EnumFacing> getValidBlockFacings(List<EnumFacing> paramList, IBlockState paramIBlockState);
 }
 
 

@@ -15,80 +15,80 @@ import net.minecraft.util.MathHelper;
 import java.util.Random;
 
 public class OverlayEditWaypoint extends ScreenOverlay {
-  private Waypoint waypoint = null;
+    private Waypoint waypoint = null;
 
-  private TextInputField name;
+    private TextInputField name;
 
-  private NumberInputField x;
+    private NumberInputField x;
 
-  private NumberInputField y;
+    private NumberInputField y;
 
-  private NumberInputField z;
+    private NumberInputField z;
 
-  private ColorPicker color;
+    private ColorPicker color;
 
-  public OverlayEditWaypoint() {
-    super(0, 0, 300, 10, "Create Waypoint");
-    this.overlay = false;
-  }
-
-  public OverlayEditWaypoint(Waypoint waypoint) {
-    super(0, 0, 300, 10, "Modify Waypoint");
-    this.waypoint = waypoint;
-  }
-
-  public void init() {
-    super.init();
-    center();
-    int x = this.pane.x + 5;
-    int y = this.pane.y + 24;
-    int w = this.pane.width - 10;
-    int w1 = (this.pane.width - 20) / 3;
-    int h = 18;
-
-    addButton((this.name = new TextInputField(-1, x, y, w, h, "Enter Waypoint Name") {
-
-    }));
-    if(waypoint != null) {
-      name.setText(waypoint.getName());
+    public OverlayEditWaypoint() {
+        super(0, 0, 300, 10, "Create Waypoint");
+        this.overlay = false;
     }
-    y += h + 5;
-    addButton((this.x = new NumberInputField(-1, x, y, w1, h, (this.waypoint == null) ? MathHelper.floor_double(this.mc.thePlayer.posX) : this.waypoint.getPos().getX())));
-    addButton((this.y = new NumberInputField(-1, x + w1 + 5, y, w1, h, (this.waypoint == null) ? (int)this.mc.thePlayer.posY : this.waypoint.getPos().getY())));
-    addButton((this.z = new NumberInputField(-1, x + 10 + w1 * 2, y, w1, h, (this.waypoint == null) ? MathHelper.floor_double(this.mc.thePlayer.posZ) : this.waypoint.getPos().getZ())));
-    y += h + 5;
-    Random r = new Random();
-    ColorObject c = (this.waypoint == null) ? new ColorObject(r.nextInt(255), r.nextInt(255), r.nextInt(255), 180) : this.waypoint.getColor();
-    addButton((this.color = new ColorPicker(-1, x, y, w, h, "Color", c, false) {
+
+    public OverlayEditWaypoint(Waypoint waypoint) {
+        super(0, 0, 300, 10, "Modify Waypoint");
+        this.waypoint = waypoint;
+    }
+
+    public void init() {
+        super.init();
+        center();
+        int x = this.pane.x + 5;
+        int y = this.pane.y + 24;
+        int w = this.pane.width - 10;
+        int w1 = (this.pane.width - 20) / 3;
+        int h = 18;
+
+        addButton((this.name = new TextInputField(-1, x, y, w, h, "Enter Waypoint Name") {
 
         }));
-    this.color.setCanBeExpanded(false);
-    this.color.setShouldCollapseButtonsBelow(false);
-    this.color.invertExpandedState();
-    this.color.setBackgroundColorToNonHovering();
+        if (waypoint != null) {
+            name.setText(waypoint.getName());
+        }
+        y += h + 5;
+        addButton((this.x = new NumberInputField(-1, x, y, w1, h, (this.waypoint == null) ? MathHelper.floor_double(this.mc.thePlayer.posX) : this.waypoint.getPos().getX())));
+        addButton((this.y = new NumberInputField(-1, x + w1 + 5, y, w1, h, (this.waypoint == null) ? (int) this.mc.thePlayer.posY : this.waypoint.getPos().getY())));
+        addButton((this.z = new NumberInputField(-1, x + 10 + w1 * 2, y, w1, h, (this.waypoint == null) ? MathHelper.floor_double(this.mc.thePlayer.posZ) : this.waypoint.getPos().getZ())));
+        y += h + 5;
+        Random r = new Random();
+        ColorObject c = (this.waypoint == null) ? new ColorObject(r.nextInt(255), r.nextInt(255), r.nextInt(255), 180) : this.waypoint.getColor();
+        addButton((this.color = new ColorPicker(-1, x, y, w, h, "Color", c, false) {
 
-    y += this.color.height + 5;
-    addButton(new MenuButton(-1, x, y, w, h, (this.waypoint == null) ? "Create" : "Apply Edits"));
-    while (this.pane.y + this.pane.height < y + h + 5)
-      this.pane.height++;
-    center();
-    this.color.onUpdate();
-  }
+        }));
+        this.color.setCanBeExpanded(false);
+        this.color.setShouldCollapseButtonsBelow(false);
+        this.color.invertExpandedState();
+        this.color.setBackgroundColorToNonHovering();
 
-  public void onButtonInteract(Button button, int mouseX, int mouseY, int mouseButton) {
-    super.onButtonInteract(button, mouseX, mouseY, mouseButton);
-    if(button != null && button.displayText != null) {
-      if(button.displayText.equals("Create") && !name.getText().isEmpty()) {
-          Waypoint waypoint;
-          waypoint = new Waypoint(name.getText(), Client.formatConnectedServerIp(), new BlockPos(x.getValue(),y.getValue(),z.getValue()), color.getCurrentValue());
-          WaypointHandler.getInstance().addWaypoint(waypoint.setWorld(Client.getCurrentWorldName()));
-          this.mc.displayGuiScreen(this.parent);
-      } else if(button.displayText.equals("Apply Edits") && waypoint != null) {
-        waypoint.setName(name.getText());
-        waypoint.setPos(new BlockPos(x.getValue(),y.getValue(),z.getValue()));
-        waypoint.setColor(color.getCurrentValue());
-        super.closeOverlay();
-      }
+        y += this.color.height + 5;
+        addButton(new MenuButton(-1, x, y, w, h, (this.waypoint == null) ? "Create" : "Apply Edits"));
+        while (this.pane.y + this.pane.height < y + h + 5)
+            this.pane.height++;
+        center();
+        this.color.onUpdate();
     }
-  }
+
+    public void onButtonInteract(Button button, int mouseX, int mouseY, int mouseButton) {
+        super.onButtonInteract(button, mouseX, mouseY, mouseButton);
+        if (button != null && button.displayText != null) {
+            if (button.displayText.equals("Create") && !name.getText().isEmpty()) {
+                Waypoint waypoint;
+                waypoint = new Waypoint(name.getText(), Client.formatConnectedServerIp(), new BlockPos(x.getValue(), y.getValue(), z.getValue()), color.getCurrentValue());
+                WaypointHandler.getInstance().addWaypoint(waypoint.setWorld(Client.getCurrentWorldName()));
+                this.mc.displayGuiScreen(this.parent);
+            } else if (button.displayText.equals("Apply Edits") && waypoint != null) {
+                waypoint.setName(name.getText());
+                waypoint.setPos(new BlockPos(x.getValue(), y.getValue(), z.getValue()));
+                waypoint.setColor(color.getCurrentValue());
+                super.closeOverlay();
+            }
+        }
+    }
 }

@@ -16,21 +16,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({LayerHeldItem.class})
 public abstract class MixinLayerHeldItem {
-  @Shadow
-  @Final
-  private RendererLivingEntity<?> livingEntityRenderer;
-  
-  @Inject(method = {"doRenderLayer"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemRenderer;renderItem(Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/renderer/block/model/ItemCameraTransforms$TransformType;)V", shift = At.Shift.BEFORE)})
-  public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale, CallbackInfo ci) {
-    ModelBiped model = (ModelBiped)((MixinRendererLivingEntity)this.livingEntityRenderer).getMainModel();
-    boolean isBlocking = (model.heldItemRight == 3);
-    if (isBlocking && (OldAnimations.getInstance()).enabled && (OldAnimations.getInstance()).revertBlocking) {
-      GlStateManager.rotate(-45.0F, 1.0F, 1.0F, 1.0F);
-      GlStateManager.rotate(20.0F, 1.0F, 1.0F, 0.0F);
-      GlStateManager.rotate(-20.0F, 0.0F, 1.0F, 0.0F);
-      GlStateManager.rotate(-30.0F, 0.0F, 0.0F, 1.0F);
-    } 
-  }
+    @Shadow
+    @Final
+    private RendererLivingEntity<?> livingEntityRenderer;
+
+    @Inject(method = {"doRenderLayer"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ItemRenderer;renderItem(Lnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/item/ItemStack;Lnet/minecraft/client/renderer/block/model/ItemCameraTransforms$TransformType;)V", shift = At.Shift.BEFORE)})
+    public void doRenderLayer(EntityLivingBase entitylivingbaseIn, float p_177141_2_, float p_177141_3_, float partialTicks, float p_177141_5_, float p_177141_6_, float p_177141_7_, float scale, CallbackInfo ci) {
+        ModelBiped model = (ModelBiped) ((MixinRendererLivingEntity) this.livingEntityRenderer).getMainModel();
+        boolean isBlocking = (model.heldItemRight == 3);
+        if (isBlocking && (OldAnimations.getInstance()).enabled && (OldAnimations.getInstance()).revertBlocking) {
+            GlStateManager.rotate(-45.0F, 1.0F, 1.0F, 1.0F);
+            GlStateManager.rotate(20.0F, 1.0F, 1.0F, 0.0F);
+            GlStateManager.rotate(-20.0F, 0.0F, 1.0F, 0.0F);
+            GlStateManager.rotate(-30.0F, 0.0F, 0.0F, 1.0F);
+        }
+    }
 }
 
 

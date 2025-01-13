@@ -4,7 +4,9 @@ package co.crystaldev.client.network.plugin;
 import co.crystaldev.client.network.ByteBufWrapper;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+
 import java.nio.charset.StandardCharsets;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.Packet;
 import net.minecraft.network.PacketBuffer;
@@ -20,7 +22,7 @@ public abstract class MessageHandler {
     public void sendMessage(String content) {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.getNetHandler() != null)
-            mc.getNetHandler().addToSendQueue((Packet)new C17PacketCustomPayload(this.channelName, new PacketBuffer(Unpooled.wrappedBuffer(content.getBytes(StandardCharsets.UTF_8)))));
+            mc.getNetHandler().addToSendQueue((Packet) new C17PacketCustomPayload(this.channelName, new PacketBuffer(Unpooled.wrappedBuffer(content.getBytes(StandardCharsets.UTF_8)))));
     }
 
     public void sendMessage(ByteBufWrapper wrapper) {
@@ -30,7 +32,7 @@ public abstract class MessageHandler {
     public void sendMessage(ByteBuf buf) {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.getNetHandler() != null)
-            mc.getNetHandler().addToSendQueue((Packet)new C17PacketCustomPayload(this.channelName, new PacketBuffer(Unpooled.wrappedBuffer(buf.array()))));
+            mc.getNetHandler().addToSendQueue((Packet) new C17PacketCustomPayload(this.channelName, new PacketBuffer(Unpooled.wrappedBuffer(buf.array()))));
     }
 
     public abstract void fromBytes(ByteBuf paramByteBuf);

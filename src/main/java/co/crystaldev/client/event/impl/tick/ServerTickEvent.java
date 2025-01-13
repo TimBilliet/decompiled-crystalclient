@@ -3,11 +3,11 @@ package co.crystaldev.client.event.impl.tick;
 import co.crystaldev.client.event.Event;
 
 public class ServerTickEvent extends Event {
-  public final int currentTick;
-  
-  public ServerTickEvent(int currentTick) {
-    this.currentTick = currentTick;
-  }
+    public final int currentTick;
+
+    public ServerTickEvent(int currentTick) {
+        this.currentTick = currentTick;
+    }
 }
 
 

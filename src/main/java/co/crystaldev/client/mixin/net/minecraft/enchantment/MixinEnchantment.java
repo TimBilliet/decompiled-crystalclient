@@ -11,13 +11,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({Enchantment.class})
 public abstract class MixinEnchantment {
-  @Shadow
-  public abstract String getName();
-  
-  @Inject(method = {"getTranslatedName"}, at = {@At("HEAD")}, cancellable = true)
-  private void translateToEnglish(int level, CallbackInfoReturnable<String> ci) {
-    if ((ClientOptions.getInstance()).translateRomanNumerals)
-      ci.setReturnValue(StatCollector.translateToLocal(getName()) + " " + level); 
-  }
+    @Shadow
+    public abstract String getName();
+
+    @Inject(method = {"getTranslatedName"}, at = {@At("HEAD")}, cancellable = true)
+    private void translateToEnglish(int level, CallbackInfoReturnable<String> ci) {
+        if ((ClientOptions.getInstance()).translateRomanNumerals)
+            ci.setReturnValue(StatCollector.translateToLocal(getName()) + " " + level);
+    }
 }
 

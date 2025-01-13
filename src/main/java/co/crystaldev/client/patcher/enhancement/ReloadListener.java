@@ -6,11 +6,11 @@ import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.resources.IResourceManagerReloadListener;
 
 public class ReloadListener implements IResourceManagerReloadListener {
-  public void onResourceManagerReload(IResourceManager resourceManager) {
-    for (EnhancedFontRenderer enhancedFontRenderer : EnhancedFontRenderer.getInstances())
-      enhancedFontRenderer.invalidateAll();
-    FontRendererHook.forceRefresh = true;
-  }
+    public void onResourceManagerReload(IResourceManager resourceManager) {
+        for (EnhancedFontRenderer enhancedFontRenderer : EnhancedFontRenderer.getInstances())
+            enhancedFontRenderer.invalidateAll();
+        FontRendererHook.forceRefresh = true;
+    }
 }
 
 

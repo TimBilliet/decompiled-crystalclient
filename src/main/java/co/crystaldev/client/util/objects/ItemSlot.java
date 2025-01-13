@@ -4,55 +4,55 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
 public class ItemSlot {
-  private static final Minecraft mc = Minecraft.getMinecraft();
-  
-  private final Type type;
-  
-  private final int slot;
-  
-  private final boolean dynamic;
-  
-  public Type getType() {
-    return this.type;
-  }
-  
-  public int getSlot() {
-    return this.slot;
-  }
-  
-  public boolean isDynamic() {
-    return this.dynamic;
-  }
-  
-  public ItemSlot(Type type, int slot) {
-    this.type = type;
-    this.slot = slot;
-    this.dynamic = false;
-  }
-  
-  public ItemSlot() {
-    this.type = null;
-    this.slot = -1;
-    this.dynamic = true;
-  }
-  
-  public boolean isPresent() {
-    if (mc.thePlayer == null)
-      return false; 
-    if (this.dynamic)
-      return (mc.thePlayer.getHeldItem() != null); 
-    return (((this.type == Type.ARMOR) ? mc.thePlayer.inventory.armorInventory : mc.thePlayer.inventory.mainInventory)[this.slot] != null);
-  }
-  
-  public ItemStack getItemStack() {
-    if (this.dynamic)
-      return mc.thePlayer.getHeldItem(); 
-    return ((this.type == Type.ARMOR) ? mc.thePlayer.inventory.armorInventory : mc.thePlayer.inventory.mainInventory)[this.slot];
-  }
-  
-  public enum Type {
-    ARMOR, REGULAR;
-  }
+    private static final Minecraft mc = Minecraft.getMinecraft();
+
+    private final Type type;
+
+    private final int slot;
+
+    private final boolean dynamic;
+
+    public Type getType() {
+        return this.type;
+    }
+
+    public int getSlot() {
+        return this.slot;
+    }
+
+    public boolean isDynamic() {
+        return this.dynamic;
+    }
+
+    public ItemSlot(Type type, int slot) {
+        this.type = type;
+        this.slot = slot;
+        this.dynamic = false;
+    }
+
+    public ItemSlot() {
+        this.type = null;
+        this.slot = -1;
+        this.dynamic = true;
+    }
+
+    public boolean isPresent() {
+        if (mc.thePlayer == null)
+            return false;
+        if (this.dynamic)
+            return (mc.thePlayer.getHeldItem() != null);
+        return (((this.type == Type.ARMOR) ? mc.thePlayer.inventory.armorInventory : mc.thePlayer.inventory.mainInventory)[this.slot] != null);
+    }
+
+    public ItemStack getItemStack() {
+        if (this.dynamic)
+            return mc.thePlayer.getHeldItem();
+        return ((this.type == Type.ARMOR) ? mc.thePlayer.inventory.armorInventory : mc.thePlayer.inventory.mainInventory)[this.slot];
+    }
+
+    public enum Type {
+        ARMOR, REGULAR;
+    }
 }
 
 

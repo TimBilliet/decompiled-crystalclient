@@ -9,15 +9,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({Timer.class})
 //public abstract class MixinTimer extends Timer {
-public abstract class MixinTimer{
+public abstract class MixinTimer {
 //  public MixinTimer(float p_i1018_1_) {
 //    super(p_i1018_1_);
 //  }
 
-  @Inject(method = {"<init>"}, at = {@At("RETURN")})
-  private void constructorTail(float tps, CallbackInfo ci) {
-    Client.setTimer((Timer)(Object)this);
-  }
+    @Inject(method = {"<init>"}, at = {@At("RETURN")})
+    private void constructorTail(float tps, CallbackInfo ci) {
+        Client.setTimer((Timer) (Object) this);
+    }
 }
 
 

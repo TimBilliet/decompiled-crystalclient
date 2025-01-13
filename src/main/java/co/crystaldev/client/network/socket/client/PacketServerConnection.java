@@ -10,38 +10,40 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 
 public class PacketServerConnection extends Packet {
-  public Type connectionType;
-  
-  public PacketServerConnection(Type connectionType) {
-    this.connectionType = connectionType;
-  }
-  
-  public void write(ByteBufWrapper out) throws IOException {
-    JsonObject obj = new JsonObject();
-    obj.addProperty("server", (this.connectionType == Type.LEAVE) ? "null" : 
-        Client.formatConnectedServerIp());
-    obj.addProperty("connectionType", this.connectionType.toString());
-    out.writeString(Reference.GSON.toJson(obj, JsonObject.class));
-  }
-  
-  public void read(ByteBufWrapper in) throws IOException {}
-  
-  public void process(INetHandler handler) {}
-  
-  public enum Type {
-    JOIN("JOIN"),
-    LEAVE("LEAVE");
-    
-    private final String serializationString;
-    
-    Type(String serializationString) {
-      this.serializationString = serializationString;
+    public Type connectionType;
+
+    public PacketServerConnection(Type connectionType) {
+        this.connectionType = connectionType;
     }
-    
-    public String toString() {
-      return this.serializationString;
+
+    public void write(ByteBufWrapper out) throws IOException {
+        JsonObject obj = new JsonObject();
+        obj.addProperty("server", (this.connectionType == Type.LEAVE) ? "null" :
+                Client.formatConnectedServerIp());
+        obj.addProperty("connectionType", this.connectionType.toString());
+        out.writeString(Reference.GSON.toJson(obj, JsonObject.class));
     }
-  }
+
+    public void read(ByteBufWrapper in) throws IOException {
+    }
+
+    public void process(INetHandler handler) {
+    }
+
+    public enum Type {
+        JOIN("JOIN"),
+        LEAVE("LEAVE");
+
+        private final String serializationString;
+
+        Type(String serializationString) {
+            this.serializationString = serializationString;
+        }
+
+        public String toString() {
+            return this.serializationString;
+        }
+    }
 }
 
 

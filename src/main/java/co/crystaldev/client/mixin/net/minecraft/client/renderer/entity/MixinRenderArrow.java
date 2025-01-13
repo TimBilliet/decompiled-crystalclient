@@ -10,9 +10,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({RenderArrow.class})
 public abstract class MixinRenderArrow {
-  @Inject(method = {"doRender(Lnet/minecraft/entity/projectile/EntityArrow;DDDFF)V"}, at = {@At("HEAD")}, cancellable = true)
-  private void cancelArrowRendering(EntityArrow entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
-    if (RenderArrowHook.cancelRendering(entity))
-      ci.cancel();
-  }
+    @Inject(method = {"doRender(Lnet/minecraft/entity/projectile/EntityArrow;DDDFF)V"}, at = {@At("HEAD")}, cancellable = true)
+    private void cancelArrowRendering(EntityArrow entity, double x, double y, double z, float entityYaw, float partialTicks, CallbackInfo ci) {
+        if (RenderArrowHook.cancelRendering(entity))
+            ci.cancel();
+    }
 }

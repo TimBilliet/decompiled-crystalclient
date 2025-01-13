@@ -10,57 +10,58 @@ import java.io.IOException;
 import java.util.UUID;
 
 public class PacketPendingGroupMemberAction extends Packet {
-  private UUID uuid;
+    private UUID uuid;
 
-  private Action action;
+    private Action action;
 
-  public PacketPendingGroupMemberAction() {}
-
-  public PacketPendingGroupMemberAction(UUID uuid, Action action) {
-    this.uuid = uuid;
-    this.action = action;
-  }
-
-  public void write(ByteBufWrapper out) throws IOException {
-    out.writeUUID(this.uuid);
-    out.writeString(this.action.toString());
-  }
-
-  public void read(ByteBufWrapper in) throws IOException {
-    this.uuid = in.readUUID();
-    this.action = Action.fromString(in.readString());
-  }
-
-  public void process(INetHandler handler) {
-    Group sel = GroupManager.getSelectedGroup();
-    if (sel != null && sel.hasPermission(8) &&
-      this.action == Action.ADD)
-      sel.addPendingMember(this.uuid);
-  }
-
-  public enum Action {
-    ACCEPT("ACCEPT"),
-    DENY("DENY"),
-    ADD("ADD");
-
-    Action(String serializationString) {
-      this.serializationString = serializationString;
+    public PacketPendingGroupMemberAction() {
     }
 
-    private final String serializationString;
-
-    public String toString() {
-      return this.serializationString;
+    public PacketPendingGroupMemberAction(UUID uuid, Action action) {
+        this.uuid = uuid;
+        this.action = action;
     }
 
-    public static Action fromString(String name) {
-      for (Action action : values()) {
-        if (action.toString().equalsIgnoreCase(name))
-          return action;
-      }
-      return null;
+    public void write(ByteBufWrapper out) throws IOException {
+        out.writeUUID(this.uuid);
+        out.writeString(this.action.toString());
     }
-  }
+
+    public void read(ByteBufWrapper in) throws IOException {
+        this.uuid = in.readUUID();
+        this.action = Action.fromString(in.readString());
+    }
+
+    public void process(INetHandler handler) {
+        Group sel = GroupManager.getSelectedGroup();
+        if (sel != null && sel.hasPermission(8) &&
+                this.action == Action.ADD)
+            sel.addPendingMember(this.uuid);
+    }
+
+    public enum Action {
+        ACCEPT("ACCEPT"),
+        DENY("DENY"),
+        ADD("ADD");
+
+        Action(String serializationString) {
+            this.serializationString = serializationString;
+        }
+
+        private final String serializationString;
+
+        public String toString() {
+            return this.serializationString;
+        }
+
+        public static Action fromString(String name) {
+            for (Action action : values()) {
+                if (action.toString().equalsIgnoreCase(name))
+                    return action;
+            }
+            return null;
+        }
+    }
 }
 
 

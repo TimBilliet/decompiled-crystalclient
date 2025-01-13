@@ -25,50 +25,51 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({EntityPlayerSP.class})
 public abstract class MixinEntityPlayerSP extends AbstractClientPlayer {
-  @Shadow
-  public float timeInPortal;
-  
-  @Shadow
-  public float prevTimeInPortal;
-  
-  public MixinEntityPlayerSP(World worldIn, GameProfile playerProfile) {
-    super(worldIn, playerProfile);
-  }
-  
-  @Inject(method = {"sendChatMessage"}, cancellable = true, at = {@At("HEAD")})
-  private void sendChatMessage(String message, CallbackInfo ci) {
-    PlayerChatEvent event = new PlayerChatEvent((EntityPlayer)this, message);
-    event.call();
-    if (event.isCancelled())
-      ci.cancel(); 
-  }
-  
-  @Redirect(method = {"onLivingUpdate"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayGuiScreen(Lnet/minecraft/client/gui/GuiScreen;)V"))
-  private void portalFix(Minecraft minecraft, GuiScreen guiScreenIn) {}
+    @Shadow
+    public float timeInPortal;
 
-  @Redirect(method = {"onLivingUpdate"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;isPotionActive(Lnet/minecraft/potion/Potion;)Z", ordinal = 0))
-  private boolean cancelNauseaRendering(EntityPlayerSP instance, Potion potion) {
-    return (NoLag.isDisabled((NoLag.getInstance()).disableNausea) && instance.isPotionActive(potion));
-  }
-  
-  @Inject(method = {"damageEntity"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;setHealth(F)V", shift = At.Shift.BEFORE)})
-  public void onDamage(DamageSource damageSrc, float damageAmount, CallbackInfo ci) {
-    (new PlayerEvent.Damage((EntityPlayer)this, damageSrc, getHealth() - damageAmount, damageAmount)).call();
-  }
-  
-  @Inject(method = {"onCriticalHit"}, at = {@At("HEAD")}, cancellable = true)
-  public void onCriticalHit(Entity entityHit, CallbackInfo ci) {
-    Event event = (new EntityCriticalStrikeEvent(entityHit)).call();
-    if (event.isCancelled())
-      ci.cancel(); 
-  }
-  
-  @Inject(method = {"onEnchantmentCritical"}, at = {@At("HEAD")}, cancellable = true)
-  public void onEnchantmentCritical(Entity entityHit, CallbackInfo ci) {
-    Event event = (new EntityEnchantCriticalStrikeEvent(entityHit)).call();
-    if (event.isCancelled())
-      ci.cancel(); 
-  }
+    @Shadow
+    public float prevTimeInPortal;
+
+    public MixinEntityPlayerSP(World worldIn, GameProfile playerProfile) {
+        super(worldIn, playerProfile);
+    }
+
+    @Inject(method = {"sendChatMessage"}, cancellable = true, at = {@At("HEAD")})
+    private void sendChatMessage(String message, CallbackInfo ci) {
+        PlayerChatEvent event = new PlayerChatEvent((EntityPlayer) this, message);
+        event.call();
+        if (event.isCancelled())
+            ci.cancel();
+    }
+
+    @Redirect(method = {"onLivingUpdate"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayGuiScreen(Lnet/minecraft/client/gui/GuiScreen;)V"))
+    private void portalFix(Minecraft minecraft, GuiScreen guiScreenIn) {
+    }
+
+    @Redirect(method = {"onLivingUpdate"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;isPotionActive(Lnet/minecraft/potion/Potion;)Z", ordinal = 0))
+    private boolean cancelNauseaRendering(EntityPlayerSP instance, Potion potion) {
+        return (NoLag.isDisabled((NoLag.getInstance()).disableNausea) && instance.isPotionActive(potion));
+    }
+
+    @Inject(method = {"damageEntity"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityPlayerSP;setHealth(F)V", shift = At.Shift.BEFORE)})
+    public void onDamage(DamageSource damageSrc, float damageAmount, CallbackInfo ci) {
+        (new PlayerEvent.Damage((EntityPlayer) this, damageSrc, getHealth() - damageAmount, damageAmount)).call();
+    }
+
+    @Inject(method = {"onCriticalHit"}, at = {@At("HEAD")}, cancellable = true)
+    public void onCriticalHit(Entity entityHit, CallbackInfo ci) {
+        Event event = (new EntityCriticalStrikeEvent(entityHit)).call();
+        if (event.isCancelled())
+            ci.cancel();
+    }
+
+    @Inject(method = {"onEnchantmentCritical"}, at = {@At("HEAD")}, cancellable = true)
+    public void onEnchantmentCritical(Entity entityHit, CallbackInfo ci) {
+        Event event = (new EntityEnchantCriticalStrikeEvent(entityHit)).call();
+        if (event.isCancelled())
+            ci.cancel();
+    }
 }
 
 

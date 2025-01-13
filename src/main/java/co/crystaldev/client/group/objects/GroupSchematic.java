@@ -3,34 +3,35 @@ package co.crystaldev.client.group.objects;
 import com.google.gson.annotations.SerializedName;
 
 public class GroupSchematic {
-  @SerializedName("dir")
-  private String dir;
-  
-  @SerializedName("id")
-  private String id;
-  
-  @SerializedName("name")
-  private String name;
-  
-  public String getDir() {
-    return this.dir;
-  }
-  
-  public String getId() {
-    return this.id;
-  }
-  
-  public String getName() {
-    return this.name;
-  }
-  
-  public GroupSchematic(String name, String dir, String id) {
-    this.name = name;
-    this.dir = dir;
-    this.id = id;
-  }
-  
-  public GroupSchematic() {}
+    @SerializedName("dir")
+    private String dir;
+
+    @SerializedName("id")
+    private String id;
+
+    @SerializedName("name")
+    private String name;
+
+    public String getDir() {
+        return this.dir;
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public GroupSchematic(String name, String dir, String id) {
+        this.name = name;
+        this.dir = dir;
+        this.id = id;
+    }
+
+    public GroupSchematic() {
+    }
 }
 
 

@@ -8,10 +8,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({EntityOtherPlayerMP.class})
 public abstract class MixinEntityOtherPlayerMP {
-  @Inject(method = {"onLivingUpdate"}, cancellable = true, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityOtherPlayerMP;updateArmSwingProgress()V", shift = At.Shift.AFTER)})
-  private void removeUselessAnimations(CallbackInfo ci) {
-    ci.cancel();
-  }
+    @Inject(method = {"onLivingUpdate"}, cancellable = true, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/entity/EntityOtherPlayerMP;updateArmSwingProgress()V", shift = At.Shift.AFTER)})
+    private void removeUselessAnimations(CallbackInfo ci) {
+        ci.cancel();
+    }
 }
 
 

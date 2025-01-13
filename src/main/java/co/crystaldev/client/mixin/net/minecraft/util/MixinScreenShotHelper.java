@@ -23,50 +23,50 @@ import java.nio.IntBuffer;
 
 @Mixin({ScreenShotHelper.class})
 public abstract class MixinScreenShotHelper {
-  @Shadow
-  private static IntBuffer pixelBuffer;
-  
-  @Shadow
-  private static int[] pixelValues;
-  
-  @Shadow
-  @Final
-  private static Logger logger;
-  
-  /**
-   * @author
-   */
-  @Overwrite(aliases = {"saveScreenshot"})
-  public static IChatComponent saveScreenshot(File gameDirectory, int width, int height, Framebuffer buffer) {
-    try {
-      File directory = new File(gameDirectory, "screenshots");
-      if (!directory.exists())
-        directory.mkdir(); 
-      if (OpenGlHelper.isFramebufferEnabled()) {
-        width = buffer.framebufferWidth;
-        height = buffer.framebufferHeight;
-      } 
-      int scale = width * height;
-      if (pixelBuffer == null || pixelBuffer.capacity() < scale) {
-        pixelBuffer = BufferUtils.createIntBuffer(scale);
-        pixelValues = new int[scale];
-      } 
-      GL11.glPixelStorei(3333, 1);
-      GL11.glPixelStorei(3317, 1);
-      pixelBuffer.clear();
-      if (OpenGlHelper.isFramebufferEnabled()) {
-        GlStateManager.bindTexture(buffer.framebufferTexture);
-        GL11.glGetTexImage(3553, 0, 32993, 33639, pixelBuffer);
-      } else {
-        GL11.glReadPixels(0, 0, width, height, 32993, 33639, pixelBuffer);
-      } 
-      pixelBuffer.get(pixelValues);
-      ScreenshotTask screenshotTask = new ScreenshotTask(directory, width, height, pixelValues, buffer);
-      (new Thread((Runnable)screenshotTask)).start();
-    } catch (Exception ex) {
-      logger.warn("Couldn't save screenshot", ex);
-      return (IChatComponent)new ChatComponentTranslation("screenshot.failure", new Object[] { ex.getMessage() });
-    } 
-    return (IChatComponent)new ChatComponentText(ChatColor.translate(Client.getPrefix()) + " Taking screenshot...");
-  }
+    @Shadow
+    private static IntBuffer pixelBuffer;
+
+    @Shadow
+    private static int[] pixelValues;
+
+    @Shadow
+    @Final
+    private static Logger logger;
+
+    /**
+     * @author
+     */
+    @Overwrite(aliases = {"saveScreenshot"})
+    public static IChatComponent saveScreenshot(File gameDirectory, int width, int height, Framebuffer buffer) {
+        try {
+            File directory = new File(gameDirectory, "screenshots");
+            if (!directory.exists())
+                directory.mkdir();
+            if (OpenGlHelper.isFramebufferEnabled()) {
+                width = buffer.framebufferWidth;
+                height = buffer.framebufferHeight;
+            }
+            int scale = width * height;
+            if (pixelBuffer == null || pixelBuffer.capacity() < scale) {
+                pixelBuffer = BufferUtils.createIntBuffer(scale);
+                pixelValues = new int[scale];
+            }
+            GL11.glPixelStorei(3333, 1);
+            GL11.glPixelStorei(3317, 1);
+            pixelBuffer.clear();
+            if (OpenGlHelper.isFramebufferEnabled()) {
+                GlStateManager.bindTexture(buffer.framebufferTexture);
+                GL11.glGetTexImage(3553, 0, 32993, 33639, pixelBuffer);
+            } else {
+                GL11.glReadPixels(0, 0, width, height, 32993, 33639, pixelBuffer);
+            }
+            pixelBuffer.get(pixelValues);
+            ScreenshotTask screenshotTask = new ScreenshotTask(directory, width, height, pixelValues, buffer);
+            (new Thread((Runnable) screenshotTask)).start();
+        } catch (Exception ex) {
+            logger.warn("Couldn't save screenshot", ex);
+            return (IChatComponent) new ChatComponentTranslation("screenshot.failure", new Object[]{ex.getMessage()});
+        }
+        return (IChatComponent) new ChatComponentText(ChatColor.translate(Client.getPrefix()) + " Taking screenshot...");
+    }
 }

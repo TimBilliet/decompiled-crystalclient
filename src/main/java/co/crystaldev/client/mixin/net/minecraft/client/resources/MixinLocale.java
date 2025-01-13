@@ -9,10 +9,10 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 @Mixin({Locale.class})
 public abstract class MixinLocale {
-  @Inject(method = {"formatMessage"}, cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = {@At(value = "RETURN", ordinal = 1)})
-  private void formatMessage(String translateKey, Object[] parameters, CallbackInfoReturnable<String> cir, String s) {
-    cir.setReturnValue(s);
-  }
+    @Inject(method = {"formatMessage"}, cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION, at = {@At(value = "RETURN", ordinal = 1)})
+    private void formatMessage(String translateKey, Object[] parameters, CallbackInfoReturnable<String> cir, String s) {
+        cir.setReturnValue(s);
+    }
 }
 
 

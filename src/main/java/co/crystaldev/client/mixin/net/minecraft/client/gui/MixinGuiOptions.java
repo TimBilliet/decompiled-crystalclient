@@ -6,9 +6,9 @@ import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin({GuiOptions.class})
 public abstract class MixinGuiOptions extends GuiScreen {
-  public void onGuiClosed() {
-    this.mc.gameSettings.saveOptions();
-  }
+    public void onGuiClosed() {
+        this.mc.gameSettings.saveOptions();
+    }
 }
 
 

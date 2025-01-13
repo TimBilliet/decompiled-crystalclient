@@ -4,11 +4,11 @@ import co.crystaldev.client.network.INetHandler;
 import co.crystaldev.client.network.Packet;
 
 public abstract class PluginChannelPacket extends Packet {
-  public final void process(INetHandler handler) {
-    process((NetHandlerPlugin)handler);
-  }
-  
-  public abstract void process(NetHandlerPlugin paramNetHandlerPlugin);
+    public final void process(INetHandler handler) {
+        process((NetHandlerPlugin) handler);
+    }
+
+    public abstract void process(NetHandlerPlugin paramNetHandlerPlugin);
 }
 
 

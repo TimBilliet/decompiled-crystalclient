@@ -7,20 +7,20 @@ import co.crystaldev.client.feature.base.Module;
 
 @ModuleInfo(name = "1.7 Hits", description = "Reverts the hit delay to how it was in 1.7", category = Category.COMBAT)
 public class OldHits extends Module {
-  private static OldHits INSTANCE;
-  
-  public OldHits() {
-    INSTANCE = this;
-    this.enabled = false;
-  }
-  
-  public static OldHits getInstance() {
-    return INSTANCE;
-  }
-  
-  public boolean getDefaultForceDisabledState() {
-    return Client.isOnHypixel();
-  }
+    private static OldHits INSTANCE;
+
+    public OldHits() {
+        INSTANCE = this;
+        this.enabled = false;
+    }
+
+    public static OldHits getInstance() {
+        return INSTANCE;
+    }
+
+    public boolean getDefaultForceDisabledState() {
+        return Client.isOnHypixel();
+    }
 }
 
 

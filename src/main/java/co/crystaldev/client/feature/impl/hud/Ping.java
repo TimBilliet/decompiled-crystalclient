@@ -10,21 +10,21 @@ import net.minecraft.client.network.NetworkPlayerInfo;
 @ConfigurableSize
 @ModuleInfo(name = "Ping", description = "View your connection latency", category = Category.HUD)
 public class Ping extends HudModuleBackground {
-  public Tuple<String, String> getInfoHud() {
-    return new Tuple("Ping", getPing() + "ms");
-  }
-  
-  public String getDisplayText() {
-    return getPing() + "ms";
-  }
-  
-  public long getPing() {
-    long ping = 0L;
-    NetworkPlayerInfo playerInfo = this.mc.getNetHandler().getPlayerInfo(this.mc.thePlayer.getUniqueID());
-    if (playerInfo != null)
-      ping = playerInfo.getResponseTime(); 
-    return ping;
-  }
+    public Tuple<String, String> getInfoHud() {
+        return new Tuple("Ping", getPing() + "ms");
+    }
+
+    public String getDisplayText() {
+        return getPing() + "ms";
+    }
+
+    public long getPing() {
+        long ping = 0L;
+        NetworkPlayerInfo playerInfo = this.mc.getNetHandler().getPlayerInfo(this.mc.thePlayer.getUniqueID());
+        if (playerInfo != null)
+            ping = playerInfo.getResponseTime();
+        return ping;
+    }
 }
 
 

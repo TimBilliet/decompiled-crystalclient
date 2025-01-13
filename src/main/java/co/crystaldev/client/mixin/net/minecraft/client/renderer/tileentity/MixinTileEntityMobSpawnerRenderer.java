@@ -10,11 +10,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin({TileEntityMobSpawnerRenderer.class})
 public abstract class MixinTileEntityMobSpawnerRenderer {
-  @Inject(method = {"renderMob"}, cancellable = true, at = {@At("HEAD")})
-  private static void renderMob(MobSpawnerBaseLogic f, double mobSpawnerLogic, double posX, double posY, float posZ, CallbackInfo ci) {
-    if (NoLag.isEnabled((NoLag.getInstance()).disableSpawnerAnimation))
-      ci.cancel(); 
-  }
+    @Inject(method = {"renderMob"}, cancellable = true, at = {@At("HEAD")})
+    private static void renderMob(MobSpawnerBaseLogic f, double mobSpawnerLogic, double posX, double posY, float posZ, CallbackInfo ci) {
+        if (NoLag.isEnabled((NoLag.getInstance()).disableSpawnerAnimation))
+            ci.cancel();
+    }
 }
 
 

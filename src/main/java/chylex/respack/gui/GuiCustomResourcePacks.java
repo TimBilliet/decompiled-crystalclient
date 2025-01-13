@@ -42,17 +42,15 @@ public class GuiCustomResourcePacks extends GuiScreenResourcePacks {
     public static ResourcePackRepository.Entry createEntryInstance(ResourcePackRepository repository, File file) {
         try {
             if (entryConstructor == null) {
-                entryConstructor = ResourcePackRepository.Entry.class.getDeclaredConstructor(new Class[]{ResourcePackRepository.class, File.class});
+                entryConstructor = ResourcePackRepository.Entry.class.getDeclaredConstructor(ResourcePackRepository.class, File.class);
                 entryConstructor.setAccessible(true);
             }
-            return entryConstructor.newInstance(new Object[]{repository, file});
+            return entryConstructor.newInstance(repository, file);
         } catch (Throwable ex) {
             Reference.LOGGER.error("Unable to create repository entry", ex);
             return null;
         }
     }
-
-    private final Field top = ReflectionHelper.findField(GuiSlot.class, new String[]{"top", "top", "d"});
 
     private File currentFolder;
 
@@ -95,19 +93,11 @@ public class GuiCustomResourcePacks extends GuiScreenResourcePacks {
         this.guiPacksAvailable = new GuiResourcePackAvailable(this.mc, 200, this.height, this.listPacksAvailableProcessed);
         this.guiPacksAvailable.setSlotXBoundsFromLeft(this.width / 2 - 204);
         this.guiPacksAvailable.registerScrollButtons(7, 8);
-        try {
-            this.top.set(this.guiPacksAvailable, Integer.valueOf(4));
-        } catch (IllegalAccessException ex) {
-            Reference.LOGGER.error("Unable to set field value in guiPacksAvailable", ex);
-        }
+        this.guiPacksAvailable.top = 4;
         this.guiPacksSelected = new GuiResourcePackSelected(this.mc, 200, this.height, this.listPacksSelected);
         this.guiPacksSelected.setSlotXBoundsFromLeft(this.width / 2 + 4);
         this.guiPacksSelected.registerScrollButtons(7, 8);
-        try {
-            this.top.set(this.guiPacksSelected, Integer.valueOf(4));
-        } catch (IllegalAccessException ex) {
-            Reference.LOGGER.error("Unable to set field value in guiPacksSelected", ex);
-        }
+        this.guiPacksSelected.top = 4;
         this.listProcessor = new ResourcePackListProcessor(this.listPacksAvailable, this.listPacksAvailableProcessed);
         this.listProcessor.setSorter((this.currentSorter == null) ? (this.currentSorter = ResourcePackListProcessor.sortAZ) : this.currentSorter);
         this.listProcessor.setFilter(this.searchField.getText().trim());
@@ -159,7 +149,7 @@ public class GuiCustomResourcePacks extends GuiScreenResourcePacks {
         this.guiPacksSelected.handleMouseInput();
     }
 
-    protected void mouseMovedOrUp(int mouseX, int mouseY, int eventType) {
+    protected void mouseReleased(int mouseX, int mouseY, int eventType) {
         if (eventType == 0 && this.selectedButton != null) {
             this.selectedButton.mouseReleased(mouseX, mouseY);
             this.selectedButton = null;
@@ -207,8 +197,6 @@ public class GuiCustomResourcePacks extends GuiScreenResourcePacks {
             ResourcePackListEntryFound packEntry = (ResourcePackListEntryFound) entry;
             if (packEntry.func_148318_i() != null)
                 selected.add(packEntry.func_148318_i());
-            //if (packEntry.getResourcePackEntry() != null)
-            //  selected.add(packEntry.getResourcePackEntry());
         }
         Collections.reverse(selected);
         this.mc.getResourcePackRepository().setRepositories(selected);
@@ -244,7 +232,6 @@ public class GuiCustomResourcePacks extends GuiScreenResourcePacks {
                 }
             }
         List<ResourcePackRepository.Entry> repositoryEntries = repository.getRepositoryEntries();
-        //list.removeIf(listEntry -> (listEntry.getResourcePackEntry() != null && repositoryEntries.contains(listEntry.getResourcePackEntry())));
         list.removeIf(listEntry -> (listEntry.func_148318_i() != null && repositoryEntries.contains(listEntry.func_148318_i())));
 
         return list;
@@ -273,9 +260,3 @@ public class GuiCustomResourcePacks extends GuiScreenResourcePacks {
         this.requiresReload = true;
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\chylex\chylex.respack\gui\GuiCustomResourcePacks.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

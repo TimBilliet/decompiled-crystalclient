@@ -2,7 +2,6 @@
 
 ## Things that currently don't work (yet)
 - schematica redstone items transparency
-- optifine compatibility
 - alt manager (never worked in the original one anyway)
 - chat math
 

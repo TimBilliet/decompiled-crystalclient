@@ -78,7 +78,7 @@ public class Client {
 
     private static File CLIENT_RUN_DIRECTORY;
 
-    private static final boolean OPTIFINE_LOADED = isClassLoaded("net.optifine.Lang");
+    private static final boolean OPTIFINE_LOADED = isClassLoaded("optifine.OptiFineClassTransformer");
 
     private static final boolean OBFUSCATED = !isClassLoaded(String.format("%s.%s.%s.%s", "co", "crystaldev", "client", "Client"));
 
@@ -435,9 +435,6 @@ public class Client {
             System.out.println("FOUT BIJ ISCLASSLOADED");
             return false;
         }
-//        } catch (ClassNotFoundException exception) {
-//            return false;
-//        }
     }
 
     public static boolean isOptiFineLoaded() {

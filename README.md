@@ -2,7 +2,6 @@
 
 ## Things that currently don't work (yet)
 - schematica material sorting & some block transparency
-- gui scale (gui is way too big)
 - optifine compatibility
 - alt manager (never worked in the original one anyway)
 - chat math

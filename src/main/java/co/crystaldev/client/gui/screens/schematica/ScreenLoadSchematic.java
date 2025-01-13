@@ -132,7 +132,7 @@ public class ScreenLoadSchematic extends ScreenSchematicaBase {
                 }
                 NBTTagCompound schematic = SchematicUtil.readTagCompoundFromFile(this.selected);
                 if (schematic != null) {
-                    BasicFileAttributes bfa = Files.readAttributes(this.selected.toPath(), BasicFileAttributes.class, new java.nio.file.LinkOption[0]);
+                    BasicFileAttributes bfa = Files.readAttributes(this.selected.toPath(), BasicFileAttributes.class);
                     FileTime creation = bfa.creationTime();
                     String name = this.selected.getName().replaceAll("\\.schematic", "");
                     int len = name.length();
@@ -171,6 +171,7 @@ public class ScreenLoadSchematic extends ScreenSchematicaBase {
                         b.setOnClick(new Runnable() {
                             @Override
                             public void run() {
+                                //TODO
                             }
                         });
                     });

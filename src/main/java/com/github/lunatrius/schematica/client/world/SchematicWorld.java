@@ -96,7 +96,7 @@ public class SchematicWorld extends WorldClient {
     public void setSpawnPoint(BlockPos pos) {
     }
 
-    protected int func_152379_p() {
+    protected int getRenderDistanceChunks() {
         return 0;
     }
 
@@ -125,7 +125,7 @@ public class SchematicWorld extends WorldClient {
     }
 
     protected IChunkProvider createChunkProvider() {
-        return (IChunkProvider) new ChunkProviderSchematic(this);
+        return new ChunkProviderSchematic(this);
     }
 
     public Entity getEntityByID(int id) {
@@ -147,7 +147,7 @@ public class SchematicWorld extends WorldClient {
             tileEntity.invalidate();
             tileEntity.validate();
         } catch (Exception e) {
-            Reference.logger.error("TileEntity validation for {} failed!", new Object[]{tileEntity.getClass(), e});
+            Reference.logger.error("TileEntity validation for {} failed!", tileEntity.getClass(), e);
         }
     }
 
@@ -173,6 +173,7 @@ public class SchematicWorld extends WorldClient {
         for (MBlockPos pos : positions) {
             IBlockState blockState = this.schematic.getBlockState((BlockPos) pos);
             if (blockState.getBlock().hasTileEntity())
+
                 continue;
             IBlockState replacement = replacer.getReplacement(blockState, properties);
             if (replacement.getBlock().hasTileEntity())
@@ -190,12 +191,17 @@ public class SchematicWorld extends WorldClient {
         List<MBlockPos> replaced = new ArrayList<>();
         for (MBlockPos pos : BlockPosHelper.getAllInBox(0, 0, 0, getWidth(), getHeight(), getLength())) {
             IBlockState blockState = this.schematic.getBlockState((BlockPos) pos);
-            if (blockState.getBlock().hasTileEntity())
-                continue;
+            if (blockState.getBlock().hasTileEntity()){
+
+                continue;} else {
+                System.out.println("block doesn't have tileentity");
+            }
             if (matcher.apply(blockState)) {
                 IBlockState replacement = replacer.getReplacement(blockState, properties);
-                if (replacement.getBlock().hasTileEntity())
-                    continue;
+                if (replacement.getBlock().hasTileEntity()) {
+                    continue;} else {
+                    System.out.println("block doesn't have tileentity");
+                }
                 if (this.schematic.setBlockState((BlockPos) pos, replacement)) {
                     replaced.add(new MBlockPos((Vec3i) pos));
                     markBlockForUpdate((BlockPos) pos.add((Vec3i) this.position));
@@ -203,7 +209,7 @@ public class SchematicWorld extends WorldClient {
                 }
             }
         }
-        return new Tuple(Integer.valueOf(count), replaced);
+        return new Tuple<>(count, replaced);
     }
 
     public boolean isInside(BlockPos pos) {
@@ -213,9 +219,3 @@ public class SchematicWorld extends WorldClient {
         return (x >= 0 && y >= 0 && z >= 0 && x < getWidth() && y < getHeight() && z < getLength());
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematica\client\world\SchematicWorld.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

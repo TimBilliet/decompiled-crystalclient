@@ -75,7 +75,7 @@ public class Cooldowns extends HudModuleBackground {
         Iterator<Cooldown> iterator = cooldowns.listIterator();
         while (iterator.hasNext()) {
             Cooldown cooldown = iterator.next();
-            RenderUtils.drawSemiCircle(x, y, 13.0D, cooldown.getTimeRemaining() / cooldown.getDuration(), this.cooldownColor.getRGB());
+            RenderUtils.drawSemiCircle(x, y, 13.0D, cooldown.getTimeRemaining() / (float)cooldown.getDuration(), this.cooldownColor.getRGB());
             String displayText = DECIMAL_FORMAT.format(cooldown.getTimeRemaining() / 1000.0D);
             if (!displayText.contains("."))
                 displayText = displayText + ".0";
@@ -95,9 +95,7 @@ public class Cooldowns extends HudModuleBackground {
     public void addCooldown(ItemStack stack, long duration) {
         if (!this.enabled)
             return;
-        this.activeCooldowns.removeAll((Collection) this.activeCooldowns.stream().filter(c -> c.getItemStack().getIsItemStackEqual(stack)).collect(Collectors.toList()));
-
-//    this.activeCooldowns.removeAll((Collection)this.activeCooldowns.stream().filter(c -> c.getItemStack().func_179549_c(stack)).collect(Collectors.toList()));
+        this.activeCooldowns.removeAll(this.activeCooldowns.stream().filter(c -> c.getItemStack().getIsItemStackEqual(stack)).collect(Collectors.toList()));
         this.activeCooldowns.add(new Cooldown(stack, duration, System.currentTimeMillis()));
     }
 

@@ -143,11 +143,8 @@ public class ArmorStatus extends HudModule {
         if (stack.isItemStackDamageable()) {
             ColorObject dynamicColor = this.textColor;
             if (this.dynamicTextColor) {
-                //int i = (int)Math.round(255.0D - stack.getItemDamageForDisplay() * 255.0D / stack.getMaxDamage());
                 int i = (int) Math.round(255.0D - stack.getItemDamage() * 255.0D / stack.getMaxDamage());
-                if (this.lowEffect && System.currentTimeMillis() / Math.max(140, i * 16) % 2L == 0L && (stack.getMaxDamage() - stack.getItemDamage()) / stack.getMaxDamage() * 100.0D <= this.lowEffectThreshold) {
-
-                    //if (this.lowEffect && System.currentTimeMillis() / Math.max(140, i * 16) % 2L == 0L && (stack.getMaxDamage() - stack.getItemDamageForDisplay()) / stack.getMaxDamage() * 100.0D <= this.lowEffectThreshold) {
+                if (this.lowEffect && System.currentTimeMillis() / Math.max(140, i * 16) % 2L == 0L && (stack.getMaxDamage() - stack.getItemDamage()) / (float)stack.getMaxDamage() * 100.0D <= this.lowEffectThreshold) {
                     dynamicColor = new ColorObject(255, 255, 255, 255);
                 } else {
                     dynamicColor = new ColorObject(255, i, i, 255);
@@ -192,11 +189,10 @@ public class ArmorStatus extends HudModule {
         String uses;
         StringBuilder builder = new StringBuilder();
         if (stack.isItemStackDamageable()) {
-//      int itemDamage = stack.getItemDamageForDisplay();
             int itemDamage = stack.getItemDamage();
 
             int maxDamage = stack.getMaxDamage();
-            double percent = MathHelper.clamp_double((maxDamage - itemDamage) / maxDamage * 100.0D, 0.0D, 100.0D);
+            double percent = MathHelper.clamp_double((maxDamage - itemDamage) / (float)maxDamage * 100.0D, 0.0D, 100.0D);
             switch (this.textMode) {
                 case "Remaining":
                     uses = Integer.toString(maxDamage - itemDamage);

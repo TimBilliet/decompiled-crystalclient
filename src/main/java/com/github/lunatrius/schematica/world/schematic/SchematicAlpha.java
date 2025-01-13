@@ -55,7 +55,7 @@ public class SchematicAlpha extends SchematicFormat {
             NBTTagCompound mapping = tagCompound.getCompoundTag("SchematicaMapping");
             Set<String> names = mapping.getKeySet();
             for (String name : names)
-                oldToNew.put(Short.valueOf(mapping.getShort(name)), Short.valueOf((short) Block.getIdFromBlock((Block) BLOCK_REGISTRY.getObject(new ResourceLocation(name)))));
+                oldToNew.put(mapping.getShort(name), (short) Block.getIdFromBlock(BLOCK_REGISTRY.getObject(new ResourceLocation(name))));
         }
         MBlockPos pos = new MBlockPos();
         Schematic schematic = new Schematic(icon, width, height, length);
@@ -65,15 +65,15 @@ public class SchematicAlpha extends SchematicFormat {
                     int index = x + (y * length + z) * width;
                     int blockID = localBlocks[index] & 0xFF | (extra ? ((extraBlocks[index] & 0xFF) << 8) : 0);
                     int meta = localMetadata[index] & 0xFF;
-                    if ((id = oldToNew.get(Short.valueOf((short) blockID))) != null)
-                        blockID = id.shortValue();
-                    Block block = (Block) BLOCK_REGISTRY.getObjectById(blockID);
+                    if ((id = oldToNew.get((short) blockID)) != null)
+                        blockID = id;
+                    Block block = BLOCK_REGISTRY.getObjectById(blockID);
                     pos.set(x, y, z);
                     try {
                         IBlockState blockState = block.getStateFromMeta(meta);
                         schematic.setBlockState((BlockPos) pos, blockState);
                     } catch (Exception e) {
-                        Reference.logger.error("Could not set block state at {} to {} with metadata {}", new Object[]{pos, BLOCK_REGISTRY.getNameForObject(block), Integer.valueOf(meta), e});
+                        Reference.logger.error("Could not set block state at {} to {} with metadata {}", pos, BLOCK_REGISTRY.getNameForObject(block), meta, e);
                     }
                 }
             }

@@ -682,7 +682,7 @@ public class RenderSchematic extends RenderGlobal implements IRegistrable {
     public void drawSelectionBox(EntityPlayer player, MovingObjectPosition movingObjectPosition, int p_72731_3_, float partialTicks) {
     }
 
-    public void func_174960_a(BlockPos pos) {
+    public void markBlockForUpdate(BlockPos pos) {
         int x = pos.getX();
         int y = pos.getY();
         int z = pos.getZ();

@@ -25,7 +25,7 @@ public class BlockStateReplacer {
 
     public IBlockState getReplacement(IBlockState original, Map<IProperty, Comparable> properties) {
         IBlockState replacement = this.defaultReplacement;
-        replacement = applyProperties(replacement, (Map<IProperty, Comparable>) original.getProperties());
+        replacement = applyProperties(replacement, original.getProperties());
         replacement = applyProperties(replacement, properties);
         return replacement;
     }
@@ -47,11 +47,7 @@ public class BlockStateReplacer {
     public static BlockStateHelper getMatcher(BlockStateInfo blockStateInfo) {
         BlockStateHelper matcher = BlockStateHelper.forBlock(blockStateInfo.block);
         for (Map.Entry<IProperty, Comparable> entry : blockStateInfo.stateData.entrySet()) {
-            matcher.where(entry.getKey(), new Predicate<Comparable>() {
-                public boolean apply(Comparable input) {
-                    return (input != null && input.equals(entry.getValue()));
-                }
-            });
+            matcher.where(entry.getKey(), input -> (input != null && input.equals(entry.getValue())));
         }
         return matcher;
     }
@@ -102,7 +98,7 @@ public class BlockStateReplacer {
             }
         }
         if (strict)
-            throw new LocalizedException(I18n.format("schematica.message.invalidPropertyForBlock", new Object[0]), new Object[]{name + "=" + value, BLOCK_REGISTRY.getNameForObject(blockState.getBlock())});
+            throw new LocalizedException(I18n.format("schematica.message.invalidPropertyForBlock", new Object[0]), name + "=" + value, BLOCK_REGISTRY.getNameForObject(blockState.getBlock()));
         return false;
     }
 

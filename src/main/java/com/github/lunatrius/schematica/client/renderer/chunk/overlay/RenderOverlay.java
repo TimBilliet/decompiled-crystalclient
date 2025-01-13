@@ -11,6 +11,7 @@ import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Reference;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -82,7 +83,6 @@ public class RenderOverlay extends RenderChunk {
                 Block schBlock = schBlockState.getBlock();
                 if (schBlock.isOpaqueCube())
                     visgraph.func_178606_a(pos);
-//          visgraph.setOpaqueCube(pos);
                 BlockPos mcPos = pos.add((Vec3i) schematic.position);
                 IBlockState mcBlockState = worldClient.getBlockState(mcPos);
                 Block mcBlock = mcBlockState.getBlock();
@@ -102,24 +102,32 @@ public class RenderOverlay extends RenderChunk {
                                     render = true;
                                     color = 16711680;
                                     if (!(Schematica.getInstance()).trayMode || mcPos.getY() != 253) {
-                                        mcBlock.setBlockBoundsBasedOnState(worldClient, mcPos);
-                                        AxisAlignedBB bb = mcBlock.getCollisionBoundingBox(worldClient, mcPos, null);
-                                        if (bb != null) {
-                                            AxisAlignedBB aabb = bb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
-                                            tracers.put(mcPos, new Tuple(RenderType.INCORRECT_BLOCK, aabb));
+                                        Block superBlock = mcBlock;
+                                        if (mcBlock.getCollisionBoundingBox(worldClient, mcPos, null) == null) {
+                                            superBlock = new Block(material);
+                                            if (!(mcBlock instanceof BlockStairs)) {
+                                                superBlock.setBlockBounds((float) mcBlock.getBlockBoundsMinX(), (float) mcBlock.getBlockBoundsMinY(), (float) mcBlock.getBlockBoundsMinZ(), (float) mcBlock.getBlockBoundsMaxX(), (float) mcBlock.getBlockBoundsMaxY(), (float) mcBlock.getBlockBoundsMaxZ());
+                                            }
                                         }
+                                        superBlock.setBlockBoundsBasedOnState(worldClient, mcPos);
+                                        AxisAlignedBB aabb = superBlock.getCollisionBoundingBox(worldClient, mcPos, null).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
+                                        tracers.put(mcPos, new Tuple<>(RenderType.INCORRECT_BLOCK, aabb));
                                     }
                                 }
                             } else if (!BlockStateHelper.areBlockStatesEqual(schBlockState, mcBlockState)) {
                                 render = true;
                                 color = 12541696;
                                 if (!(Schematica.getInstance()).trayMode || mcPos.getY() != 253) {
-                                    mcBlock.setBlockBoundsBasedOnState(worldClient, mcPos);
-                                    AxisAlignedBB bb = mcBlock.getCollisionBoundingBox(worldClient, mcPos, null);
-                                    if (bb != null) {
-                                        AxisAlignedBB aabb = bb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
-                                        tracers.put(mcPos, new Tuple(RenderType.WRONG_META, aabb));
+                                    Block superBlock = mcBlock;
+                                    if (mcBlock.getCollisionBoundingBox(worldClient, mcPos, null) == null) {
+                                        superBlock = new Block(mcBlock.getMaterial());
+                                        if (!(mcBlock instanceof BlockStairs)) {
+                                            superBlock.setBlockBounds((float) mcBlock.getBlockBoundsMinX(), (float) mcBlock.getBlockBoundsMinY(), (float) mcBlock.getBlockBoundsMinZ(), (float) mcBlock.getBlockBoundsMaxX(), (float) mcBlock.getBlockBoundsMaxY(), (float) mcBlock.getBlockBoundsMaxZ());
+                                        }
                                     }
+                                    superBlock.setBlockBoundsBasedOnState(worldClient, mcPos);
+                                    AxisAlignedBB aabb = superBlock.getCollisionBoundingBox(worldClient, mcPos, null).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
+                                    tracers.put(mcPos, new Tuple<>(RenderType.WRONG_META, aabb));
                                 }
                             }
                         } else if (!isSchAirBlock) {
@@ -138,12 +146,16 @@ public class RenderOverlay extends RenderChunk {
                         if (ClientProxy.currentSchematic.totalBlocks > 7000) {
                             GeometryTessellator.drawCuboid(worldRenderer, pos, sides, 0x3F000000 | color);
                         } else {
-                            schBlock.setBlockBoundsBasedOnState(schematic, pos);
-                            AxisAlignedBB bb = schBlock.getCollisionBoundingBox(schematic, pos, null);
-                            if (bb != null) {
-                                AxisAlignedBB aabb = bb.expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
-                                GeometryTessellator.drawCuboid(worldRenderer, aabb, sides, 0x3F000000 | color);
+                            Block superBlock = schBlock;
+                            if (schBlock.getCollisionBoundingBox(schematic, pos, null) == null) {
+                                superBlock = new Block(schBlock.getMaterial());
+                                if (!(schBlock instanceof BlockStairs)) {
+                                    superBlock.setBlockBounds((float) schBlock.getBlockBoundsMinX(), (float) schBlock.getBlockBoundsMinY(), (float) schBlock.getBlockBoundsMinZ(), (float) schBlock.getBlockBoundsMaxX(), (float) schBlock.getBlockBoundsMaxY(), (float) schBlock.getBlockBoundsMaxZ());
+                                }
                             }
+                            superBlock.setBlockBoundsBasedOnState(schematic, pos);
+                            AxisAlignedBB aabb = superBlock.getCollisionBoundingBox(schematic, pos, null).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
+                            GeometryTessellator.drawCuboid(worldRenderer, aabb, sides, 0x3F000000 | color);
                         }
                         cuboids++;
                     }

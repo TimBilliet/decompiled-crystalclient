@@ -120,16 +120,10 @@ public class Notification {
     }
 
     public double getProgress() {
-        return (System.currentTimeMillis() - this.createMs) / this.delay;
+        return (System.currentTimeMillis() - this.createMs) / (float)this.delay;
     }
 
     public boolean isExpired() {
         return (System.currentTimeMillis() >= this.expireMs);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\clien\\util\objects\Notification.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

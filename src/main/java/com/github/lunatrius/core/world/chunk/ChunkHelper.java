@@ -10,7 +10,7 @@ public class ChunkHelper {
     public static boolean isSlimeChunk(long seed, BlockPos pos) {
         int x = pos.getX() >> 4;
         int z = pos.getZ() >> 4;
-        RANDOM.setSeed(seed + (x * x * 4987142) + (x * 5947611) + (z * z * 4392871) + (z * 389711) ^ 0x3AD8025FL);
+        RANDOM.setSeed(seed + ((long) x * x * 4987142) + (x * 5947611L) + ((long) z * z * 4392871) + (z * 389711L) ^ 0x3AD8025FL);
         return (RANDOM.nextInt(10) == 0);
     }
 }

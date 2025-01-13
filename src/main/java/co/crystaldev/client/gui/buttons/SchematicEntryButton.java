@@ -67,6 +67,7 @@ public class SchematicEntryButton extends Button {
 
     public void onUpdate() {
         int bSize = 16;
+        this.load.y = this.y + this.height / 2 - bSize / 2;
         this.delete.y = this.y + this.height / 2 - bSize / 2;
     }
 

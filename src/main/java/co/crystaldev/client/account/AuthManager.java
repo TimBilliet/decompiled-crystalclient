@@ -33,14 +33,8 @@ public class AuthManager {
             response.append('\r');
         }
         rd.close();
-        JsonObject obj = (JsonObject) Reference.GSON.fromJson(response.toString(), JsonObject.class);
+        JsonObject obj = Reference.GSON.fromJson(response.toString(), JsonObject.class);
         AltManager.getInstance().addAccount(new AccountData(data.getAccessToken(), obj.get("name").getAsString(), obj.get("id").getAsString()));
         return true;
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\account\AuthManager.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

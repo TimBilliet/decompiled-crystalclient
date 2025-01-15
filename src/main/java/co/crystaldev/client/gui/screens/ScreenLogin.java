@@ -1,5 +1,6 @@
 package co.crystaldev.client.gui.screens;
 
+import co.crystaldev.client.Reference;
 import co.crystaldev.client.Resources;
 import co.crystaldev.client.account.AltManager;
 import co.crystaldev.client.account.MojangAuthManager;
@@ -13,6 +14,8 @@ import co.crystaldev.client.gui.screens.override.ScreenMainMenu;
 import co.crystaldev.client.util.Reflector;
 import co.crystaldev.client.util.RenderUtils;
 import co.crystaldev.client.util.enums.ChatColor;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.mojang.authlib.exceptions.AuthenticationException;
 import net.minecraft.client.gui.GuiScreen;
 import org.lwjgl.input.Keyboard;
@@ -86,20 +89,59 @@ public class ScreenLogin extends ScreenPanorama {
             }
         });
         this.microsoftButton.onClick = (() -> {
-//        if (Reflector.isOptiFineLoaded()) {
-            System.out.println("launcherProtocol.openMicrosoftWindow()");
-            this.microsoftButton.displayText = "Sign-in window opened";
-            this.microsoftButton.setEnabled(false);
-            this.msmcIn = new Scanner(System.in);
-            this.thread = new Thread();
-            this.thread.setDaemon(true);
-            this.thread.start();
-//      try {
-//        Desktop.getDesktop().browse(new URI(""));
-//      } catch (IOException | URISyntaxException e) {
-//        e.printStackTrace();
-//      }
-//        }
+//            if (Reflector.isOptiFineLoaded()) {
+//                System.out.println("launcherProtocol.openMicrosoftWindow()");
+//                this.microsoftButton.displayText = "Sign-in window opened";
+//                this.microsoftButton.setEnabled(false);
+//                this.msmcIn = new Scanner(System.in);
+//                this.thread = new Thread(() -> {
+//                    while (true) {
+//                        if (this.msmcIn.hasNextLine()) {
+//                            String line = this.msmcIn.nextLine();
+//                            try {
+//                                JsonObject jsonObject = Reference.GSON.fromJson(line, JsonObject.class);
+//                                if(jsonObject.has("final")){
+//                                    String var3 = jsonObject.get("status").getAsString();
+//                                    int var4 = -1;
+//                                    switch(var3.hashCode()) {
+//                                        case -1867169789:
+//                                            if (var3.equals("success")) {
+//                                                var4 = 2;
+//                                            }
+//                                            break;
+//                                        case -838846263:
+//                                            if (var3.equals("update")) {
+//                                                var4 = 0;
+//                                            }
+//                                            break;
+//                                        case 96784904:
+//                                            if (var3.equals("error")) {
+//                                                var4 = 1;
+//                                            }
+//                                    }
+//                                    switch (var4) {
+//                                        case 0:
+////                                            this.microsoftButton. = var2.get("message").getAsString();
+////                                            this.microsoftButton.
+//                                            break;
+//                                        case 1:
+//                                            this.errorMessage = jsonObject.get("message").getAsString();
+//                                            this.erroredAt = System.currentTimeMillis();
+//                                            break;
+//                                    }
+//                                }
+//                            } catch (JsonParseException ex) {
+//                                Reference.LOGGER.error("Unable to parse JSON from '{}'", line, ex);
+//                            }
+//                        }
+//                    }
+//
+//                });
+//                this.thread.setDaemon(true);
+//                this.thread.start();
+//            } else {
+//
+//            }
         });
         Keyboard.enableRepeatEvents(true);
     }

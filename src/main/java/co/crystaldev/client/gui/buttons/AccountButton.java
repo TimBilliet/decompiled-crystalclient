@@ -49,13 +49,12 @@ public class AccountButton extends Button {
             return;
         }
         List<AccountData> accounts = AltManager.getAccounts();
+//        System.out.println(accounts);
         if (accounts != null && this.width == 0) {
             int y = this.y + this.height + 2;
             if (accounts.isEmpty() || !AltManager.isLoggedIn())
                 this.width = 45 + this.fontRenderer.getStringWidth("No Account Selected");
-            Iterator<AccountData> iterator = accounts.iterator();
-            while (iterator.hasNext()) {
-                AccountData accountData = iterator.next();
+            for (AccountData accountData : accounts) {
                 if (accountData == null)
                     continue;
                 this.width = Math.max(60 + this.fontRenderer.getStringWidth(accountData.getName()), this.width);
@@ -108,6 +107,7 @@ public class AccountButton extends Button {
                     (new Thread(() -> {
                         boolean res = false;
                         try {
+                            System.out.println("loggin in");
                             res = AuthManager.login(b.data);
                         } catch (IOException iOException) {
                         }
@@ -121,7 +121,7 @@ public class AccountButton extends Button {
                 }
                 if (button instanceof MenuResourceButton) {
                     this.expanded = false;
-                    this.mc.displayGuiScreen((GuiScreen) new ScreenLogin((GuiScreen) this.parent));
+                    this.mc.displayGuiScreen(new ScreenLogin(this.parent));
                 }
             }
     }

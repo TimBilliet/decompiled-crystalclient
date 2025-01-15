@@ -22,10 +22,12 @@ import com.github.lunatrius.schematica.util.FileFilterSchematic;
 import com.github.lunatrius.schematica.world.schematic.SchematicUtil;
 import net.minecraft.nbt.NBTTagCompound;
 import org.apache.commons.io.FilenameUtils;
+import org.lwjgl.Sys;
 
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
@@ -183,7 +185,20 @@ public class ScreenLoadSchematic extends ScreenSchematicaBase {
         }
         addButton(new MenuButton(-1, x, loadedY, w, h, "Open Schematic Folder"), b -> {
             b.addAttribute("schematic_info_entry");
-            b.onClick = () -> GuiUtils.openFolder(this.currentDirectory);
+            b.onClick = () -> {
+                boolean retry = false;
+                try {
+                    Class<?> clazz = Class.forName("java.awt.Desktop");
+                    Object method = clazz.getMethod("getDesktop").invoke(null);
+                    clazz.getMethod("browse", URI.class).invoke(method, ConfigurationHandler.schematicDirectory.toURI());
+                } catch (Throwable var3) {
+                    retry = true;
+                }
+                if (retry) {
+                    Sys.openURL("file://" + ConfigurationHandler.schematicDirectory.getAbsolutePath());
+                }
+
+            };
         });
     }
 

@@ -128,7 +128,7 @@ public class MicrosoftAuthManager {
             JsonObject claims = (JsonObject) obj.get("DisplayClaims");
             JsonArray xui = claims.getAsJsonArray("xui");
             String xblUhs = xui.get(0).getAsJsonObject().get("uhs").getAsString();
-            return new Tuple(xblUhs, xstsToken);
+            return new Tuple<>(xblUhs, xstsToken);
         } catch (IOException ex) {
             InputStream is = connection.getErrorStream();
             if (is != null) {
@@ -217,9 +217,3 @@ public class MicrosoftAuthManager {
 
     private static final Minecraft mc = Minecraft.getMinecraft();
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\account\MicrosoftAuthManager.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

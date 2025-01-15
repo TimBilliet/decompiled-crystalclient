@@ -49,6 +49,7 @@ public class AltManager {
     public AltManager() {
         accounts = new LinkedList<>();
         INSTANCE = this;
+        populateAltManager();
     }
 
     public boolean contains(AccountData account) {

@@ -155,7 +155,6 @@ public class ChatSettings extends Module implements IRegistrable {
       String text = ((MixinGuiChat)chatBar).getInputField().getText();
       char[] operators = { '+', '-', '*', '/', '^', '=', '(' };
       for (char operator : operators) {
-          System.out.println(text + " lasttext: " + lastText);
         if (!text.equals(this.lastText) && text.contains(String.valueOf(operator))) {
           double result;
           this.lastText = text;

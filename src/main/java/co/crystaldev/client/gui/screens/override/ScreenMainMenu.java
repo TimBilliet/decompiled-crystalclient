@@ -8,6 +8,7 @@ import co.crystaldev.client.gui.Button;
 import co.crystaldev.client.gui.GuiOptions;
 import co.crystaldev.client.gui.Screen;
 import co.crystaldev.client.gui.ScreenPanorama;
+import co.crystaldev.client.gui.buttons.AccountButton;
 import co.crystaldev.client.gui.buttons.MenuButton;
 import co.crystaldev.client.gui.buttons.ResourceButton;
 import co.crystaldev.client.gui.ease.Animation;
@@ -95,8 +96,11 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
             addButton(new ResourceButton(20, x, 5, h, h, Resources.REPLAY_MOD), b -> b.setOnClick(Reflector::openReplayGui));
             x += h;
         }
-//    addButton(new AccountButton(21, x, 5, this));
-        addButton(new ResourceButton(21, x, 5, h, h, Resources.ADD_PERSON), b -> {
+//        addButton(new AccountButton(21, x, 5, this));
+        addButton(new ResourceButton(22, x, 5, h, h, Resources.ADD_PERSON), b -> {
+            b.setOnClick(() -> {
+                this.addOverlay(new OverlayOfflineAccount());
+            });
         });
     }
 
@@ -117,9 +121,9 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
             case 4:
                 this.mc.displayGuiScreen(new GuiModList(this));
                 break;
-            case 21:
-                ((Screen) this.mc.currentScreen).addOverlay(new OverlayOfflineAccount());
-                break;
+            case 22:
+//                ((Screen) this.mc.currentScreen).addOverlay(new OverlayOfflineAccount());
+//                break;
         }
     }
 
@@ -170,9 +174,10 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
     }
 
     private void checkSession(GuiScreen screenIn) {
-        if (!AltManager.isLoggedIn()) {
+        System.out.println("altmanagerloggedin: " + AltManager.isLoggedIn());
+//        if (AltManager.isLoggedIn()) {
             this.mc.displayGuiScreen(screenIn);
-        }
+//        }
     }
 
     public static boolean isAnimationComplete() {

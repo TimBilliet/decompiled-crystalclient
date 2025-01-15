@@ -148,25 +148,23 @@ public class ChatSettings extends Module implements IRegistrable {
 
     public void onClientTick(ClientTickEvent.Post event) {
         if (this.algebra && this.mc.currentScreen instanceof GuiChat) {
-            //TODO fix, exp.evaluate fails
-      GuiChat chatBar = (GuiChat)this.mc.currentScreen;
-      String text = ((MixinGuiChat)chatBar).getInputField().getText();
-      char[] operators = { '+', '-', '*', '/', '^', '=', '(' };
-      for (char operator : operators) {
-        if (!text.equals(this.lastText) && text.contains(String.valueOf(operator))) {
-          double result;
-          this.lastText = text;
-          try {
-            Expression exp = (new ExpressionBuilder(text)).build();
-            result = exp.evaluate();
-          } catch (Throwable ignored) {
-              System.out.println("throwable");
-            return;
-          }
-          Client.sendMessage("&7» " + result, false);
-          break;
-        }
-      }
+            GuiChat chatBar = (GuiChat) this.mc.currentScreen;
+            String text = ((MixinGuiChat) chatBar).getInputField().getText();
+            char[] operators = {'+', '-', '*', '/', '^', '=', '('};
+            for (char operator : operators) {
+                if (!text.equals(this.lastText) && text.contains(String.valueOf(operator))) {
+                    double result;
+                    this.lastText = text;
+                    try {
+                        Expression exp = (new ExpressionBuilder(text)).build();
+                        result = exp.evaluate();
+                    } catch (Throwable ignored) {
+                        return;
+                    }
+                    Client.sendMessage("&7» " + result, false);
+                    break;
+                }
+            }
         }
     }
 

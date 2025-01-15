@@ -3,7 +3,6 @@
 ## Things that currently don't work (yet)
 - schematic rotation 
 - alt manager (never worked in the original one anyway)
-- chat math (who cares)
 - stackoverflow with slab rendering if nolag is on
 
 ## How to generate a working jar

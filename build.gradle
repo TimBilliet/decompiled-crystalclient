@@ -52,6 +52,7 @@ dependencies {
     implementation 'org.jetbrains:annotations:24.0.0'
     implementation 'com.github.ben-manes.caffeine:caffeine:2.9.3'
     shade 'net.objecthunter:exp4j:0.4.8'
+    shade 'it.unimi.dsi:fastutil:8.3.1'
     implementation 'org.java-websocket:Java-WebSocket:1.6.0'
 }
 

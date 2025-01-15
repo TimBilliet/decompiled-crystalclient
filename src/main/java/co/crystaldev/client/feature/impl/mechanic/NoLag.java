@@ -15,12 +15,15 @@ import co.crystaldev.client.feature.annotations.properties.Toggle;
 import co.crystaldev.client.feature.base.Category;
 import co.crystaldev.client.feature.base.Module;
 import co.crystaldev.client.handler.ModuleHandler;
+import it.unimi.dsi.fastutil.doubles.AbstractDoubleList;
+import it.unimi.dsi.fastutil.doubles.DoubleArrayList;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHalfStoneSlab;
+import net.minecraft.block.BlockHalfStoneSlabNew;
+import net.minecraft.block.BlockHalfWoodSlab;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.item.EntityTNTPrimed;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @ModuleInfo(name = "No Lag", nameAliases = {"FPS"}, description = "Improve game performance", category = Category.MECHANIC)
 public class NoLag extends Module implements IRegistrable {
@@ -152,11 +155,10 @@ public class NoLag extends Module implements IRegistrable {
 
     private static final long LONG_BITS = Double.doubleToLongBits(0.0D);
 
-//    private final AbstractDoubleList minimalTnt = (AbstractDoubleList)new DoubleArrayList(2048);
+    private final AbstractDoubleList minimalTnt = new DoubleArrayList(2048);
 
-    //    private final AbstractDoubleList minimalSand = (AbstractDoubleList)new DoubleArrayList(2048);
-    private final List<Double> minimalTnt = new ArrayList<>(2048);
-    private final List<Double> minimalSand = new ArrayList<>(2048);
+    private final AbstractDoubleList minimalSand = new DoubleArrayList(2048);
+
     private long lastClearTime = System.currentTimeMillis();
 
     public NoLag() {
@@ -186,7 +188,7 @@ public class NoLag extends Module implements IRegistrable {
     }
 
     public static boolean isSlab(Block block) {
-        return (block instanceof net.minecraft.block.BlockHalfWoodSlab || block instanceof net.minecraft.block.BlockHalfStoneSlabNew || block instanceof net.minecraft.block.BlockHalfStoneSlab);
+        return (block instanceof BlockHalfWoodSlab || block instanceof BlockHalfStoneSlabNew || block instanceof BlockHalfStoneSlab);
     }
 
     public static NoLag getInstance() {
@@ -213,7 +215,7 @@ public class NoLag extends Module implements IRegistrable {
                     hash = 31.0D * hash + (int) entity.posY;
                     hash = 31.0D * hash + ModuleHandler.getTotalTicks();
                     hash = 31.0D * hash + ((EntityTNTPrimed) entity).fuse;
-                } else if (entity instanceof net.minecraft.entity.item.EntityFallingBlock) {
+                } else if (entity instanceof EntityFallingBlock) {
                     hash = 23.0D;
                     hash = 47.0D * hash + ((int) entity.posX & 0xFFFFFFFE);
                     hash = 47.0D * hash + ((int) entity.posZ & 0xFFFFFFFE);
@@ -221,8 +223,7 @@ public class NoLag extends Module implements IRegistrable {
                     hash = 47.0D * hash + ModuleHandler.getTotalTicks();
                 }
                 if (Double.doubleToLongBits(hash) != LONG_BITS) {
-                    List<Double> list = (entity instanceof EntityTNTPrimed) ? this.minimalTnt : this.minimalSand;
-                    //AbstractDoubleList list = (entity instanceof EntityTNTPrimed) ? this.minimalTnt : this.minimalSand;
+                    AbstractDoubleList list = (entity instanceof EntityTNTPrimed) ? this.minimalTnt : this.minimalSand;
                     if (list.contains(hash)) {
                         ev.setCancelled(true);
                         return;

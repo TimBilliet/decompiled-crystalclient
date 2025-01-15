@@ -56,7 +56,6 @@ public abstract class HudModule extends Module {
         AnchorRegion ar = this.position.getAnchorRegion();
         int width = (int) (this.width * this.scale);
         int x = ar.isRightSided() ? (int) (ar.getRelativeX() - this.position.getX() - width) : (int) (ar.getRelativeX() + this.position.getX() - (ar.isCenteredHorizontally() ? (width / 2) : 0));
-//    int x = ar.isRightSided() ? (int)(ar.getRelativeX() - this.position.getX() - width) : (int)(ar.getRelativeX() + this.position.getX() - (ar.isCenteredHorizontally() ? (width / 2) : false));
         return Math.max(ar.clampX(x + width) - width, 0);
     }
 

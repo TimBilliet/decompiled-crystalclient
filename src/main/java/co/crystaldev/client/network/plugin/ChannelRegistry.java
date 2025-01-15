@@ -55,7 +55,7 @@ public class ChannelRegistry {
     private void registerChannel(String name) {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.getNetHandler() != null && !this.channels.isEmpty())
-            mc.getNetHandler().addToSendQueue((Packet) new C17PacketCustomPayload("REGISTER", new PacketBuffer(Unpooled.wrappedBuffer(name.getBytes(StandardCharsets.UTF_8)))));
+            mc.getNetHandler().addToSendQueue(new C17PacketCustomPayload("REGISTER", new PacketBuffer(Unpooled.wrappedBuffer(name.getBytes(StandardCharsets.UTF_8)))));
     }
 
     @SubscribeEvent
@@ -63,8 +63,10 @@ public class ChannelRegistry {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.getNetHandler() != null && System.currentTimeMillis() - this.lastRegister > 2000L) {
             String data = Joiner.on("\000").join(this.channels.keySet());
-            mc.getNetHandler().addToSendQueue((Packet) new C17PacketCustomPayload("REGISTER", new PacketBuffer(Unpooled.wrappedBuffer(data.getBytes(StandardCharsets.UTF_8)))));
-            mc.getNetHandler().addToSendQueue((Packet) new C17PacketCustomPayload("CC|Init", new PacketBuffer(Unpooled.wrappedBuffer("crystalclient_1.1.16-projectassfucker".getBytes(StandardCharsets.UTF_8)))));
+            mc.getNetHandler().addToSendQueue(new C17PacketCustomPayload("REGISTER", new PacketBuffer(Unpooled.wrappedBuffer(data.getBytes(StandardCharsets.UTF_8)))));
+            mc.getNetHandler().addToSendQueue(new C17PacketCustomPayload("CC|Init", new PacketBuffer(Unpooled.wrappedBuffer("crystalclient_1.1.12".getBytes(StandardCharsets.UTF_8)))));
+
+//            mc.getNetHandler().addToSendQueue(new C17PacketCustomPayload("CC|Init", new PacketBuffer(Unpooled.wrappedBuffer("crystalclient_1.1.16-projectassfucker".getBytes(StandardCharsets.UTF_8)))));
             this.lastRegister = System.currentTimeMillis();
             (new PluginChannelEvent.Register()).call();
         }

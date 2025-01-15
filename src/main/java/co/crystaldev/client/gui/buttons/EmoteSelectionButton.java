@@ -59,7 +59,6 @@ public class EmoteSelectionButton extends Button {
 
     public void drawButton(int mouseX, int mouseY, boolean hovered) {
         hovered = (hovered && this.emote != null);
-//    hovered = false;
         this.backgroundColor.fade(hovered);
         this.outlineColor.fade(hovered);
         this.textColor.fade(hovered);

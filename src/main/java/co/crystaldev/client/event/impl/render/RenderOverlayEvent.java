@@ -33,7 +33,6 @@ public class RenderOverlayEvent extends Event {
         private final boolean visible;
 
         public boolean isVisible() {
-//      System.out.println("crosshairrenderoverlayev");
             return this.visible;
         }
 

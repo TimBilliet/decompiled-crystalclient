@@ -42,7 +42,6 @@ import net.minecraftforge.client.GuiIngameForge;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
-//import net.minecraftforge.fml.common.eventhandler.Event;
 import org.lwjgl.opengl.GL11;
 
 public class GuiIngameCrystal extends GuiIngameForge {

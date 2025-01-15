@@ -14,7 +14,6 @@ import co.crystaldev.client.event.impl.network.ServerConnectEvent;
 import co.crystaldev.client.event.impl.tick.ClientTickEvent;
 import co.crystaldev.client.util.enums.IconColor;
 import co.crystaldev.client.util.type.GlueList;
-//import mchorse.emoticons.common.emotes.Emotes;
 import mchorse.emoticons.common.emotes.Emotes;
 import net.minecraft.client.Minecraft;
 import org.jetbrains.annotations.NotNull;

@@ -15,8 +15,6 @@ import co.crystaldev.client.feature.annotations.Hidden;
 import co.crystaldev.client.feature.annotations.properties.*;
 import co.crystaldev.client.feature.base.Category;
 import co.crystaldev.client.feature.base.HudModule;
-//import co.crystaldev.client.group.provider.GroupChunkProvider;
-//import co.crystaldev.client.group.provider.GroupMapProvider;
 import co.crystaldev.client.group.provider.GroupChunkProvider;
 import co.crystaldev.client.group.provider.GroupMapProvider;
 import co.crystaldev.client.gui.screens.ScreenMapWriter;
@@ -30,7 +28,6 @@ import mapwriter.api.MwAPI;
 import mapwriter.config.ConfigurationHandler;
 import net.minecraft.client.gui.GuiScreen;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -145,7 +142,7 @@ public class MapWriter extends HudModule implements IRegistrable {
     public void registerEvents() {
         EventBus.register(this, InitializationEvent.class, this::onClientInit);
         EventBus.register(this, WindowResizeEvent.class, ev -> ConfigurationHandler.loadConfig());
-        EventBus.register(this, ShutdownEvent.class, (byte) 0, ev -> this.enabledMapwriterProviders = Reference.GSON.toJson(new HashSet(MwAPI.getEnabledProviderNames())));
+        EventBus.register(this, ShutdownEvent.class, (byte) 0, ev -> this.enabledMapwriterProviders = Reference.GSON.toJson(new HashSet<>(MwAPI.getEnabledProviderNames())));
         EventBus.register(this, RenderWorldEvent.Pre.class, ev -> {
             if (this.mapwriter != null)
                 this.mapwriter.updatePlayer();

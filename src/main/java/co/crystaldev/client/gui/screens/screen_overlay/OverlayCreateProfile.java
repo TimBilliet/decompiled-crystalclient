@@ -7,6 +7,9 @@ import co.crystaldev.client.gui.buttons.MenuButton;
 import co.crystaldev.client.gui.buttons.SimpleColorPicker;
 import co.crystaldev.client.gui.buttons.TextInputField;
 import co.crystaldev.client.gui.buttons.settings.ToggleButton;
+import co.crystaldev.client.gui.screens.ScreenProfiles;
+import co.crystaldev.client.handler.ProfileHandler;
+import co.crystaldev.client.util.objects.profiles.Profile;
 
 import java.awt.*;
 
@@ -30,21 +33,40 @@ public class OverlayCreateProfile extends ScreenOverlay {
         int w = this.pane.width - 10;
         int h = 18;
         addButton((Button) (this.name = new TextInputField(-1, x + w / 2, y, w / 2, h, "Profile Name") {
+            {
+                setMaxLength(32);
+            }
 
         }));
-        addButton((Button) new Label(x + 5, y + h / 2 - Fonts.NUNITO_REGULAR_20.getStringHeight() / 2, "Name", -1) {
 
+        addButton((Button) new Label(x + 5, y + h / 2 - Fonts.NUNITO_REGULAR_20.getStringHeight() / 2, "Name", -1) {
+            {
+                setCentered(false);
+            }
         });
         y += h + 5;
         addButton((Button) (this.color = new SimpleColorPicker(x + w / 2 + 3, y, w / 2 - 6, h - 6, Color.WHITE)));
         addButton((Button) new Label(x + 5, y + (h - 6) / 2 - Fonts.NUNITO_REGULAR_20.getStringHeight() / 2, "Color", -1) {
-
+            {
+                setCentered(false);
+            }
         });
         y += h - 6 + 5;
         addButton((Button) (this.autoSelect = new ToggleButton(-1, x, y, w, h, "Auto-Select on this " + (this.mc.isSingleplayer() ? "World" : "Server"), false)));
         y += h + 7;
         addButton((Button) (this.create = new MenuButton(-1, x, y, w, h, "Create Profile") {
-
+            {
+                onClick = () -> {
+                    if(enabled && !name.getText().isEmpty()){
+                        Profile profile = ProfileHandler.getInstance().createNewProfile(OverlayCreateProfile.this.name.getText(), OverlayCreateProfile.this.autoSelect.getCurrentValue());
+                        profile.setColor(OverlayCreateProfile.this.color.getCurrentColor());
+                        OverlayCreateProfile.this.closeOverlay();
+                        if (this.mc.currentScreen instanceof ScreenProfiles) {
+                            ((ScreenProfiles)this.mc.currentScreen).initProfiles();
+                        }
+                    }
+                };
+            }
         }));
         while (this.pane.y + this.pane.height < y + h + 5)
             this.pane.height++;

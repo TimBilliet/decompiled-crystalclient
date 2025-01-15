@@ -63,10 +63,8 @@ public class ToggleSneak extends HudModuleText implements IRegistrable {
     public ToggleSneak() {
         this.enabled = true;
         this.hasInfoHud = true;
-        //this.width = this.mc.fontRenderer.getStringWidth(ToggleSneakStatus.StatusText.SPRINT.toString());
         this.width = this.mc.fontRendererObj.getStringWidth(ToggleSneakStatus.StatusText.SPRINT.toString());
 
-        // this.height = this.mc.fontRenderer.FONT_HEIGHT;
         this.height = this.mc.fontRendererObj.FONT_HEIGHT;
         this.gameSettings = this.mc.gameSettings;
         this.status = ToggleSneakStatus.getInstance();
@@ -85,7 +83,7 @@ public class ToggleSneak extends HudModuleText implements IRegistrable {
     public Tuple<String, String> getInfoHud() {
         if (this.displayString.isEmpty())
             return null;
-        return new Tuple("TS", this.displayString);
+        return new Tuple<>("TS", this.displayString);
     }
 
     public String getDisplayText() {
@@ -106,9 +104,9 @@ public class ToggleSneak extends HudModuleText implements IRegistrable {
         EntityPlayerSP player = this.mc.thePlayer;
         if (player == null)
             return;
-        boolean sneakKeyDown = this.gameSettings.keyBindSneak.isPressed();//getIsKeyPressed();
-        boolean sprintKeyDown = this.gameSettings.keyBindSprint.isPressed();//
-        boolean jumpKeyDown = this.gameSettings.keyBindJump.isPressed();//
+        boolean sneakKeyDown = this.gameSettings.keyBindSneak.isPressed();
+        boolean sprintKeyDown = this.gameSettings.keyBindSprint.isPressed();
+        boolean jumpKeyDown = this.gameSettings.keyBindJump.isPressed();
         if (sneakKeyDown && this.sneakPressStart == 0L) {
             this.sneakPressStart = System.currentTimeMillis();
         } else if (!sneakKeyDown) {

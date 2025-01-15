@@ -5,6 +5,7 @@ import co.crystaldev.client.font.Fonts;
 import co.crystaldev.client.gui.buttons.MenuResourceButton;
 import co.crystaldev.client.gui.buttons.ProfileButton;
 import co.crystaldev.client.gui.buttons.SearchButton;
+import co.crystaldev.client.gui.screens.screen_overlay.OverlayCreateProfile;
 import co.crystaldev.client.handler.ProfileHandler;
 import co.crystaldev.client.util.objects.profiles.Profile;
 
@@ -33,8 +34,13 @@ public class ScreenProfiles extends ScreenBase {
         int h = 28;
         int x = this.content.x + this.content.width / 2 - w / 2;
         int y = this.content.y + 5;
-        addButton(new MenuResourceButton(-1, x, y, w, h, "Create Profile", Resources.PROFILE_ADD, 16) {
-        });
+        addButton(new MenuResourceButton(-1, x, y, w, h, "Create Profile", Resources.PROFILE_ADD, 16), b-> {
+            b.setFontRenderer(Fonts.NUNITO_SEMI_BOLD_24);
+            b.addAttribute("profile_button");
+            b.onClick = ()->{
+              addOverlay(new OverlayCreateProfile());
+            };
+        } );
         y += h + 8;
         for (Profile profile : ProfileHandler.getInstance().getProfiles()) {
             if (!this.search.matchesQuery(profile.getName()))
@@ -47,9 +53,3 @@ public class ScreenProfiles extends ScreenBase {
         this.content.updateMaxScroll(this, 5);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\screens\ScreenProfiles.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

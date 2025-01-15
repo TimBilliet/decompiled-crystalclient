@@ -1,8 +1,6 @@
 package co.crystaldev.client.network.socket.shared;
 
 import co.crystaldev.client.Reference;
-//import co.crystaldev.client.group.GroupManager;
-//import co.crystaldev.client.group.objects.Group;
 import co.crystaldev.client.group.GroupManager;
 import co.crystaldev.client.group.objects.Group;
 import co.crystaldev.client.network.ByteBufWrapper;

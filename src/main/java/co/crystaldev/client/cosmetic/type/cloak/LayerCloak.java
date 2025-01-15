@@ -3,7 +3,6 @@ package co.crystaldev.client.cosmetic.type.cloak;
 import co.crystaldev.client.cosmetic.CosmeticPlayer;
 import co.crystaldev.client.cosmetic.base.Cosmetic;
 import co.crystaldev.client.duck.AbstractClientPlayerExt;
-//import co.crystaldev.client.gui.screens.ScreenCosmetics;
 import co.crystaldev.client.gui.screens.ScreenCosmetics;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;

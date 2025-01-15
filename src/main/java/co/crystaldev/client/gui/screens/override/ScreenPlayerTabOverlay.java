@@ -85,7 +85,7 @@ public class ScreenPlayerTabOverlay extends GuiPlayerTabOverlay {
                 j = Math.max(j, k + (isOnCrystal ? 10 : 0));
             }
         }
-        // List<NetworkPlayerInfo> list = list.subList(0, Math.min(list.size(), 80));
+//         List<NetworkPlayerInfo> list = list.subList(0, Math.min(list.size(), 80));
         List<NetworkPlayerInfo> list = this.list.subList(0, Math.min(this.list.size(), 80));
         int l3 = list.size();
         int i4 = l3;

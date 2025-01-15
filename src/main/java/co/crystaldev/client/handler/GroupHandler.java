@@ -13,7 +13,7 @@ import co.crystaldev.client.feature.settings.GroupOptions;
 import co.crystaldev.client.group.GroupManager;
 import co.crystaldev.client.group.StatusUpdateTask;
 import co.crystaldev.client.network.Packet;
-//import co.crystaldev.client.network.socket.client.group.PacketGroupChat;
+import co.crystaldev.client.network.socket.client.group.PacketGroupChat;
 import co.crystaldev.client.network.socket.client.group.PacketPingLocation;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.MathHelper;
@@ -50,8 +50,8 @@ public class GroupHandler implements IRegistrable {
         });
         EventBus.register(this, PlayerChatEvent.class, ev -> {
             if (!ev.message.startsWith("/") && (GroupOptions.getInstance()).groupChat && GroupManager.getSelectedGroup() != null) {
-//            PacketGroupChat packet = new PacketGroupChat(ev.message);
-//            Client.sendPacket((Packet)packet);
+            PacketGroupChat packet = new PacketGroupChat(ev.message);
+            Client.sendPacket((Packet)packet);
                 ev.setCancelled(true);
             }
         });

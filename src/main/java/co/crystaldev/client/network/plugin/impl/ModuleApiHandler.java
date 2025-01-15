@@ -2,7 +2,6 @@ package co.crystaldev.client.network.plugin.impl;
 
 import co.crystaldev.client.Reference;
 import co.crystaldev.client.handler.ModuleHandler;
-//import co.crystaldev.client.handler.NotificationHandler;
 import co.crystaldev.client.handler.NotificationHandler;
 import co.crystaldev.client.network.plugin.MessageHandler;
 import co.crystaldev.client.util.ByteBufUtils;
@@ -26,17 +25,17 @@ public class ModuleApiHandler extends MessageHandler {
         try {
             ModuleHandler.setModuleApi((ModuleAPI) Reference.GSON.fromJson(this.json, ModuleAPI.class));
         } catch (JsonSyntaxException ex) {
-            Reference.LOGGER.error("Received invalid JSON from module api ({})", new Object[]{this.json, ex});
+            Reference.LOGGER.error("Received invalid JSON from module api ({})", this.json, ex);
         }
         ModuleHandler.getInstance().updateDisallowedModules();
         ArrayList<String> disabled = new ArrayList<>();
         JsonObject obj = (JsonObject) Reference.GSON.fromJson(this.json, JsonObject.class);
-        for (Map.Entry<String, JsonElement> entry : (Iterable<Map.Entry<String, JsonElement>>) obj.entrySet()) {
-            if (!((JsonElement) entry.getValue()).getAsBoolean())
-                disabled.add(WordUtils.capitalizeFully(((String) entry.getKey()).replace("_", " ")));
+        for (Map.Entry<String, JsonElement> entry : obj.entrySet()) {
+            if (!entry.getValue().getAsBoolean())
+                disabled.add(WordUtils.capitalizeFully(entry.getKey().replace("_", " ")));
         }
         if (!disabled.isEmpty())
-            NotificationHandler.addNotification("The current server has remotely disabled: " + String.join(", ", (Iterable) disabled));
+            NotificationHandler.addNotification("The current server has remotely disabled: " + String.join(", ", disabled));
     }
 
     public void toBytes(ByteBuf buf) {

@@ -61,7 +61,6 @@ public class WeatherChanger extends Module implements IRegistrable {
                     int k = chunkcoordintpair.chunkXPos * 16;
                     int l = chunkcoordintpair.chunkZPos * 16;
                     BlockPos blockpos = adjustPosToNearbyEntity(new BlockPos(k + (i1 & 0xF), 0, l + (i1 >> 8 & 0xF)));
-//          if(worldClient.isRaining())
                     if (worldClient.isRainingAt(blockpos))
                         worldClient.addWeatherEffect(new EntityLightningBolt((World) worldClient, blockpos.getX(), blockpos.getY(), blockpos.getZ()));
                 }
@@ -73,8 +72,6 @@ public class WeatherChanger extends Module implements IRegistrable {
         WorldClient worldClient = this.mc.theWorld;
         BlockPos blockpos = worldClient.getPrecipitationHeight(pos);
         AxisAlignedBB axisalignedbb = (new AxisAlignedBB(blockpos, new BlockPos(blockpos.getX(), worldClient.getHeight(), blockpos.getZ()))).expand(3.0D, 3.0D, 3.0D);
-        //List<EntityLivingBase> list = worldClient.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb, p_apply_1_ -> (p_apply_1_ != null && p_apply_1_.isEntityAlive() && world.canSeeSky(p_apply_1_.getPosition())));
-
         List<EntityLivingBase> list = worldClient.getEntitiesWithinAABB(EntityLivingBase.class, axisalignedbb, p_apply_1_ -> (p_apply_1_ != null && p_apply_1_.isEntityAlive() && worldClient.canSeeSky(p_apply_1_.getPosition())));
         return !list.isEmpty() ? ((EntityLivingBase) list.get(((World) worldClient).rand.nextInt(list.size()))).getPosition() : blockpos;
     }
@@ -110,9 +107,3 @@ public class WeatherChanger extends Module implements IRegistrable {
         RAIN, STORMING, SNOW, CLEAR;
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\feature\impl\mechanic\WeatherChanger.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

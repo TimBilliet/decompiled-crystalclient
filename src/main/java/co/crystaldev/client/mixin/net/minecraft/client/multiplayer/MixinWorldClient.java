@@ -5,7 +5,6 @@ import co.crystaldev.client.event.impl.entity.EntitySpawnEvent;
 import co.crystaldev.client.event.impl.network.ServerDisconnectEvent;
 import co.crystaldev.client.event.impl.world.WorldEvent;
 import co.crystaldev.client.feature.impl.mechanic.NoLag;
-//import co.crystaldev.client.feature.settings.ClientOptions;
 import co.crystaldev.client.feature.settings.ClientOptions;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerPlayClient;
@@ -23,7 +22,6 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import wdl.WDLHooks;
-//import wdl.WDLHooks;
 
 import java.util.Random;
 

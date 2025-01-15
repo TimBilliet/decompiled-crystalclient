@@ -40,9 +40,7 @@ public class WaypointButton extends Button {
         int bSize = this.height - 6;
 
         this.remove = new ResourceButton(-1, this.x + this.width - 3 - this.height + 4, this.y + this.height / 2 - bSize / 2, bSize, bSize, Resources.CLOSE);
-//    this.remove = new ResourceButton(-1,this.x + this.width - 3 - bSize - this.height - bSize + 4, this.y + this.height / 2 - bSize / 2, bSize, bSize, Resources.CLOSE);
         this.edit = new ResourceButton(-1, this.x + this.width - 3 - this.height + 4 - 3 - bSize, this.y + this.height / 2 - bSize / 2, bSize, bSize, Resources.COG);
-//    this.edit = new ResourceButton(-1, this.x + this.width - 3 - bSize - this.height - bSize + 4 - 3 - bSize, this.y + this.height / 2 - bSize / 2, bSize, bSize, Resources.COG);
         this.fontRenderer = Fonts.NUNITO_SEMI_BOLD_18;
     }
 

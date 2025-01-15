@@ -9,7 +9,6 @@ import co.crystaldev.client.feature.annotations.properties.ModuleInfo;
 import co.crystaldev.client.feature.annotations.properties.Toggle;
 import co.crystaldev.client.feature.base.Category;
 import co.crystaldev.client.feature.base.Module;
-//import co.crystaldev.client.handler.NotificationHandler;
 import co.crystaldev.client.handler.NotificationHandler;
 import net.minecraft.block.Block;
 import net.minecraft.util.BlockPos;

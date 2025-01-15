@@ -112,7 +112,6 @@ public class PerspectiveMod extends Module implements IRegistrable {
                 resetPerspective();
         });
         EventBus.register(this, RenderTickEvent.Pre.class, ev -> {
-//          boolean down = this.keybind.isPressed();//isPressed
             boolean down = this.keybind.isKeyDown();
             if (down != this.prevState && this.mc.currentScreen == null && this.mc.theWorld != null && this.mc.thePlayer != null) {
                 this.prevState = down;

@@ -15,8 +15,6 @@ import co.crystaldev.client.feature.annotations.properties.Toggle;
 import co.crystaldev.client.feature.base.Category;
 import co.crystaldev.client.feature.base.Module;
 import co.crystaldev.client.handler.ModuleHandler;
-//import it.unimi.dsi.fastutil.doubles.AbstractDoubleList;
-//import it.unimi.dsi.fastutil.doubles.DoubleArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityTNTPrimed;

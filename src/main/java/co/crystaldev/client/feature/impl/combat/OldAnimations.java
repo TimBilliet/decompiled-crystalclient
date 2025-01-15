@@ -62,7 +62,6 @@ public class OldAnimations extends Module implements IRegistrable {
         return INSTANCE;
     }
 
-    //veranderd
     public void registerEvents() {
         EventBus.register(this, RenderTickEvent.Pre.class, ev -> {
             if (this.punchDuringUsage) {

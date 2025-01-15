@@ -4,10 +4,11 @@ package co.crystaldev.client.group;
 import co.crystaldev.client.cache.UsernameCache;
 import co.crystaldev.client.group.objects.Group;
 import co.crystaldev.client.group.objects.GroupMember;
-//import co.crystaldev.client.group.provider.GroupChunkProvider;
 import java.util.HashSet;
 import java.util.Set;
-//import mapwriter.api.MwAPI;
+
+import co.crystaldev.client.group.provider.GroupChunkProvider;
+import mapwriter.api.MwAPI;
 
 public class GroupManager {
     private static Group selectedGroup;
@@ -31,7 +32,7 @@ public class GroupManager {
         if (group != null)
             for (GroupMember member : group.getMembers())
                 UsernameCache.getInstance().getUsername(member.getUuid());
-//        ((GroupChunkProvider)MwAPI.getDataProvider(GroupChunkProvider.class)).setAwaitingUpdate(true);
+        (MwAPI.getDataProvider(GroupChunkProvider.class)).setAwaitingUpdate(true);
     }
 
     public static boolean isInGroup() {

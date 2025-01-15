@@ -2,7 +2,7 @@ package co.crystaldev.client.network.socket.client.group;
 
 import co.crystaldev.client.Client;
 import co.crystaldev.client.Reference;
-//import co.crystaldev.client.group.GroupManager;
+import co.crystaldev.client.group.GroupManager;
 import co.crystaldev.client.network.ByteBufWrapper;
 import co.crystaldev.client.network.INetHandler;
 import co.crystaldev.client.network.Packet;
@@ -74,8 +74,8 @@ public class PacketPingLocation extends Packet {
     public void process(INetHandler handler) {
         if ((Minecraft.getMinecraft()).theWorld != null) {
             Client.sendMessage("&b" + this.username + "&f has pinged their location at &b" + this.x + " " + this.y + " " + this.z, true);
-//      if (GroupManager.getSelectedGroup() != null)
-//        GroupManager.getSelectedGroup().getMember(UUID.fromString(this.uuid)).setPingLocation(new BlockPos(this.x, this.y, this.z));
+      if (GroupManager.getSelectedGroup() != null)
+        GroupManager.getSelectedGroup().getMember(UUID.fromString(this.uuid)).setPingLocation(new BlockPos(this.x, this.y, this.z));
         }
     }
 }

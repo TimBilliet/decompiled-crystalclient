@@ -2,9 +2,6 @@ package co.crystaldev.client.mixin.net.minecraft.client.gui;
 
 import co.crystaldev.client.Client;
 import co.crystaldev.client.util.CallbackClickEvent;
-//import co.crystaldev.client.util.RenderUtils;
-//import co.crystaldev.client.util.objects.resources.ImageSelection;
-//import co.crystaldev.client.util.task.ScreenshotTask;
 import co.crystaldev.client.util.RenderUtils;
 import co.crystaldev.client.util.objects.resources.ImageSelection;
 import co.crystaldev.client.util.task.ScreenshotTask;

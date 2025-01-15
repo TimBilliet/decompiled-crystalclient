@@ -60,15 +60,15 @@ public class ScreenLogin extends ScreenPanorama {
         int x = this.pane.x + this.pane.width / 2 - w / 2;
         int y = this.pane.y + (int) (this.pane.width / 2.0F * 0.5F) + 40;
         this.returnButton = new ResourceButton(-1, x, this.pane.y + this.pane.width / 2 - w / 2, 18, 18, Resources.CHEVRON_LEFT);
-        addButton((Button) (this.usernameInput = new TextInputField(-1, x, y, w, h, "Username")));
+        addButton(this.usernameInput = new TextInputField(-1, x, y, w, h, "Username"));
         y += h + 4;
-        addButton((Button) (this.passwordInput = new TextInputField(-1, x, y, w, h, "Password", true)));
+        addButton(this.passwordInput = new TextInputField(-1, x, y, w, h, "Password", true));
         y += h + 4;
-        addButton((Button) (this.signInButton = new MenuButton(-1, x, y, w, h, "Sign In")));
+        addButton(this.signInButton = new MenuButton(-1, x, y, w, h, "Sign In"));
         y += h + 8;
-        addButton((Button) new Label(this.pane.x + this.pane.width / 2, y + h / 2, ChatColor.translate("&o- OR -"), this.opts.neutralTextColor.getRGB()));
+        addButton(new Label(this.pane.x + this.pane.width / 2, y + h / 2, ChatColor.translate("&o- OR -"), this.opts.neutralTextColor.getRGB()));
         y += h + 8;
-        addButton((Button) (this.microsoftButton = (MenuButton) new MenuResourceButton(-1, x, y, w, h, "Sign-in with Microsoft", Resources.MICROSOFT, h - 6)));
+        addButton(this.microsoftButton = new MenuResourceButton(-1, x, y, w, h, "Sign-in with Microsoft", Resources.MICROSOFT, h - 6));
         this.signInButton.onClick = (() -> {
             if (!this.usernameInput.getText().contains("@")) {
                 this.errorMessage = "Please enter a valid e-mail address";
@@ -89,59 +89,18 @@ public class ScreenLogin extends ScreenPanorama {
             }
         });
         this.microsoftButton.onClick = (() -> {
-//            if (Reflector.isOptiFineLoaded()) {
-//                System.out.println("launcherProtocol.openMicrosoftWindow()");
-//                this.microsoftButton.displayText = "Sign-in window opened";
-//                this.microsoftButton.setEnabled(false);
-//                this.msmcIn = new Scanner(System.in);
-//                this.thread = new Thread(() -> {
-//                    while (true) {
-//                        if (this.msmcIn.hasNextLine()) {
-//                            String line = this.msmcIn.nextLine();
-//                            try {
-//                                JsonObject jsonObject = Reference.GSON.fromJson(line, JsonObject.class);
-//                                if(jsonObject.has("final")){
-//                                    String var3 = jsonObject.get("status").getAsString();
-//                                    int var4 = -1;
-//                                    switch(var3.hashCode()) {
-//                                        case -1867169789:
-//                                            if (var3.equals("success")) {
-//                                                var4 = 2;
-//                                            }
-//                                            break;
-//                                        case -838846263:
-//                                            if (var3.equals("update")) {
-//                                                var4 = 0;
-//                                            }
-//                                            break;
-//                                        case 96784904:
-//                                            if (var3.equals("error")) {
-//                                                var4 = 1;
-//                                            }
-//                                    }
-//                                    switch (var4) {
-//                                        case 0:
-////                                            this.microsoftButton. = var2.get("message").getAsString();
-////                                            this.microsoftButton.
-//                                            break;
-//                                        case 1:
-//                                            this.errorMessage = jsonObject.get("message").getAsString();
-//                                            this.erroredAt = System.currentTimeMillis();
-//                                            break;
-//                                    }
-//                                }
-//                            } catch (JsonParseException ex) {
-//                                Reference.LOGGER.error("Unable to parse JSON from '{}'", line, ex);
-//                            }
-//                        }
-//                    }
-//
-//                });
-//                this.thread.setDaemon(true);
-//                this.thread.start();
-//            } else {
-//
-//            }
+            if (Reflector.isOptiFineLoaded()) {
+                System.out.println("launcherProtocol.openMicrosoftWindow()");
+                this.microsoftButton.displayText = "Sign-in window opened";
+                this.microsoftButton.setEnabled(false);
+                this.msmcIn = new Scanner(System.in);
+                this.thread = new Thread(() -> {
+
+
+                });
+                this.thread.setDaemon(true);
+                this.thread.start();
+            }
         });
         Keyboard.enableRepeatEvents(true);
     }

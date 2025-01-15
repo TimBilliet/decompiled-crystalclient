@@ -42,10 +42,10 @@ public abstract class MixinRender<T extends Entity> {
     protected void renderLivingLabel(T entityIn, String str, double x, double y, double z, int maxDistance) {
         double d0 = entityIn.getDistanceSqToEntity(this.renderManager.livingPlayer);
         if (d0 <= (maxDistance * maxDistance)) {
-//      boolean isNameTag = (entityIn instanceof net.minecraft.entity.player.EntityPlayer && str.contains(entityIn.getCommandSenderName()));
             boolean isNameTag = (entityIn instanceof net.minecraft.entity.player.EntityPlayer && str.contains(entityIn.getCommandSenderEntity().getName()));
             boolean isCrystalClient = (isNameTag && (NametagEditor.getInstance()).enabled && (NametagEditor.getInstance()).showClientLogo && Client.isOnCrystalClient((Entity) entityIn));
             FontRenderer fontrenderer = getFontRendererFromRenderManager();
+//            System.out.println("iscrystal: " + isCrystalClient);
             float f = 1.6F;
             float f1 = 0.016666668F * f;
             GlStateManager.pushMatrix();
@@ -117,9 +117,3 @@ public abstract class MixinRender<T extends Entity> {
         }
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\mixin\net\minecraft\client\renderer\entity\MixinRender.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,7 +1,6 @@
 package co.crystaldev.client.mixin.net.minecraft.client.network;
 
 import co.crystaldev.client.Resources;
-//import co.crystaldev.client.command.ThumbnailCommand;
 import co.crystaldev.client.command.ThumbnailCommand;
 import co.crystaldev.client.duck.NetworkPlayerInfoExt;
 import co.crystaldev.client.handler.PlayerHandler;

@@ -1,8 +1,8 @@
 package co.crystaldev.client.network.socket.client.group;
 
 import co.crystaldev.client.Reference;
-//import co.crystaldev.client.group.GroupManager;
-//import co.crystaldev.client.handler.NotificationHandler;
+import co.crystaldev.client.group.GroupManager;
+import co.crystaldev.client.handler.NotificationHandler;
 import co.crystaldev.client.network.ByteBufWrapper;
 import co.crystaldev.client.network.INetHandler;
 import co.crystaldev.client.network.Packet;
@@ -41,10 +41,10 @@ public class PacketGroupInvitationAction extends Packet {
 
     public void process(INetHandler handler) {
         if (this.action == Action.REQUEST_JOIN) {
-//      NotificationHandler.addNotification(this.message);
-        } //else if (GroupManager.getSelectedGroup() != null) {
-//      GroupManager.getSelectedGroup().setInviteCode(this.message);
-//    }
+            NotificationHandler.addNotification(this.message);
+        } else if (GroupManager.getSelectedGroup() != null) {
+            GroupManager.getSelectedGroup().setInviteCode(this.message);
+        }
     }
 
     public enum Action {

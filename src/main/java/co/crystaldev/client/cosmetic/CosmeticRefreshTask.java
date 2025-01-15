@@ -1,9 +1,6 @@
 package co.crystaldev.client.cosmetic;
 
 import co.crystaldev.client.Client;
-//import co.crystaldev.client.network.Packet;
-//import co.crystaldev.client.network.socket.client.cosmetic.PacketRequestCosmetics;
-import co.crystaldev.client.network.Packet;
 import co.crystaldev.client.network.socket.client.cosmetic.PacketRequestCosmetics;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.NetworkPlayerInfo;

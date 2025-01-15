@@ -32,12 +32,11 @@ public class PacketOnlineUsers extends Packet {
     }
 
     public void read(ByteBufWrapper in) throws IOException {
-        this.uuids = (Set<UUID>) Reference.GSON.fromJson(in.readString(), (new TypeToken<HashSet<UUID>>() {
-
-        }).getType());
+        this.uuids = Reference.GSON.fromJson(in.readString(), (new TypeToken<HashSet<UUID>>() {}).getType());
     }
 
     public void process(INetHandler handler) {
+        System.out.println("process");
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.theWorld == null || mc.isSingleplayer() || mc.getNetHandler() == null)
             return;
@@ -48,9 +47,3 @@ public class PacketOnlineUsers extends Packet {
         }
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\network\socket\client\PacketOnlineUsers.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

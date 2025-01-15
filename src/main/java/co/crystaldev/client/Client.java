@@ -16,10 +16,12 @@ import co.crystaldev.client.network.plugin.impl.HandshakeHandler;
 import co.crystaldev.client.network.plugin.impl.ModuleApiHandler;
 import co.crystaldev.client.network.plugin.impl.WorldEditCuiHandler;
 import co.crystaldev.client.util.Log4jPatch;
+import com.google.common.collect.ImmutableMap;
 import mchorse.emoticons.Emoticons;
 import net.minecraft.client.Minecraft;
 
 import java.io.File;
+import java.net.URI;
 import java.util.UUID;
 
 import co.crystaldev.client.account.AltManager;
@@ -33,40 +35,24 @@ import co.crystaldev.client.command.SchemshareCommand;
 import co.crystaldev.client.command.SudoCommand;
 import co.crystaldev.client.command.ThumbnailCommand;
 import co.crystaldev.client.command.WaypointsCommand;
-import co.crystaldev.client.cosmetic.CosmeticManager;
-import co.crystaldev.client.cosmetic.type.cloak.LayerCloak;
-import co.crystaldev.client.cosmetic.type.wings.LayerWings;
 import co.crystaldev.client.feature.settings.ClientOptions;
 import co.crystaldev.client.font.Fonts;
-//import co.crystaldev.client.handler.GroupHandler;
 import co.crystaldev.client.handler.MacroHandler;
-//import co.crystaldev.client.handler.ProfileHandler;
-//import co.crystaldev.client.handler.WaypointHandler;
 import co.crystaldev.client.mixin.accessor.net.minecraft.client.MixinMinecraft;
 import co.crystaldev.client.network.Packet;
-//import co.crystaldev.client.network.WebClient;
+import co.crystaldev.client.network.WebClient;
 import co.crystaldev.client.network.plugin.ChannelRegistry;
-import co.crystaldev.client.network.plugin.MessageHandler;
-import co.crystaldev.client.network.plugin.impl.ClientApiHandler;
-//import co.crystaldev.client.network.plugin.impl.HandshakeHandler;
-//import co.crystaldev.client.network.plugin.impl.ModuleApiHandler;
-//import co.crystaldev.client.network.plugin.impl.WorldEditCuiHandler;
 import co.crystaldev.client.network.socket.NetHandlerClient;
 import co.crystaldev.client.util.ClientTextureManager;
-import co.crystaldev.client.util.Log4jPatch;
 import co.crystaldev.client.util.enums.ChatColor;
 import co.crystaldev.client.util.enums.MinecraftVersion;
-
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
-//import mchorse.emoticons.Emoticons;
 import net.minecraft.client.multiplayer.ServerData;
 import net.minecraft.client.network.NetworkPlayerInfo;
 import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.settings.KeyBinding;
-import net.minecraft.command.ICommand;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
@@ -224,7 +210,7 @@ public class Client {
 
     private final ScheduledExecutorService cacheExecutor = Executors.newSingleThreadScheduledExecutor();
 
-//    private WebClient webClient;
+    private WebClient webClient;
 
     public ScheduledExecutorService getExecutor() {
         return this.executor;
@@ -234,9 +220,9 @@ public class Client {
         return this.cacheExecutor;
     }
 
-//    public WebClient getWebClient() {
-//        return this.webClient;
-//    }
+    public WebClient getWebClient() {
+        return this.webClient;
+    }
 
     private UUID currentUuid = null;
 
@@ -305,30 +291,33 @@ public class Client {
     }
 
     public void connectToSocket(boolean blocking) {
-//        if (this.webClient != null && !this.webClient.isClosed())
-//            try {
-//                this.webClient.closeBlocking();
-//            } catch (InterruptedException ex) {
-//                Reference.LOGGER.error("Unable to initiate closing handshake", ex);
-//            }
-//        ImmutableMap immutableMap = (new ImmutableMap.Builder()).put("playerId", Minecraft.getMinecraft().getSession().getProfile().getId().toString()).put("username", Minecraft.getMinecraft().getSession().getUsername()).put("client", String.format("%s-v%s-%s/%s", new Object[] { "crystalclient", "1.1.16-projectassfucker", "37aa61d", "offline" })).put("clientVersion", "1.1.16-projectassfucker").put("gitCommitId", "37aa61df290702c2b191a4ef4ab4f92e7ab7563a").put("gitCommitIdAbbr", "37aa61d").put("gitBranch", "offline").build();
-//        try {
-//            this.webClient = new WebClient(new URI("ws://websocket.crystalclient.net"), (Map)immutableMap);
-//            if (blocking) {
-//                this.webClient.connectBlocking();
-//            } else {
-//                this.webClient.connect();
-//            }
-//        } catch (Throwable ex) {
-//            Reference.LOGGER.error("Unable to connect to WebSocket", ex);
-//        }
+        if (this.webClient != null && !this.webClient.isClosed())
+            try {
+                this.webClient.closeBlocking();
+            } catch (InterruptedException ex) {
+                Reference.LOGGER.error("Unable to initiate closing handshake", ex);
+            }
+        ImmutableMap<String, String> immutableMap = (new ImmutableMap.Builder()).put("playerId", Minecraft.getMinecraft().getSession().getProfile().getId().toString()).put("username", Minecraft.getMinecraft().getSession().getUsername()).put("client", String.format("%s-v%s-%s/%s", "crystalclient", "1.1.12", "cbd77ac", "main")).put("clientVersion", "1.1.12").put("gitCommitId", "cbd77ac1ae06d9986b554a7a9709972587397126").put("gitCommitIdAbbr", "cbd77ac").put("gitBranch", "main").build();
+
+//        ImmutableMap<String, String> immutableMap = (new ImmutableMap.Builder()).put("playerId", Minecraft.getMinecraft().getSession().getProfile().getId().toString()).put("username", Minecraft.getMinecraft().getSession().getUsername()).put("client", String.format("%s-v%s-%s/%s", new Object[] { "crystalclient", "1.1.16-projectassfucker", "37aa61d", "offline" })).put("clientVersion", "1.1.16-projectassfucker").put("gitCommitId", "37aa61df290702c2b191a4ef4ab4f92e7ab7563a").put("gitCommitIdAbbr", "37aa61d").put("gitBranch", "offline").build();
+        try {
+            this.webClient = new WebClient(new URI("ws://websocket.crystalclient.net"), immutableMap);
+            if (blocking) {
+                this.webClient.connectBlocking();
+            } else {
+                this.webClient.connect();
+            }
+        } catch (Throwable ex) {
+            System.out.println("unable to connect to socket");
+            Reference.LOGGER.error("Unable to connect to WebSocket", ex);
+        }
     }
 
-//    public NetHandlerClient getNetHandler() {
-//        if (getWebClient() == null || getWebClient().isClosed())
-//            connectToSocket(true);
-//        return getWebClient().getHandler();
-//    }
+    public NetHandlerClient getNetHandler() {
+        if (getWebClient() == null || getWebClient().isClosed())
+            connectToSocket(true);
+        return getWebClient().getHandler();
+    }
 
     public static void sendPacket(Packet packet) {
     }
@@ -358,11 +347,11 @@ public class Client {
     }
 
     public static String getPrefix() {
-        return ChatColor.translate(String.format("&8<&b&l%s&8>&r", new Object[]{"Crystal Client"}));
+        return ChatColor.translate(String.format("&8<&b&l%s&8>&r", "Crystal Client"));
     }
 
     public static String getErrorPrefix() {
-        return ChatColor.translate(String.format("&8<&c&l%s&8>&r", new Object[]{"Crystal Client"}));
+        return ChatColor.translate(String.format("&8<&c&l%s&8>&r", "Crystal Client"));
     }
 
     public static Thread getMainThread() {
@@ -417,7 +406,7 @@ public class Client {
         return CLIENT_RUN_DIRECTORY;
     }
 
-    public static boolean isOnCrystalClient(Entity entity) {//mss niet met interface, wat het nu wel is
+    public static boolean isOnCrystalClient(Entity entity) {
         NetworkPlayerInfo info = (entity instanceof net.minecraft.client.entity.AbstractClientPlayer) ? ((MixinAbstractClientPlayer) entity).invokeGetPlayerInfo() : null;
         return (info != null && ((NetworkPlayerInfoExt) info).isOnCrystalClient());
     }
@@ -432,7 +421,6 @@ public class Client {
             Class.forName(classpath);
             return true;
         } catch (Exception ex) {
-            System.out.println("FOUT BIJ ISCLASSLOADED");
             return false;
         }
     }

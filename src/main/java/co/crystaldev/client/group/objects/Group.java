@@ -5,17 +5,17 @@ import co.crystaldev.client.Client;
 import co.crystaldev.client.cache.UsernameCache;
 import co.crystaldev.client.group.objects.enums.HighlightedChunk;
 import co.crystaldev.client.group.objects.enums.Rank;
-//import co.crystaldev.client.group.provider.GroupChunkProvider;
+import co.crystaldev.client.group.provider.GroupChunkProvider;
 import co.crystaldev.client.gui.screens.groups.ScreenGroups;
 import co.crystaldev.client.gui.screens.groups.SectionSchematics;
 import com.google.gson.annotations.SerializedName;
+import mapwriter.api.MwAPI;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-//import mapwriter.api.MwAPI;
 
 public class Group {
     @SerializedName("id")
@@ -121,12 +121,12 @@ public class Group {
 
     public synchronized void addSchematic(GroupSchematic schematic) {
         this.schematics.add(schematic);
-//        ScreenGroups.updateSection(SectionSchematics.class);
+        ScreenGroups.updateSection(SectionSchematics.class);
     }
 
     public synchronized void removeSchematic(GroupSchematic schematic) {
         this.schematics.removeIf(s -> (s.getId().equals(schematic.getId()) && s.getDir().equals(schematic.getDir())));
-//        ScreenGroups.updateSection(SectionSchematics.class);
+        ScreenGroups.updateSection(SectionSchematics.class);
     }
 
     public synchronized void addPendingMember(UUID id) {
@@ -197,8 +197,8 @@ public class Group {
             return;
         ChunkHighlightGrid grid = this.highlightedChunks.computeIfAbsent(server, s -> new ChunkHighlightGrid());
         grid.highlightChunk(highlight);
-        grid.sort(Comparator.comparing(c -> Boolean.valueOf((c.getType() == HighlightedChunk.TEXT))));
-//        ((GroupChunkProvider)MwAPI.getDataProvider(GroupChunkProvider.class)).setAwaitingUpdate(true);
+        grid.sort(Comparator.comparing(c -> (c.getType() == HighlightedChunk.TEXT)));
+        (MwAPI.getDataProvider(GroupChunkProvider.class)).setAwaitingUpdate(true);
     }
 
     public synchronized void removeHighlight(String server, int x, int z) {
@@ -206,8 +206,8 @@ public class Group {
             return;
         for (Map.Entry<String, ChunkHighlightGrid> entry : getHighlightedChunks().entrySet()) {
             if (server.endsWith(entry.getKey())) {
-                ((ChunkHighlightGrid) entry.getValue()).removeChunk(x, z);
-//                ((GroupChunkProvider)MwAPI.getDataProvider(GroupChunkProvider.class)).setAwaitingUpdate(true);
+                (entry.getValue()).removeChunk(x, z);
+                (MwAPI.getDataProvider(GroupChunkProvider.class)).setAwaitingUpdate(true);
                 break;
             }
         }
@@ -219,7 +219,7 @@ public class Group {
         for (Map.Entry<String, ChunkHighlightGrid> entry : getHighlightedChunks().entrySet()) {
             if (server.endsWith(entry.getKey())) {
                 this.highlightedChunks.remove(entry.getKey());
-//                ((GroupChunkProvider)MwAPI.getDataProvider(GroupChunkProvider.class)).setAwaitingUpdate(true);
+                (MwAPI.getDataProvider(GroupChunkProvider.class)).setAwaitingUpdate(true);
                 break;
             }
         }
@@ -238,9 +238,3 @@ public class Group {
         return this.members.size();
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\group\objects\Group.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

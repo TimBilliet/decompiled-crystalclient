@@ -49,7 +49,6 @@ public class AccountButton extends Button {
             return;
         }
         List<AccountData> accounts = AltManager.getAccounts();
-//        System.out.println(accounts);
         if (accounts != null && this.width == 0) {
             int y = this.y + this.height + 2;
             if (accounts.isEmpty() || !AltManager.isLoggedIn())

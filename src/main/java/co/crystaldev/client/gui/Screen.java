@@ -1,7 +1,6 @@
 package co.crystaldev.client.gui;
 
 import co.crystaldev.client.Reference;
-//import co.crystaldev.client.feature.settings.ClientOptions;
 import co.crystaldev.client.feature.settings.ClientOptions;
 import co.crystaldev.client.util.RenderUtils;
 import net.minecraft.client.Minecraft;

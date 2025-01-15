@@ -4,7 +4,7 @@ import co.crystaldev.client.Client;
 import co.crystaldev.client.network.ByteBufWrapper;
 import co.crystaldev.client.network.INetHandler;
 import co.crystaldev.client.network.Packet;
-//import mchorse.emoticons.common.EmoteAPI;
+import mchorse.emoticons.common.EmoteAPI;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +42,7 @@ public class PacketStartEmote extends Packet {
                 return;
             for (EntityPlayer player : (Minecraft.getMinecraft()).theWorld.playerEntities) {
                 if (player.getUniqueID().equals(this.player)) {
-//          EmoteAPI.setEmoteClient(this.emoteId, player);
+          EmoteAPI.setEmoteClient(this.emoteId, player);
                     break;
                 }
             }

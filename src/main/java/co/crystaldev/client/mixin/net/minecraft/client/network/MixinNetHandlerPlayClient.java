@@ -2,10 +2,8 @@ package co.crystaldev.client.mixin.net.minecraft.client.network;
 
 import co.crystaldev.client.event.impl.network.ChatReceivedEvent;
 import co.crystaldev.client.event.impl.player.PlayerEvent;
-//import co.crystaldev.client.handler.ClientCommandHandler;
 import co.crystaldev.client.handler.ClientCommandHandler;
 import co.crystaldev.client.mixin.accessor.net.minecraft.network.play.server.MixinS02PacketChat;
-//import co.crystaldev.client.network.plugin.ChannelRegistry;
 import co.crystaldev.client.network.plugin.ChannelRegistry;
 import com.google.common.collect.ObjectArrays;
 import net.minecraft.client.Minecraft;
@@ -26,8 +24,6 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import wdl.WDL;
 import wdl.WDLHooks;
-//import wdl.WDL;
-//import wdl.WDLHooks;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -108,12 +104,10 @@ public abstract class MixinNetHandlerPlayClient {
     private void onPlayerDisconnect(S38PacketPlayerListItem packetIn, CallbackInfo ci) {
         if ((Minecraft.getMinecraft()).theWorld == null)
             return;
-//    S38PacketPlayerListItem.Action action = packetIn.func_179768_b();
 
         S38PacketPlayerListItem.Action action = packetIn.getAction();
         List<EntityPlayer> players = (Minecraft.getMinecraft()).theWorld.playerEntities;
         for (S38PacketPlayerListItem.AddPlayerData data : packetIn.getEntries()) {
-//    for (S38PacketPlayerListItem.AddPlayerData data : packetIn.func_179767_a()) {
             if (action == S38PacketPlayerListItem.Action.REMOVE_PLAYER) {
                 for (EntityPlayer player : players) {
                     if (player.getUniqueID().equals(data.getProfile().getId()))

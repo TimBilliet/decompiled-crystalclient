@@ -21,8 +21,6 @@ import net.minecraft.event.HoverEvent;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.IChatComponent;
-//import net.objecthunter.exp4j.Expression;
-//import net.objecthunter.exp4j.ExpressionBuilder;
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 import org.apache.commons.lang3.math.NumberUtils;

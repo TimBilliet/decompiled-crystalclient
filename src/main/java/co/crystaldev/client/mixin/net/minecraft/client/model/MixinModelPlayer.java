@@ -19,17 +19,6 @@ public abstract class MixinModelPlayer extends ModelBiped {
     }
 
 
-//  @Overwrite
-//  public void func_178718_a(float scale) {
-//    if (this.smallArms) {
-//      this.bipedRightArm.rotationPointX += 0.5F;
-//      this.bipedRightArm.postRender(scale);
-//      this.bipedRightArm.rotationPointZ -= 0.5F;
-//    } else {
-//      this.bipedRightArm.postRender(scale);
-//    }
-//  }
-
     /**
      * @author
      */

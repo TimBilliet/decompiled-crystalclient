@@ -5,8 +5,6 @@ import co.crystaldev.client.network.plugin.server.PacketCooldown;
 import co.crystaldev.client.network.plugin.server.PacketDisallowedModules;
 import co.crystaldev.client.network.plugin.server.PacketNotification;
 import co.crystaldev.client.network.plugin.server.PacketUpdateWorld;
-//import co.crystaldev.client.network.plugin.shared.PacketWaypointAdd;
-//import co.crystaldev.client.network.plugin.shared.PacketWaypointRemove;
 import co.crystaldev.client.network.plugin.shared.PacketWaypointAdd;
 import co.crystaldev.client.network.plugin.shared.PacketWaypointRemove;
 import co.crystaldev.client.network.socket.client.PacketOnlineUsers;
@@ -18,7 +16,6 @@ import co.crystaldev.client.network.socket.client.cosmetic.PacketUpdateSelectedC
 import co.crystaldev.client.network.socket.client.group.*;
 import co.crystaldev.client.network.socket.shared.PacketAuthInfo;
 import co.crystaldev.client.network.socket.shared.PacketGroupInfo;
-//import co.crystaldev.client.network.socket.shared.PacketServerList;
 import co.crystaldev.client.network.socket.shared.PacketServerList;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
@@ -39,7 +36,7 @@ public abstract class Packet {
     public static Packet handle(byte[] data, Object attachment) {
         ByteBufWrapper wrapper = new ByteBufWrapper(Unpooled.wrappedBuffer(data));
         int packetId = wrapper.readVarInt();
-        Class<? extends Packet> packetClass = idToClass.get(Integer.valueOf(packetId));
+        Class<? extends Packet> packetClass = idToClass.get(packetId);
         if (packetClass != null)
             try {
                 Packet packet = packetClass.newInstance();
@@ -47,7 +44,7 @@ public abstract class Packet {
                 packet.read(wrapper);
                 return packet;
             } catch (IOException | InstantiationException | IllegalAccessException ex) {
-//        WebClient.logger.error("Exception handling packet", ex);
+                WebClient.logger.error("Exception handling packet", ex);
             }
         return null;
     }
@@ -71,7 +68,7 @@ public abstract class Packet {
         if (classToId.containsKey(clazz))
             throw new IllegalArgumentException(String.format("Duplicate class entry found! %s is already being used by ID %d", clazz.getSimpleName(), classToId.get(clazz)));
         if (idToClass.containsKey(id))
-            throw new IllegalArgumentException(String.format("Duplicate packet ID entry found! %d is already being used by class %s", Integer.valueOf(id), ((Class) idToClass.get(Integer.valueOf(id))).getSimpleName()));
+            throw new IllegalArgumentException(String.format("Duplicate packet ID entry found! %d is already being used by class %s", id, idToClass.get(id).getSimpleName()));
         classToId.put(clazz, id);
         idToClass.put(id, clazz);
     }
@@ -101,42 +98,42 @@ public abstract class Packet {
     private Object attachment;
 
     static {
-        addPacket(0, (Class) PacketServerList.class);
-        addPacket(1, (Class) PacketOnlineUsers.class);
-        addPacket(2, (Class) PacketServerConnection.class);
-        addPacket(3, (Class) PacketAuthInfo.class);
-        addPacket(96, (Class) PacketStartEmote.class);
-        addPacket(97, (Class) PacketStopEmote.class);
-        addPacket(98, (Class) PacketRequestCosmetics.class);
-        addPacket(99, (Class) PacketUpdateSelectedCosmetic.class);
-        addPacket(200, (Class) PacketGroupInfo.class);
-        addPacket(201, (Class) PacketGroupUpdate.class);
-        addPacket(202, (Class) PacketCreateGroup.class);
-        addPacket(203, (Class) PacketLeaveGroup.class);
-        addPacket(204, (Class) PacketDeleteGroup.class);
-        addPacket(208, (Class) PacketGroupMemberRankChange.class);
-        addPacket(209, (Class) PacketGroupMemberAction.class);
-        addPacket(210, (Class) PacketPendingGroupMemberAction.class);
-        addPacket(211, (Class) PacketHighlightChunk.class);
-        addPacket(212, (Class) PacketRemoveChunkHighlight.class);
-        addPacket(213, (Class) PacketClearChunkHighlights.class);
-        addPacket(280, (Class) PacketGroupPermissionUpdate.class);
-        addPacket(281, (Class) PacketGroupSchematicAction.class);
-        addPacket(282, (Class) PacketShareSchematic.class);
-        addPacket(292, (Class) PacketGroupPrivateMessage.class);
-        addPacket(293, (Class) PacketGroupChat.class);
-        addPacket(294, (Class) PacketPatchcrumbUpdate.class);
-        addPacket(295, (Class) PacketGroupInvitationAction.class);
-        addPacket(296, (Class) PacketStatusUpdate.class);
-        addPacket(297, (Class) PacketPingLocation.class);
-        addPacket(298, (Class) PacketFocusPlayer.class);
-        addPacket(299, (Class) PacketAdjHelper.class);
-        addPacket(2000, (Class) PacketWaypointAdd.class);
-        addPacket(2001, (Class) PacketWaypointRemove.class);
-        addPacket(2100, (Class) PacketDisallowedModules.class);
-        addPacket(2101, (Class) PacketCooldown.class);
-        addPacket(2102, (Class) PacketUpdateWorld.class);
-        addPacket(2103, (Class) PacketNotification.class);
+        addPacket(0, PacketServerList.class);
+        addPacket(1, PacketOnlineUsers.class);
+        addPacket(2, PacketServerConnection.class);
+        addPacket(3, PacketAuthInfo.class);
+        addPacket(96, PacketStartEmote.class);
+        addPacket(97, PacketStopEmote.class);
+        addPacket(98, PacketRequestCosmetics.class);
+        addPacket(99, PacketUpdateSelectedCosmetic.class);
+        addPacket(200, PacketGroupInfo.class);
+        addPacket(201, PacketGroupUpdate.class);
+        addPacket(202, PacketCreateGroup.class);
+        addPacket(203, PacketLeaveGroup.class);
+        addPacket(204, PacketDeleteGroup.class);
+        addPacket(208, PacketGroupMemberRankChange.class);
+        addPacket(209, PacketGroupMemberAction.class);
+        addPacket(210, PacketPendingGroupMemberAction.class);
+        addPacket(211, PacketHighlightChunk.class);
+        addPacket(212, PacketRemoveChunkHighlight.class);
+        addPacket(213, PacketClearChunkHighlights.class);
+        addPacket(280, PacketGroupPermissionUpdate.class);
+        addPacket(281, PacketGroupSchematicAction.class);
+        addPacket(282, PacketShareSchematic.class);
+        addPacket(292, PacketGroupPrivateMessage.class);
+        addPacket(293, PacketGroupChat.class);
+        addPacket(294, PacketPatchcrumbUpdate.class);
+        addPacket(295, PacketGroupInvitationAction.class);
+        addPacket(296, PacketStatusUpdate.class);
+        addPacket(297, PacketPingLocation.class);
+        addPacket(298, PacketFocusPlayer.class);
+        addPacket(299, PacketAdjHelper.class);
+        addPacket(2000, PacketWaypointAdd.class);
+        addPacket(2001, PacketWaypointRemove.class);
+        addPacket(2100, PacketDisallowedModules.class);
+        addPacket(2101, PacketCooldown.class);
+        addPacket(2102, PacketUpdateWorld.class);
+        addPacket(2103, PacketNotification.class);
     }
 
     public abstract void write(ByteBufWrapper paramByteBufWrapper) throws IOException;

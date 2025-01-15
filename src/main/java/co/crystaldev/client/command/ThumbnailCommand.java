@@ -17,7 +17,6 @@ import co.crystaldev.client.event.impl.render.RenderOverlayEvent;
 import co.crystaldev.client.gui.screens.ScreenCosmetics;
 import co.crystaldev.client.util.RenderUtils;
 import co.crystaldev.client.util.objects.resources.cosmetic.ICosmeticTexture;
-//import com.madgag.gif.fmsware.AnimatedGifEncoder;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;

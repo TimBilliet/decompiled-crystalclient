@@ -6,9 +6,9 @@ import co.crystaldev.client.group.GroupManager;
 import co.crystaldev.client.group.objects.Group;
 import co.crystaldev.client.gui.Button;
 import co.crystaldev.client.gui.Screen;
-//import co.crystaldev.client.gui.screens.screen_overlay.OverlayGroupInteraction;
+import co.crystaldev.client.gui.screens.screen_overlay.OverlayGroupInteraction;
 import co.crystaldev.client.network.Packet;
-//import co.crystaldev.client.network.socket.client.group.PacketGroupUpdate;
+import co.crystaldev.client.network.socket.client.group.PacketGroupUpdate;
 import co.crystaldev.client.util.RenderUtils;
 import co.crystaldev.client.util.objects.FadingColor;
 
@@ -96,7 +96,7 @@ public class GroupButton extends Button {
     public void onInteract(int mouseX, int mouseY, int mouseButton) {
         super.onInteract(mouseX, mouseY, mouseButton);
         if (mouseButton == 1) {
-//      ((Screen)this.mc.currentScreen).addOverlay((Screen)new OverlayGroupInteraction(this.group, mouseX, mouseY, 100));
+            ((Screen) this.mc.currentScreen).addOverlay((Screen) new OverlayGroupInteraction(this.group, mouseX, mouseY, 100));
         } else {
             Group sel = GroupManager.getSelectedGroup();
             if (System.currentTimeMillis() - lastClickTime > 3000L) {
@@ -104,8 +104,8 @@ public class GroupButton extends Button {
                 if (sel != null && sel.getId().equals(this.group.getId()))
                     newId = null;
                 lastClickTime = System.currentTimeMillis();
-//        PacketGroupUpdate packet = new PacketGroupUpdate(newId);
-//        Client.sendPacket((Packet)packet);
+                PacketGroupUpdate packet = new PacketGroupUpdate(newId);
+                Client.sendPacket((Packet) packet);
             }
         }
     }

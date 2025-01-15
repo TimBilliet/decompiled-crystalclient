@@ -14,7 +14,6 @@ import co.crystaldev.client.event.impl.render.WindowResizeEvent;
 import co.crystaldev.client.event.impl.tick.ClientTickEvent;
 import co.crystaldev.client.event.impl.world.WorldEvent;
 import co.crystaldev.client.ext.GuiIngameCrystal;
-//import co.crystaldev.client.feature.impl.all.ChatSettings;
 import co.crystaldev.client.feature.impl.all.ChatSettings;
 import co.crystaldev.client.feature.impl.combat.OldAnimations;
 import co.crystaldev.client.feature.impl.combat.OldHits;

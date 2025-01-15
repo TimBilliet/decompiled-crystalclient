@@ -28,27 +28,47 @@ public class OverlayModifyProfile extends ScreenOverlay {
         int y = this.pane.y + 24;
         int w = this.pane.width - 10;
         int h = 18;
-        addButton((Button) (this.name = new TextInputField(-1, x + w / 2, y, w / 2, h, "Profile Name") {
-
-        }));
-        addButton((Button) new Label(x + 5, y + h / 2 - Fonts.NUNITO_REGULAR_20.getStringHeight() / 2, "Name", -1) {
-
+        addButton(this.name = new TextInputField(-1, x + w / 2, y, w / 2, h, "Profile Name") {
+            {
+                setText(profile.getName());
+                setMaxLength(32);
+            }
+        });
+        addButton(new Label(x + 5, y + h / 2 - Fonts.NUNITO_REGULAR_20.getStringHeight() / 2, "Name", -1) {
+            {
+                setCentered(false);
+            }
         });
         y += h + 5;
-        addButton((Button) (this.autoSelect = new TextInputField(-1, x + w / 2, y, w / 2, h, "Server IP") {
-
-        }));
-        addButton((Button) new Label(x + 5, y + h / 2 - Fonts.NUNITO_REGULAR_20.getStringHeight() / 2, "Auto-Select", -1) {
-
+        addButton(this.autoSelect = new TextInputField(-1, x + w / 2, y, w / 2, h, "Server IP") {
+            {
+                setText(profile.getAutoUseServer() == null ? "" : profile.getAutoUseServer());
+            }
+        });
+        addButton(new Label(x + 5, y + h / 2 - Fonts.NUNITO_REGULAR_20.getStringHeight() / 2, "Auto-Select", -1) {
+            {
+                setCentered(false);
+            }
         });
         y += h + 7;
-        addButton((Button) (this.color = new SimpleColorPicker(x + w / 2 + 3, y, w / 2 - 6, h - 6, this.profile.getColor())));
-        addButton((Button) new Label(x + 5, y + (h - 6) / 2 - Fonts.NUNITO_REGULAR_20.getStringHeight() / 2, "Color", -1) {
-
+        addButton(this.color = new SimpleColorPicker(x + w / 2 + 3, y, w / 2 - 6, h - 6, this.profile.getColor()));
+        addButton(new Label(x + 5, y + (h - 6) / 2 - Fonts.NUNITO_REGULAR_20.getStringHeight() / 2, "Color", -1) {
+            {
+                setCentered(false);
+            }
         });
         y += h - 6 + 5;
-        addButton((Button) new MenuButton(-1, x, y, w, h, "Save Profile") {
-
+        addButton(new MenuButton(-1, x, y, w, h, "Save Profile") {
+            {
+                onClick = () -> {
+                    if (!name.getText().isEmpty()) {
+                        profile.setName(name.getText());
+                    }
+                    profile.setAutoUseServer(autoSelect.getText().isEmpty() ? null : autoSelect.getText());
+                    profile.setColor(color.getCurrentColor());
+                    closeOverlay();
+                };
+            }
         });
         while (this.pane.y + this.pane.height < y + h + 5)
             this.pane.height++;

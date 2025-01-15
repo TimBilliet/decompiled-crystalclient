@@ -1,7 +1,6 @@
 package co.crystaldev.client.handler;
 
 import co.crystaldev.client.Client;
-//import co.crystaldev.client.cache.UsernameCache;
 import co.crystaldev.client.cache.UsernameCache;
 import co.crystaldev.client.cosmetic.CosmeticCache;
 import co.crystaldev.client.event.EventBus;

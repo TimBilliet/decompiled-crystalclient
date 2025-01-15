@@ -88,7 +88,6 @@ public class AdjustHelper extends Module implements IRegistrable {
 
     private static AdjustHelper INSTANCE;
     private static final char LINE = '|';
-    //private static final char LINE = '┃';
 
     public BlockPos pos1 = new BlockPos(0, 0, 0);
 

@@ -48,8 +48,6 @@ public abstract class MixinPlayerControllerMP {
             if (stack == null || (id = Item.getIdFromItem(stack.getItem())) == 332 || id == 381 || id == 368)
                 return;
             if (this.mc.gameSettings.keyBindAttack.isPressed() && (this.mc.gameSettings.keyBindUseItem.isPressed() || this.mc.thePlayer.isUsingItem()) && this.mc.thePlayer.getHeldItem() != null && (this.mc.thePlayer.getHeldItem()).stackSize > 0 &&
-
-                    //if (this.mc.gameSettings.keyBindAttack.getIsKeyPressed() && (this.mc.gameSettings.keyBindUseItem.getIsKeyPressed() || this.mc.thePlayer.isUsingItem()) && this.mc.thePlayer.getHeldItem() != null && (this.mc.thePlayer.getHeldItem()).stackSize > 0 &&
                     sendUseItem((EntityPlayer) this.mc.thePlayer, (World) this.mc.theWorld, this.mc.thePlayer.getHeldItem())) {
                 this.isHittingBlock = false;
                 this.netClientHandler.addToSendQueue(new C07PacketPlayerDigging(C07PacketPlayerDigging.Action.STOP_DESTROY_BLOCK, posBlock, directionFacing));

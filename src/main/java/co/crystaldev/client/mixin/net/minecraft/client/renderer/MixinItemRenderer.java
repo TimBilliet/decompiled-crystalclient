@@ -2,7 +2,6 @@ package co.crystaldev.client.mixin.net.minecraft.client.renderer;
 
 import co.crystaldev.client.feature.impl.all.ClearWater;
 import co.crystaldev.client.feature.impl.combat.OldAnimations;
-//import co.crystaldev.client.feature.settings.ClientOptions;
 import co.crystaldev.client.feature.settings.ClientOptions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;

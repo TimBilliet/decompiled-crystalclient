@@ -2,7 +2,7 @@ package co.crystaldev.client.network.socket.client.group;
 
 import co.crystaldev.client.Client;
 import co.crystaldev.client.Reference;
-//import co.crystaldev.client.command.GroupCommand;
+import co.crystaldev.client.command.GroupCommand;
 import co.crystaldev.client.event.impl.network.ChatReceivedEvent;
 import co.crystaldev.client.group.GroupManager;
 import co.crystaldev.client.network.ByteBufWrapper;
@@ -58,8 +58,8 @@ public class PacketGroupPrivateMessage extends Packet {
     public void process(INetHandler handler) {
         if ((Minecraft.getMinecraft()).theWorld == null)
             return;
-        String prefix = String.format("%s&8 [&f%s &7%c %s&8] ", new Object[]{Client.getPrefix(), this.sender, Character.valueOf('\u27a5'), this.receiver});
-        String lore = String.format("&bServer: &r%s\n&bGroup: &r%s", new Object[]{this.server, GroupManager.getSelectedGroup().getName()});
+        String prefix = String.format("%s&8 [&f%s &7%c %s&8] ", Client.getPrefix(), this.sender, '\u27a5', this.receiver);
+        String lore = String.format("&bServer: &r%s\n&bGroup: &r%s", this.server, GroupManager.getSelectedGroup().getName());
         ChatComponentText ch = new ChatComponentText(ChatColor.translate(prefix));
         ChatComponentText ch1 = new ChatComponentText(ChatColor.translate("&f" + this.message));
         ChatComponentText ch2 = new ChatComponentText(ChatColor.translate(lore));
@@ -70,13 +70,7 @@ public class PacketGroupPrivateMessage extends Packet {
         event.call();
         if (!event.isCancelled() && event.message != null)
             (Minecraft.getMinecraft()).ingameGUI.getChatGUI().printChatMessage(event.message);
-//    if (this.senderId != Client.getUniqueID())
-//      GroupCommand.setLastSender(this.senderId);
+    if (this.senderId != Client.getUniqueID())
+      GroupCommand.setLastSender(this.senderId);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\network\socket\client\group\PacketGroupPrivateMessage.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

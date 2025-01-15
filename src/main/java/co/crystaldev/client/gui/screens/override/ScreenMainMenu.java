@@ -96,12 +96,12 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
             addButton(new ResourceButton(20, x, 5, h, h, Resources.REPLAY_MOD), b -> b.setOnClick(Reflector::openReplayGui));
             x += h;
         }
-//        addButton(new AccountButton(21, x, 5, this));
-        addButton(new ResourceButton(22, x, 5, h, h, Resources.ADD_PERSON), b -> {
-            b.setOnClick(() -> {
-                this.addOverlay(new OverlayOfflineAccount());
-            });
-        });
+        addButton(new AccountButton(21, x, 5, this));
+//        addButton(new ResourceButton(22, x, 5, h, h, Resources.ADD_PERSON), b -> {
+//            b.setOnClick(() -> {
+//                this.addOverlay(new OverlayOfflineAccount());
+//            });
+//        });
     }
 
     public void onButtonInteract(Button button, int mouseX, int mouseY, int mouseButton) {
@@ -121,9 +121,6 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
             case 4:
                 this.mc.displayGuiScreen(new GuiModList(this));
                 break;
-            case 22:
-//                ((Screen) this.mc.currentScreen).addOverlay(new OverlayOfflineAccount());
-//                break;
         }
     }
 

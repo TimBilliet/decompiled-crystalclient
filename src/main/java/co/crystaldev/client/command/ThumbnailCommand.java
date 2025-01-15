@@ -25,13 +25,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.IntBuffer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 
@@ -94,7 +88,7 @@ public class ThumbnailCommand extends AbstractCommand {
         this.gifLocations.clear();
         List<String> filter = new ArrayList<>();
         if (!arguments.isEmpty())
-            filter.addAll((Collection<? extends String>) arguments.getArguments().stream().map(arg -> arg.getAsString().toLowerCase()).collect(Collectors.toList()));
+            filter.addAll(arguments.getArguments().stream().map(arg -> arg.getAsString().toLowerCase()).collect(Collectors.toList()));
         File dir = new File(Client.getClientRunDirectory(), "generated-thumbnails");
         if (!dir.exists())
             dir.mkdirs();
@@ -169,8 +163,8 @@ public class ThumbnailCommand extends AbstractCommand {
                     }
                     int index = 0;
                     for (File file : frames) {
-//                        if (cosmetic.getType() == CosmeticType.EMOTE && (Emotes.get(cosmetic.getName())).looping && ++index < frames.size() / 4)
-//                            continue;
+                        if (cosmetic.getType() == CosmeticType.EMOTE && (Objects.requireNonNull(Emotes.get(cosmetic.getName()))).looping && ++index < frames.size() / 4)
+                            continue;
                         try {
                             encoder.addFrame(ImageIO.read(file));
                         } catch (IOException ex) {
@@ -207,7 +201,7 @@ public class ThumbnailCommand extends AbstractCommand {
                     }
                 } else {
                     this.completedEmotes.add(next);
-                    EmoteAPI.setEmoteClient(next.getName(), (EntityPlayer) (Minecraft.getMinecraft()).thePlayer);
+                    EmoteAPI.setEmoteClient(next.getName(), (Minecraft.getMinecraft()).thePlayer);
                     this.currentGifFrame = 0;
                 }
             this.currentGifFrame++;
@@ -223,7 +217,7 @@ public class ThumbnailCommand extends AbstractCommand {
             boolean shouldUpdate = cp.isShouldUpdateCosmetic();
             cp.setShouldUpdateCosmetic(false);
             RenderUtils.drawEntityOnScreen(width / 4, (int) (width / 2.0D * 0.9375D), (int) (width / 2.0D * 0.46875D), 0.0F, 0.0F,
-                    next.getType().isFront() ? 20 : 200, (EntityLivingBase) entityPlayerSP);
+                    next.getType().isFront() ? 20 : 200, entityPlayerSP);
             cp.setShouldUpdateCosmetic(shouldUpdate);
             ScreenCosmetics.setRenderingPlayer(false);
             GL11.glPopMatrix();
@@ -231,7 +225,7 @@ public class ThumbnailCommand extends AbstractCommand {
             setupScreenshot(resolution);
             File completed = screenshot(resolution, "emote_" + next.getName(), next.getType().getInternalName() + "_" + next.getName() + "_" + this.currentGifFrame);
             if (completed != null)
-                ((List<File>) this.gifLocations.computeIfAbsent(next, c -> new ArrayList())).add(completed);
+                this.gifLocations.computeIfAbsent(next, c -> new ArrayList<>()).add(completed);
         }
         return false;
     }
@@ -243,7 +237,7 @@ public class ThumbnailCommand extends AbstractCommand {
         RenderUtils.drawRect(0.0F, 0.0F, 512.0F, 512.0F, BACKGROUND_COLOR);
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         ScreenCosmetics.setRenderingPlayer(true);
-        CosmeticPlayer player = CosmeticCache.getInstance().fromPlayer((EntityPlayer) (Minecraft.getMinecraft()).thePlayer);
+        CosmeticPlayer player = CosmeticCache.getInstance().fromPlayer((Minecraft.getMinecraft()).thePlayer);
         Cosmetic cloak = player.getCloak(), wings = player.getWings();
         ResourceLocation cape = player.getLocationOfCape();
         player.setLocationOfCape(null);
@@ -260,7 +254,7 @@ public class ThumbnailCommand extends AbstractCommand {
         boolean shouldUpdate = player.isShouldUpdateCosmetic();
         player.setShouldUpdateCosmetic(false);
         RenderUtils.drawEntityOnScreen(256, 480, 240, 0.0F, 0.0F,
-                next.getType().isFront() ? 20 : 200, (EntityLivingBase) (Minecraft.getMinecraft()).thePlayer);
+                next.getType().isFront() ? 20 : 200, (Minecraft.getMinecraft()).thePlayer);
         player.setShouldUpdateCosmetic(shouldUpdate);
         player.setLocationOfCape(cape);
         player.setCloak(cloak);
@@ -317,7 +311,7 @@ public class ThumbnailCommand extends AbstractCommand {
         boolean shouldUpdate = player.isShouldUpdateCosmetic();
         player.setShouldUpdateCosmetic(false);
         RenderUtils.drawEntityOnScreen(width / 4, (int) (width / 2.0D * 0.9375D), (int) (width / 2.0D * 0.46875D), 0.0F, 0.0F,
-                next.getType().isFront() ? 20 : 200, (EntityLivingBase) entity);
+                next.getType().isFront() ? 20 : 200, entity);
         player.setShouldUpdateCosmetic(shouldUpdate);
         player.setLocationOfCape(cape);
         player.setCloak(cloak);
@@ -329,7 +323,7 @@ public class ThumbnailCommand extends AbstractCommand {
         setupScreenshot(resolution);
         File completed = screenshot(resolution, next.getType().getInternalName() + "_" + next.getName(), next.getType().getInternalName() + "_" + next.getName() + "_" + this.currentGifFrame);
         if (completed != null)
-            ((List<File>) this.gifLocations.computeIfAbsent(next, c -> new ArrayList())).add(completed);
+            this.gifLocations.computeIfAbsent(next, c -> new ArrayList<>()).add(completed);
         return false;
     }
 
@@ -414,9 +408,3 @@ public class ThumbnailCommand extends AbstractCommand {
         }
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\command\ThumbnailCommand.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

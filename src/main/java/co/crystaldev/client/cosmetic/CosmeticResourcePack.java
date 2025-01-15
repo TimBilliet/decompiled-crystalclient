@@ -27,7 +27,7 @@ public class CosmeticResourcePack extends FolderResourcePack {
 
     public <T extends net.minecraft.client.resources.data.IMetadataSection> T getPackMetadata(IMetadataSerializer metadataSerializer, String metadataSectionName) {
         try {
-            return (T) metadataSerializer.parseMetadataSection(metadataSectionName, PACK_META);
+            return metadataSerializer.parseMetadataSection(metadataSectionName, PACK_META);
         } catch (Throwable ex) {
             return null;
         }
@@ -47,9 +47,3 @@ public class CosmeticResourcePack extends FolderResourcePack {
         PACK_META.addProperty("pack_format", 1);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\cosmetic\CosmeticResourcePack.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

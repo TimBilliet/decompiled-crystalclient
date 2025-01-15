@@ -120,28 +120,31 @@ public class ScreenSchematicaBase extends Screen {
         switch (type) {
             case LOAD_SCHEMATIC:
                 Minecraft.getMinecraft().displayGuiScreen(new ScreenLoadSchematic() {
-
+                    {
+                        ignoreFirstKeyPress = !flag;
+                    }
                 });
-                return;
+                break;
             case CONTROL_SCHEMATIC:
                 Minecraft.getMinecraft().displayGuiScreen(new ScreenSchematicControl() {
-
+                    {
+                        ignoreFirstKeyPress = !flag;
+                    }
                 });
-                return;
+                break;
             case SAVE_SCHEMATIC:
                 Minecraft.getMinecraft().displayGuiScreen(new ScreenSaveSchematic() {
-
+                    {
+                        ignoreFirstKeyPress = !flag;
+                    }
                 });
-                return;
+                break;
+            default:
+                Minecraft.getMinecraft().displayGuiScreen(new ScreenSchematicaBase(type) {
+                    {
+                        ignoreFirstKeyPress = !flag;
+                    }
+                });
         }
-        Minecraft.getMinecraft().displayGuiScreen(new ScreenSchematicaBase(type) {
-
-        });
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\screens\schematica\ScreenSchematicaBase.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

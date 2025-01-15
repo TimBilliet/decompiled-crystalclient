@@ -512,7 +512,6 @@ public class Schematica extends Module implements IRegistrable {
             if (!isSchAirBlock && isMcAirBlock && (block == null || block == schBlock)) {
                 MissingSchematicBlock missingBlock;
                 try {
-                    // schBlock.func_180654_a((IBlockAccess)schematic, (BlockPos)pos);
                     schBlock.setBlockBoundsBasedOnState(schematic, pos);
                     missingBlock = new MissingSchematicBlock(mBlockPos1, pos, schBlock.getCollisionBoundingBox(worldClient, mBlockPos1, null).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D), schBlockState);
                 } catch (Exception ex) {

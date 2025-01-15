@@ -125,15 +125,11 @@ public class CannonPlayback extends HudModuleBackground implements IRegistrable 
     }
 
     public String getDisplayText() {
-
-        if (this.recording)
-            return String.format("Recording (Frame %d/%d - %.2f%c)", new Object[]{Integer.valueOf(this.frames.size()), Integer.valueOf(this.maxTime),
-                    Double.valueOf(this.frames.size() / this.maxTime * 100.0D), Character.valueOf('%')});
-        //TODO implementeren cannonplayback
-        // if (this.playback)
-        //   return String.format("Frame %d/%d - %d TNT | %d Sand", new Object[] { Integer.valueOf(this.frames.indexOf(this.currentFrame) + 1),
-        //        Integer.valueOf(this.frames.size()), Integer.valueOf(Frame.access$000(this.currentFrame)), Integer.valueOf(Frame.access$100(this.currentFrame)) });
-        return null;
+        if (this.recording) {
+            return String.format("Recording (Frame %d/%d - %.2f%c)", this.frames.size(), this.maxTime, (double)this.frames.size() / (double)this.maxTime * 100.0D, '%');
+        } else {
+            return this.playback ? String.format("Frame %d/%d - %d TNT | %d Sand", this.frames.indexOf(this.currentFrame) + 1, this.frames.size(), this.currentFrame.tntSize, this.currentFrame.sandSize) : null;
+        }
     }
 
     public String getDefaultDisplayText() {
@@ -194,7 +190,7 @@ public class CannonPlayback extends HudModuleBackground implements IRegistrable 
                 } else {
                     this.recording = false;
                     this.playback = true;
-                    Client.sendMessage(String.format("Recording has reached the maximum of %d frames.", new Object[]{Integer.valueOf(this.maxTime)}), true);
+                    Client.sendMessage(String.format("Recording has reached the maximum of %d frames.", this.maxTime), true);
                     if (!this.frames.isEmpty())
                         switchToFrame(getFirstFrame());
                 }
@@ -247,9 +243,3 @@ public class CannonPlayback extends HudModuleBackground implements IRegistrable 
         }
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\feature\impl\factions\CannonPlayback.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

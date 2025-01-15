@@ -4,6 +4,7 @@ import co.crystaldev.client.font.FontRenderer;
 import co.crystaldev.client.font.Fonts;
 import co.crystaldev.client.gui.buttons.Label;
 import co.crystaldev.client.gui.buttons.MenuButton;
+import co.crystaldev.client.gui.screens.schematica.ScreenLoadSchematic;
 import co.crystaldev.client.gui.screens.schematica.ScreenSchematicaBase;
 import co.crystaldev.client.util.enums.SchematicaGuiType;
 import co.crystaldev.client.util.objects.FadingColor;
@@ -33,9 +34,12 @@ public class OverlayRemoveSchematic extends ScreenOverlay {
         addButton(new MenuButton(-1, this.pane.x + 5, y, this.pane.width / 2 - 7, 18, "Cancel"), b -> b.onClick = this::closeOverlay);
         addButton(new MenuButton(-1, this.pane.x + this.pane.width / 2 + 2, y, this.pane.width / 2 - 7, 18, "Delete Schematic"), b -> {
             b.onClick = (() -> {
-                schematic.delete();
-                closeOverlay();
-                ScreenSchematicaBase.openGui(SchematicaGuiType.LOAD_SCHEMATIC);
+                if(schematic.delete() && this.mc.currentScreen instanceof ScreenLoadSchematic) {
+                    ScreenLoadSchematic screen = (ScreenLoadSchematic) this.mc.currentScreen;
+                    screen.initSchematics();
+                    screen.initSchematicInfo();
+                    closeOverlay();
+                }
             });
             b.setTextColor(new FadingColor(this.opts.secondaryRed, this.opts.mainRed));
         });

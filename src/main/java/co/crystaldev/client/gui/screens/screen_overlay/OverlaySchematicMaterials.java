@@ -63,7 +63,9 @@ public class OverlaySchematicMaterials extends ScreenOverlay {
         y = this.pane.y + this.pane.height - 5 - h;
         w = (this.pane.width - 6) / 3 - 4;
         addButton(new MenuButton(-1, x, y, w, h, "Trace All"), b -> b.setOnClick(() -> {
-            Schematica.getInstance().missingBlocks.addAll(Schematica.getInstance().traceAllMaterials());
+            List<MissingSchematicBlock> missing = Schematica.getInstance().traceAllMaterials();
+            Schematica.getInstance().missingBlocks.clear();
+            Schematica.getInstance().missingBlocks.addAll(missing);
         }));
         x += w + 4;
         addButton(new MenuButton(-1, x, y, w, h, "Un-trace All"), b -> b.setOnClick(() -> {

@@ -68,27 +68,26 @@ public class OverlayEditWaypoint extends ScreenOverlay {
         this.color.setBackgroundColorToNonHovering();
 
         y += this.color.height + 5;
-        addButton(new MenuButton(-1, x, y, w, h, (this.waypoint == null) ? "Create" : "Apply Edits"));
+        addButton(new MenuButton(-1, x, y, w, h, (this.waypoint == null) ? "Create" : "Apply Edits") { {
+                onClick = () ->{
+                    OverlayEditWaypoint instance = OverlayEditWaypoint.this;
+                    if (!instance.name.getText().isEmpty()) {
+                        if (OverlayEditWaypoint.this.waypoint != null) {
+                            OverlayEditWaypoint.this.waypoint.setName(instance.name.getText());
+                            OverlayEditWaypoint.this.waypoint.setColor(instance.color.getCurrentValue());
+                            new BlockPos(instance.x.getValue(), instance.y.getValue(), instance.z.getValue());
+                            OverlayEditWaypoint.this.closeOverlay();
+                        } else {
+                            WaypointHandler.getInstance().addWaypoint(instance.name.getText(), Client.formatConnectedServerIp(), new BlockPos(instance.x.getValue(), instance.y.getValue(), instance.z.getValue()), (ColorObject)instance.color.getCurrentValue());
+                            this.mc.displayGuiScreen(null);
+                        }
+                    }
+                };
+            }
+        });
         while (this.pane.y + this.pane.height < y + h + 5)
             this.pane.height++;
         center();
         this.color.onUpdate();
-    }
-
-    public void onButtonInteract(Button button, int mouseX, int mouseY, int mouseButton) {
-        super.onButtonInteract(button, mouseX, mouseY, mouseButton);
-        if (button != null && button.displayText != null) {
-            if (button.displayText.equals("Create") && !name.getText().isEmpty()) {
-                Waypoint waypoint;
-                waypoint = new Waypoint(name.getText(), Client.formatConnectedServerIp(), new BlockPos(x.getValue(), y.getValue(), z.getValue()), color.getCurrentValue());
-                WaypointHandler.getInstance().addWaypoint(waypoint.setWorld(Client.getCurrentWorldName()));
-                this.mc.displayGuiScreen(this.parent);
-            } else if (button.displayText.equals("Apply Edits") && waypoint != null) {
-                waypoint.setName(name.getText());
-                waypoint.setPos(new BlockPos(x.getValue(), y.getValue(), z.getValue()));
-                waypoint.setColor(color.getCurrentValue());
-                super.closeOverlay();
-            }
-        }
     }
 }

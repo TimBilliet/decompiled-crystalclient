@@ -136,14 +136,13 @@ public abstract class MixinMinecraft {
 
     @Inject(method = {"startGame"}, at = {@At(value = "FIELD", target = "Lnet/minecraft/client/Minecraft;ingameGUI:Lnet/minecraft/client/gui/GuiIngame;", shift = At.Shift.AFTER)})
     private void replaceGuiIngame(CallbackInfo ci) {
-        this.ingameGUI = (GuiIngame) new GuiIngameCrystal((Minecraft) (Object) this);
+        this.ingameGUI = new GuiIngameCrystal((Minecraft) (Object) this);
     }
 
     @Inject(method = {"startGame"}, at = {@At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;info(Ljava/lang/String;)V", shift = At.Shift.BEFORE)})
     private void logClientVersion(CallbackInfo ci) {
         Reference.LOGGER.info("");
         Reference.LOGGER.info("  {} v{}-{}/{}", "Crystal Client", "1.1.16-projectassfucker", "37aa61d", "offline");
-        Reference.LOGGER.info("  https://discord.gg/mmVWkk93E9");
         Reference.LOGGER.info("");
     }
 
@@ -311,12 +310,11 @@ public abstract class MixinMinecraft {
                 if ((OldAnimations.getInstance()).enabled && this.playerController.gameIsSurvivalOrAdventure() &&
                         (OldAnimations.getInstance()).punchDuringUsage &&
                         this.gameSettings.keyBindAttack.isKeyDown() && (this.gameSettings.keyBindUseItem.isKeyDown() || this.thePlayer.isUsingItem()) && this.thePlayer.getHeldItem() != null && (this.thePlayer.getHeldItem()).stackSize > 0) {
-//          this.gameSettings.keyBindAttack.getIsKeyPressed() && (this.gameSettings.keyBindUseItem.getIsKeyPressed() || this.thePlayer.isUsingItem()) && this.thePlayer.getHeldItem() != null && (this.thePlayer.getHeldItem()).stackSize > 0) {
                     ItemStack stack = this.thePlayer.getHeldItem();
                     int id;
                     if (stack == null || (id = Item.getIdFromItem(stack.getItem())) == 332 || id == 381 || id == 368)
                         return;
-                    if (this.playerController.sendUseItem((EntityPlayer) this.thePlayer, (World) this.theWorld, this.thePlayer.getHeldItem())) {
+                    if (this.playerController.sendUseItem(this.thePlayer, this.theWorld, this.thePlayer.getHeldItem())) {
                         this.playerController.resetBlockRemoving();
                         return;
                     }
@@ -377,8 +375,6 @@ public abstract class MixinMinecraft {
 
     private void loadGui(GuiScreen guiScreenIn, CallbackInfo ci) {
 
-//    ScreenMainMenu screenMainMenu = null;
-//    GuiGameOver guiGameOver = null;
         ci.cancel();
         if (guiScreenIn instanceof net.minecraft.client.gui.GuiMainMenu)
             guiScreenIn = new ScreenMainMenu();

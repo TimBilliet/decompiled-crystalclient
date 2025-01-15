@@ -15,7 +15,6 @@ public abstract class MixinBlockTripWire extends Block {
         super(blockMaterialIn, blockMapColorIn);
     }
 
-    //func_180662_a
     public int colorMultiplier(IBlockAccess blockAccess, BlockPos pos, int renderPass) {
         return (ClientOptions.getInstance()).redString ? 16711680 : super.colorMultiplier(blockAccess, pos, renderPass);//func_180662_a
     }

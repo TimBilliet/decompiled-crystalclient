@@ -22,12 +22,12 @@ public abstract class MixinBlockRedstoneWire {
         if ((ClientOptions.getInstance()).useRedstoneColor) {
             float[] hsv = new float[3];
             ColorObject colorObj = (ClientOptions.getInstance()).redstoneColor;
-            Color color = colorObj.isChroma() ? RenderUtils.getCurrentChromaColor() : (Color) colorObj;
+            Color color = colorObj.isChroma() ? RenderUtils.getCurrentChromaColor() : colorObj;
             Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), hsv);
             IBlockState block = worldIn.getBlockState(pos);
-            int power = ((Integer) block.getValue((IProperty) BlockRedstoneWire.POWER)).intValue();
+            int power = block.getValue(BlockRedstoneWire.POWER);
             float decay = Math.max(0.3F, power / 15.0F);
-            cir.setReturnValue(Integer.valueOf(Color.getHSBColor(hsv[0], hsv[1], decay).getRGB()));
+            cir.setReturnValue(Color.getHSBColor(hsv[0], hsv[1], decay).getRGB());
         }
     }
 }

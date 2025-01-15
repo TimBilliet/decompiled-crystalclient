@@ -9,6 +9,9 @@ import org.spongepowered.asm.mixin.Overwrite;
 
 @Mixin({BlockRedstoneDiode.class})
 public abstract class MixinBlockRedstoneDiode {
+    /**
+     * @author
+     */
     @Overwrite
     public boolean shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side) {
         return (side != EnumFacing.DOWN);

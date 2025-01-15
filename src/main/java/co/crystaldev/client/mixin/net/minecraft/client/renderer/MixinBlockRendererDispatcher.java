@@ -44,7 +44,6 @@ public abstract class MixinBlockRendererDispatcher {
 
     @Shadow
     public abstract IBakedModel getModelFromBlockState(IBlockState paramIBlockState, IBlockAccess paramIBlockAccess, BlockPos paramBlockPos);
-//  public abstract IBakedModel func_175022_a(IBlockState paramIBlockState, IBlockAccess paramIBlockAccess, BlockPos paramBlockPos);
 
     /**
      * @author Tim
@@ -74,7 +73,6 @@ public abstract class MixinBlockRendererDispatcher {
                     if ((CannonView.getInstance()).enabled) {
                         if (!CannonView.BLOCKS.contains(state.getBlock().getClass()))
                             return false;
-//            IBakedModel iBakedModel = func_175022_a(state, blockAccess, pos);
                         IBakedModel iBakedModel = getModelFromBlockState(state, blockAccess, pos);
                         return this.blockModelRenderer.renderModel(blockAccess, iBakedModel, state, pos, wr, false);
                     }
@@ -100,7 +98,6 @@ public abstract class MixinBlockRendererDispatcher {
                     state = DOUBLE_WOODEN_SLAB_STATE;
                 }
         }
-//    return instance.func_175022_a(state, worldIn, pos);
         return instance.getModelFromBlockState(state, worldIn, pos);
     }
 }

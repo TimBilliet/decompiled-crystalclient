@@ -19,7 +19,7 @@ public abstract class MixinFileResourcePack {
     @Inject(method = {"hasResourceName"}, cancellable = true, at = {@At("HEAD")})
     private void hasResourceName(String name, CallbackInfoReturnable<Boolean> ci) {
         if (name.contains("crystalclient"))
-            ci.setReturnValue(Boolean.valueOf(false));
+            ci.setReturnValue(Boolean.FALSE);
     }
 }
 

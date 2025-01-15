@@ -99,7 +99,6 @@ public class GuiIngameCrystal extends GuiIngameForge {
                 renderPortal(this.res, partialTicks);
             }
             if (renderHotbar) {
-//                renderHotbar(this.res, partialTicks);
                 renderTooltip(this.res, partialTicks);
 
             }
@@ -139,7 +138,6 @@ public class GuiIngameCrystal extends GuiIngameForge {
             renderTitle(width, height, partialTicks);
             Scoreboard scoreboard = this.mc.theWorld.getScoreboard();
             ScoreObjective objective = null;
-            //ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(this.mc.thePlayer.getCommandSenderName());
             ScorePlayerTeam scoreplayerteam = scoreboard.getPlayersTeam(this.mc.thePlayer.getCommandSenderEntity().getName());
 
             if (scoreplayerteam != null) {
@@ -502,7 +500,6 @@ public class GuiIngameCrystal extends GuiIngameForge {
 
             this.mc.mcProfiler.endSection();
         } else if (this.mc.thePlayer.isSpectator()) {
-            //this.spectatorGui.func_175263_a(res);
             this.spectatorGui.renderSelectedItem(res);
         }
     }
@@ -588,8 +585,6 @@ public class GuiIngameCrystal extends GuiIngameForge {
 
 
     protected void renderTitle(int width, int height, float partialTicks) {
-
-//        if (this.field_175195_w > 0) {
         if (this.titlesTimer > 0) {
             this.mc.mcProfiler.startSection("titleAndSubtitle");
             float age = this.titlesTimer - partialTicks;//
@@ -718,11 +713,9 @@ public class GuiIngameCrystal extends GuiIngameForge {
             super(mc);
         }
 
-        //func_180798_a
         protected void renderDebugInfoLeft() {
         }
 
-        //func_175239_b
         protected void renderDebugInfoRight(ScaledResolution res) {
         }
 

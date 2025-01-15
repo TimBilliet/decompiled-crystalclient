@@ -32,7 +32,7 @@ public abstract class MixinBlockStateMapper {
         Map<IBlockState, ModelResourceLocation> map = Maps.newIdentityHashMap();
         for (Block block : Block.blockRegistry) {
             if (block == Blocks.chest || block == Blocks.trapped_chest || !this.setBuiltInBlocks.contains(block))
-                map.putAll(((IStateMapper) Objects.firstNonNull(this.blockStateMap.get(block), new DefaultStateMapper())).putStateModelLocations(block));
+                map.putAll(Objects.firstNonNull(this.blockStateMap.get(block), new DefaultStateMapper()).putStateModelLocations(block));
         }
         return map;
     }

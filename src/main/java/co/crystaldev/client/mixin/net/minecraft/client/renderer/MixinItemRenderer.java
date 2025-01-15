@@ -36,30 +36,24 @@ public abstract class MixinItemRenderer {
     private Minecraft mc;
 
     @Shadow
-//  protected abstract void func_178097_a(AbstractClientPlayer paramAbstractClientPlayer, float paramFloat1, float paramFloat2, float paramFloat3);
     protected abstract void renderItemMap(AbstractClientPlayer paramAbstractClientPlayer, float paramFloat1, float paramFloat2, float paramFloat3);
 
     @Shadow
-//  protected abstract void func_178095_a(AbstractClientPlayer paramAbstractClientPlayer, float paramFloat1, float paramFloat2);
     protected abstract void renderPlayerArm(AbstractClientPlayer paramAbstractClientPlayer, float paramFloat1, float paramFloat2);
 
     @Shadow
     public abstract void renderItem(EntityLivingBase paramEntityLivingBase, ItemStack paramItemStack, ItemCameraTransforms.TransformType paramTransformType);
 
     @Shadow
-//  protected abstract void func_178098_a(float paramFloat, AbstractClientPlayer paramAbstractClientPlayer);
     protected abstract void doBowTransformations(float paramFloat, AbstractClientPlayer paramAbstractClientPlayer);
 
     @Shadow
-//  protected abstract void func_178103_d();
     protected abstract void doBlockTransformations();
 
     @Shadow
-//  protected abstract void func_178104_a(AbstractClientPlayer paramAbstractClientPlayer, float paramFloat);
     protected abstract void performDrinking(AbstractClientPlayer paramAbstractClientPlayer, float paramFloat);
 
     @Shadow
-//  protected abstract void func_178105_d(float paramFloat);
     protected abstract void doItemUsedTransformations(float paramFloat);
 
     @Inject(method = {"renderFireInFirstPerson"}, at = {@At("HEAD")}, cancellable = true)
@@ -71,9 +65,6 @@ public abstract class MixinItemRenderer {
         GlStateManager.pushMatrix();
         GlStateManager.translate(0.0F, (float) (ClientOptions.getInstance()).fireOverlayHeight, 0.0F);
     }
-
-//  @Shadow
-//  protected abstract void transformFirstPersonItem(float equipProgress, float swingProgress);
 
     @Inject(method = {"renderFireInFirstPerson"}, at = {@At("TAIL")})
     private void fireOverlayPost(float partialTicks, CallbackInfo ci) {
@@ -120,7 +111,7 @@ public abstract class MixinItemRenderer {
                 doItemUsedTransformations(f1);
                 transformFirstPersonItem(f, f1);
             }
-            renderItem((EntityLivingBase) abstractclientplayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
+            renderItem(abstractclientplayer, this.itemToRender, ItemCameraTransforms.TransformType.FIRST_PERSON);
         } else if (!abstractclientplayer.isInvisible()) {
             renderPlayerArm(abstractclientplayer, f, f1);
         }
@@ -133,7 +124,7 @@ public abstract class MixinItemRenderer {
      * @author
      */
     @Overwrite
-    private void transformFirstPersonItem(float equipProgress, float swingProgress) {//func_178096_b
+    private void transformFirstPersonItem(float equipProgress, float swingProgress) {
         if (this.isFishingRod) {
             GlStateManager.translate(0.4F, -0.42F, -0.71999997F);
         } else {

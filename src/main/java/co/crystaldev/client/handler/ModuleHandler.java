@@ -340,7 +340,6 @@ public class ModuleHandler implements IRegistrable {
     public static float getTps() {
         int tickCount = 0;
         float tickRate = 0.0F;
-        System.out.println(Arrays.toString(INSTANCE.ticks));
         for (float tick : INSTANCE.ticks) {
             if (tick > 0.0F) {
                 tickRate += tick;

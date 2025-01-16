@@ -28,7 +28,6 @@ public class MacroBuilderButton extends Button {
 
     public MacroBuilderButton(int x, int y, int width, int height) {
         super(-1, x, y, width, height);
-//    int bWidth = (this.x + this.width - 4 - this.x + this.width / 2 + this.width / 4 + 4) / 2 - 2;
         int bWidth = (this.width / 4 - 8) / 2 - 2;
         this.subButtons.add(this.nameInput = new TextInputField(-1, this.x + 4, this.y + this.height / 2 - 9, this.x + this.width / 4 - this.x - 8, 18, "Macro Name") {
 
@@ -130,7 +129,6 @@ public class MacroBuilderButton extends Button {
             this.text.fade((hovered || this.selecting));
             RenderUtils.drawRoundedRect(this.x, this.y, (this.x + this.width), (this.y + this.height), 9.0D, this.background.getCurrentColor().getRGB());
 
-//      RenderUtils.drawRoundedRect(this.x, this.y, (this.x + this.width), (this.y + this.height), 9.0D, this.background.getCurrentColor().getRGB());
             String s = this.selecting ? "..." : ((this.keycode == 0) ? "NONE" : GameSettings.getKeyDisplayString(this.keycode));
             this.fontRenderer.drawCenteredString(s, this.x + this.width / 2, this.y + this.height / 2, this.text.getCurrentColor().getRGB());
         }

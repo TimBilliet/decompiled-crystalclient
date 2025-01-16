@@ -35,7 +35,6 @@ public class MacroButton extends Button {
     public MacroButton(final Macro macro, int x, int y, int width, int height) {
         super(-1, x, y, width, height, macro.getName());
         this.macro = macro;
-//    int bWidth = (this.x + this.width - 4 - this.x + this.width / 2 + this.width / 4 + 4) / 2 - 2;
         int bWidth = (this.width / 4 - 8) / 2 - 2;
         this.subButtons.add(this.actionInput = new TextInputField(-1, this.x + this.width / 4, this.y + this.height / 2 - 9, this.width / 2, 18, "Macro Action") {
 

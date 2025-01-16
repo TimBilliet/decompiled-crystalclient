@@ -115,7 +115,7 @@ public class ProfileHandler {
                     !profile.equals(this.selectedProfile)) {
                 this.lastProfile = this.selectedProfile;
                 swapToProfile(profile);
-//        NotificationHandler.addNotification(String.format("Profile '%s' was automatically selected.", new Object[] { profile.getName() }));
+        NotificationHandler.addNotification(String.format("Profile '%s' was automatically selected.", profile.getName()));
                 break;
             }
         }
@@ -136,7 +136,7 @@ public class ProfileHandler {
                 FileReader fr = new FileReader(profileFile);
                 JsonObject obj = (JsonObject) Reference.GSON_PRETTY.fromJson(fr, JsonObject.class);
                 if (obj.has("available_profiles"))
-                    this.profiles.addAll((Collection<? extends Profile>) Reference.GSON.fromJson((JsonElement) obj.getAsJsonArray("available_profiles"), (new TypeToken<ArrayList<Profile>>() {
+                    this.profiles.addAll(Reference.GSON.fromJson((JsonElement) obj.getAsJsonArray("available_profiles"), (new TypeToken<ArrayList<Profile>>() {
 
                     }).getType()));
                 if (obj.has("default_profile"))

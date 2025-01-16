@@ -15,6 +15,7 @@ import co.crystaldev.client.shader.ShaderManager;
 import co.crystaldev.client.util.ColorObject;
 import co.crystaldev.client.util.RenderUtils;
 import net.minecraft.block.*;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
@@ -51,11 +52,20 @@ public class BlockOverlay extends Module implements IRegistrable {
                 GL11.glDepthMask(true);
                 GL11.glLineWidth(this.lineWidth);
                 BlockPos pos = ev.getTarget().getBlockPos();
-                Block b = this.mc.theWorld.getBlockState(pos).getBlock();
-                Block superBlock = new Block(b.getMaterial());
-                if (!(b instanceof BlockStairs))
+                IBlockState state = this.mc.theWorld.getBlockState(pos);
+                Block b = state.getBlock();
+                Block superBlock = b;
+                if(b.getCollisionBoundingBox(this.mc.theWorld, pos, state) == null) {
+                    superBlock = new Block(b.getMaterial());
                     superBlock.setBlockBounds((float) b.getBlockBoundsMinX(), (float) b.getBlockBoundsMinY(), (float) b.getBlockBoundsMinZ(), (float) b.getBlockBoundsMaxX(), (float) b.getBlockBoundsMaxY(), (float) b.getBlockBoundsMaxZ());
-                AxisAlignedBB bb = RenderUtils.normalize(superBlock.getCollisionBoundingBox(this.mc.theWorld, pos, null).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D));
+                } else {
+                    if(b instanceof BlockStairs) {
+                         superBlock.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+                    } else {
+                        superBlock.setBlockBoundsBasedOnState(mc.theWorld, pos);
+                    }
+                }
+                AxisAlignedBB bb = RenderUtils.normalize(superBlock.getCollisionBoundingBox(this.mc.theWorld, pos, state).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D));
                 if (this.color.isChroma())
                     ShaderManager.getInstance().enableShader(ChromaScreenShader.class);
                 if (this.mode.isSelected("Outline")) {

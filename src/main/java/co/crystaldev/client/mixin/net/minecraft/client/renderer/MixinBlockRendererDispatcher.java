@@ -6,6 +6,9 @@ import co.crystaldev.client.feature.impl.mechanic.NoLag;
 import co.crystaldev.client.util.LocationUtils;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCactus;
+import net.minecraft.block.BlockSlab;
+import net.minecraft.block.BlockTripWire;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BlockFluidRenderer;
@@ -54,9 +57,9 @@ public abstract class MixinBlockRendererDispatcher {
             boolean cacMode = (Farming.getInstance()).cactusMode;
             boolean disCac = (Farming.getInstance()).disableCactusRendering;
             boolean disStr = (Farming.getInstance()).disableStringRendering;
-            boolean isCac = state.getBlock() instanceof net.minecraft.block.BlockCactus;
-            boolean isStr = state.getBlock() instanceof net.minecraft.block.BlockTripWire;
-            if ((cacMode && (isCac || isStr) && !LocationUtils.isBlockInSameChunk(pos, (Entity) (Minecraft.getMinecraft()).thePlayer)) || (disCac && isCac) || (disStr && isStr))
+            boolean isCac = state.getBlock() instanceof BlockCactus;
+            boolean isStr = state.getBlock() instanceof BlockTripWire;
+            if ((cacMode && (isCac || isStr) && !LocationUtils.isBlockInSameChunk(pos, (Minecraft.getMinecraft()).thePlayer)) || (disCac && isCac) || (disStr && isStr))
                 return false;
         }
         if (NoLag.isEnabled((NoLag.getInstance()).hideFoliage) && FOLIAGE_TO_BLOCK.contains(state.getBlock()))
@@ -76,8 +79,8 @@ public abstract class MixinBlockRendererDispatcher {
                         IBakedModel iBakedModel = getModelFromBlockState(state, blockAccess, pos);
                         return this.blockModelRenderer.renderModel(blockAccess, iBakedModel, state, pos, wr, false);
                     }
-                    ibakedmodel = getModelFromBlockState(state, blockAccess, pos);//func_175022_a
-                    return this.blockModelRenderer.renderModel(blockAccess, ibakedmodel, state, pos, wr);//func_178259_a
+                    ibakedmodel = getModelFromBlockState(state, blockAccess, pos);
+                    return this.blockModelRenderer.renderModel(blockAccess, ibakedmodel, state, pos, wr);
             }
             return false;
         } catch (Throwable throwable) {

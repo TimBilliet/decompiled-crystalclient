@@ -22,16 +22,6 @@ public abstract class MixinBlockChest extends BlockContainer {
         return (NoLag.getInstance() != null && NoLag.isEnabled((NoLag.getInstance()).fasterChestRendering));
     }
 
-//  @Overwrite
-//  public boolean func_149686_d() {
-//    return isOpaqueCube();
-//  }
-
-//  @Overwrite
-//  public boolean renderAsNormalBlock() {
-//    return isOpaqueCube();
-//  }
-
     /**
      * @author
      */

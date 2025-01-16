@@ -11,7 +11,6 @@ import co.crystaldev.client.feature.annotations.properties.Toggle;
 import co.crystaldev.client.feature.base.Category;
 import co.crystaldev.client.feature.base.Module;
 import co.crystaldev.client.mixin.accessor.net.minecraft.client.gui.MixinGuiChat;
-import com.sun.corba.se.spi.orbutil.threadpool.NoSuchThreadPoolException;
 import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.client.network.NetworkPlayerInfo;

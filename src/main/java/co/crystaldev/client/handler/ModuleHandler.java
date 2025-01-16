@@ -60,7 +60,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
@@ -188,7 +187,7 @@ public class ModuleHandler implements IRegistrable {
     public void onPacketReceived(PacketReceivedEvent.Pre event) {
         if (event.packet instanceof net.minecraft.network.play.server.S03PacketTimeUpdate) {
             if (this.prevTime != -1L) {
-                this.ticks[this.currentTick % this.ticks.length] = MathHelper.clamp_float(20.0F / (float) (System.currentTimeMillis() - this.prevTime) / 1000.0F, 0.0F, 20.0F);
+                this.ticks[this.currentTick % this.ticks.length] = MathHelper.clamp_float(20.0F / ((float) (System.currentTimeMillis() - this.prevTime) / 1000.0F), 0.0F, 20.0F);
                 this.currentTick++;
             }
             this.prevTime = System.currentTimeMillis();
@@ -341,6 +340,7 @@ public class ModuleHandler implements IRegistrable {
     public static float getTps() {
         int tickCount = 0;
         float tickRate = 0.0F;
+        System.out.println(Arrays.toString(INSTANCE.ticks));
         for (float tick : INSTANCE.ticks) {
             if (tick > 0.0F) {
                 tickRate += tick;

@@ -26,11 +26,11 @@ public class TPS extends HudModuleBackground {
 
     public Tuple<String, String> getInfoHud() {
         float tps = ModuleHandler.getTps();
-        return new Tuple("TPS", String.format("%.2f", new Object[]{Float.valueOf(tps)}));
+        return new Tuple<>("TPS", String.format("%.2f", tps));
     }
 
     public String getDisplayText() {
-        return String.format("%.2f TPS", new Object[]{Float.valueOf(ModuleHandler.getTps())});
+        return String.format("%.2f TPS", ModuleHandler.getTps());
     }
 
     public void draw() {

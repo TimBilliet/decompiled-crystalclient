@@ -67,7 +67,9 @@ public abstract class GroupSection extends Screen {
         if (this.members != null && GroupManager.getSelectedGroup() != null && GroupManager.getSelectedGroup().hasPermission(12)) {
             int size = Fonts.NUNITO_SEMI_BOLD_18.getStringHeight() + 2;
             addButton((Button) (this.memberAddButton = new ResourceButton(-1, this.members.x + this.members.width - 5 - size, this.members.y + 5, size, size, Resources.ADD_PERSON) {
-
+                {
+                    addAttribute(attribute);
+                }
             }));
         }
     }

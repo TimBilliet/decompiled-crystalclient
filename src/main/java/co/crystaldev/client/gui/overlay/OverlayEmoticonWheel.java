@@ -5,6 +5,7 @@ import co.crystaldev.client.font.Fonts;
 import co.crystaldev.client.gui.Button;
 import co.crystaldev.client.gui.Overlay;
 import co.crystaldev.client.gui.buttons.EmoteSelectionButton;
+import co.crystaldev.client.gui.buttons.MenuButton;
 import co.crystaldev.client.util.RenderUtils;
 import co.crystaldev.client.util.objects.FadingColor;
 
@@ -24,7 +25,9 @@ public class OverlayEmoticonWheel extends Overlay {
         super(bind);
         this.fontRenderer = Fonts.NUNITO_SEMI_BOLD_28;
         this.fadeInColor = new FadingColor(new Color(255, 255, 255, 5), this.opts.hoveredTextColor, 400L) {
-
+            {
+                fade(false);
+            }
         };
     }
 
@@ -36,6 +39,7 @@ public class OverlayEmoticonWheel extends Overlay {
             int x = (int) (Math.sin(angle) * 80.0D + this.width / 2.0D);
             int y = (int) (Math.cos(angle) * 80.0D + this.height / 2.0D);
             this.topY = Math.min(this.topY, y - 40);
+            addButton(new MenuButton(-1, x, y, 100,100, "COCK"));
             addButton(new EmoteSelectionButton(emote, x, y, 40));
         }
     }

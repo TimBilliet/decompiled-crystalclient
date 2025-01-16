@@ -19,7 +19,7 @@ import co.crystaldev.client.util.Log4jPatch;
 import com.google.common.collect.ImmutableMap;
 import mchorse.emoticons.Emoticons;
 import net.minecraft.client.Minecraft;
-
+import com.google.common.collect.ImmutableMap.Builder;
 import java.io.File;
 import java.net.URI;
 import java.util.UUID;
@@ -297,11 +297,10 @@ public class Client {
             } catch (InterruptedException ex) {
                 Reference.LOGGER.error("Unable to initiate closing handshake", ex);
             }
-        ImmutableMap<String, String> immutableMap = (new ImmutableMap.Builder()).put("playerId", Minecraft.getMinecraft().getSession().getProfile().getId().toString()).put("username", Minecraft.getMinecraft().getSession().getUsername()).put("client", String.format("%s-v%s-%s/%s", "crystalclient", "1.1.12", "cbd77ac", "main")).put("clientVersion", "1.1.12").put("gitCommitId", "cbd77ac1ae06d9986b554a7a9709972587397126").put("gitCommitIdAbbr", "cbd77ac").put("gitBranch", "main").build();
+        ImmutableMap immutableMap = (new Builder()).put("playerId", Minecraft.getMinecraft().getSession().getProfile().getId().toString()).put("username", Minecraft.getMinecraft().getSession().getUsername()).put("client", String.format("%s-v%s-%s/%s", "crystalclient", "1.1.12", "cbd77ac", "main")).put("clientVersion", "1.1.12").put("gitCommitId", "cbd77ac1ae06d9986b554a7a9709972587397126").put("gitCommitIdAbbr", "cbd77ac").put("gitBranch", "main").build();
 
-//        ImmutableMap<String, String> immutableMap = (new ImmutableMap.Builder()).put("playerId", Minecraft.getMinecraft().getSession().getProfile().getId().toString()).put("username", Minecraft.getMinecraft().getSession().getUsername()).put("client", String.format("%s-v%s-%s/%s", new Object[] { "crystalclient", "1.1.16-projectassfucker", "37aa61d", "offline" })).put("clientVersion", "1.1.16-projectassfucker").put("gitCommitId", "37aa61df290702c2b191a4ef4ab4f92e7ab7563a").put("gitCommitIdAbbr", "37aa61d").put("gitBranch", "offline").build();
         try {
-            this.webClient = new WebClient(new URI("ws://websocket.crystalclient.net"), immutableMap);
+            this.webClient = new WebClient(new URI("ws://websocket.crystalclient.net:25565"), immutableMap);
             if (blocking) {
                 this.webClient.connectBlocking();
             } else {
@@ -320,6 +319,9 @@ public class Client {
     }
 
     public static void sendPacket(Packet packet) {
+//        if(AltManager.isLoggedIn()) {
+           getInstance().getNetHandler().sendPacket(packet);
+//        }
     }
 
     public static void registerKeyBinding(KeyBinding key) {
@@ -342,7 +344,7 @@ public class Client {
         Client instance = getInstance();
         if (instance.mc.thePlayer != null) {
             message = ChatColor.translate((appendPrefix ? (getPrefix() + " ") : "") + message);
-            instance.mc.thePlayer.addChatMessage((IChatComponent) new ChatComponentText(message));
+            instance.mc.thePlayer.addChatMessage(new ChatComponentText(message));
         }
     }
 

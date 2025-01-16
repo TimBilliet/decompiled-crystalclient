@@ -9,6 +9,7 @@ import co.crystaldev.client.event.IRegistrable;
 import co.crystaldev.client.event.impl.entity.EntityAttackEvent;
 import co.crystaldev.client.event.impl.init.InitializationEvent;
 import co.crystaldev.client.event.impl.init.ModuleOptionUpdateEvent;
+import co.crystaldev.client.event.impl.init.SessionUpdateEvent;
 import co.crystaldev.client.event.impl.init.ShutdownEvent;
 import co.crystaldev.client.event.impl.network.PacketReceivedEvent;
 import co.crystaldev.client.event.impl.network.PacketSendEvent;
@@ -59,6 +60,7 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.mojang.util.UUIDTypeAdapter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
@@ -368,6 +370,12 @@ public class ModuleHandler implements IRegistrable {
                     ClientTextureManager.getInstance().loadTextureMipMap(module.icon);
             }
         });
+
+        EventBus.register(this, SessionUpdateEvent.class, ev -> {
+            Client.getInstance().connectToSocket(true);
+            Client.getInstance().setCurrentUuid(UUIDTypeAdapter.fromString(ev.getSession().getPlayerID()));
+        });
+
         EventBus.register(this, ShutdownEvent.class, ev -> {
             ((MixinMinecraft) this.mc).setCurrentServerData(null);
             for (Module module : modules)

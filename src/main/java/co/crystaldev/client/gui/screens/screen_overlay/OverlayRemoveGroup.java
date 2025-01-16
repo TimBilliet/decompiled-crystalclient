@@ -1,11 +1,14 @@
 package co.crystaldev.client.gui.screens.screen_overlay;
 
+import co.crystaldev.client.Client;
 import co.crystaldev.client.font.FontRenderer;
 import co.crystaldev.client.font.Fonts;
 import co.crystaldev.client.group.objects.Group;
 import co.crystaldev.client.gui.Button;
 import co.crystaldev.client.gui.buttons.Label;
 import co.crystaldev.client.gui.buttons.MenuButton;
+import co.crystaldev.client.network.socket.client.group.PacketDeleteGroup;
+import co.crystaldev.client.util.objects.FadingColor;
 import org.apache.commons.lang3.text.WordUtils;
 
 public class OverlayRemoveGroup extends ScreenOverlay {
@@ -19,8 +22,7 @@ public class OverlayRemoveGroup extends ScreenOverlay {
     }
 
     public void init() {
-        String desc = String.format("Are you sure you wish to delete your group '%s'? This action will result in the group being permanently deleted and is irreversible.", new Object[]{this.group
-                .getName()});
+        String desc = String.format("Are you sure you wish to delete your group '%s'? This action will result in the group being permanently deleted and is irreversible.", this.group.getName());
         int y = this.pane.y + 28;
         for (String str : WordUtils.wrap(desc, 45).split("\n")) {
             addButton((Button) new Label(this.pane.x + this.pane.width / 2, y, str, this.opts.neutralTextColor.getRGB(), fr));
@@ -28,9 +30,21 @@ public class OverlayRemoveGroup extends ScreenOverlay {
         }
         y += 2;
         addButton((Button) new MenuButton(-1, this.pane.x + 5, y, this.pane.width / 2 - 7, 18, "Cancel") {
-
+            {
+                onClick = () -> {
+                    closeOverlay();
+                };
+            }
         });
         addButton((Button) new MenuButton(-1, this.pane.x + this.pane.width / 2 + 2, y, this.pane.width / 2 - 7, 18, "Remove Group") {
+            {
+                onClick = () -> {
+                    PacketDeleteGroup packet = new PacketDeleteGroup();
+                    Client.sendPacket(packet);
+                    closeOverlay();
+                };
+                setTextColor(new FadingColor(opts.secondaryRed, opts.mainRed));
+            }
 
         });
         while (this.pane.y + this.pane.height < y + 18 + 5)

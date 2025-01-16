@@ -54,15 +54,15 @@ public class Permissions {
     private final Set<Integer> permissions = new HashSet<>();
 
     public boolean hasPermission(int permission) {
-        return this.permissions.contains(Integer.valueOf(permission));
+        return this.permissions.contains(permission);
     }
 
     public boolean setPermission(int permission) {
-        if (this.permissions.contains(Integer.valueOf(permission))) {
-            this.permissions.remove(Integer.valueOf(permission));
+        if (this.permissions.contains(permission)) {
+            this.permissions.remove(permission);
             return false;
         }
-        this.permissions.add(Integer.valueOf(permission));
+        this.permissions.add(permission);
         return true;
     }
 

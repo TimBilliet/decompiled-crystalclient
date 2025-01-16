@@ -26,7 +26,7 @@ public class EventBus {
 
     public static <T extends Event> void register(Object o, Class<T> clazz, byte priority, Consumer<T> consumer) {
         LambdaEventData methodData = new LambdaEventData(o, (Consumer<Event>) consumer, priority);
-        (REGISTRY_MAP.computeIfAbsent(clazz, c -> new GlueList())).add(methodData);
+        (REGISTRY_MAP.computeIfAbsent(clazz, c -> new GlueList<>())).add(methodData);
         sortListValue(clazz);
     }
 
@@ -47,14 +47,13 @@ public class EventBus {
             ReflectiveEventData methodData = new ReflectiveEventData(o, method, ((SubscribeEvent) method.<SubscribeEvent>getAnnotation(SubscribeEvent.class)).priority());
             if (!methodData.target.isAccessible())
                 methodData.target.setAccessible(true);
-            (REGISTRY_MAP.computeIfAbsent((Class<? extends Event>) clazz, c -> new GlueList())).add(methodData);
+            (REGISTRY_MAP.computeIfAbsent((Class<? extends Event>) clazz, c -> new GlueList<>())).add(methodData);
             sortListValue((Class) clazz);
         }
     }
 
     public static void unregister(Object o) {
-        for (Iterator<List<AbstractEventData>> iterator = REGISTRY_MAP.values().iterator(); iterator.hasNext(); ) {
-            List<AbstractEventData> flexibleArray = iterator.next();
+        for (List<AbstractEventData> flexibleArray : REGISTRY_MAP.values()) {
             flexibleArray.removeIf(methodData -> methodData.source.equals(o));
         }
         cleanMap(true);
@@ -79,7 +78,7 @@ public class EventBus {
     public static void removeEntry(Class<? extends Event> clazz) {
         Iterator<Map.Entry<Class<? extends Event>, List<AbstractEventData>>> iterator = REGISTRY_MAP.entrySet().iterator();
         while (iterator.hasNext()) {
-            if (((Class) ((Map.Entry) iterator.next()).getKey()).equals(clazz)) {
+            if ((((Map.Entry) iterator.next()).getKey()).equals(clazz)) {
                 iterator.remove();
                 break;
             }
@@ -87,7 +86,7 @@ public class EventBus {
     }
 
     private static void sortListValue(Class<? extends Event> clazz) {
-        GlueList<AbstractEventData> glueList = new GlueList();
+        GlueList<AbstractEventData> glueList = new GlueList<>();
         for (byte b : Event.Priority.PRIORITIES) {
             for (AbstractEventData methodData : REGISTRY_MAP.get(clazz)) {
                 if (methodData.priority == b)
@@ -98,7 +97,7 @@ public class EventBus {
     }
 
     private static boolean isMethodBad(Method method) {
-        return ((method.getParameterTypes()).length != 1 || !method.isAnnotationPresent((Class) SubscribeEvent.class));
+        return ((method.getParameterTypes()).length != 1 || !method.isAnnotationPresent(SubscribeEvent.class));
     }
 
     private static boolean isMethodBad(Method method, Class<? extends Event> clazz) {
@@ -113,9 +112,3 @@ public class EventBus {
         REGISTRY_MAP.clear();
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\event\EventBus.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

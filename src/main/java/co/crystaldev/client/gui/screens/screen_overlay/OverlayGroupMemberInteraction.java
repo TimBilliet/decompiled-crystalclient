@@ -10,7 +10,13 @@ import co.crystaldev.client.gui.Button;
 import co.crystaldev.client.gui.Pane;
 import co.crystaldev.client.gui.Screen;
 import co.crystaldev.client.gui.buttons.MenuButton;
+import co.crystaldev.client.handler.NotificationHandler;
+import co.crystaldev.client.network.socket.client.group.PacketGroupMemberAction;
+import co.crystaldev.client.util.objects.FadingColor;
+import net.minecraft.client.gui.GuiChat;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 import java.util.UUID;
 
 public class OverlayGroupMemberInteraction extends ScreenOverlay {
@@ -34,28 +40,58 @@ public class OverlayGroupMemberInteraction extends ScreenOverlay {
         Group sg = GroupManager.getSelectedGroup();
         UUID player = Client.getUniqueID();
         addButton((Button) new MenuButton(-1, x, y, w, h, "Copy UUID") {
-
+            {
+                onClick = () -> {
+                    StringSelection selection = new StringSelection(member.getUuid().toString());
+                    Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
+                    NotificationHandler.addNotification("UUID copied to clipboard!");
+                    closeOverlay();
+                };
+            }
         });
         y += h + 5;
         addButton((Button) new MenuButton(-1, x, y, w, h, "Send Message") {
-
+            {
+                onClick = () -> {
+                    mc.displayGuiScreen(new GuiChat(String.format("/g msg %s ", OverlayGroupMemberInteraction.this.headerText)));
+                };
+            }
         });
         if (sg.hasPermission(6) && sg.compareRanks(player, this.member.getUuid()) && sg.canRankBeUpdated(player, this.member.getRank().promote())) {
             y += h + 5;
             addButton((Button) new MenuButton(-1, x, y, w, h, "Promote") {
-
+                {
+                    onClick = () -> {
+                        PacketGroupMemberAction packet = new PacketGroupMemberAction(member.getUuid(), PacketGroupMemberAction.Action.PROMOTE);
+                        Client.sendPacket(packet);
+                        closeOverlay();
+                    };
+                }
             });
         }
         if (sg.hasPermission(7) && sg.compareRanks(player, this.member.getUuid()) && sg.canRankBeUpdated(player, this.member.getRank().demote())) {
             y += h + 5;
             addButton((Button) new MenuButton(-1, x, y, w, h, "Demote") {
-
+                {
+                    onClick = () -> {
+                        PacketGroupMemberAction packet = new PacketGroupMemberAction(member.getUuid(), PacketGroupMemberAction.Action.DEMOTE);
+                        Client.sendPacket(packet);
+                        closeOverlay();
+                    };
+                }
             });
         }
         if (sg.hasPermission(5) && sg.compareRanks(player, this.member.getUuid())) {
             y += h + 5;
             addButton((Button) new MenuButton(-1, x, y, w, h, "Remove from group") {
-
+                {
+                    setTextColor(new FadingColor(opts.secondaryRed, opts.mainRed));
+                    onClick = () -> {
+                        PacketGroupMemberAction packet = new PacketGroupMemberAction(member.getUuid(), PacketGroupMemberAction.Action.REMOVE);
+                        Client.sendPacket(packet);
+                        closeOverlay();
+                    };
+                }
             });
         }
         while (this.pane.y + this.pane.height < y + h + 5)

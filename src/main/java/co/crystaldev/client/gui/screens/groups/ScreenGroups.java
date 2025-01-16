@@ -54,7 +54,7 @@ public class ScreenGroups extends ScreenBase {
         this.nav = new NavigationButton(GroupCategory.LANDING, this.header.x + this.header.width / 2, this.header.y + this.header.height / 2);
         this.groups = new ScrollPane(this.content.x + 10, this.content.y, 40, this.content.height - 10);
         this.members = new ScrollPane(this.content.x + this.content.width - 140, this.content.y, 130, this.groups.height);
-        this.center = new ScrollPane(this.content.x + this.groups.width + 10, this.content.y, this.members.x - this.groups.x + this.groups.width, this.groups.height);
+        this.center = new ScrollPane(this.content.x + this.groups.width + 10, this.content.y, this.members.x - (this.groups.x + this.groups.width), this.groups.height);
         this.full = new ScrollPane(this.groups.x + this.groups.width, this.groups.y, this.content.width - this.groups.width - 10, this.groups.height);
         this.groups.setScrollIf(b -> b instanceof GroupButton);
         initGroupButtons();
@@ -153,13 +153,17 @@ public class ScreenGroups extends ScreenBase {
             int x = this.full.x + this.full.width / 2;
             int y = this.full.y + 40;
             addButton((Button) new Label(x, y, "You don't have a group currently selected", -1, Fonts.NUNITO_SEMI_BOLD_24) {
-
+                {
+                    addAttribute("groupSection#noneSelected");
+                }
             });
             y += Fonts.NUNITO_SEMI_BOLD_28.getStringHeight() / 2 + 10;
             String desc = "You may join a group, create a new group, or select an existing group on the left sidebar.";
             for (String str : WordUtils.wrap(desc, 60).split("\n")) {
                 addButton((Button) new Label(x, y, str, this.opts.neutralTextColor.getRGB(), Fonts.NUNITO_REGULAR_16) {
-
+                    {
+                        addAttribute("groupSection#noneSelected");
+                    }
                 });
                 y += Fonts.NUNITO_REGULAR_20.getStringHeight();
             }
@@ -170,7 +174,7 @@ public class ScreenGroups extends ScreenBase {
             addButton((Button) this.nav);
         switch ((GroupCategory) this.nav.getCurrent()) {
             case LANDING:
-                this.section = new SectionLanding((Pane) this.center, (Pane) this.members);
+                this.section = new SectionLanding(this.center, (Pane) this.members);
                 return;
             case RANKS:
                 this.section = new SectionRanks((Pane) this.center, (Pane) this.members);
@@ -200,14 +204,19 @@ public class ScreenGroups extends ScreenBase {
         scissor.height -= 10 + w;
         for (Group group : sorted) {
             addButton((Button) new GroupButton(group, x, y, w, w) {
-
+                {
+                    setScissorPane(scissor);
+                    addAttribute("groupSelectionButton");
+                }
             });
             y += w + 4;
         }
         if (this.groupAddButton != null)
             removeButton((Button) this.groupAddButton);
         addButton((Button) (this.groupAddButton = new GroupAddButton(x, this.groups.y + this.groups.height - 8 - w, w, w) {
-
+            {
+                addAttribute("groupSelectionButton");
+            }
         }));
         this.groups.updateMaxScroll((Screen) this, 16);
     }

@@ -41,7 +41,13 @@ public class PacketGroupInvitationAction extends Packet {
 
     public void process(INetHandler handler) {
         if (this.action == Action.REQUEST_JOIN) {
-            NotificationHandler.addNotification(this.message);
+            if(message.contains("invalid_invitation_code")) {
+                NotificationHandler.addNotification("Invalid invitation code");
+            } else if(message.contains("member_already_in_group")) {
+                NotificationHandler.addNotification("You are already a member of this group!");
+            } else {
+                NotificationHandler.addNotification(this.message);
+            }
         } else if (GroupManager.getSelectedGroup() != null) {
             GroupManager.getSelectedGroup().setInviteCode(this.message);
         }

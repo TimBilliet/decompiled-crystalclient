@@ -47,7 +47,9 @@ public class SectionRanks extends GroupSection {
         int index = 0;
         for (Rank rank : Rank.values()) {
             addButton((Button) new GroupRankButton(rank, (index == 0) ? x : x1, y, w, h, (rank == this.selectedRank)) {
-
+                {
+                    addAttribute("groupSection");
+                }
             });
             index++;
             if (index == 2) {
@@ -57,7 +59,7 @@ public class SectionRanks extends GroupSection {
         }
         if (index != 0)
             y += h + 5;
-        this.permissions = new ScrollPane(this.pane.x, y, this.pane.width, this.pane.height - y - this.pane.y);
+        this.permissions = new ScrollPane(this.pane.x, y, this.pane.width, this.pane.height - (y - this.pane.y));
         this.permissions.setScrollIf(b -> b.hasAttribute("groupSection#permissionButton"));
         initPermissions();
     }
@@ -95,20 +97,28 @@ public class SectionRanks extends GroupSection {
         final Pane scissor = this.memberContent.scale(getScaledScreen());
         Map<Rank, List<GroupMember>> sorted = new HashMap<>();
         for (GroupMember mem : GroupManager.getSelectedGroup().getMembers())
-            ((List<GroupMember>) sorted.computeIfAbsent(mem.getRank(), r -> new ArrayList())).add(mem);
+            sorted.computeIfAbsent(mem.getRank(), r -> new ArrayList<>()).add(mem);
         for (Map.Entry<Rank, List<GroupMember>> entry : (new TreeMap<>(sorted)).entrySet()) {
             List<GroupMember> members = entry.getValue();
             members.sort(Comparator.comparing(m -> UsernameCache.getInstance().getUsername(m.getUuid()).toLowerCase()));
             addButton((Button) new Label(x + w / 2, y + h / 2, ((Rank) entry
                     .getKey()).getDisplayText() + " - " + members.size(), 16777215, Fonts.NUNITO_SEMI_BOLD_16) {
-
+                {
+                    {
+                        addAttribute("groupSection#memberButton");
+                        setScissorPane(scissor);
+                    }
+                }
             });
             y += h;
             for (GroupMember member : members) {
                 if (member == null)
                     continue;
                 addButton((Button) new GroupMemberSmallButton(member, x, y, w, h) {
-
+                    {
+                        addAttribute("groupSection#memberButton");
+                        setScissorPane(scissor);
+                    }
                 });
                 y += h + 5;
             }
@@ -125,11 +135,15 @@ public class SectionRanks extends GroupSection {
         int h = 18;
         final Pane scissor = this.permissions.scale(getScaledScreen());
         for (Field field : Permissions.class.getDeclaredFields()) {
-            Permission annotation = field.<Permission>getAnnotation(Permission.class);
+            System.out.println(field);
+            Permission annotation = field.getAnnotation(Permission.class);
             if (annotation != null)
                 try {
-                    addButton((Button) new GroupPermissionButton(this.selectedRank, field.getInt(null), x, y, w, h, annotation.label()) {
-
+                    addButton(new GroupPermissionButton(this.selectedRank, field.getInt(null), x, y, w, h, annotation.label()) {
+                        {
+                            addAttribute("groupSection#permissionButton");
+                            setScissorPane(scissor);
+                        }
                     });
                     y += h + 5;
                 } catch (IllegalAccessException ex) {
@@ -147,9 +161,3 @@ public class SectionRanks extends GroupSection {
             this.permissions.scroll(this, mouseX, mouseY, dwheel);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\screens\groups\SectionRanks.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

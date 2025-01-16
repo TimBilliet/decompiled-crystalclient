@@ -33,20 +33,26 @@ public class SectionMembers extends GroupSection {
         final Pane scissor = this.pane.scale(getScaledScreen());
         Map<Rank, List<GroupMember>> sorted = new HashMap<>();
         for (GroupMember mem : GroupManager.getSelectedGroup().getMembers())
-            ((List<GroupMember>) sorted.computeIfAbsent(mem.getRank(), r -> new ArrayList())).add(mem);
+            ((List<GroupMember>) sorted.computeIfAbsent(mem.getRank(), r -> new ArrayList<>())).add(mem);
         List<GroupMember> pending = new ArrayList<>(GroupManager.getSelectedGroup().getPendingMembers());
         pending.sort(Comparator.comparing(GroupMember::getUuid));
         if (!pending.isEmpty()) {
             addButton((Button) new Label(x + w / 2, y + h / 2, "Pending - " + pending
                     .size(), 16777215, Fonts.NUNITO_SEMI_BOLD_16) {
-
+                {
+                    addAttribute("groupSection");
+                    setScissorPane(scissor);
+                }
             });
             y += h;
             for (GroupMember member : pending) {
                 if (member == null)
                     continue;
                 addButton((Button) new GroupMemberLargeButton(member, x, y, w, h, true) {
-
+                    {
+                        addAttribute("groupSection");
+                        setScissorPane(scissor);
+                    }
                 });
                 y += h + 5;
             }
@@ -56,14 +62,20 @@ public class SectionMembers extends GroupSection {
             members.sort(Comparator.comparing(m -> UsernameCache.getInstance().getUsername(m.getUuid()).toLowerCase()));
             addButton((Button) new Label(x + w / 2, y + h / 2, ((Rank) entry
                     .getKey()).getDisplayText() + " - " + members.size(), 16777215, Fonts.NUNITO_SEMI_BOLD_16) {
-
+                {
+                    addAttribute("groupSection");
+                    setScissorPane(scissor);
+                }
             });
             y += h;
             for (GroupMember member : members) {
                 if (member == null)
                     continue;
                 addButton((Button) new GroupMemberLargeButton(member, x, y, w, h, false) {
-
+                    {
+                        addAttribute("groupSection");
+                        setScissorPane(scissor);
+                    }
                 });
                 y += h + 5;
             }
@@ -75,9 +87,3 @@ public class SectionMembers extends GroupSection {
     public void draw(int mouseX, int mouseY, float partialTicks) {
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\screens\groups\SectionMembers.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

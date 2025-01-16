@@ -24,14 +24,27 @@ public class SectionSchematics extends GroupSection {
         int h = 18;
         final Pane scissor = this.pane.scale(getScaledScreen());
         addButton((Button) new MenuButton(-1, x, y, w, h, "Upload Current Schematic") {
+            {
+                this.setScissorPane(scissor);
+//                this.setEnabled(ClientProxy.currentSchematic.schematic != null && GroupManager.getSelectedGroup().hasPermission(9));
+                this.addAttribute("groupSection");
+                this.onClick = () -> {
+//                    if (this.enabled) {
+//                        ((Screen)this.mc.currentScreen).addOverlay(new OverlaySchematicUpload());
+//                    }
 
+                };
+            }
         });
         y += h + 5;
         List<GroupSchematic> sorted = new ArrayList<>(GroupManager.getSelectedGroup().getSchematics());
         sorted.sort(Comparator.comparing(s -> s.getName().toLowerCase()));
         for (GroupSchematic schematic : sorted) {
             addButton((Button) new GroupSchematicButton(schematic, x, y, w, h) {
-
+                {
+                    this.setScissorPane(scissor);
+                    this.addAttribute("groupSection");
+                }
             });
             y += h + 5;
         }
@@ -42,9 +55,3 @@ public class SectionSchematics extends GroupSection {
     public void draw(int mouseX, int mouseY, float partialTicks) {
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\screens\groups\SectionSchematics.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

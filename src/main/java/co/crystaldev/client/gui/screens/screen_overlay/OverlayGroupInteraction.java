@@ -6,12 +6,15 @@ import co.crystaldev.client.group.GroupManager;
 import co.crystaldev.client.group.objects.Group;
 import co.crystaldev.client.gui.Button;
 import co.crystaldev.client.gui.Pane;
+import co.crystaldev.client.gui.Screen;
 import co.crystaldev.client.gui.ScrollPane;
 import co.crystaldev.client.gui.buttons.MenuButton;
 import co.crystaldev.client.gui.screens.ScreenBase;
+import co.crystaldev.client.gui.screens.groups.ScreenGroups;
 import co.crystaldev.client.network.Packet;
 import co.crystaldev.client.network.socket.client.group.PacketGroupUpdate;
 import co.crystaldev.client.util.enums.GroupCategory;
+import co.crystaldev.client.util.objects.FadingColor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,12 +40,26 @@ public class OverlayGroupInteraction extends ScreenOverlay {
         sorted.sort(Comparator.comparing(c -> c.toString().toLowerCase()));
         for (GroupCategory category : sorted) {
             addButton((Button) new MenuButton(-1, x, y, w, h, category.getTranslationKey()) {
-
+                {
+                    onClick = () -> {
+                      if(mc.currentScreen instanceof ScreenGroups) {
+                          ((ScreenGroups)mc.currentScreen).getNav().setType(category);
+                          selectGroup();
+                          closeOverlay();
+                      }
+                    };
+                }
             });
             y += h + 5;
         }
         addButton((Button) new MenuButton(-1, x, y, w, h, "Leave Group") {
-
+            {
+                onClick = ()-> {
+                    ((Screen)mc.currentScreen).addOverlay(new OverlayLeaveGroup(group));
+                    closeOverlay();
+                };
+                setTextColor(new FadingColor(opts.secondaryRed, opts.mainRed));
+            }
         });
         while (this.pane.y + this.pane.height < y + h + 5)
             this.pane.height++;

@@ -36,7 +36,6 @@ public class PacketOnlineUsers extends Packet {
     }
 
     public void process(INetHandler handler) {
-        System.out.println("process");
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.theWorld == null || mc.isSingleplayer() || mc.getNetHandler() == null)
             return;

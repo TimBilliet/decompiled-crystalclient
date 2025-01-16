@@ -21,12 +21,10 @@ public final class EnhancedFontRenderer implements Enhancement {
     private final Cache<StringHash, CachedString> stringCache;
 
     public EnhancedFontRenderer() {
-        this
-
-                .stringCache = Caffeine.newBuilder().removalListener((key, value, cause) -> {
+        this.stringCache = Caffeine.newBuilder().removalListener((key, value, cause) -> {
             if (value == null)
                 return;
-            this.glRemoval.add(Integer.valueOf(((CachedString) value).getListId()));
+            this.glRemoval.add(((CachedString) value).getListId());
         }).executor(POOL).maximumSize(5000L).build();
         instances.add(this);
     }
@@ -46,7 +44,7 @@ public final class EnhancedFontRenderer implements Enhancement {
 
     public int getGlList() {
         Integer poll = this.glRemoval.poll();
-        return (poll == null) ? GLAllocation.generateDisplayLists(1) : poll.intValue();
+        return (poll == null) ? GLAllocation.generateDisplayLists(1) : poll;
     }
 
     public CachedString get(StringHash key) {
@@ -69,9 +67,3 @@ public final class EnhancedFontRenderer implements Enhancement {
         return this.obfuscated;
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\patcher\enhancement\text\EnhancedFontRenderer.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -12,7 +12,9 @@ import co.crystaldev.client.gui.Pane;
 import co.crystaldev.client.gui.buttons.Divider;
 import co.crystaldev.client.gui.buttons.MenuButton;
 import co.crystaldev.client.gui.buttons.settings.*;
+import co.crystaldev.client.gui.screens.screen_overlay.OverlayRemoveGroup;
 import co.crystaldev.client.util.ColorObject;
+import co.crystaldev.client.util.objects.FadingColor;
 import net.minecraft.client.settings.KeyBinding;
 
 import java.lang.annotation.Annotation;
@@ -34,34 +36,49 @@ public class SectionSettings extends GroupSection {
         int h = 18;
         final GroupOptions module = GroupOptions.getInstance();
         final Pane scissor = this.pane.scale(getScaledScreen());
-        List<Field> declaredFields = (List<Field>) Arrays.<Field>stream(module.getClass().getFields()).filter(field -> ((field.getAnnotations()).length > 0)).collect(Collectors.toList());
+        List<Field> declaredFields = Arrays.<Field>stream(module.getClass().getFields()).filter(field -> ((field.getAnnotations()).length > 0)).collect(Collectors.toList());
         for (Field field : declaredFields) {
-            if (field.isAnnotationPresent((Class) Hidden.class))
+            if (field.isAnnotationPresent(Hidden.class))
                 continue;
             try {
                 for (Annotation annotation : field.getDeclaredAnnotations()) {
                     if (annotation instanceof Toggle) {
                         Toggle toggle = (Toggle) annotation;
                         addButton((Button) new ToggleButton(-1, x, y, w, h, toggle.label(), field.getBoolean(module)) {
-
+                            {
+                                this.assignField(module, field);
+                                this.addAttribute("groupSection");
+                                this.setScissorPane(scissor);
+                            }
                         });
                         y += h + 4;
                     } else if (annotation instanceof Keybind) {
                         Keybind keybind = (Keybind) annotation;
                         addButton((Button) new KeybindButton(-1, x, y, w, h, keybind.label(), (KeyBinding) field.get(module)) {
-
+                            {
+                                this.addAttribute("groupSection");
+                                this.setScissorPane(scissor);
+                            }
                         });
                         y += h + 4;
                     } else if (annotation instanceof Colour) {
                         Colour colour = (Colour) annotation;
                         addButton((Button) new ColorPicker(-1, x, y, w, h, colour.label(), (ColorObject) field.get(module), colour.isTextRender()) {
-
+                            {
+                                this.assignField(module, field);
+                                this.addAttribute("groupSection");
+                                this.setScissorPane(scissor);
+                            }
                         });
                         y += h + 4;
                     } else if (annotation instanceof Selector) {
                         Selector selector = (Selector) annotation;
                         addButton((Button) new SelectorButton(-1, x, y, w, h, selector.label(), (String) field.get(module), selector.values()) {
-
+                            {
+                                this.assignField(module, field);
+                                this.addAttribute("groupSection");
+                                this.setScissorPane(scissor);
+                            }
                         });
                         y += h + 4;
                     } else if (annotation instanceof Slider) {
@@ -69,12 +86,20 @@ public class SectionSettings extends GroupSection {
                         if (slider.integers()) {
                             addButton((Button) new SliderButton(-1, x, y, w, h, slider.label(), slider.placeholder(), field
                                     .getInt(module), (int) slider.minimum(), (int) slider.maximum(), (int) slider.standard()) {
-
+                                {
+                                    this.assignField(module, field);
+                                    this.addAttribute("groupSection");
+                                    this.setScissorPane(scissor);
+                                }
                             });
                         } else {
                             addButton((Button) new SliderButton(-1, x, y, w, h, slider.label(), slider.placeholder(), field
                                     .getDouble(module), slider.minimum(), slider.maximum(), slider.standard()) {
-
+                                {
+                                    this.assignField(module, field);
+                                    this.addAttribute("groupSection");
+                                    this.setScissorPane(scissor);
+                                }
                             });
                         }
                         y += h + 4;
@@ -82,7 +107,11 @@ public class SectionSettings extends GroupSection {
                         PageBreak pageBreak = (PageBreak) annotation;
                         y += 6;
                         addButton((Button) new Divider(x, y + 3, pageBreak.label()) {
+                            {
+                                setScissorPane(scissor);
+                                this.addAttribute("config_option");
 
+                            }
                         });
                         y += h + 18;
                     }
@@ -91,13 +120,33 @@ public class SectionSettings extends GroupSection {
             }
         }
         addButton((Button) new MenuButton(-1, x, y, w, h, "Clear Schematic Cache") {
+            {
+                this.addAttribute("groupSection");
+                this.setScissorPane(scissor);
+//                this.setOnClick(() -> {
+//                    File dir = SchematicHandler.getInstance().getSchematicDirectory();
+//                    if (dir.exists()) {
+//                        dir.delete();
+//                        NotificationHandler.addNotification("Schematic cache has been cleared");
+//                    } else {
+//                        NotificationHandler.addNotification("Schematic cache is already empty");
+//                    }
 
+//                });
+            }
         });
         y += h + 4;
         final Group sg = GroupManager.getSelectedGroup();
         if (sg.getRank(Client.getUniqueID()) == Rank.LEADER)
             addButton((Button) new MenuButton(-1, x, y, w, h, "Delete group") {
-
+                {
+                    setTextColor(new FadingColor(opts.secondaryRed, opts.mainRed));
+                    addAttribute("groupSection");
+                    setScissorPane(scissor);
+                    onClick = () -> {
+                        addOverlay(new OverlayRemoveGroup(sg));
+                    };
+                }
             });
         this.pane.updateMaxScroll(this, 0);
         this.pane.addScrollbarToScreen(this);

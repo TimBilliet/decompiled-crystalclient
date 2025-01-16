@@ -1,7 +1,6 @@
 # Working decompiled forge version of crystalclient
 
 ## Things that currently don't work (yet)
-- schematic rotation 
 - alt manager (never worked in the original one anyway)
 - stackoverflow with slab rendering if nolag is on
 

@@ -16,6 +16,8 @@ import co.crystaldev.client.gui.buttons.settings.DropdownButton;
 import co.crystaldev.client.gui.buttons.settings.SelectorMenuResourceButton;
 import co.crystaldev.client.gui.buttons.settings.ToggleButton;
 import co.crystaldev.client.gui.screens.screen_overlay.OverlaySchematicMaterials;
+import co.crystaldev.client.gui.screens.screen_overlay.OverlaySchematicUpload;
+import co.crystaldev.client.handler.SchematicHandler;
 import co.crystaldev.client.mixin.accessor.net.minecraft.util.MixinEnumFacing;
 import co.crystaldev.client.util.RenderUtils;
 import co.crystaldev.client.util.enums.ChatColor;
@@ -92,9 +94,7 @@ public class ScreenSchematicControl extends ScreenSchematicaBase {
         ly -= lh + 5;
         addButton(new MenuButton(-1, lx, ly, lw, lh, "Materials"), b -> {
             b.setOnClick(() -> {
-                if (schemLoaded) {
-                    ((Screen) this.mc.currentScreen).addOverlay(new OverlaySchematicMaterials(schematic));
-                }
+                this.addOverlay(new OverlaySchematicMaterials(schematic));
             });
             b.setEnabled(schemLoaded);
         });
@@ -104,13 +104,15 @@ public class ScreenSchematicControl extends ScreenSchematicaBase {
         int ry = this.content.y + 5;
         addButton(new MenuButton(-1, rx, ry, rw, rh, "Share Schematic"), b -> {
             b.setEnabled(schemLoaded);
-//          b.setOnClick(null);
+            b.setOnClick(() -> SchematicHandler.getInstance().shareCurrentSchematic());
         });
         ry += rh + 5;
         addButton(new MenuButton(-1, rx, ry, rw, rh, "Save to Group"), b -> {
             Group group = GroupManager.getSelectedGroup();
             b.setEnabled((schemLoaded && group != null && group.hasPermission(9)));
-//          b.setOnClick(null);
+            b.setOnClick(() -> {
+                this.addOverlay(new OverlaySchematicUpload());
+            });
         });
         int ry1 = ry + rh;
         String[] validAxes = Stream.of(MixinEnumFacing.getValues()).map(EnumFacing::getName).toArray(String[]::new);

@@ -240,18 +240,6 @@ public class ScreenMapWriter extends Screen {
         super.handleMouseInput();
     }
 
-//    public void onButtonInteract(Button button, int mouseX, int mouseY, int mouseButton) {
-//        if (button.id == 0 && !(this.mc.currentScreen instanceof ScreenClientOptions)) {
-//            this.mc.displayGuiScreen(new ScreenClientOptions(this));
-//        } else if (button.id == 2) {
-//            //TODO implement chunk clearing functionality
-////      mapWriterMod.chunkManager.close();
-////      mapWriterMod.regionManager.regionFileCache.close();
-////      mapWriterMod.regionManager.close();
-////      mapWriterMod.close();
-//        }
-//    }
-
     public void keyTyped(char character, int key) {
         super.keyTyped(character, key);
         if (this.mc.currentScreen == null || this.field.isTyping())

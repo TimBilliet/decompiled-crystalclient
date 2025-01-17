@@ -2,7 +2,6 @@ package co.crystaldev.client.network;
 
 import co.crystaldev.client.Reference;
 import co.crystaldev.client.network.plugin.server.PacketCooldown;
-import co.crystaldev.client.network.plugin.server.PacketDisallowedModules;
 import co.crystaldev.client.network.plugin.server.PacketNotification;
 import co.crystaldev.client.network.plugin.server.PacketUpdateWorld;
 import co.crystaldev.client.network.plugin.shared.PacketWaypointAdd;
@@ -130,7 +129,6 @@ public abstract class Packet {
         addPacket(299, PacketAdjHelper.class);
         addPacket(2000, PacketWaypointAdd.class);
         addPacket(2001, PacketWaypointRemove.class);
-        addPacket(2100, PacketDisallowedModules.class);
         addPacket(2101, PacketCooldown.class);
         addPacket(2102, PacketUpdateWorld.class);
         addPacket(2103, PacketNotification.class);

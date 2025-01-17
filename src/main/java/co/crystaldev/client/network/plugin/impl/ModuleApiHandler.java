@@ -27,15 +27,6 @@ public class ModuleApiHandler extends MessageHandler {
         } catch (JsonSyntaxException ex) {
             Reference.LOGGER.error("Received invalid JSON from module api ({})", this.json, ex);
         }
-        ModuleHandler.getInstance().updateDisallowedModules();
-        ArrayList<String> disabled = new ArrayList<>();
-        JsonObject obj = (JsonObject) Reference.GSON.fromJson(this.json, JsonObject.class);
-        for (Map.Entry<String, JsonElement> entry : obj.entrySet()) {
-            if (!entry.getValue().getAsBoolean())
-                disabled.add(WordUtils.capitalizeFully(entry.getKey().replace("_", " ")));
-        }
-        if (!disabled.isEmpty())
-            NotificationHandler.addNotification("The current server has remotely disabled: " + String.join(", ", disabled));
     }
 
     public void toBytes(ByteBuf buf) {

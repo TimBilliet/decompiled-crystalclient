@@ -22,9 +22,9 @@ public class LayerCloak implements LayerRenderer<AbstractClientPlayer> {
             GL11.glTranslatef(0.0F, entity.isChild() ? 0.725F : 0.0F, entity.isChild() ? 0.0625F : 0.125F);
             if (entity.isChild())
                 GL11.glScalef(0.5F, 0.5F, 0.5F);
-            double d0 = entity.prevChasingPosX + (entity.chasingPosX - entity.prevChasingPosX) * partialTicks - entity.prevPosX + (entity.posX - entity.prevPosX) * partialTicks;
-            double d1 = entity.prevChasingPosY + (entity.chasingPosY - entity.prevChasingPosY) * partialTicks - entity.prevPosY + (entity.posY - entity.prevPosY) * partialTicks;
-            double d2 = entity.prevChasingPosZ + (entity.chasingPosZ - entity.prevChasingPosZ) * partialTicks - entity.prevPosZ + (entity.posZ - entity.prevPosZ) * partialTicks;
+            double d0 = entity.prevChasingPosX + (entity.chasingPosX - entity.prevChasingPosX) * partialTicks - (entity.prevPosX + (entity.posX - entity.prevPosX) * partialTicks);
+            double d1 = entity.prevChasingPosY + (entity.chasingPosY - entity.prevChasingPosY) * partialTicks - (entity.prevPosY + (entity.posY - entity.prevPosY) * partialTicks);
+            double d2 = entity.prevChasingPosZ + (entity.chasingPosZ - entity.prevChasingPosZ) * partialTicks - (entity.prevPosZ + (entity.posZ - entity.prevPosZ) * partialTicks);
             float f = entity.prevRenderYawOffset + (entity.renderYawOffset - entity.prevRenderYawOffset) * partialTicks;
             double d3 = MathHelper.sin(f * 3.1415927F / 180.0F);
             double d4 = -MathHelper.cos(f * 3.1415927F / 180.0F);

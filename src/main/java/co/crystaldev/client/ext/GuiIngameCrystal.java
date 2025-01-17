@@ -586,14 +586,14 @@ public class GuiIngameCrystal extends GuiIngameForge {
     protected void renderTitle(int width, int height, float partialTicks) {
         if (this.titlesTimer > 0) {
             this.mc.mcProfiler.startSection("titleAndSubtitle");
-            float age = this.titlesTimer - partialTicks;//
+            float age = this.titlesTimer - partialTicks;
             int opacity = 255;
             if (this.titlesTimer > this.titleFadeOut + this.titleDisplayTime) {
                 float f3 = (this.titleFadeIn + this.titleDisplayTime + this.titleFadeOut) - age;
-                opacity = (int) (f3 * 255.0F / this.titleFadeIn);//
+                opacity = (int) (f3 * 255.0F / this.titleFadeIn);
             }
 
-            if (this.titlesTimer <= this.titleFadeOut) {//
+            if (this.titlesTimer <= this.titleFadeOut) {
                 opacity = (int) (age * 255.0F / this.titleFadeOut);
             }
 

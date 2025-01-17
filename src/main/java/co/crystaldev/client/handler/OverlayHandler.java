@@ -77,7 +77,7 @@ public class OverlayHandler implements IRegistrable {
         if (this.mc.currentScreen != null || getInstance().hasOverlay())
             return;
         if (this.emoteWheel.getKeyCode() == code)
-            displayOverlay((Overlay) new OverlayEmoticonWheel(this.emoteWheel));
+            displayOverlay(new OverlayEmoticonWheel(this.emoteWheel));
     }
 
     public static OverlayHandler getInstance() {

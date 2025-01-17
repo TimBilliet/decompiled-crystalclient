@@ -39,7 +39,6 @@ public class OverlayEmoticonWheel extends Overlay {
             int x = (int) (Math.sin(angle) * 80.0D + this.width / 2.0D);
             int y = (int) (Math.cos(angle) * 80.0D + this.height / 2.0D);
             this.topY = Math.min(this.topY, y - 40);
-            addButton(new MenuButton(-1, x, y, 100,100, "COCK"));
             addButton(new EmoteSelectionButton(emote, x, y, 40));
         }
     }

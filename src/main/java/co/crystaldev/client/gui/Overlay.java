@@ -103,7 +103,7 @@ public abstract class Overlay {
 
     public float getScaledScreen() {
         int s = ((this.sr == null) ? (this.sr = new ScaledResolution(this.mc)) : this.sr).getScaleFactor();
-        return 1.0F / 0.5F * s;
+        return 1.0F / (0.5F * s);
     }
 
     public void onResize(ScaledResolution sr) {

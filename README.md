@@ -1,7 +1,7 @@
-# Working decompiled forge version of crystalclient
+# Working decompiled forge version of crystalclient with extra features
 
-## Things that currently don't work (yet)
-- alt manager (never worked in the original one anyway)
+## Extra added features
+- Autofish for SaicoPvP
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"

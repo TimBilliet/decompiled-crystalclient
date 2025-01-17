@@ -45,7 +45,6 @@ public abstract class MixinRender<T extends Entity> {
             boolean isNameTag = (entityIn instanceof net.minecraft.entity.player.EntityPlayer && str.contains(entityIn.getCommandSenderEntity().getName()));
             boolean isCrystalClient = (isNameTag && (NametagEditor.getInstance()).enabled && (NametagEditor.getInstance()).showClientLogo && Client.isOnCrystalClient((Entity) entityIn));
             FontRenderer fontrenderer = getFontRendererFromRenderManager();
-//            System.out.println("iscrystal: " + isCrystalClient);
             float f = 1.6F;
             float f1 = 0.016666668F * f;
             GlStateManager.pushMatrix();

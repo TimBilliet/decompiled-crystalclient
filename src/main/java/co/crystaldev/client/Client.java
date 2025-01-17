@@ -307,7 +307,6 @@ public class Client {
                 this.webClient.connect();
             }
         } catch (Throwable ex) {
-            System.out.println("unable to connect to socket");
             Reference.LOGGER.error("Unable to connect to WebSocket", ex);
         }
     }

@@ -146,18 +146,25 @@ public class ScreenBase extends Screen {
         int w1 = w + x - this.sidebar.x + 5;
         for (GuiType type : GuiType.values()) {
             addButton(new SidebarButton(x, y, w, w1, h, type) {
-
+                {
+                    addAttribute("persistent");
+                }
             });
             y += h + 6;
         }
-//    y = this.sidebar.y + this.sidebar.height - x - this.sidebar.x - (h + 6) * 2;
-        y = this.sidebar.height + h / 2 + (h + 6) * 2;
+        y = this.sidebar.y + this.sidebar.height - x + this.sidebar.x - (h + 6) * 2;
         addButton(new MenuResourceButton(0, x, y, w, h, "Client Options", Resources.COG, 10) {
-
+            {
+                addAttribute("persistent");
+                setFontRenderer(Fonts.NUNITO_SEMI_BOLD_20);
+            }
         });
         y += h + 6;
         addButton(new MenuResourceButton(1, x, y, w, h, "Edit HUD", Resources.EDIT, 11) {
-
+            {
+                setFontRenderer(Fonts.NUNITO_SEMI_BOLD_20);
+                addAttribute("persistent");
+            }
         });
     }
 

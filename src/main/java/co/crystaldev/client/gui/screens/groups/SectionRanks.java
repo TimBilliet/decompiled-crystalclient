@@ -135,7 +135,6 @@ public class SectionRanks extends GroupSection {
         int h = 18;
         final Pane scissor = this.permissions.scale(getScaledScreen());
         for (Field field : Permissions.class.getDeclaredFields()) {
-            System.out.println(field);
             Permission annotation = field.getAnnotation(Permission.class);
             if (annotation != null)
                 try {

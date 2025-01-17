@@ -588,13 +588,13 @@ public class GuiIngameCrystal extends GuiIngameForge {
             this.mc.mcProfiler.startSection("titleAndSubtitle");
             float age = this.titlesTimer - partialTicks;//
             int opacity = 255;
-            if (this.titlesTimer > this.titleFadeOut + this.titleDisplayTime) {//
-                float f3 = (this.titleFadeIn + this.titleDisplayTime + this.titleFadeOut) - age;//
+            if (this.titlesTimer > this.titleFadeOut + this.titleDisplayTime) {
+                float f3 = (this.titleFadeIn + this.titleDisplayTime + this.titleFadeOut) - age;
                 opacity = (int) (f3 * 255.0F / this.titleFadeIn);//
             }
 
             if (this.titlesTimer <= this.titleFadeOut) {//
-                opacity = (int) (age * 255.0F / this.titleFadeOut);//
+                opacity = (int) (age * 255.0F / this.titleFadeOut);
             }
 
             opacity = MathHelper.clamp_int(opacity, 0, 255);
@@ -606,12 +606,10 @@ public class GuiIngameCrystal extends GuiIngameForge {
                 GlStateManager.pushMatrix();
                 GlStateManager.scale(4.0F, 4.0F, 4.0F);
                 int l = opacity << 24 & 0xFF000000;
-                //field_175201_x
                 getFontRenderer().drawString(this.displayedTitle, ((float) -getFontRenderer().getStringWidth(this.displayedTitle) / 2), -10.0F, 0xFFFFFF | l, true);
                 GlStateManager.popMatrix();
                 GlStateManager.pushMatrix();
                 GlStateManager.scale(2.0F, 2.0F, 2.0F);
-                //field_175200_y
                 getFontRenderer().drawString(this.displayedSubTitle, ((float) -getFontRenderer().getStringWidth(this.displayedSubTitle) / 2), 5.0F, 0xFFFFFF | l, true);
                 GlStateManager.popMatrix();
                 GlStateManager.disableBlend();

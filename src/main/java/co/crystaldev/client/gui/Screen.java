@@ -108,7 +108,6 @@ public abstract class Screen extends GuiScreen {
     public float getScaledScreen() {
         int s = ((this.scaledResolution == null) ? (this.scaledResolution = new ScaledResolution(this.mc)) : this.scaledResolution).getScaleFactor();
         return 1.0F / (0.5F * s);
-//    return 1.0F / 0.5F * s;
     }
 
     public boolean hasOverlay() {

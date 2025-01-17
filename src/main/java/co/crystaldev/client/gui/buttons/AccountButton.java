@@ -106,7 +106,6 @@ public class AccountButton extends Button {
                     (new Thread(() -> {
                         boolean res = false;
                         try {
-                            System.out.println("loggin in");
                             res = AuthManager.login(b.data);
                         } catch (IOException iOException) {
                         }

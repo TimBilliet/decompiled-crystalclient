@@ -1,5 +1,6 @@
 package co.crystaldev.client.gui.screens;
 
+import co.crystaldev.client.Reference;
 import co.crystaldev.client.Resources;
 import co.crystaldev.client.cosmetic.CosmeticCache;
 import co.crystaldev.client.cosmetic.CosmeticManager;
@@ -23,6 +24,10 @@ import net.minecraft.client.renderer.texture.ITextureObject;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -142,15 +147,26 @@ public class ScreenCosmetics extends ScreenBase {
         int w = (int) (this.entity.width * 0.82F);
         int h = 18;
         int x = this.entity.x + this.entity.width / 2 - w / 2;
-        int y = this.entity.y + this.entity.height - x - this.entity.x - h + 6;
+        int y = this.entity.y + this.entity.height - x + this.entity.x - h - 6;
         addButton(new MenuResourceButton(-1, x, this.entity.y + x - this.entity.x + 6, w, h, "Store", Resources.SHOPPING_CART, 10), b -> {
+            b.setFontRenderer(Fonts.NUNITO_SEMI_BOLD_20);
             b.addAttribute("cosmetic");
+            b.setOnClick(()-> {
+                if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                    try {
+                        Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=dQw4w9WgXcQ"));
+                    } catch (URISyntaxException | IOException var1) {
+                        Reference.LOGGER.error("Error opening link", var1);
+                    }
+                }
+            });
         });
         addButton(new ToggleButton(-1, x, this.entity.y + x - this.entity.x + 6 + h + 4, w, h, "Display Unowned", (ClientOptions.getInstance()).showUnownedCosmetics), b -> {
+            b.setFontRenderer(Fonts.NUNITO_SEMI_BOLD_18);
             b.addAttribute("cosmetic");
         });
-        addButton(this.removeButton = new MenuButton(-1, x, this.entity.height + entity.width, w, h, String.format("Disable %s", (this.nav.getCurrent()).getSingularForm())), b -> {
-            b.addAttribute("cosmetic");
+        addButton(this.removeButton = new MenuButton(-1, x, y, w, h, String.format("Disable %s", (this.nav.getCurrent()).getSingularForm())), b -> {
+            b.setFontRenderer(Fonts.NUNITO_SEMI_BOLD_20);
         });
         int margin = 20;
         w = (this.cosmetics.width - margin * 4) / 3;

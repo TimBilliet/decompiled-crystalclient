@@ -41,7 +41,7 @@ public abstract class MixinNetworkManager {
     @Overwrite(aliases = {"exceptionCaught"})
     public void exceptionCaught(ChannelHandlerContext channelHandlerContext, Throwable throwable) {
         if (throwable instanceof io.netty.handler.timeout.TimeoutException) {
-            ChatComponentTranslation component = new ChatComponentTranslation("disconnect.timeout", new Object[0]);
+            ChatComponentTranslation component = new ChatComponentTranslation("disconnect.timeout");
             closeChannel((IChatComponent) component);
             return;
         }
@@ -69,14 +69,12 @@ public abstract class MixinNetworkManager {
         ChatComponentText chatComponentText2 = new ChatComponentText(ChatColor.translate("  &7&l* &fYour connection to the server may be unstable, this error should be reported"));
         IChatComponent opt1 = (new ChatComponentText(ChatColor.translate("  &7&l* &f"))).appendSibling((IChatComponent) upload).appendText(" to upload the error");
         IChatComponent opt2 = (new ChatComponentText(ChatColor.translate("  &7&l* &f"))).appendSibling((IChatComponent) disconnect).appendText(" to disconnect from the server");
-        IChatComponent opt3 = (new ChatComponentText(ChatColor.translate("  &7&l* &f"))).appendSibling((IChatComponent) discord).appendText(" to join our support Discord server");
         if ((Minecraft.getMinecraft()).thePlayer != null) {
             EntityPlayerSP entityPlayerSP = (Minecraft.getMinecraft()).thePlayer;
             entityPlayerSP.addChatMessage((IChatComponent) chatComponentText1);
             entityPlayerSP.addChatMessage((IChatComponent) chatComponentText2);
             entityPlayerSP.addChatMessage(opt1);
             entityPlayerSP.addChatMessage(opt2);
-            entityPlayerSP.addChatMessage(opt3);
         }
     }
 

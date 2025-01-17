@@ -171,7 +171,6 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
     }
 
     private void checkSession(GuiScreen screenIn) {
-        System.out.println("altmanagerloggedin: " + AltManager.isLoggedIn());
 //        if (AltManager.isLoggedIn()) {
             this.mc.displayGuiScreen(screenIn);
 //        }

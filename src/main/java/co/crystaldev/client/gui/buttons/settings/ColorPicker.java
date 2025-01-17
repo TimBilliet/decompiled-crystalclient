@@ -93,7 +93,6 @@ public class ColorPicker extends SettingButton<ColorObject> {
         sbx += sbw + 5;
         this.saturation = new SaturationSubButton(sbx, sby, sbh * 2, sbh);
         sbx += sbh * 2 + 5;
-//        int hexWidth = this.width - sbx - this.x - 5;
         int hexWidth = this.width - sbx + this.x - 5;
         this.hexInputLabel = new Label(sbx + 5, sby + 9 - Fonts.NUNITO_REGULAR_20.getStringHeight() / 2, "Hex", 16777215, Fonts.NUNITO_REGULAR_20);
         this.hexInputLabel.setCentered(false);
@@ -376,8 +375,6 @@ public class ColorPicker extends SettingButton<ColorObject> {
                     .getRGB());
             if (hovered && this.selecting) {
                 this.saturation = MathHelper.clamp_int((int) ((float) (mouseX - this.x) / this.width * 100), 0, 100);
-//                this.saturation = MathHelper.clamp_int(100 - (mouseX - this.x) * 100 / this.width, 0, 100);
-//                this.brightness = MathHelper.clamp_int((this.height - mouseY - this.y) * 100 / this.height, 0, 100);
                 this.brightness = MathHelper.clamp_int(100 - (mouseY - this.y) * 100 / this.height, 0, 100);
             }
             if (!Mouse.isButtonDown(0) && this.selecting)

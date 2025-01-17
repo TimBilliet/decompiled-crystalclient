@@ -85,14 +85,6 @@ reobf {
     shadowJar {}
 }
 
-/**
- * Adds the manifest values
- * FMLCorePlugin -> Put the Mixin Loader here
- * ModSide -> Client or Server
- * TweakClass -> Mixin tweaker
- * MixinConfigs -> Put your mixin config here (mixins.MODID.json)
- */
-
 jar {
     manifest.attributes(
             "FMLCorePlugin": "co.crystaldev.client.ForgeCoreMod",
@@ -110,11 +102,3 @@ sourceSets {
         ext.refMap = "mixins.crystalclient.refmap.json"
     }
 }
-
-// Task that will build the mod and put it in the "run" folder, and then run the client.
-task buildCopyToRunModsAndRun(type: Copy, dependsOn: 'build') {
-    from "build/libs"
-    into "run/mods"
-    include "*.jar"
-}
-buildCopyToRunModsAndRun.finalizedBy runClient

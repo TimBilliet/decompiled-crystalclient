@@ -36,7 +36,6 @@ public class SectionLanding extends GroupSection {
         initGroupMembers();
         int x = this.pane.x + 20;
         int y = this.pane.y + 60;
-//        int w = this.pane.width - 100;
         int w = this.pane.width - 40;
         int h = 18;
         addButton((Button) new MenuButton(-1, x, y, w, h, "Ping Location") {

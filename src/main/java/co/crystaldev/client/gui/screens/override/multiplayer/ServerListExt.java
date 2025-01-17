@@ -29,8 +29,8 @@ public class ServerListExt {
 
     public void loadServerList() {
         this.servers.clear();
-        for (PartneredServer server : PacketServerList.partneredServers)
-            this.servers.add(server.getData());
+//        for (PartneredServer server : PacketServerList.partneredServers)
+//            this.servers.add(server.getData());
         try {
             NBTTagCompound nbttagcompound = CompressedStreamTools.read(new File(this.mc.mcDataDir, "servers.dat"));
             if (nbttagcompound == null)
@@ -47,8 +47,8 @@ public class ServerListExt {
         try {
             NBTTagList nbttaglist = new NBTTagList();
             for (ServerData serverdata : this.servers) {
-                if (serverdata instanceof co.crystaldev.client.util.objects.partners.PartneredServerData)
-                    continue;
+//                if (serverdata instanceof co.crystaldev.client.util.objects.partners.PartneredServerData)
+//                    continue;
                 nbttaglist.appendTag((NBTBase) serverdata.getNBTCompound());
             }
             NBTTagCompound nbttagcompound = new NBTTagCompound();
@@ -78,8 +78,8 @@ public class ServerListExt {
     public void swapServers(int p_78857_1_, int p_78857_2_) {
         ServerData serverdata = getServerData(p_78857_1_);
         ServerData serverdata1 = getServerData(p_78857_2_);
-        if (serverdata instanceof co.crystaldev.client.util.objects.partners.PartneredServerData || serverdata1 instanceof co.crystaldev.client.util.objects.partners.PartneredServerData)
-            return;
+//        if (serverdata instanceof co.crystaldev.client.util.objects.partners.PartneredServerData || serverdata1 instanceof co.crystaldev.client.util.objects.partners.PartneredServerData)
+//            return;
         this.servers.set(p_78857_1_, serverdata1);
         this.servers.set(p_78857_2_, serverdata);
         saveServerList();

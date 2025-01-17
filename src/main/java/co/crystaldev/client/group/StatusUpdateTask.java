@@ -26,8 +26,6 @@ public class StatusUpdateTask implements Runnable {
             float helmet = (isHelm == null || !isHelm.isItemStackDamageable()) ? -1.0F : MathHelper.clamp_float((isHelm.getMaxDamage() - (float) isHelm.getItemDamage()) / isHelm.getMaxDamage(), 0.0F, 1.0F);
             float boots = (isBoots == null || !isBoots.isItemStackDamageable()) ? -1.0F : MathHelper.clamp_float((isBoots.getMaxDamage() - (float) isBoots.getItemDamage()) / isBoots.getMaxDamage(), 0.0F, 1.0F);
 
-//      float helmet = (isHelm == null || !isHelm.isItemStackDamageable()) ? -1.0F : MathHelper.clamp_float((isHelm.getMaxDamage() - isHelm.getItemDamageForDisplay()) / isHelm.getMaxDamage(), 0.0F, 1.0F);
-//      float boots = (isBoots == null || !isBoots.isItemStackDamageable()) ? -1.0F : MathHelper.clamp_float((isBoots.getMaxDamage() - isBoots.getItemDamageForDisplay()) / isBoots.getMaxDamage(), 0.0F, 1.0F);
             PacketStatusUpdate packet = new PacketStatusUpdate(uuid, x, y, z, health, pots, helmet, boots);
             Client.sendPacket((Packet) packet);
         }

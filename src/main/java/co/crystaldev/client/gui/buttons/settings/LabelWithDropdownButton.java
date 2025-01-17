@@ -16,7 +16,10 @@ public class LabelWithDropdownButton<T> extends SettingButton<Dropdown<T>> {
         super(id, x, y, width, height, label, dropdown);
         this.textColor = new FadingColor(this.opts.neutralTextColor, this.opts.hoveredTextColor);
         this.dropdown = new DropdownButton<T>(-1, this.x + this.width / 2 - 2, this.y, this.width / 2, this.height, placeholderText, dropdown) {
+            {
+                getFadingColor().setColor1(opts.getColor(opts.neutralButtonBackground, 0));
 
+            }
         };
     }
 

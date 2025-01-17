@@ -72,8 +72,8 @@ public abstract class ScreenPanorama extends Screen {
         int i = 8;
         for (int j = 0; j < i * i; j++) {
             GlStateManager.pushMatrix();
-            float f = ((float) (j % i) / i - 0.5F) / 64.0F;//(float)
-            float f1 = ((float) (j / i) / i - 0.5F) / 64.0F;//(float)
+            float f = ((float) (j % i) / i - 0.5F) / 64.0F;
+            float f1 = ((float) (j / i) / i - 0.5F) / 64.0F;
             float f2 = 0.0F;
             GlStateManager.translate(f, f1, f2);
             GlStateManager.rotate(MathHelper.sin(((float) panoramaTimer + partialTicks) / 400.0F) * 25.0F + 20.0F, 1.0F, 0.0F, 0.0F);

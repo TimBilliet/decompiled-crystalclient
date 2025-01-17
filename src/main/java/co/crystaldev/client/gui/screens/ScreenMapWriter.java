@@ -3,8 +3,10 @@ package co.crystaldev.client.gui.screens;
 import co.crystaldev.client.Client;
 import co.crystaldev.client.Resources;
 import co.crystaldev.client.feature.base.Dropdown;
+import co.crystaldev.client.feature.impl.hud.MapWriter;
 import co.crystaldev.client.font.FontRenderer;
 import co.crystaldev.client.font.Fonts;
+import co.crystaldev.client.group.provider.GroupChunkProvider;
 import co.crystaldev.client.gui.Button;
 import co.crystaldev.client.gui.Pane;
 import co.crystaldev.client.gui.Screen;
@@ -12,6 +14,7 @@ import co.crystaldev.client.gui.buttons.*;
 import co.crystaldev.client.gui.buttons.Label;
 import co.crystaldev.client.gui.buttons.settings.DropdownButton;
 import co.crystaldev.client.network.Packet;
+import co.crystaldev.client.network.socket.client.group.PacketClearChunkHighlights;
 import co.crystaldev.client.network.socket.client.group.PacketHighlightChunk;
 import co.crystaldev.client.network.socket.client.group.PacketRemoveChunkHighlight;
 import co.crystaldev.client.util.RenderUtils;
@@ -97,12 +100,27 @@ public class ScreenMapWriter extends Screen {
         int w = this.pane.width - 8;
         int h = 18;
         addButton((Button) new MenuButton(0, x, y, w, h, "Settings") {
-
+            {
+                onClick = ()->{
+                  mc.displayGuiScreen(new ScreenSettings(MapWriter.getInstance(), ScreenMapWriter.this));
+                };
+            }
         });
         y += h + 4;
         addButton((Button) new DropdownButton<String>(-1, x, y, w, h, new Dropdown(
-                MwAPI.getRegisteredProviders().stream().map(IMwDataProvider::getName).toArray(String[]::new), (Object[]) new String[0], true)) {
+                MwAPI.getRegisteredProviders().stream().map(IMwDataProvider::getName).toArray(String[]::new), new String[0], true)) {
+            {
+                setDisplayStringOverride("Data Providers");
+                selectAll(MwAPI.getEnabledProviderNames().toArray(new String[0]));
+                setOnSelect((dropdownx, s) -> {
+                    IMwDataProvider provider = MwAPI.getDataProvider(s);
+                    if (provider != null) {
+                        MwAPI.toggleDataProvider(provider);
+                    }
 
+                    return true;
+                });
+            }
         });
         y += h + 4;
         addButton((Button) new Label(x + w / 2, y + Fonts.NUNITO_SEMI_BOLD_16.getStringHeight() / 2, "Chunk Highlighting", 16777215, Fonts.NUNITO_SEMI_BOLD_16));
@@ -110,15 +128,35 @@ public class ScreenMapWriter extends Screen {
         addButton((Button) (this.colorPicker = new SimpleColorPicker(x + 1, y + 1, w - 2, 10, currentColor)));
         y += 16;
         addButton((Button) new MenuButton(2, x, y, w, h, "Clear Chunks") {
-
+            {
+                onClick = ()->{
+                    PacketClearChunkHighlights packet = new PacketClearChunkHighlights();
+                    Client.sendPacket(packet);
+                    MwAPI.getDataProvider(GroupChunkProvider.class).setAwaitingUpdate(true);
+                    field.setText("");
+                };
+            }
         });
         y += h + 4;
         addButton((Button) new DropdownButton<String>(-1, x, y, w, h, new Dropdown((Object[]) new String[]{"Highlight", "Text"}, (Object[]) new String[]{"Highlight"})) {
-
+            {
+                setDisplayStringOverride("Display Mode");
+                getCurrentValue().setDefault();
+                setDisplayText();
+                setOnSelect((dropdownx, s) -> {
+                    colorMode = s.toLowerCase();
+                    return true;
+                });
+            }
         });
         y += h + 4;
         addButton((Button) (this.field = new TextInputField(-1, x, y, w, h, "Chunk Label") {
-
+            {
+                fontRenderer = Fonts.NUNITO_REGULAR_20;
+                setOnTextInput((str) -> {
+                    chunkLabel = str;
+                });
+            }
         }));
         y += h + 4;
         this.pane.height = y - this.pane.y;
@@ -154,10 +192,10 @@ public class ScreenMapWriter extends Screen {
         int chunkX = blockX >> 4, chunkZ = blockZ >> 4;
         FontRenderer fr = Fonts.NUNITO_SEMI_BOLD_18;
         String title = "Cursor Information";
-        String blockCoords = String.format("Block: X: %d, Y: %d, Z: %d", new Object[]{Integer.valueOf(blockX), Integer.valueOf(blockY), Integer.valueOf(blockZ)});
-        String chunkCoords = String.format("Chunk: X: %d, Z: %d", new Object[]{Integer.valueOf(chunkX), Integer.valueOf(chunkZ)});
+        String blockCoords = String.format("Block: X: %d, Y: %d, Z: %d", blockX, blockY, blockZ);
+        String chunkCoords = String.format("Chunk: X: %d, Z: %d", chunkX, chunkZ);
         int strHeight = fr.getStringHeight();
-        int width = fr.getMaxWidth(new String[]{title, blockCoords, chunkCoords}) + 12;
+        int width = fr.getMaxWidth(title, blockCoords, chunkCoords) + 12;
         int height = fr.getStringHeight() * 3 + 4;
         int x = this.mc.displayWidth / 4 - width / 2;
         int y = this.mc.displayHeight / 2 - 4 - height;
@@ -200,18 +238,6 @@ public class ScreenMapWriter extends Screen {
             this.lastdwheel = 0;
         }
         super.handleMouseInput();
-    }
-
-    public void onButtonInteract(Button button, int mouseX, int mouseY, int mouseButton) {
-        if (button.id == 0 && !(this.mc.currentScreen instanceof ScreenClientOptions)) {
-            this.mc.displayGuiScreen(new ScreenClientOptions(this));
-        } else if (button.id == 2) {
-            //TODO implement chunk clearing functionality
-//      mapWriterMod.chunkManager.close();
-//      mapWriterMod.regionManager.regionFileCache.close();
-//      mapWriterMod.regionManager.close();
-//      mapWriterMod.close();
-        }
     }
 
     public void keyTyped(char character, int key) {
@@ -342,9 +368,3 @@ public class ScreenMapWriter extends Screen {
         Keyboard.enableRepeatEvents(false);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\screens\ScreenMapWriter.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

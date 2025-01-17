@@ -143,9 +143,7 @@ public class Reflector {
             return null;
         try {
             return ReflectionHelper.findMethod((Class<? super Object>) clazzIn, nameAliases, methodTypes);
-            //return null;
         } catch (Exception ex) {
-            System.out.println("failed to find method");
             return null;
         }
     }

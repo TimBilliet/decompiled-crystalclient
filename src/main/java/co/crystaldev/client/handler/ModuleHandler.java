@@ -183,7 +183,6 @@ public class ModuleHandler implements IRegistrable {
             }
         }
         moduleApi = new ModuleAPI();
-        updateDisallowedModules();
     }
 
     public void onPacketReceived(PacketReceivedEvent.Pre event) {
@@ -291,16 +290,6 @@ public class ModuleHandler implements IRegistrable {
         Client.setCurrentWorld(null);
         for (Module module : modules)
             module.setForceDisabled(module.getDefaultForceDisabledState());
-    }
-
-    public void updateDisallowedModules() {
-    }
-
-    public void updateDisallowedModules(Set<String> disabledModules) {
-        for (Module module : modules) {
-            if (module.canBeDisabled)
-                module.setForceDisabled(disabledModules.contains(module.getSanitizedName()));
-        }
     }
 
     public void registerAll() {

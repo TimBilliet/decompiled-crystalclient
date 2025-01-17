@@ -90,12 +90,12 @@ public class ScreenLogin extends ScreenPanorama {
         });
         this.microsoftButton.onClick = (() -> {
             if (Reflector.isOptiFineLoaded()) {
+                //Can only work with the crystal client launcher, so not forge version
                 System.out.println("launcherProtocol.openMicrosoftWindow()");
                 this.microsoftButton.displayText = "Sign-in window opened";
                 this.microsoftButton.setEnabled(false);
                 this.msmcIn = new Scanner(System.in);
                 this.thread = new Thread(() -> {
-
 
                 });
                 this.thread.setDaemon(true);

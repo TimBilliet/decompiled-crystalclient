@@ -26,17 +26,25 @@ public class SelectorButton extends SettingButton<String> {
         this.textColor = new FadingColor(this.opts.neutralTextColor, this.opts.hoveredTextColor);
         int boxSize = this.height - 6;
         this.previous = new ResourceButton(-1, this.x + this.width / 2 - boxSize / 2, this.y + this.height / 2 - boxSize / 2, boxSize, boxSize, Resources.CHEVRON_LEFT) {
-
+            {
+                setFadingColor(new FadingColor(opts.getColor(opts.mainColor, 100), opts.getColor(opts.mainColor, 180)));
+                setIconColor(new FadingColor(opts.neutralTextColor, opts.hoveredTextColor));
+                setRadius(6);
+            }
         };
         this.next = new ResourceButton(-1, this.x + this.width - 3 - boxSize, this.y + this.height / 2 - boxSize / 2, boxSize, boxSize, Resources.CHEVRON_RIGHT) {
-
+            {
+                setFadingColor(new FadingColor(opts.getColor(opts.mainColor, 100), opts.getColor(opts.mainColor, 180)));
+                setIconColor(new FadingColor(opts.neutralTextColor, opts.hoveredTextColor));
+                setRadius(6);
+            }
         };
     }
 
     public void onUpdate() {
         int boxSize = this.height - 6;
         this.next.x = this.x + this.width - 3 - boxSize;
-        this.next.y = this.y + this.height / 2 - boxSize / 2;
+        this.previous.y = this.next.y = this.y + this.height / 2 - boxSize / 2;
     }
 
     public void drawButton(int mouseX, int mouseY, boolean hovered) {
@@ -70,9 +78,3 @@ public class SelectorButton extends SettingButton<String> {
         }
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\buttons\settings\SelectorButton.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -40,7 +40,6 @@ public class OverlayRemoveProfile extends ScreenOverlay {
         addButton(new MenuButton(-1, this.pane.x + this.pane.width / 2 + 2, y, this.pane.width / 2 - 7, 18, "Delete Profile") {
             {
                 onClick = () -> {
-                    System.out.println("onclick profile");
                     ProfileHandler.getInstance().removeProfile(profile);
                     closeOverlay();
                     if (this.mc.currentScreen instanceof ScreenProfiles) {

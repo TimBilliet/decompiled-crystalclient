@@ -16,6 +16,10 @@ import co.crystaldev.client.feature.base.Module;
 import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 @ModuleInfo(name = "Auto Fish", description = "Auto fish for the enchanted lake on SaicoPvP", category = Category.ALL)
 
 public class AutoFish extends Module implements IRegistrable {
@@ -34,6 +38,7 @@ public class AutoFish extends Module implements IRegistrable {
     private long castScheduledAt = 0L;
     private static final int TICKS_PER_SECOND = 20;
     private String previousTitle = "Watch";
+    private Set<String> disabledSounds = new HashSet<>(Arrays.asList(SOUND_NAME,"random.bow","game.neutral.swim","game.neutral.swim.splash","random.orb"));
 
     public AutoFish() {
         this.enabled = false;
@@ -79,8 +84,7 @@ public class AutoFish extends Module implements IRegistrable {
     @Override
     public void registerEvents() {
         EventBus.register(this, PlaySoundEvent.class, ev -> {
-            if (disableSound && mc.thePlayer != null && isPlayerHoldingRod()
-                    && (ev.name.equals(SOUND_NAME) || ev.name.equals("random.bow") || ev.name.contains("game.neutral.swim") || ev.name.equals("random.orb"))) {
+            if (disableSound && mc.thePlayer != null && isPlayerHoldingRod() && (disabledSounds.contains(ev.name))) {
                 ev.setCancelled(true);
             }
             if (mc.thePlayer != null && detectionMode.isSelected("Sound") && isPlayerHoldingRod() && ev.name.equals(SOUND_NAME)) {

@@ -9,10 +9,10 @@ import co.crystaldev.client.feature.annotations.HoverOverlay;
 import co.crystaldev.client.feature.annotations.properties.DropdownMenu;
 import co.crystaldev.client.feature.annotations.properties.ModuleInfo;
 import co.crystaldev.client.feature.annotations.properties.Slider;
+import co.crystaldev.client.feature.annotations.properties.Toggle;
 import co.crystaldev.client.feature.base.Category;
 import co.crystaldev.client.feature.base.Dropdown;
 import co.crystaldev.client.feature.base.Module;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
 
@@ -27,9 +27,13 @@ public class AutoFish extends Module implements IRegistrable {
     @DropdownMenu(label = "Detection mode", values = {"Sound", "Text"}, defaultValues = {"Sound"})
     public Dropdown<String> detectionMode;
 
+    @Toggle(label = "Disable fish sounds")
+    public boolean disableSound = false;
+
     private static final String SOUND_NAME = "random.splash";
     private long castScheduledAt = 0L;
     private static final int TICKS_PER_SECOND = 20;
+    private String previousTitle = "Watch";
 
     public AutoFish() {
         this.enabled = false;
@@ -75,13 +79,17 @@ public class AutoFish extends Module implements IRegistrable {
     @Override
     public void registerEvents() {
         EventBus.register(this, PlaySoundEvent.class, ev -> {
-            if (detectionMode.isSelected("Sound") && ev.name.equals(SOUND_NAME)) {
+            if (disableSound && mc.thePlayer != null && isPlayerHoldingRod()
+                    && (ev.name.equals(SOUND_NAME) || ev.name.equals("random.bow") || ev.name.contains("game.neutral.swim") || ev.name.equals("random.orb"))) {
+                ev.setCancelled(true);
+            }
+            if (mc.thePlayer != null && detectionMode.isSelected("Sound") && isPlayerHoldingRod() && ev.name.equals(SOUND_NAME)) {
                 playerUseRod();
                 scheduleNextCast();
             }
         });
         EventBus.register(this, ClientTickEvent.Post.class, ev -> {
-            if (detectionMode.isSelected("Sound") && !mc.isGamePaused() && mc.thePlayer != null) {
+            if (!mc.isGamePaused() && mc.thePlayer != null) {
                 if (isPlayerHoldingRod() || waitingToRecast()) {
                     if (isTimeToCast()) {
                         if (isPlayerHoldingRod()) {
@@ -92,8 +100,14 @@ public class AutoFish extends Module implements IRegistrable {
                 }
             }
         });
-        EventBus.register(this, RenderOverlayEvent.All.class, ev -> {
-
+        EventBus.register(this, RenderOverlayEvent.Title.class, ev -> {
+            if (mc.thePlayer != null && detectionMode.isSelected("Text")) {
+                if (previousTitle.contains("Watch") && ev.getSubTitle().contains("Biting") && isPlayerHoldingRod()) {
+                    playerUseRod();
+                    scheduleNextCast();
+                }
+                previousTitle = ev.getSubTitle();
+            }
         });
     }
 }

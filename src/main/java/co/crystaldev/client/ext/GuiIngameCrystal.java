@@ -616,6 +616,7 @@ public class GuiIngameCrystal extends GuiIngameForge {
                 GlStateManager.popMatrix();
             }
             this.mc.mcProfiler.endSection();
+            new RenderOverlayEvent.Title(this.displayedTitle, this.displayedSubTitle, partialTicks).call();
         }
     }
 

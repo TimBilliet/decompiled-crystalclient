@@ -27,3 +27,5 @@ crystalclient.key.start_recording=Start Recording
 crystalclient.key.reset_recording=Reset Recording
 crystalclient.key.previous_frame=Previous Frame
 crystalclient.key.next_frame=Next Frame
+crystalclient.key.select_adjust_block=Select Adjust Block
+crystalclient.key.calc_float_location=Calculate Float Location

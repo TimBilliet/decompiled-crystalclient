@@ -7,6 +7,7 @@ import co.crystaldev.client.event.IRegistrable;
 import co.crystaldev.client.event.impl.player.InputEvent;
 import co.crystaldev.client.event.impl.render.RenderWorldEvent;
 import co.crystaldev.client.event.impl.tick.ClientTickEvent;
+import co.crystaldev.client.feature.annotations.HoverOverlay;
 import co.crystaldev.client.feature.annotations.properties.*;
 import co.crystaldev.client.feature.base.Category;
 import co.crystaldev.client.feature.base.Module;
@@ -27,8 +28,12 @@ import org.lwjgl.opengl.GL11;
 @ModuleInfo(name = "Float Finder", description = "Finds the float coordinates from a specified float block. /float for more.", category = Category.FACTIONS)
 public class FloatFinder extends Module implements IRegistrable {
 
-    @Keybind(label = "Select adjust block")
-    public KeyBinding selectAdjustBlock = new KeyBinding("crystalclient.key.select_adjust_block", 0, "Crystal Client - Float Finder");
+    @Keybind(label = "Select barrel block")
+    public KeyBinding selectAdjustBlock = new KeyBinding("crystalclient.key.select_barrel_block", 0, "Crystal Client - Float Finder");
+
+    @HoverOverlay({"Required for flipping barrels"})
+    @Keybind(label = "Select power block")
+    public KeyBinding selectPowerBlock = new KeyBinding("crystalclient.key.select_power_block", 0, "Crystal Client - Float Finder");
 
     @Keybind(label = "Calculate float location")
     public KeyBinding calcFloatLocation = new KeyBinding("crystalclient.key.calc_float_location", 0, "Crystal Client - Float Finder");
@@ -39,12 +44,19 @@ public class FloatFinder extends Module implements IRegistrable {
     @Slider(label = "Checking interval", placeholder = "{value}ms", minimum = 50.0D, maximum = 1000.0D, standard = 300.0D, integers = true)
     public int checkInterval = 300;
 
+    @HoverOverlay({"Maximum amount of blocks to check sideways"})
+    @Slider(label = "Max sideways blocks", placeholder = "{value} blocks", minimum = 10.0D, maximum = 600.0D, standard = 250, integers = true)
+    public int checkBlocksSideways = 250;
+
     @PageBreak(label = "Visuals Customization")
     @Colour(label = "Line Color")
     public ColorObject lineColor = ColorObject.fromColor(GuiOptions.getInstance().getColor((GuiOptions.getInstance()).secondaryRed, 255));
 
-    @Colour(label = "Stair block Color")
+    @Colour(label = "Barrel block Color")
     public ColorObject barrelBlockColor = ColorObject.fromColor(GuiOptions.getInstance().getColor((GuiOptions.getInstance()).mainColor, 180));
+
+    @Colour(label = "Power block Color")
+    public ColorObject powerBlockColor = ColorObject.fromColor(GuiOptions.getInstance().getColor((GuiOptions.getInstance()).mainRed, 180));
 
     @Colour(label = "End block Color")
     public ColorObject endBlockColor = ColorObject.fromColor(GuiOptions.getInstance().getColor((GuiOptions.getInstance()).secondaryColor, 180));
@@ -56,7 +68,7 @@ public class FloatFinder extends Module implements IRegistrable {
     private BlockPos barrelNextBlockPos;
     public BlockPos horizontal;
     public BlockPos vertical;
-    private int CHECK_BLOCKS_SIDEWAYS = 300;
+    public BlockPos powerBlockPos;
     private boolean calledFromKeybind = false;
     private EnumFacing barrelDirection;
     private static long lastExecutionTime = System.currentTimeMillis();
@@ -90,45 +102,26 @@ public class FloatFinder extends Module implements IRegistrable {
         return top;
     }
 
+    private BlockPos horizontalScanIteration(int x, int z) {
+        for (int i = 1; i < checkBlocksSideways; i++) {
+            BlockPos currentNext = vertical.add(i * x, 0, i * z);
+            if (cantPassThroughBlock(currentNext, true)) {
+                return currentNext.add(-x, 0, -z);
+            }
+        }
+        return null;
+    }
+
     private BlockPos horizontalScan() {
         BlockPos side = null;
-        switch (barrelDirection) {
-            case NORTH:
-                for (int i = 1; i < CHECK_BLOCKS_SIDEWAYS; i++) {
-                    BlockPos currentNext = vertical.add(0, 0, -i);
-                    if (cantPassThroughBlock(currentNext, true)) {
-                        side = currentNext.add(0, 0, 1);
-                        break;
-                    }
-                }
-                break;
-            case SOUTH:
-                for (int i = 1; i < CHECK_BLOCKS_SIDEWAYS; i++) {
-                    BlockPos currentNext = vertical.add(0, 0, i);
-                    if (cantPassThroughBlock(currentNext, true)) {
-                        side = currentNext.add(0, 0, -1);
-                        break;
-                    }
-                }
-                break;
-            case EAST:
-                for (int i = 1; i < CHECK_BLOCKS_SIDEWAYS; i++) {
-                    BlockPos currentNext = vertical.add(i, 0, 0);
-                    if (cantPassThroughBlock(currentNext, true)) {
-                        side = currentNext.add(-1, 0, 0);
-                        break;
-                    }
-                }
-                break;
-            case WEST:
-                for (int i = 1; i < CHECK_BLOCKS_SIDEWAYS; i++) {
-                    BlockPos currentNext = vertical.add(-i, 0, 0);
-                    if (cantPassThroughBlock(currentNext, true)) {
-                        side = currentNext.add(1, 0, 0);
-                        break;
-                    }
-                }
-                break;
+        if (barrelDirection == EnumFacing.WEST) {
+            side = (powerBlockPos.getX() > barrelBlockPos.getX()) ? horizontalScanIteration(-1, 0) : horizontalScanIteration(1, 0);
+        } else if (barrelDirection == EnumFacing.EAST) {
+            side = powerBlockPos.getX() < barrelBlockPos.getX() ? horizontalScanIteration(1, 0) : horizontalScanIteration(-1, 0);
+        } else if (barrelDirection == EnumFacing.SOUTH) {
+            side = (powerBlockPos.getZ() < barrelBlockPos.getZ()) ? horizontalScanIteration(0, 1) : horizontalScanIteration(0, -1);
+        } else if (barrelDirection == EnumFacing.NORTH) {
+            side = (powerBlockPos.getZ() > barrelBlockPos.getZ()) ? horizontalScanIteration(0, -1) : horizontalScanIteration(0, 1);
         }
         return side;
     }
@@ -140,8 +133,17 @@ public class FloatFinder extends Module implements IRegistrable {
             Block block = state.getBlock();
             if (block instanceof BlockStairs) {
                 direction = state.getValue(BlockStairs.FACING);
-            } else if (true) {
-                //TODO implement other barrels and flipped barrels
+            } else if (block instanceof BlockTrapDoor && state.getValue(BlockTrapDoor.OPEN)) {
+                EnumFacing dir = state.getValue(BlockTrapDoor.FACING);
+                if (dir == EnumFacing.WEST) {
+                    direction = EnumFacing.EAST;
+                } else if (dir == EnumFacing.EAST) {
+                    direction = EnumFacing.WEST;
+                } else if (dir == EnumFacing.NORTH) {
+                    direction = EnumFacing.SOUTH;
+                } else {
+                    direction = EnumFacing.NORTH;
+                }
             }
         }
         return direction;
@@ -153,7 +155,7 @@ public class FloatFinder extends Module implements IRegistrable {
             vertical = null;
             horizontal = null;
             if (calledFromKeybind)
-                Client.sendMessage("&fInvalid barrel block", true);
+                Client.sendMessage("&fInvalid barrel block or state", true);
             return;
         }
         barrelNextBlockPos = determinePosNextToBarrel();
@@ -173,7 +175,6 @@ public class FloatFinder extends Module implements IRegistrable {
             Client.sendMessage(String.format("&fFloat position set to &bx%s y%s z%s.", horizontal.getX(), horizontal.getY(), horizontal.getZ()), true);
         } else if (!previousFloat.equals(horizontal)) {
             Client.sendMessage(String.format("&fFloat position set to &bx%s y%s z%s.", horizontal.getX(), horizontal.getY(), horizontal.getZ()), true);
-
         }
         previousFloat = horizontal;
     }
@@ -203,7 +204,6 @@ public class FloatFinder extends Module implements IRegistrable {
         return true;
     }
 
-
     private BlockPos determinePosNextToBarrel() {
         switch (barrelDirection) {
             case WEST:
@@ -230,6 +230,16 @@ public class FloatFinder extends Module implements IRegistrable {
                 ShaderManager.getInstance().enableShader(ChromaScreenShader.class);
             RenderUtils.setGlColor(barrelBlockColor);
             AxisAlignedBB bb = RenderUtils.normalize(RenderUtils.posToAABB(barrelBlockPos));
+            RenderUtils.drawFilledBoundingBox(bb.expand(0.015D, 0.015D, 0.015D));
+            ShaderManager.getInstance().disableShader();
+            GL11.glPopMatrix();
+        }
+        if (powerBlockPos != null) {
+            GL11.glPushMatrix();
+            if (powerBlockColor.isChroma())
+                ShaderManager.getInstance().enableShader(ChromaScreenShader.class);
+            RenderUtils.setGlColor(powerBlockColor);
+            AxisAlignedBB bb = RenderUtils.normalize(RenderUtils.posToAABB(powerBlockPos));
             RenderUtils.drawFilledBoundingBox(bb.expand(0.015D, 0.015D, 0.015D));
             ShaderManager.getInstance().disableShader();
             GL11.glPopMatrix();
@@ -270,11 +280,15 @@ public class FloatFinder extends Module implements IRegistrable {
 
     public void findFloatOnce() {
         if (barrelBlockPos != null) {
-            Client.sendMessage("&fFinding float...", true);
-            calledFromKeybind = true;
-            findFloat();
+            if (powerBlockPos != null) {
+                Client.sendMessage("&fFinding float...", true);
+                calledFromKeybind = true;
+                findFloat();
+            } else {
+                Client.sendMessage("&fYou must set a power block first!", true);
+            }
         } else {
-            Client.sendMessage("&fYou need to set a barrel block first!", true);
+            Client.sendMessage("&fYou must set a barrel block first!", true);
         }
     }
 
@@ -287,11 +301,22 @@ public class FloatFinder extends Module implements IRegistrable {
         Client.sendMessage(String.format("&fBarrel position set to &bx%s y%s z%s.", barrelBlockPos.getX(), barrelBlockPos.getY(), barrelBlockPos.getZ()), true);
     }
 
+    public void selectPowerBlock() {
+        if (mc.thePlayer == null)
+            return;
+        powerBlockPos = mc.objectMouseOver.getBlockPos().up();
+        horizontal = null;
+        vertical = null;
+        Client.sendMessage(String.format("&fPower position set to &bx%s y%s z%s.", powerBlockPos.getX(), powerBlockPos.getY(), powerBlockPos.getZ()), true);
+    }
+
     private void onKeyInput(InputEvent.Key event) {
         if (selectAdjustBlock.isPressed()) {
             selectBarrelBlock();
         } else if (calcFloatLocation.isPressed()) {
             findFloatOnce();
+        } else if (selectPowerBlock.isPressed()) {
+            selectPowerBlock();
         }
     }
 
@@ -300,7 +325,7 @@ public class FloatFinder extends Module implements IRegistrable {
         EventBus.register(this, RenderWorldEvent.Post.class, this::onRenderWorld);
         EventBus.register(this, InputEvent.Key.class, this::onKeyInput);
         EventBus.register(this, ClientTickEvent.Post.class, ev -> {
-            if (recalcOnChange && barrelBlockPos != null) {
+            if (recalcOnChange && barrelBlockPos != null && powerBlockPos != null) {
                 long currentTime = System.currentTimeMillis();
                 if (currentTime - lastExecutionTime > checkInterval) {
                     lastExecutionTime = currentTime;

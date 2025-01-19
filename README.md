@@ -2,6 +2,7 @@
 
 ## Extra added features
 - Autofish for SaicoPvP
+- Float finder
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"

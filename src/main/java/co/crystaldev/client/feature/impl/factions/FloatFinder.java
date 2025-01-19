@@ -6,6 +6,7 @@ import co.crystaldev.client.event.EventBus;
 import co.crystaldev.client.event.IRegistrable;
 import co.crystaldev.client.event.impl.player.InputEvent;
 import co.crystaldev.client.event.impl.render.RenderWorldEvent;
+import co.crystaldev.client.event.impl.tick.ClientTickEvent;
 import co.crystaldev.client.feature.annotations.properties.*;
 import co.crystaldev.client.feature.base.Category;
 import co.crystaldev.client.feature.base.Module;
@@ -35,8 +36,8 @@ public class FloatFinder extends Module implements IRegistrable {
     @Toggle(label = "Recalculate on change")
     public boolean recalcOnChange = false;
 
-    @Slider(label = "Checking interval", placeholder = "{value}ms", minimum = 50.0D, maximum = 1000.0D, standard = 200.0D, integers = true)
-    public int checkInterval = 200;
+    @Slider(label = "Checking interval", placeholder = "{value}ms", minimum = 50.0D, maximum = 1000.0D, standard = 300.0D, integers = true)
+    public int checkInterval = 300;
 
     @PageBreak(label = "Visuals Customization")
     @Colour(label = "Line Color")
@@ -55,13 +56,14 @@ public class FloatFinder extends Module implements IRegistrable {
     private BlockPos barrelNextBlockPos;
     private BlockPos horizontal;
     private BlockPos vertical;
-    private int checkAmountSideways = 300;
+    private int CHECK_BLOCKS_SIDEWAYS = 300;
     private boolean calledFromKeybind = false;
     private EnumFacing barrelDirection;
+    private static long lastExecutionTime = System.currentTimeMillis();
+    private BlockPos previousFloat = new BlockPos(0, 0, 0);
 
     public FloatFinder() {
         this.enabled = false;
-
     }
 
     public void configPostInit() {
@@ -86,7 +88,7 @@ public class FloatFinder extends Module implements IRegistrable {
         BlockPos side = null;
         switch (barrelDirection) {
             case NORTH:
-                for (int i = 1; i < checkAmountSideways; i++) {
+                for (int i = 1; i < CHECK_BLOCKS_SIDEWAYS; i++) {
                     BlockPos currentNext = vertical.add(0, 0, -i);
                     if (cantPassThroughBlock(currentNext, true)) {
                         side = currentNext.add(0, 0, 1);
@@ -95,7 +97,7 @@ public class FloatFinder extends Module implements IRegistrable {
                 }
                 break;
             case SOUTH:
-                for (int i = 1; i < checkAmountSideways; i++) {
+                for (int i = 1; i < CHECK_BLOCKS_SIDEWAYS; i++) {
                     BlockPos currentNext = vertical.add(0, 0, i);
                     if (cantPassThroughBlock(currentNext, true)) {
                         side = currentNext.add(0, 0, -1);
@@ -104,7 +106,7 @@ public class FloatFinder extends Module implements IRegistrable {
                 }
                 break;
             case EAST:
-                for (int i = 1; i < checkAmountSideways; i++) {
+                for (int i = 1; i < CHECK_BLOCKS_SIDEWAYS; i++) {
                     BlockPos currentNext = vertical.add(i, 0, 0);
                     if (cantPassThroughBlock(currentNext, true)) {
                         side = currentNext.add(-1, 0, 0);
@@ -113,7 +115,7 @@ public class FloatFinder extends Module implements IRegistrable {
                 }
                 break;
             case WEST:
-                for (int i = 1; i < checkAmountSideways; i++) {
+                for (int i = 1; i < CHECK_BLOCKS_SIDEWAYS; i++) {
                     BlockPos currentNext = vertical.add(-i, 0, 0);
                     if (cantPassThroughBlock(currentNext, true)) {
                         side = currentNext.add(1, 0, 0);
@@ -126,13 +128,15 @@ public class FloatFinder extends Module implements IRegistrable {
     }
 
     private EnumFacing detectDirection() {
-        IBlockState state = mc.theWorld.getBlockState(barrelBlockPos);
-        Block block = state.getBlock();
         EnumFacing direction = null;
-        if (block instanceof BlockStairs) {
-            direction = state.getValue(BlockStairs.FACING);
-        } else if (true) {
-            //TODO implement other barrels and flipped barrels
+        if (mc.theWorld != null) {
+            IBlockState state = mc.theWorld.getBlockState(barrelBlockPos);
+            Block block = state.getBlock();
+            if (block instanceof BlockStairs) {
+                direction = state.getValue(BlockStairs.FACING);
+            } else if (true) {
+                //TODO implement other barrels and flipped barrels
+            }
         }
         return direction;
     }
@@ -159,7 +163,13 @@ public class FloatFinder extends Module implements IRegistrable {
                 Client.sendMessage("&fCould not find a side block", true);
             return;
         }
-        Client.sendMessage(String.format("&fFloat position set to &bx%s y%s z%s.", horizontal.getX(), horizontal.getY(), horizontal.getZ()), true);
+        if (calledFromKeybind) {
+            Client.sendMessage(String.format("&fFloat position set to &bx%s y%s z%s.", horizontal.getX(), horizontal.getY(), horizontal.getZ()), true);
+        } else if (!previousFloat.equals(horizontal)) {
+            Client.sendMessage(String.format("&fFloat position set to &bx%s y%s z%s.", horizontal.getX(), horizontal.getY(), horizontal.getZ()), true);
+
+        }
+        previousFloat = horizontal;
     }
 
     private boolean cantPassThroughBlock(BlockPos pos, boolean checkingHorizontal) {
@@ -232,6 +242,8 @@ public class FloatFinder extends Module implements IRegistrable {
             GL11.glEnable(2848);
             GL11.glLineWidth(lineWidth);
             GL11.glDepthMask(true);
+            if (lineColor.isChroma())
+                ShaderManager.getInstance().enableShader(ChromaScreenShader.class);
             RenderUtils.setGlColor(lineColor);
             Vec3d barrel = RenderUtils.normalize(new Vec3d(barrelBlockPos.getX() + 0.5D, barrelBlockPos.getY() + 1.0D, barrelBlockPos.getZ() + 0.5D));
             Vec3d top = RenderUtils.normalize(new Vec3d(vertical.getX() + 0.5D, vertical.getY() + 0.5D, vertical.getZ() + 0.5D));
@@ -273,5 +285,19 @@ public class FloatFinder extends Module implements IRegistrable {
     public void registerEvents() {
         EventBus.register(this, RenderWorldEvent.Post.class, this::onRenderWorld);
         EventBus.register(this, InputEvent.Key.class, this::onKeyInput);
+        EventBus.register(this, ClientTickEvent.Post.class, ev -> {
+            if (recalcOnChange && barrelBlockPos != null) {
+                long currentTime = System.currentTimeMillis();
+                if (currentTime - lastExecutionTime > checkInterval) {
+                    lastExecutionTime = currentTime;
+                    try {
+                        calledFromKeybind = false;
+                        findFloat();
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 }

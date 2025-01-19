@@ -4,6 +4,7 @@ import co.crystaldev.client.Client;
 import co.crystaldev.client.Reference;
 import co.crystaldev.client.event.impl.network.ChatReceivedEvent;
 import co.crystaldev.client.feature.impl.factions.FloatFinder;
+import co.crystaldev.client.feature.impl.factions.Patchcrumbs;
 import co.crystaldev.client.group.GroupManager;
 import co.crystaldev.client.network.ByteBufWrapper;
 import co.crystaldev.client.network.INetHandler;
@@ -50,17 +51,22 @@ public class PacketGroupChat extends Packet {
         if(message.startsWith("ZQX_")) {
             if (FloatFinder.getInstance().enabled && mc.thePlayer != null && !ign.equals(mc.thePlayer.getName())) {
                 String[] coords = message.substring(4).split("_");
-                if (coords.length == 6) {
+                if (coords.length == 7) {
                     int hX = Integer.parseInt(coords[0]);
                     int hY = Integer.parseInt(coords[1]);
                     int hZ = Integer.parseInt(coords[2]);
                     int bX = Integer.parseInt(coords[3]);
                     int bY = Integer.parseInt(coords[4]);
                     int bZ = Integer.parseInt(coords[5]);
-                    FloatFinder.getInstance().horizontal = new BlockPos(hX, hY, hZ);
-                    FloatFinder.getInstance().barrelBlockPos = new BlockPos(bX,bY,bZ);
-                    FloatFinder.getInstance().vertical = new BlockPos(bX,hY,bZ);
-                    Client.sendMessage(String.format("&fReceived shared float position at &bx%s y%s z%s.", hX, hY, hZ), true);
+                    if(FloatFinder.getInstance().enabled){
+                        FloatFinder.getInstance().horizontal = new BlockPos(hX, hY, hZ);
+                        FloatFinder.getInstance().barrelBlockPos = new BlockPos(bX,bY,bZ);
+                        FloatFinder.getInstance().vertical = new BlockPos(bX,hY,bZ);
+                        Client.sendMessage(String.format("&fReceived shared float position at &bx%s y%s z%s.", hX, hY, hZ), true);
+                        if(Patchcrumbs.getInstance().enabled && Patchcrumbs.getInstance().useFloatFinder){
+                            Patchcrumbs.getInstance().setCrumbsFromFloatFinder(hX, hY,hZ, coords[6]);
+                        }
+                    }
                 }
             }
             return;

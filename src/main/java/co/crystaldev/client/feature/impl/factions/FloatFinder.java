@@ -76,6 +76,7 @@ public class FloatFinder extends Module implements IRegistrable {
     private static long lastExecutionTime = System.currentTimeMillis();
     private BlockPos previousFloat = new BlockPos(0, 0, 0);
     private static FloatFinder INSTANCE;
+    public String shootDirection;
 
     public FloatFinder() {
         this.enabled = false;
@@ -176,7 +177,7 @@ public class FloatFinder extends Module implements IRegistrable {
         if (calledFromKeybind || !previousFloat.equals(horizontal)) {
             Client.sendMessage(String.format("&fFloat position set to &bx%s y%s z%s.", horizontal.getX(), horizontal.getY(), horizontal.getZ()), true);
             if(GroupOptions.getInstance().sharedFloatPos){
-                Client.sendPacket(new PacketGroupChat(String.format("ZQX_%s_%s_%s_%s_%s_%s", horizontal.getX(),horizontal.getY(),horizontal.getZ(), barrelBlockPos.getX(), barrelBlockPos.getY(), barrelBlockPos.getZ())));
+                Client.sendPacket(new PacketGroupChat(String.format("ZQX_%s_%s_%s_%s_%s_%s_%s", horizontal.getX(),horizontal.getY(),horizontal.getZ(), barrelBlockPos.getX(), barrelBlockPos.getY(), barrelBlockPos.getZ(), shootDirection)));
             }
             //Client.sendPacket(new PacketFloatFinder());
         }
@@ -211,12 +212,16 @@ public class FloatFinder extends Module implements IRegistrable {
     private BlockPos determinePosNextToBarrel() {
         switch (barrelDirection) {
             case WEST:
+                shootDirection = "NORTH/SOUTH";
                 return barrelBlockPos.east();
             case EAST:
+                shootDirection = "NORTH/SOUTH";
                 return barrelBlockPos.west();
             case NORTH:
+                shootDirection = "EAST/WEST";
                 return barrelBlockPos.south();
             case SOUTH:
+                shootDirection = "EAST/WEST";
                 return barrelBlockPos.north();
         }
         return null;

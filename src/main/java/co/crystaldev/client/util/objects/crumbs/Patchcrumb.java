@@ -80,7 +80,7 @@ public class Patchcrumb {
     }
 
     public enum Source {
-        ENTITY, EXPLOSION, GROUP;
+        ENTITY, EXPLOSION, GROUP, FLOATFINDER
     }
 }
 

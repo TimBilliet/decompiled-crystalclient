@@ -12,6 +12,9 @@ public class GroupOptions {
     @Toggle(label = "Shared Adjusts")
     public boolean sharedAdjusts = true;
 
+    @Toggle(label = "Shared Float Positions")
+    public boolean sharedFloatPos = true;
+
     @Toggle(label = "Show Members on Map")
     public boolean showMembersOnMap = true;
 

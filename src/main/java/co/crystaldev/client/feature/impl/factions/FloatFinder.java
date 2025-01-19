@@ -11,7 +11,9 @@ import co.crystaldev.client.feature.annotations.HoverOverlay;
 import co.crystaldev.client.feature.annotations.properties.*;
 import co.crystaldev.client.feature.base.Category;
 import co.crystaldev.client.feature.base.Module;
+import co.crystaldev.client.feature.settings.GroupOptions;
 import co.crystaldev.client.gui.GuiOptions;
+import co.crystaldev.client.network.socket.client.group.PacketGroupChat;
 import co.crystaldev.client.shader.ShaderManager;
 import co.crystaldev.client.shader.chroma.ChromaScreenShader;
 import co.crystaldev.client.util.ColorObject;
@@ -171,10 +173,12 @@ public class FloatFinder extends Module implements IRegistrable {
                 Client.sendMessage("&fCould not find a side block", true);
             return;
         }
-        if (calledFromKeybind) {
+        if (calledFromKeybind || !previousFloat.equals(horizontal)) {
             Client.sendMessage(String.format("&fFloat position set to &bx%s y%s z%s.", horizontal.getX(), horizontal.getY(), horizontal.getZ()), true);
-        } else if (!previousFloat.equals(horizontal)) {
-            Client.sendMessage(String.format("&fFloat position set to &bx%s y%s z%s.", horizontal.getX(), horizontal.getY(), horizontal.getZ()), true);
+            if(GroupOptions.getInstance().sharedFloatPos){
+                Client.sendPacket(new PacketGroupChat(String.format("ZQX_%s_%s_%s_%s_%s_%s", horizontal.getX(),horizontal.getY(),horizontal.getZ(), barrelBlockPos.getX(), barrelBlockPos.getY(), barrelBlockPos.getZ())));
+            }
+            //Client.sendPacket(new PacketFloatFinder());
         }
         previousFloat = horizontal;
     }
@@ -244,7 +248,7 @@ public class FloatFinder extends Module implements IRegistrable {
             ShaderManager.getInstance().disableShader();
             GL11.glPopMatrix();
         }
-        if (horizontal != null && vertical != null) {
+        if (horizontal != null && vertical != null && barrelBlockPos != null) {
             GL11.glPushMatrix();
             if (endBlockColor.isChroma())
                 ShaderManager.getInstance().enableShader(ChromaScreenShader.class);

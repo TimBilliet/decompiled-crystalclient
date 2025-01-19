@@ -52,18 +52,24 @@ public class FloatFinder extends Module implements IRegistrable {
     @Slider(label = "Line Width", placeholder = "{value}px", minimum = 1.0D, maximum = 10.0D, standard = 3.0D, integers = true)
     public int lineWidth = 3;
 
-    private BlockPos barrelBlockPos;
+    public BlockPos barrelBlockPos;
     private BlockPos barrelNextBlockPos;
-    private BlockPos horizontal;
-    private BlockPos vertical;
+    public BlockPos horizontal;
+    public BlockPos vertical;
     private int CHECK_BLOCKS_SIDEWAYS = 300;
     private boolean calledFromKeybind = false;
     private EnumFacing barrelDirection;
     private static long lastExecutionTime = System.currentTimeMillis();
     private BlockPos previousFloat = new BlockPos(0, 0, 0);
+    private static FloatFinder INSTANCE;
 
     public FloatFinder() {
         this.enabled = false;
+        INSTANCE = this;
+    }
+
+    public static FloatFinder getInstance() {
+        return INSTANCE;
     }
 
     public void configPostInit() {
@@ -262,22 +268,30 @@ public class FloatFinder extends Module implements IRegistrable {
         GL11.glPopMatrix();
     }
 
+    public void findFloatOnce() {
+        if (barrelBlockPos != null) {
+            Client.sendMessage("&fFinding float...", true);
+            calledFromKeybind = true;
+            findFloat();
+        } else {
+            Client.sendMessage("&fYou need to set a barrel block first!", true);
+        }
+    }
+
+    public void selectBarrelBlock() {
+        if (mc.thePlayer == null)
+            return;
+        barrelBlockPos = mc.objectMouseOver.getBlockPos();
+        horizontal = null;
+        vertical = null;
+        Client.sendMessage(String.format("&fBarrel position set to &bx%s y%s z%s.", barrelBlockPos.getX(), barrelBlockPos.getY(), barrelBlockPos.getZ()), true);
+    }
+
     private void onKeyInput(InputEvent.Key event) {
         if (selectAdjustBlock.isPressed()) {
-            if (mc.thePlayer == null)
-                return;
-            barrelBlockPos = mc.objectMouseOver.getBlockPos();
-            horizontal = null;
-            vertical = null;
-            Client.sendMessage(String.format("&fBarrel position set to &bx%s y%s z%s.", barrelBlockPos.getX(), barrelBlockPos.getY(), barrelBlockPos.getZ()), true);
+            selectBarrelBlock();
         } else if (calcFloatLocation.isPressed()) {
-            if (barrelBlockPos != null) {
-                Client.sendMessage("&fFinding float...", true);
-                calledFromKeybind = true;
-                findFloat();
-            } else {
-                Client.sendMessage("&fYou need to set a barrel block first!", true);
-            }
+            findFloatOnce();
         }
     }
 

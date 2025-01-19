@@ -275,6 +275,7 @@ public class Client {
         this.commandHandler.registerCommand(new WaypointsCommand());
         this.commandHandler.registerCommand(new CrashCommand());
         this.commandHandler.registerCommand(new DupeCommand());
+        this.commandHandler.registerCommand(new FloatFinderCommand());
         if (!OBFUSCATED) {
             this.commandHandler.registerCommand(new ThumbnailCommand());
             Log4jPatch.patchLogger();

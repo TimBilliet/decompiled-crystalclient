@@ -45,6 +45,10 @@ public class PacketGroupInvitationAction extends Packet {
                 NotificationHandler.addNotification("Invalid invitation code");
             } else if(message.contains("member_already_in_group")) {
                 NotificationHandler.addNotification("You are already a member of this group!");
+            } else if(message.contains("invite_sent_successfully")) {
+                NotificationHandler.addNotification("Invite sent successfully");
+            } else if(message.contains("member_already_pending")) {
+                NotificationHandler.addNotification("Your invitation is already pending!");
             } else {
                 NotificationHandler.addNotification(this.message);
             }

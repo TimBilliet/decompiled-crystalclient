@@ -24,6 +24,9 @@ import java.awt.*;
 public class CrosshairSettings extends Module implements IRegistrable {
     private final int TRANSPARENT = (new ColorObject(0, 0, 0, 0)).getRGB();
 
+    @Toggle(label = "Keep Crosshair In Spectator")
+    public boolean keepCrosshairSpectator = true;
+
     @Toggle(label = "Use Custom Crosshair")
     public boolean useCustomCrosshair = true;
 

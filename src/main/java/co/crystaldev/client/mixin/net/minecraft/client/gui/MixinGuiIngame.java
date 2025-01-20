@@ -2,6 +2,7 @@ package co.crystaldev.client.mixin.net.minecraft.client.gui;
 
 import co.crystaldev.client.Client;
 import co.crystaldev.client.event.impl.render.RenderOverlayEvent;
+import co.crystaldev.client.feature.impl.combat.CrosshairSettings;
 import co.crystaldev.client.feature.impl.combat.OldAnimations;
 import co.crystaldev.client.gui.screens.override.ScreenPlayerTabOverlay;
 import net.minecraft.client.Minecraft;
@@ -17,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin({GuiIngame.class})
 public abstract class MixinGuiIngame {
@@ -45,6 +47,11 @@ public abstract class MixinGuiIngame {
         event.call();
         if (event.isCancelled())
             ci.cancel();
+    }
+    @Inject(method = {"showCrosshair"}, cancellable = true, at= {@At(value = "RETURN", ordinal = 3)})
+    private void showCrosshair(CallbackInfoReturnable<Boolean> cir){
+        if(CrosshairSettings.getInstance().keepCrosshairSpectator)
+            cir.setReturnValue(true);
     }
 
     @ModifyVariable(method = {"renderPlayerStats(Lnet/minecraft/client/gui/ScaledResolution;)V"}, at = @At(value = "STORE", ordinal = 0), ordinal = 1)

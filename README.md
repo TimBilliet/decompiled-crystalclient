@@ -3,6 +3,8 @@
 ## Extra added features
 - Autofish for SaicoPvP
 - Float finder
+- Clear menu/inventory/container backgrounds
+- Keep crosshair in spectator mode
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"

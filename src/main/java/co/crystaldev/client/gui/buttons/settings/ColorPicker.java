@@ -407,7 +407,6 @@ public class ColorPicker extends SettingButton<ColorObject> {
             RenderUtils.drawLine(1.5F, this.x, (this.y + this.height) - (this.alpha * this.height) / 255.0F, (this.x + this.width), (this.y + this.height) - (this.alpha * this.height) / 255.0F);
             RenderUtils.drawRoundedBorder(this.x - 0.5D, this.y - 0.5D, (this.x + this.width) + 0.5D, (this.y + this.height) + 0.5D, 4.0D, 1.5F, Color.WHITE.getRGB());
             if (hovered && this.selecting) {
-//                this.alpha = MathHelper.clamp_int((this.height - mouseY - this.y) * 255 / this.height, 0, 255);
                 this.alpha = MathHelper.clamp_int(255 - (mouseY - this.y) * 255 / this.height, 0, 255);
             }
             if (!Mouse.isButtonDown(0) && this.selecting)

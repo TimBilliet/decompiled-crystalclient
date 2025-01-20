@@ -70,7 +70,6 @@ public class WaypointHandler implements IRegistrable {
                 .filter(predicate)
                 .map(wp -> new Tuple<>(EnumActionShift.REMOVE, wp))
                 .collect(Collectors.toList());
-//    List<Tuple<EnumActionShift, Waypoint>> toRemove = (List<Tuple<EnumActionShift, Waypoint>>)this.registeredWaypoints.stream().filter(predicate).map(wp -> new Tuple(EnumActionShift.REMOVE, wp)).collect(Collectors.toList());
         this.queue.addAll(toRemove);
     }
 

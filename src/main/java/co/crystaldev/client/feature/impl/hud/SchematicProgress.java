@@ -79,7 +79,7 @@ public class SchematicProgress extends HudModuleBackground {
                     if (this.total == 0) {
                         this.progress = 100.0F;
                     } else {
-                        this.progress = (float) this.missing / this.total * 100.0F;//float
+                        this.progress = (float) this.missing / this.total * 100.0F;
                     }
                 });
         } else {

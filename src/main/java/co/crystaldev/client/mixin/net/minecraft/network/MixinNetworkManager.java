@@ -4,6 +4,7 @@ import co.crystaldev.client.Client;
 import co.crystaldev.client.event.impl.network.PacketReceivedEvent;
 import co.crystaldev.client.event.impl.network.PacketSendEvent;
 import co.crystaldev.client.util.CallbackClickEvent;
+import co.crystaldev.client.util.Hastebin;
 import co.crystaldev.client.util.enums.ChatColor;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.util.concurrent.Future;
@@ -28,6 +29,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
+import java.util.stream.Stream;
 
 @Mixin({NetworkManager.class})
 public abstract class MixinNetworkManager {
@@ -49,8 +51,6 @@ public abstract class MixinNetworkManager {
         ChatComponentText upload = new ChatComponentText(ChatColor.translate("&nClick Here&f"));
         upload.getChatStyle().setChatClickEvent((ClickEvent) new CallbackClickEvent(comp -> {
             try {
-                //String link = Hastebin.upload(throwable + "\n" + (String)Stream.<StackTraceElement>of(throwable.getStackTrace()).map().collect(Collectors.joining("\n")));
-//              String link = Hastebin.upload(throwable + "\n" + (String)Stream.<StackTraceElement>of(throwable.getStackTrace()).collect(Collectors.joining("\n")))
                 String link = "dummylink";
 
                 StringSelection selection = new StringSelection(link);
@@ -120,9 +120,3 @@ public abstract class MixinNetworkManager {
     @Shadow
     public abstract void closeChannel(IChatComponent paramIChatComponent);
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\mixin\net\minecraft\network\MixinNetworkManager.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

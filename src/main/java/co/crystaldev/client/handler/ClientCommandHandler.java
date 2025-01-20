@@ -83,7 +83,6 @@ public class ClientCommandHandler implements ICommandManager, IRegistrable {
         ICommand cmd = this.commandMap.get(s);
         if (cmd != null && cmd.canCommandSenderUseCommand(sender))
             return cmd.addTabCompletionOptions(sender, dropFirstString(astring), pos);
-        //return cmd.func_180525_a(sender, dropFirstString(astring), pos);
         return null;
     }
 

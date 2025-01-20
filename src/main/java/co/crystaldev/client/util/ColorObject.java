@@ -181,7 +181,6 @@ public class ColorObject extends Color implements Cloneable {
                 String field = "";
                 if (token.equals(JsonToken.NAME))
                     field = in.nextName();
-                //BREAKS TOEGEVOEGD
                 switch (field) {
                     case "r":
                         r = in.nextInt();
@@ -214,9 +213,3 @@ public class ColorObject extends Color implements Cloneable {
         }
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\clien\\util\ColorObject.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

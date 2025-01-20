@@ -157,12 +157,11 @@ public class Patchcrumbs extends Module implements IRegistrable {
             S22PacketMultiBlockChange packet = (S22PacketMultiBlockChange) event.packet;
             for (S22PacketMultiBlockChange.BlockUpdateData data : packet.getChangedBlocks()) {
                 if (data.getBlockState() != null && data.getBlockState().getBlock() instanceof net.minecraft.block.BlockFalling)
-                    //for (CrumbEntity entity : new ArrayList(this.entities)) {
                     for (CrumbEntity entity : this.entities) {
 
                         if (entity == null || entity.getPos() == null || data.getPos() == null)
                             continue;
-                        if (Math.sqrt(entity.getPos().distanceSq((Vec3i) data.getPos())) <= 4.0D)
+                        if (Math.sqrt(entity.getPos().distanceSq(data.getPos())) <= 4.0D)
                             entity.setBypassSandCheck(true);
                     }
             }

@@ -147,7 +147,7 @@ public class SliderButton extends SettingButton<Double> {
             return this.min;
         if (mouseX >= x + w)
             return this.max;
-        double percent = ((float) Math.abs(mouseX - x) / w) * (this.max - this.min) + this.min;//float
+        double percent = ((float) Math.abs(mouseX - x) / w) * (this.max - this.min) + this.min;
         if (this.useInts)
             return MathHelper.clamp_double(Math.round(percent), this.min, this.max);
         BigDecimal bd = new BigDecimal(Double.toString(percent));

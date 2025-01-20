@@ -80,12 +80,10 @@ public class ScreenPlayerTabOverlay extends GuiPlayerTabOverlay {
             int k = this.mc.fontRendererObj.getStringWidth(getPlayerName(networkplayerinfo));
             i = Math.max(i, k + (isOnCrystal ? 10 : 0));
             if (scoreObjectiveIn != null && scoreObjectiveIn.getRenderType() != IScoreObjectiveCriteria.EnumRenderType.HEARTS) {
-                //k = this.mc.fontRendererObj.getStringWidth(" " + scoreboardIn.getOrCreateScore(networkplayerinfo.getGameProfile().getName(), scoreObjectiveIn).getScorePoints());
                 k = this.mc.fontRendererObj.getStringWidth(" " + scoreboardIn.getValueFromObjective(networkplayerinfo.getGameProfile().getName(), scoreObjectiveIn).getScorePoints());
                 j = Math.max(j, k + (isOnCrystal ? 10 : 0));
             }
         }
-//         List<NetworkPlayerInfo> list = list.subList(0, Math.min(list.size(), 80));
         List<NetworkPlayerInfo> list = this.list.subList(0, Math.min(this.list.size(), 80));
         int l3 = list.size();
         int i4 = l3;
@@ -230,7 +228,6 @@ public class ScreenPlayerTabOverlay extends GuiPlayerTabOverlay {
     }
 
     private void drawScoreboardValues(ScoreObjective objective, int p_175247_2_, String name, int p_175247_4_, int p_175247_5_, NetworkPlayerInfo info) {
-        //int i = objective.getScoreboard().getOrCreateScore(name, objective).getScorePoints();
         int i = objective.getScoreboard().getValueFromObjective(name, objective).getScorePoints();
         if (objective.getRenderType() == IScoreObjectiveCriteria.EnumRenderType.HEARTS) {
             this.mc.getTextureManager().bindTexture(icons);
@@ -250,10 +247,10 @@ public class ScreenPlayerTabOverlay extends GuiPlayerTabOverlay {
             info.func_178843_c(this.lastTimeOpened);
             info.func_178836_b(i);
             int j = MathHelper.ceiling_float_int(Math.max(i, info.func_178860_m()) / 2.0F);
-            int k = Math.max(MathHelper.ceiling_float_int(((float) i / 2)), Math.max(MathHelper.ceiling_float_int(((float) info.func_178860_m() / 2)), 10));//floatfloat
+            int k = Math.max(MathHelper.ceiling_float_int(((float) i / 2)), Math.max(MathHelper.ceiling_float_int(((float) info.func_178860_m() / 2)), 10));
             boolean flag = (info.func_178858_o() > this.guiIngame.getUpdateCounter() && (info.func_178858_o() - this.guiIngame.getUpdateCounter()) / 3L % 2L == 1L);
             if (j > 0) {
-                float f = Math.min(((float) p_175247_5_ - p_175247_4_ - 4) / k, 9.0F);//float
+                float f = Math.min(((float) p_175247_5_ - p_175247_4_ - 4) / k, 9.0F);
                 if (f > 3.0F) {
                     for (int l = j; l < k; l++)
                         drawTexturedModalRect(p_175247_4_ + l * f, p_175247_2_, flag ? 25 : 16, 0, 9, 9);
@@ -276,7 +273,7 @@ public class ScreenPlayerTabOverlay extends GuiPlayerTabOverlay {
                     String s = "" + (i / 2.0F);
                     if (p_175247_5_ - this.mc.fontRendererObj.getStringWidth(s + "hp") >= p_175247_4_)
                         s = s + "hp";
-                    this.mc.fontRendererObj.drawStringWithShadow(s, (((float) p_175247_5_ + p_175247_4_) / 2 - (float) this.mc.fontRendererObj.getStringWidth(s) / 2), p_175247_2_, i1);//floatfloat
+                    this.mc.fontRendererObj.drawStringWithShadow(s, (((float) p_175247_5_ + p_175247_4_) / 2 - (float) this.mc.fontRendererObj.getStringWidth(s) / 2), p_175247_2_, i1);
                 }
             }
         } else {

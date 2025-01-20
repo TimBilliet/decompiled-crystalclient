@@ -415,9 +415,3 @@ public class Quat4d extends Tuple4d implements Serializable {
         this.z = s1 * q1.z + s2 * q2.z;
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\clien\\util\javax\Quat4d.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

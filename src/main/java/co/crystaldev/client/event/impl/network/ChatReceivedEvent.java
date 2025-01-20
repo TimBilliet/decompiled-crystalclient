@@ -33,9 +33,3 @@ public class ChatReceivedEvent extends Event {
         public static final byte[] TYPES = new byte[]{0, 1, 2};
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\event\impl\network\ChatReceivedEvent.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

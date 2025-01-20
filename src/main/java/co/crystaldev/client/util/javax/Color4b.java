@@ -47,9 +47,3 @@ public class Color4b extends Tuple4b implements Serializable {
         return new Color(r, g, b, a);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\clien\\util\javax\Color4b.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

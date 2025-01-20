@@ -18,9 +18,8 @@ public class UsernameUtils {
                 return pl.getGameProfile().getName();
         }
         if (worldClient != null)
-            for (EntityPlayer player : ((World) worldClient).playerEntities) {
+            for (EntityPlayer player : worldClient.playerEntities) {
                 if (player.getUniqueID().equals(uuid))
-//          return player.getCommandSenderName();
                     return player.getName();
             }
         return uuid.toString();

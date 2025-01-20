@@ -50,7 +50,6 @@ public abstract class MixinNetHandlerPlayClient {
     public String[] handleTabComplete(String[] in) {
         String[] complete = (ClientCommandHandler.getInstance()).latestAutoComplete;
         if (complete != null)
-            //in = (String[])ObjectArrays.concat((Object[])complete, (Object[])in, String.class);
             in = ObjectArrays.concat(complete, in, String.class);
 
         return in;

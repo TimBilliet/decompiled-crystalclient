@@ -956,7 +956,7 @@ public class RenderUtils {
         float f = 1.0F / tileWidth;
         float f1 = 1.0F / tileHeight;
         worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        worldRenderer.pos(x, y + height, 0.0D).tex((u * f), ((v + vHeight) * f1)).endVertex();//tex = func_181673_a
+        worldRenderer.pos(x, y + height, 0.0D).tex((u * f), ((v + vHeight) * f1)).endVertex();
         worldRenderer.pos(x + width, y + height, 0.0D).tex(((u + uWidth) * f), ((v + vHeight) * f1)).endVertex();
         worldRenderer.pos(x + width, y, 0.0D).tex(((u + uWidth) * f), (v * f1)).endVertex();
         worldRenderer.pos(x, y, 0.0D).tex((u * f), (v * f1)).endVertex();

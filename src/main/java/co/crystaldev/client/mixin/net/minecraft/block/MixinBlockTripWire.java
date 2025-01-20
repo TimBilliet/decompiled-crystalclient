@@ -16,12 +16,6 @@ public abstract class MixinBlockTripWire extends Block {
     }
 
     public int colorMultiplier(IBlockAccess blockAccess, BlockPos pos, int renderPass) {
-        return (ClientOptions.getInstance()).redString ? 16711680 : super.colorMultiplier(blockAccess, pos, renderPass);//func_180662_a
+        return (ClientOptions.getInstance()).redString ? 16711680 : super.colorMultiplier(blockAccess, pos, renderPass);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\mixin\net\minecraft\block\MixinBlockTripWire.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

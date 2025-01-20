@@ -49,12 +49,11 @@ public class PacketShareSchematic
 
 
     public void process(INetHandler handler) {
-        String topMsg = String.format("&8&l❙  &b&l%s&b has shared a schematic with you!", new Object[]{this.username});
+        String topMsg = String.format("&8&l❙  &b&l%s&b has shared a schematic with you!", this.username);
         String bottomMsg = "&8&l❙  &7&l - &rDownload by clicking this message!";
-        String cmd = String.format("/schemshare %s %s", new Object[]{this.schemDir, this.schemId});
+        String cmd = String.format("/schemshare %s %s", this.schemDir, this.schemId);
 
         ChatComponentText ch = new ChatComponentText(ChatColor.translate(topMsg));
-//        ch.func_150256_b().func_150241_a(new ClickEvent(ClickEvent.Action.RUN_COMMAND, cmd));
         ch.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, cmd));
 
         ChatComponentText ch1 = new ChatComponentText(ChatColor.translate(bottomMsg));

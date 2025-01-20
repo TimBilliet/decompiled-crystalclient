@@ -24,11 +24,10 @@ public abstract class MixinGuiOverlayDebug {
     private List<String> renderDebugInfoLeft(GuiOverlayDebug instance) {
         List<String> values = ((co.crystaldev.client.mixin.accessor.net.minecraft.client.gui.MixinGuiOverlayDebug) instance).invokeCall();
         values.add("");
-        values.add(ChatColor.translate(String.format("&b%s Debug Info", new Object[]{"Crystal Client"})));
+        values.add(ChatColor.translate(String.format("&b%s Debug Info", "Crystal Client")));
         values.add("Client Version: " + Client.getMinecraftVersion().getVersionString() + "/" + "1.1.16-projectassfucker");
-//    values.add("Server brand: " + this.mc.thePlayer.getServerBrand());
-        values.add("Server brand: " + this.mc.thePlayer.getClientBrand());
-        values.add("Server TPS: " + String.format("%.2f", new Object[]{Float.valueOf(ModuleHandler.getTps())}));
+        values.add("Client brand: " + this.mc.thePlayer.getClientBrand());
+        values.add("Server TPS: " + String.format("%.2f", ModuleHandler.getTps()));
         values.add("");
         values.add("World name: " + Client.getCurrentWorldName());
         values.add("Tile Entity Count (Loaded): " + this.mc.theWorld.loadedTileEntityList.size());
@@ -37,9 +36,3 @@ public abstract class MixinGuiOverlayDebug {
         return values;
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\mixin\net\minecraft\client\gui\MixinGuiOverlayDebug.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

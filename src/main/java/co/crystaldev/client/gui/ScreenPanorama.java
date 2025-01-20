@@ -132,7 +132,7 @@ public abstract class ScreenPanorama extends Screen {
         float height = this.height / scale;
         for (int j = 0; j < i; j++) {
             float f = 1.0F / (j + 1);
-            float f1 = (j - i / 2.0F) / this.imageResolution;//.0F
+            float f1 = (j - i / 2.0F) / this.imageResolution;
             worldrenderer.pos(width, height, this.zLevel).tex((0.0F + f1), 1.0D).color(1.0F, 1.0F, 1.0F, f).endVertex();
             worldrenderer.pos(width, 0.0D, this.zLevel).tex((1.0F + f1), 1.0D).color(1.0F, 1.0F, 1.0F, f).endVertex();
             worldrenderer.pos(0.0D, 0.0D, this.zLevel).tex((1.0F + f1), 0.0D).color(1.0F, 1.0F, 1.0F, f).endVertex();
@@ -165,7 +165,7 @@ public abstract class ScreenPanorama extends Screen {
         Tessellator tessellator = Tessellator.getInstance();
         WorldRenderer worldrenderer = tessellator.getWorldRenderer();
         worldrenderer.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
-        worldrenderer.pos(0.0D, height, this.zLevel).tex((0.5F - f1), (0.5F + f2)).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();//tex
+        worldrenderer.pos(0.0D, height, this.zLevel).tex((0.5F - f1), (0.5F + f2)).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();
         worldrenderer.pos(width, height, this.zLevel).tex((0.5F - f1), (0.5F - f2)).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();
         worldrenderer.pos(width, 0.0D, this.zLevel).tex((0.5F + f1), (0.5F - f2)).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();
         worldrenderer.pos(0.0D, 0.0D, this.zLevel).tex((0.5F + f1), (0.5F + f2)).color(1.0F, 1.0F, 1.0F, 1.0F).endVertex();

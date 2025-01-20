@@ -19,7 +19,7 @@ public class SelectorMenuResourceButton extends SelectorMenuButton {
     public void drawButton(int mouseX, int mouseY, boolean hovered) {
         Screen.scissorStart(this.scissorPane);
         hovered = (hovered && this.enabled);
-        boolean menuButtonHovered = (hovered && this.enabled && (this.entireButtonHitBox || mouseX <= this.x + this.width / 2) && !this.previous.isHovered(mouseX, mouseY) && !this.next.isHovered(mouseX, mouseY));
+        boolean menuButtonHovered = hovered && (this.entireButtonHitBox || mouseX <= this.x + this.width / 2) && !this.previous.isHovered(mouseX, mouseY) && !this.next.isHovered(mouseX, mouseY);
         this.background.fade(menuButtonHovered);
         this.textColor.fade(menuButtonHovered);
         this.valueTextColor.fade(hovered);
@@ -33,9 +33,3 @@ public class SelectorMenuResourceButton extends SelectorMenuButton {
         Screen.scissorEnd(this.scissorPane);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\buttons\settings\SelectorMenuResourceButton.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

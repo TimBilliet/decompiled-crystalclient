@@ -51,9 +51,3 @@ public class Tuple<T1, T2> {
         return String.format("Tuple{item1=%s (%s), item2=%s (%s)}", new Object[]{this.item1, this.item1.getClass().getSimpleName(), this.item2, this.item2.getClass().getSimpleName()});
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\clien\\util\type\Tuple.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -11,12 +11,11 @@ import co.crystaldev.client.gui.Screen;
 import co.crystaldev.client.gui.screens.ScreenLogin;
 import co.crystaldev.client.util.RenderUtils;
 import co.crystaldev.client.util.objects.FadingColor;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class AccountButton extends Button {
@@ -34,6 +33,8 @@ public class AccountButton extends Button {
 
     private final List<Button> buttons;
 
+    private final ResourceLocation offlineIconResource = new ResourceLocation("crystalclient", "gui/textures/offline.png");
+
     public AccountButton(int id, int x, int y, Screen parent) {
         super(id, x, y, 0, 18);
         this.fontRenderer = Fonts.NUNITO_REGULAR_20;
@@ -45,7 +46,7 @@ public class AccountButton extends Button {
 
     public void drawButton(int mouseX, int mouseY, boolean hovered) {
         if (this.loginScreen) {
-            this.mc.displayGuiScreen((GuiScreen) new ScreenLogin(null));
+            this.mc.displayGuiScreen(new ScreenLogin(null));
             return;
         }
         List<AccountData> accounts = AltManager.getAccounts();
@@ -62,7 +63,10 @@ public class AccountButton extends Button {
                 this.expandedSize += 20;
             }
             this.buttons.add(new MenuResourceButton(-1, this.x + 2, y, this.width - 4, 18, "Add account...", Resources.ADD_BOX, (int) (this.height * 0.8D)) {
-
+                {
+                    setFontRenderer(fontRenderer);
+                    setFadingColor(new FadingColor(opts.getColor(opts.neutralButtonBackground, 0), opts.hoveredButtonBackground));
+                }
             });
             this.expandedSize += 2;
         } else if (this.width == 0) {
@@ -77,8 +81,13 @@ public class AccountButton extends Button {
         this.fontRenderer.drawString((data == null) ? "No Account Selected" : data.getName(), this.x + this.height + 4, this.y + this.height / 2 - this.fontRenderer.getStringHeight() / 2, this.textColor
                 .getCurrentColor().getRGB());
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        if (data != null)
-            RenderUtils.drawCustomSizedResource(SkinCache.getInstance().getCachedSkin(data.getId()).getResourceLocation(), this.x + 4, this.y + 2, this.height - 4, this.height - 4);
+        if (data != null) {
+            if (data.isOffline()) {
+                RenderUtils.drawCustomSizedResource(offlineIconResource, this.x + 4, this.y + 2, this.height - 4, this.height - 4);
+            } else {
+                RenderUtils.drawCustomSizedResource(SkinCache.getInstance().getCachedSkin(data.getId()).getResourceLocation(), this.x + 4, this.y + 2, this.height - 4, this.height - 4);
+            }
+        }
         if (this.expanded) {
             for (Button button : this.buttons)
                 button.drawButton(mouseX, mouseY, button.isHovered(mouseX, mouseY));
@@ -106,8 +115,13 @@ public class AccountButton extends Button {
                     (new Thread(() -> {
                         boolean res = false;
                         try {
-                            res = AuthManager.login(b.data);
-                        } catch (IOException iOException) {
+                            if (b.data.isOffline()) {
+                                AltManager.getInstance().addAccount(new AccountData(null, b.data.getName(), b.data.getUnformattedId()));
+                                res = true;
+                            } else {
+                                res = AuthManager.login(b.data);
+                            }
+                        } catch (IOException ignored) {
                         }
                         if (!res) {
                             this.loginScreen = true;
@@ -147,7 +161,11 @@ public class AccountButton extends Button {
                     .getCurrentColor().getRGB());
             this.fontRenderer.drawString(this.data.getName(), this.x + this.height + 2, this.y + this.height / 2 - this.fontRenderer.getStringHeight() / 2, this.textColor
                     .getCurrentColor().getRGB());
-            RenderUtils.drawCustomSizedResource(SkinCache.getInstance().getCachedSkin(this.data.getId()).getResourceLocation(), this.x + 2, this.y + 2, this.height - 4, this.height - 4);
+            if (data.isOffline()) {
+                RenderUtils.drawCustomSizedResource(offlineIconResource, this.x + 2, this.y + 2, this.height - 4, this.height - 4);
+            } else {
+                RenderUtils.drawCustomSizedResource(SkinCache.getInstance().getCachedSkin(this.data.getId()).getResourceLocation(), this.x + 2, this.y + 2, this.height - 4, this.height - 4);
+            }
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
         }
 
@@ -157,9 +175,3 @@ public class AccountButton extends Button {
         }
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\buttons\AccountButton.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

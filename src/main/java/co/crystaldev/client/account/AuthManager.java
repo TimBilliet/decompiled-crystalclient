@@ -2,8 +2,6 @@ package co.crystaldev.client.account;
 
 import co.crystaldev.client.Reference;
 import com.google.gson.JsonObject;
-import net.minecraft.client.Minecraft;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +10,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class AuthManager {
-    private static final Minecraft mc = Minecraft.getMinecraft();
 
     public static boolean login(AccountData data) throws IOException {
         URL url = new URL("https://api.minecraftservices.com/minecraft/profile");

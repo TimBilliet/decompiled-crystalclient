@@ -54,9 +54,3 @@ public class ButtonHoverOverlay {
         this.height = 6 + this.fontRenderer.getStringHeight(this.lines);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\ButtonHoverOverlay.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

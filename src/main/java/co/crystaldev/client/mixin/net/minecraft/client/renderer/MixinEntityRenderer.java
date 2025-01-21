@@ -121,7 +121,6 @@ public abstract class MixinEntityRenderer {
             return true;
 
         return biomeGenBase.canRain();
-//    return biomeGenBase.canSpawnLightningBolt();
     }
 
     @Redirect(method = {"renderRainSnow"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/WorldChunkManager;getTemperatureAtHeight(FI)F"))

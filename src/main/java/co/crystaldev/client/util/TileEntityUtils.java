@@ -18,9 +18,7 @@ public class TileEntityUtils {
         } else if (type != null && type != Blocks.beacon) {
             AxisAlignedBB cbb;
             try {
-//        cbb = type.getSelectedBoundingBox(tileEntityIn.getWorld(), pos, tileEntityIn.getWorld().getBlockState(pos));
                 cbb = type.getSelectedBoundingBox(tileEntityIn.getWorld(), pos);
-//        type.getCollisionBoundingBox()//mss
             } catch (Exception ex) {
                 cbb = new AxisAlignedBB(pos.add(-1, 0, -1), pos.add(1, 1, 1));
             }

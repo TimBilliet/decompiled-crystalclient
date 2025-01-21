@@ -51,7 +51,7 @@ public abstract class MixinEntityLargeExplodeFX extends EntityFX {
             this.theRenderEngine.bindTexture(EXPLOSION_TEXTURE);
             float f = (i % 4) / 4.0F;
             float f1 = f + 0.24975F;
-            float f2 = (i / 4.0F) / 4.0F;//float
+            float f2 = (i / 4.0F) / 4.0F;
             float f3 = f2 + 0.24975F;
             float f4 = 2.0F * this.field_70582_as;
             float f5 = (float) (this.prevPosX + (this.posX - this.prevPosX) * partialTicks - interpPosX);
@@ -78,7 +78,6 @@ public abstract class MixinEntityLargeExplodeFX extends EntityFX {
                     ShaderManager.getInstance().enableShader(ChromaScreenTexturedShader.class);
                 worldRendererIn.begin(7, field_181549_az);
 
-                //func_181671_a
                 worldRendererIn.pos(x, (f6 - rotationZ * f4), z).tex(f1, f3).color(r, g, b, a).lightmap(0, 240).normal(0.0F, 1.0F, 0.0F).endVertex();
                 worldRendererIn.pos(x1, (f6 + rotationZ * f4), z1).tex(f1, f2).color(r, g, b, a).lightmap(0, 240).normal(0.0F, 1.0F, 0.0F).endVertex();
                 worldRendererIn.pos(x2, (f6 + rotationZ * f4), z2).tex(f, f2).color(r, g, b, a).lightmap(0, 240).normal(0.0F, 1.0F, 0.0F).endVertex();

@@ -25,16 +25,9 @@ public abstract class MixinBlockSlab extends Block {
         return false;
     }
 
-//TODO fix this
     @Inject(method = {"shouldSideBeRendered"}, cancellable = true, at = {@At("HEAD")})
     private void disableSlabRendering$shouldSideBeRendered(IBlockAccess worldIn, BlockPos pos, EnumFacing side, CallbackInfoReturnable<Boolean> cir) {
         if (NoLag.isEnabled((NoLag.getInstance()).disableSlabRendering) && isSlab(worldIn.getBlockState(pos).getBlock()) && isSlab(worldIn.getBlockState(pos.up()).getBlock()))
             cir.setReturnValue(shouldSideBeRendered(worldIn, pos, side));
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\mixin\net\minecraft\block\MixinBlockSlab.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

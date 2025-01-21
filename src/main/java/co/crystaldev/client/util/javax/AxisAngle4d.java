@@ -313,9 +313,3 @@ public class AxisAngle4d implements Serializable, Cloneable {
         this.z = z;
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\clien\\util\javax\AxisAngle4d.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

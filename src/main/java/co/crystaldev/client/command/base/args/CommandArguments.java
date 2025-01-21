@@ -144,9 +144,3 @@ public class CommandArguments implements Iterable<Argument> {
         return String.format("CommandArguments {\n\tsize = %d,\n\telements = %s}", new Object[]{Integer.valueOf(size()), elements});
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\command\base\args\CommandArguments.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

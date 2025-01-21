@@ -170,7 +170,7 @@ public class Keystrokes extends HudModule implements IRegistrable {
             GL11.glPushMatrix();
             GL11.glTranslated(this.ks.getRenderX(), this.ks.getRenderY(), 0.0D);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.fadingColor.fade(this.keybind.isPressed());//getIsKeyPressed
+            this.fadingColor.fade(this.keybind.isPressed());
             this.textColor.fade(this.keybind.isPressed());
             if (this.ks.drawBackground) {
                 RenderUtils.drawRect(this.x, this.y, (this.x + this.width), (this.y + this.height), this.fadingColor
@@ -207,9 +207,3 @@ public class Keystrokes extends HudModule implements IRegistrable {
         }
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\feature\impl\hud\Keystrokes.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

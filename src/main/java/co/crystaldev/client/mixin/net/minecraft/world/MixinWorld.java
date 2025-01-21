@@ -30,7 +30,6 @@ import java.util.List;
 @Mixin({World.class})
 public abstract class MixinWorld {
     @Unique
-//  private final List<TileEntity> emptyTileEntityList = (List<TileEntity>)ImmutableList.of();
     private final List<TileEntity> emptyTileEntityList = new ArrayList<>();
     @Shadow
     @Final
@@ -67,16 +66,16 @@ public abstract class MixinWorld {
     @Inject(method = {"checkLightFor"}, cancellable = true, at = {@At("HEAD")})
     public void checkLightFor(EnumSkyBlock lightType, BlockPos pos, CallbackInfoReturnable<Boolean> ci) {
         if (lightType == EnumSkyBlock.SKY)
-            ci.setReturnValue(Boolean.valueOf(false));
+            ci.setReturnValue(Boolean.FALSE);
     }
 
     @Inject(method = {"getRainStrength"}, at = {@At("HEAD")}, cancellable = true)
     public void World$getRainStrength(float delta, CallbackInfoReturnable<Float> ci) {
         if (WeatherChanger.getInstance() != null && (WeatherChanger.getInstance()).enabled)
             if (WeatherChanger.getInstance().getState() == WeatherChanger.State.CLEAR) {
-                ci.setReturnValue(Float.valueOf(0.0F));
+                ci.setReturnValue(0.0F);
             } else {
-                ci.setReturnValue(Float.valueOf((float) (WeatherChanger.getInstance()).weatherModifier));
+                ci.setReturnValue((float) (WeatherChanger.getInstance()).weatherModifier);
             }
     }
 
@@ -84,22 +83,22 @@ public abstract class MixinWorld {
     public void World$getThunderStrength(float delta, CallbackInfoReturnable<Float> ci) {
         if (WeatherChanger.getInstance() != null && (WeatherChanger.getInstance()).enabled)
             if (WeatherChanger.getInstance().getState() == WeatherChanger.State.STORMING) {
-                ci.setReturnValue(Float.valueOf((float) (WeatherChanger.getInstance()).weatherModifier));
+                ci.setReturnValue((float) (WeatherChanger.getInstance()).weatherModifier);
             } else {
-                ci.setReturnValue(Float.valueOf(0.0F));
+                ci.setReturnValue(0.0F);
             }
     }
 
     @Inject(method = {"checkLight"}, cancellable = true, at = {@At("HEAD")})
     public void checkLight(CallbackInfoReturnable<Boolean> ci) {
         if ((Fullbright.getInstance()).enabled)
-            ci.setReturnValue(Boolean.valueOf(true));
+            ci.setReturnValue(Boolean.TRUE);
     }
 
     @Inject(method = {"getRawLight"}, cancellable = true, at = {@At("HEAD")})
     public void getRawLight(CallbackInfoReturnable<Integer> ci) {
         if ((Fullbright.getInstance()).enabled)
-            ci.setReturnValue(Integer.valueOf(15));
+            ci.setReturnValue(15);
     }
 
     @Redirect(method = {"updateEntities"}, at = @At(value = "INVOKE", target = "Ljava/util/List;iterator()Ljava/util/Iterator;"))
@@ -122,6 +121,9 @@ public abstract class MixinWorld {
         return true;
     }
 
+    /**
+     * @author
+     */
     @Overwrite(aliases = {"markTileEntityForRemoval"})
     public void markTileEntityForRemoval(TileEntity tileEntity) {
         TileEntityExt te = (TileEntityExt) tileEntity;
@@ -136,9 +138,3 @@ public abstract class MixinWorld {
     @Shadow
     public abstract boolean tickUpdates(boolean paramBoolean);
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\mixin\net\minecraft\world\MixinWorld.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

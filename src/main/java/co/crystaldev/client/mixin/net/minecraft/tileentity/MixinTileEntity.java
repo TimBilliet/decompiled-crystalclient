@@ -33,8 +33,7 @@ public abstract class MixinTileEntity implements TileEntityExt {
      */
     @Overwrite(aliases = {"isInvalid"})
     public boolean isInvalid() {
-//    return (this.tileEntityInvalid || super.crystal$shouldBeRemoved());
-        return (this.tileEntityInvalid);
+    return (this.tileEntityInvalid || crystal$shouldBeRemoved());
     }
 
     public boolean crystal$shouldBeRemoved() {

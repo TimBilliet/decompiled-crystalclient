@@ -81,7 +81,7 @@ public abstract class MixinItemRenderer {
         if (this.itemToRender != null) {
             this.isFishingRod = (this.itemToRender.getItem() instanceof net.minecraft.item.ItemFishingRod && (OldAnimations.getInstance()).enabled && (OldAnimations.getInstance()).revertFishingRod);
             if (this.itemToRender.getItem() instanceof net.minecraft.item.ItemMap) {
-                renderItemMap(abstractclientplayer, f2, f, f1);//func_178097_a
+                renderItemMap(abstractclientplayer, f2, f, f1);
             } else if (abstractclientplayer.getItemInUseCount() > 0) {
                 EnumAction enumaction = this.itemToRender.getItemUseAction();
                 float f1Old = f1;

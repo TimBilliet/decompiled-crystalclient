@@ -126,7 +126,6 @@ public class SchematicHandler {
         connection.setReadTimeout(readTimeout);
         connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.96 Safari/537.36");
         InputStream input = connection.getInputStream();
-//    FileUtils.copyInputStreamToFile(input, destination);
         org.apache.commons.io.FileUtils.copyInputStreamToFile(input, destination);
     }
 

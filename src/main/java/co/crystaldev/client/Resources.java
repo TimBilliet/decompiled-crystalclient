@@ -76,4 +76,7 @@ public class Resources {
     public static final int PANORAMA_RESOLUTION = 256;
 
     public static final ResourceLocation[] PANORAMA_IMAGES = new ResourceLocation[]{new ResourceLocation("crystalclient", "gui/panorama/panorama_0.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_1.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_2.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_3.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_4.png"), new ResourceLocation("crystalclient", "gui/panorama/panorama_5.png")};
+
+    public static final ResourceLocation OFFLINE = new ResourceLocation("crystalclient", "gui/textures/offline.png");
+
 }

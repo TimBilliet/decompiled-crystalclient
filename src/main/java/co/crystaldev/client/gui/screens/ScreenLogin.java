@@ -90,10 +90,12 @@ public class ScreenLogin extends ScreenPanorama {
         y += h + 8;
         addButton(this.microsoftButton = new MenuResourceButton(-1, x, y, w, h, "Sign-in with Microsoft", Resources.MICROSOFT, h - 6));
         offlineAccountButton.onClick = (() -> {
-            if (!offlineName.getText().isEmpty()) {
-                AltManager.getInstance().addAccount(new AccountData(null,offlineName.getText(), UUID.nameUUIDFromBytes(("Offline:" + offlineName.getText()).getBytes()).toString()));
-            }
-            shouldExit = true;
+            new Thread(() ->{
+                if (!offlineName.getText().isEmpty()) {
+                    AltManager.getInstance().addAccount(new AccountData(null,offlineName.getText(), UUID.nameUUIDFromBytes(("Offline:" + offlineName.getText()).getBytes()).toString()));
+                    shouldExit = true;
+                }
+            }) .start();
         });
         this.microsoftButton.onClick = (() -> {
             this.microsoftButton.displayText = "Sign-in window opened";
@@ -166,7 +168,7 @@ public class ScreenLogin extends ScreenPanorama {
 
     public void mouseClicked(int mouseX, int mouseY, int mouseButton) {
         super.mouseClicked(mouseX, mouseY, mouseButton);
-        if (this.returnButton != null && AltManager.isLoggedIn()) {
+        if (this.returnButton != null) {
             float scale = getScaledScreen();
             mouseX = (int) (mouseX / scale);
             mouseY = (int) (mouseY / scale);
@@ -200,12 +202,12 @@ public class ScreenLogin extends ScreenPanorama {
                 throw new IllegalStateException("query=" + query);
             MicrosoftAuthManager.login(query.replace("code=", ""));
             if (AltManager.isLoggedIn()) {
-                microsoftButton.setEnabled(true);
-                microsoftButton.displayText = "Sign-in with Microsoft";
                 shouldExit = true;
             }
         } catch (Exception ex) {
             Reference.LOGGER.error("Login failed!", ex);
         }
+        microsoftButton.setEnabled(true);
+        microsoftButton.displayText = "Sign-in with Microsoft";
     }
 }

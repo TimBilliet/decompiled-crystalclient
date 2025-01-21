@@ -1,6 +1,7 @@
 # Working decompiled forge version of crystalclient with extra features
 
 ## Extra added features
+- Ingame account switcher and ability to use offline accounts
 - Autofish for SaicoPvP
 - Float finder
 - Clear menu/inventory/container backgrounds

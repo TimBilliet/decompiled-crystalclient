@@ -111,11 +111,11 @@ public class AccountButton extends Button {
                     AccountInfoButton b = (AccountInfoButton) button;
                     new Thread(() -> {
                         if (b.removeAccountButton.isHovered(mouseX, mouseY)) {
+                            buttons.clear();
                             AltManager.getInstance().removeAccount(b.data);
                             AltManager.getInstance().saveAltManager();
                             width = 0;
                             expanded = false;
-                            buttons.clear();
                             expandedSize = 20;
                         } else {
                             boolean res = false;

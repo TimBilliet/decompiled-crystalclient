@@ -38,6 +38,8 @@ public class ScreenLogin extends ScreenPanorama {
 
     private HttpServer httpServer;
 
+    public static String feedback = "";
+
     private static final String pageContent = "<!DOCTYPE html>\n" +
             "<html lang=\"en\">\n" +
             "<head>\n" +
@@ -80,6 +82,7 @@ public class ScreenLogin extends ScreenPanorama {
         int h = 18;
         int x = this.pane.x + this.pane.width / 2 - w / 2;
         int y = this.pane.y + (int) (this.pane.width / 2.0F * 0.5F) + 40;
+        feedback = "";
         this.returnButton = new ResourceButton(-1, x, this.pane.y + this.pane.width / 2 - w / 2, 18, 18, Resources.CHEVRON_LEFT);
         addButton(this.offlineName = new TextInputField(-1, x, y, w, h, "Username"));
         y += h + 4;
@@ -92,6 +95,7 @@ public class ScreenLogin extends ScreenPanorama {
         offlineAccountButton.onClick = (() -> {
             new Thread(() ->{
                 if (!offlineName.getText().isEmpty()) {
+                    feedback = "Logging in...";
                     AltManager.getInstance().addAccount(new AccountData(null,offlineName.getText(), UUID.nameUUIDFromBytes(("Offline:" + offlineName.getText()).getBytes()).toString()));
                     shouldExit = true;
                 }
@@ -99,10 +103,12 @@ public class ScreenLogin extends ScreenPanorama {
         });
         this.microsoftButton.onClick = (() -> {
             this.microsoftButton.displayText = "Sign-in window opened";
+           feedback = "Logging in;";
             this.microsoftButton.setEnabled(false);
              this.thread =  new Thread(() -> {
                 try {
                     httpServer = HttpServer.create(new InetSocketAddress(59125), 0);
+                    feedback = "HTTP server started...";
                     httpServer.createContext("/", exchange -> {
                         try {
                             exchange.getResponseHeaders().add("Location", "http://localhost:59125/end");
@@ -156,6 +162,7 @@ public class ScreenLogin extends ScreenPanorama {
         RenderUtils.drawCustomSizedResource(Resources.LOGO, (this.pane.x + this.pane.width / 2.0F - logoSize / 2.0F), (this.pane.y + 15), logoSize, logoSize);
         Fonts.NUNITO_REGULAR_20.drawCenteredString("Login to Minecraft", this.pane.x + this.pane.width / 2.0F, (this.pane.y + 25 + logoSize), Color.WHITE
                 .getRGB());
+        Fonts.NUNITO_REGULAR_12.drawString(feedback, this.pane.x + this.pane.width - 5 - Fonts.NUNITO_REGULAR_12.getStringWidth(feedback), this.pane.y + 5, this.opts.neutralTextColor.getRGB());
         if (this.thread != null) {
             this.thread.interrupt();
             this.thread = null;
@@ -193,6 +200,7 @@ public class ScreenLogin extends ScreenPanorama {
     }
 
     private void authenticate(String query) {
+        feedback = "Starting authentication...";
         try {
             if (query == null)
                 throw new NullPointerException("Query is null");
@@ -205,6 +213,7 @@ public class ScreenLogin extends ScreenPanorama {
                 shouldExit = true;
             }
         } catch (Exception ex) {
+           feedback = "Error: " + ex.getMessage() + "!";
             Reference.LOGGER.error("Login failed!", ex);
         }
         microsoftButton.setEnabled(true);

@@ -21,8 +21,8 @@ public class Request {
         this.conn = (HttpURLConnection) (new URL(url)).openConnection();
         this.conn.setDoOutput(true);
         this.conn.setDoInput(true);
-        this.conn.setConnectTimeout(5000);
-        this.conn.setReadTimeout(5000);
+        this.conn.setConnectTimeout(6000);
+        this.conn.setReadTimeout(6000);
     }
 
     public void header(String key, String value) {

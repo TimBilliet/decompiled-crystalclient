@@ -1,6 +1,7 @@
 package co.crystaldev.client.account;
 
 import co.crystaldev.client.Reference;
+import co.crystaldev.client.gui.screens.ScreenLogin;
 import co.crystaldev.client.util.type.Tuple;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
@@ -16,11 +17,17 @@ import java.util.HashMap;
 public class MicrosoftAuthManager {
 
     public static void login(String authCode) throws IOException, FailedLoginException, AuthenticationException {
+        ScreenLogin.feedback = "Acquiring access token...";
         String liveAccessToken = acquireAccessToken(authCode);
+        ScreenLogin.feedback = "Acquiring xbl token...";
         String xblToken = acquireXBLToken(liveAccessToken);
+        ScreenLogin.feedback = "Acquiring xsts token...";
         Tuple<String, String> xsts = acquireXstsToken(xblToken);
+        ScreenLogin.feedback = "Acquiring Minecraft token...";
         String minecraftAccessToken = acquireMinecraftToken(xsts.getItem2(), xsts.getItem1());
+        ScreenLogin.feedback = "Checking for game ownership...";
         checkProfile(minecraftAccessToken);
+        ScreenLogin.feedback = "Login complete!";
     }
 
     private static String acquireAccessToken(String authCode) throws IOException {

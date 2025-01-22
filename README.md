@@ -2,10 +2,11 @@
 
 ## Extra added features
 - Ingame account switcher and ability to use offline accounts
-- Autofish for SaicoPvP
+- Auto fish for SaicoPvP
 - Float finder
 - Clear menu/inventory/container backgrounds
 - Keep crosshair in spectator mode
+- Auto sell for collection chests 
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"

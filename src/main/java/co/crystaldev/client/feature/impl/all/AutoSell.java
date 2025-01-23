@@ -26,6 +26,7 @@ public class AutoSell extends Module implements IRegistrable {
     private boolean clickedSellGUI = false;
     private boolean handledSignGUI = false;
     private int quantity = 0;
+    private int colOpenForXTicks = 0;
 
     public AutoSell() {
         this.enabled = false;
@@ -35,18 +36,22 @@ public class AutoSell extends Module implements IRegistrable {
         if (mc.currentScreen instanceof GuiContainer) {
             GuiContainer gui = ((GuiContainer) mc.currentScreen);
             String inv = getInventoryName(gui);
-            if (inv.contains("Collection Chest") && !clickedCollectionChest) {
-                clickedCollectionChest = true;
-                ItemStack itemStack = ((GuiContainer) mc.currentScreen).inventorySlots.getSlot(0).getStack();
-                if (itemStack == null)
-                    return;
-                String quantityInfo = itemStack.getTagCompound().getCompoundTag("display").getTagList("Lore", 8).get(4).toString();
-                try {
-                    quantity = Integer.parseInt(quantityInfo.substring(22, quantityInfo.length() - 2));
-                } catch (Exception exception) {
-                    Reference.LOGGER.error("Failed to parse head quantity");
+            if (inv.contains("Collection Chest")) {
+                colOpenForXTicks++;
+                if(!clickedCollectionChest && colOpenForXTicks > 1){
+                    colOpenForXTicks = 0;
+                    clickedCollectionChest = true;
+                    ItemStack itemStack = ((GuiContainer) mc.currentScreen).inventorySlots.getSlot(0).getStack();
+                    if (itemStack == null)
+                        return;
+                    String quantityInfo = itemStack.getTagCompound().getCompoundTag("display").getTagList("Lore", 8).get(4).toString();
+                    try {
+                        quantity = Integer.parseInt(quantityInfo.substring(22, quantityInfo.length() - 2));
+                    } catch (Exception exception) {
+                        Reference.LOGGER.error("Failed to parse head quantity");
+                    }
+                    this.mc.playerController.windowClick(this.mc.thePlayer.openContainer.windowId, 0, 1, 0, this.mc.thePlayer);
                 }
-                this.mc.playerController.windowClick(this.mc.thePlayer.openContainer.windowId, 0, 1, 0, this.mc.thePlayer);
             } else if (inv.contains("Sell") && !clickedSellGUI) {
                 clickedSellGUI = true;
                 this.mc.playerController.windowClick(this.mc.thePlayer.openContainer.windowId, 4, 0, 0, this.mc.thePlayer);
@@ -69,6 +74,7 @@ public class AutoSell extends Module implements IRegistrable {
             clickedCollectionChest = false;
             clickedSellGUI = false;
             handledSignGUI = false;
+            colOpenForXTicks = 0;
         }
     }
 

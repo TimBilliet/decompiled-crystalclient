@@ -106,14 +106,18 @@ public class AltManager {
         if (file.exists())
             try {
                 FileReader fr = new FileReader(file);
-                JsonObject obj = (JsonObject) Reference.GSON.fromJson(fr, JsonObject.class);
+                JsonObject obj = Reference.GSON.fromJson(fr, JsonObject.class);
                 fr.close();
                 if (obj.has("accounts")) {
                     JsonObject accounts = obj.get("accounts").getAsJsonObject();
-                    for (Map.Entry<String, JsonElement> entry : (Iterable<Map.Entry<String, JsonElement>>) accounts.entrySet()) {
+                    for (Map.Entry<String, JsonElement> entry : accounts.entrySet()) {
                         String uuid = entry.getKey();
                         JsonObject account = accounts.get(uuid).getAsJsonObject();
-                        AltManager.accounts.add(new AccountData(account.get("access_token").getAsString(), account.get("name").getAsString(), uuid));
+                        if (account.get("access_token") == null) {
+                            AltManager.accounts.add(new AccountData(null,account.get("name").getAsString(), uuid));
+                        } else {
+                            AltManager.accounts.add(new AccountData(account.get("access_token").getAsString(), account.get("name").getAsString(), uuid));
+                        }
                     }
                 }
                 if (obj.has("client_token"))
@@ -137,8 +141,14 @@ public class AltManager {
                         }
                     }
                 }
-                if (isLoggedIn() && loginCheck)
-                    AuthManager.login(getCurrentAccount());
+                if (isLoggedIn() && loginCheck) {
+                    if (currentAccount.isOffline()) {
+                        setOfflineSession(currentAccount);
+                    } else {
+                        AuthManager.login(currentAccount);
+                    }
+                }
+
             } catch (RuntimeException | IOException ex) {
                 Reference.LOGGER.error("Exception thrown while parsing alt manager file", ex);
             }
@@ -150,16 +160,16 @@ public class AltManager {
             JsonObject acc = new JsonObject();
             acc.addProperty("access_token", data.getAccessToken());
             acc.addProperty("name", data.getName());
-            accounts.add(data.getUnformattedId(), (JsonElement) acc);
+            accounts.add(data.getUnformattedId(), acc);
         }
-        obj.add("accounts", (JsonElement) accounts);
+        obj.add("accounts", accounts);
         obj.addProperty("client_token", clientToken.toString());
         if (currentAccount != null)
             obj.addProperty("selected_account", currentAccount.getUnformattedId());
         try {
             String json = null;
             while (json == null || !FileUtils.isValidJson(json))
-                json = Reference.GSON.toJson((JsonElement) obj);
+                json = Reference.GSON.toJson(obj);
             FileWriter fileWriter = new FileWriter(getAltManagerFile());
             fileWriter.write(json);
             fileWriter.close();
@@ -170,7 +180,11 @@ public class AltManager {
 
     public void setAccount(AccountData data) {
         currentAccount = data;
-        ((MixinMinecraft) this.mc).setSession(new Session(data.getName(), data.getUnformattedId(), data.getAccessToken(), "mojang"));
+        if (data.isOffline()) {
+            setOfflineSession(data);
+        } else {
+            ((MixinMinecraft) this.mc).setSession(new Session(data.getName(), data.getUnformattedId(), data.getAccessToken(), "mojang"));
+        }
         (new SessionUpdateEvent(this.mc.getSession())).call();
     }
 
@@ -181,6 +195,10 @@ public class AltManager {
                 break;
             }
         }
+    }
+
+    public void setOfflineSession(AccountData data){
+        ((MixinMinecraft) this.mc).setSession(new Session(data.getName(), data.getUnformattedId(), "X", "legacy"));
     }
 
     public AccountData getAccountData(UUID uuid) {

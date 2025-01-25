@@ -12,13 +12,13 @@ import co.crystaldev.client.event.impl.player.InputEvent;
 import co.crystaldev.client.event.impl.render.RenderWorldEvent;
 import co.crystaldev.client.event.impl.tick.ClientTickEvent;
 import co.crystaldev.client.event.impl.world.ExplosionEvent;
+import co.crystaldev.client.feature.annotations.HoverOverlay;
 import co.crystaldev.client.feature.annotations.properties.*;
 import co.crystaldev.client.feature.base.Category;
 import co.crystaldev.client.feature.base.Dropdown;
 import co.crystaldev.client.feature.base.Module;
 import co.crystaldev.client.gui.GuiOptions;
 import co.crystaldev.client.handler.NotificationHandler;
-import co.crystaldev.client.network.Packet;
 import co.crystaldev.client.network.socket.client.group.PacketPatchcrumbUpdate;
 import co.crystaldev.client.shader.ShaderManager;
 import co.crystaldev.client.shader.chroma.ChromaScreenShader;
@@ -34,18 +34,16 @@ import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.network.play.server.S22PacketMultiBlockChange;
-import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.Vec3i;
-import net.minecraft.world.World;
+import net.minecraft.util.*;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.lwjgl.opengl.GL11;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import static co.crystaldev.client.util.objects.crumbs.Patchcrumb.Direction.EAST_WEST;
+import static co.crystaldev.client.util.objects.crumbs.Patchcrumb.Direction.NORTH_SOUTH;
 
 @ModuleInfo(name = "Patchcrumbs", description = "Displays an indicator to help with patching", category = Category.FACTIONS)
 public class Patchcrumbs extends Module implements IRegistrable {
@@ -76,6 +74,10 @@ public class Patchcrumbs extends Module implements IRegistrable {
 
     @Toggle(label = "Use Explosions")
     public boolean useExplosions = false;
+
+    @HoverOverlay("Ignores all other detection methods")
+    @Toggle(label = "Use Float Finder")
+    public boolean useFloatFinder = false;
 
     @PageBreak(label = "Crumb Configuration")
     @Slider(label = "Timeout", placeholder = "{value}s", minimum = 1.0D, maximum = 30.0D, standard = 10.0D, integers = true)
@@ -153,12 +155,11 @@ public class Patchcrumbs extends Module implements IRegistrable {
     }
 
     private void onPacketReceive(PacketReceivedEvent.Post event) {
-        if (this.useSandStacks && event.packet instanceof S22PacketMultiBlockChange) {
+        if (!useFloatFinder && this.useSandStacks && event.packet instanceof S22PacketMultiBlockChange) {
             S22PacketMultiBlockChange packet = (S22PacketMultiBlockChange) event.packet;
             for (S22PacketMultiBlockChange.BlockUpdateData data : packet.getChangedBlocks()) {
                 if (data.getBlockState() != null && data.getBlockState().getBlock() instanceof net.minecraft.block.BlockFalling)
                     for (CrumbEntity entity : this.entities) {
-
                         if (entity == null || entity.getPos() == null || data.getPos() == null)
                             continue;
                         if (Math.sqrt(entity.getPos().distanceSq(data.getPos())) <= 4.0D)
@@ -168,14 +169,29 @@ public class Patchcrumbs extends Module implements IRegistrable {
         }
     }
 
+    public void setCrumbsFromFloatFinder(int x, int y, int z, String direction) {
+        Patchcrumb.Direction dir = Patchcrumb.Direction.fromString(direction);
+        double newX = x;
+        double newZ = z;
+        if (dir == NORTH_SOUTH) {
+            newZ = mc.thePlayer.posZ;
+        } else if (dir == EAST_WEST) {
+            newX = mc.thePlayer.posX;
+        }
+        BlockPos pos = new BlockPos(newX, y, newZ);
+        currentCrumb = new Patchcrumb(pos, new AxisAlignedBB(pos, pos.add(1, 1, 1)), dir, Patchcrumb.Source.FLOATFINDER);
+        entities.clear();
+        velocityEntities.clear();
+    }
+
     private void onRenderWorld(RenderWorldEvent.Post event) {
         if (this.currentCrumb == null)
             return;
-        if (this.currentCrumb.expired()) {
+        if (this.currentCrumb.expired() && !useFloatFinder) {
             this.currentCrumb = null;
             return;
         }
-        if (this.tracers)
+        if (this.tracers && !useFloatFinder)
             RenderUtils.drawTracer(Vec3d.getNormalizedFromBlockPos(this.currentCrumb.getPos()), this.tracerColor, this.mc.thePlayer, event.partialTicks);
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
@@ -186,7 +202,7 @@ public class Patchcrumbs extends Module implements IRegistrable {
         GL11.glLineWidth(this.lineWidth);
         if (this.boundaryColor.isChroma())
             ShaderManager.getInstance().enableShader(ChromaScreenShader.class);
-        RenderUtils.setGlColor((Color) this.boundaryColor);
+        RenderUtils.setGlColor(this.boundaryColor);
         AxisAlignedBB northSouthBB = RenderUtils.normalize(this.currentCrumb.getBoundingBox()).expand(0.05D, 0.0D, 480.05D);
         AxisAlignedBB eastWestBB = RenderUtils.normalize(this.currentCrumb.getBoundingBox()).expand(480.05D, 0.0D, 0.05D);
         switch (this.currentCrumb.getDirection()) {
@@ -203,7 +219,7 @@ public class Patchcrumbs extends Module implements IRegistrable {
         }
         if (this.boxColor.isChroma())
             ShaderManager.getInstance().enableShader(ChromaScreenShader.class);
-        RenderUtils.setGlColor((Color) this.boxColor);
+        RenderUtils.setGlColor(this.boxColor);
         AxisAlignedBB tntBox = RenderUtils.normalize(this.currentCrumb.getBoundingBox()).expand(0.05D, 0.0D, 0.05D);
         RenderGlobal.drawSelectionBoundingBox(tntBox);
         RenderUtils.drawFilledBoundingBox(tntBox);
@@ -215,13 +231,15 @@ public class Patchcrumbs extends Module implements IRegistrable {
         GlStateManager.enableDepth();
         GlStateManager.resetColor();
         GlStateManager.popMatrix();
-        if (this.showText)
+        if (this.showText && !useFloatFinder)
             renderText();
     }
 
     private void onClientTick(ClientTickEvent.Post event) {
-        if (this.mc.theWorld == null)
+        if (this.mc.theWorld == null || useFloatFinder)
             return;
+        if (currentCrumb != null && currentCrumb.getSource() == Patchcrumb.Source.FLOATFINDER)
+            currentCrumb = null;
         Iterator<CrumbEntity> iterator = this.entities.iterator();
         while (iterator.hasNext()) {
             CrumbEntity entity = iterator.next();
@@ -238,7 +256,7 @@ public class Patchcrumbs extends Module implements IRegistrable {
                 if (flag && (isSandUnder(entity) || entity.isBypassSandCheck()))
                     if (entity.ticksSinceDeath() > 5L) {
                         if (!entity.isDirty()) {
-                            makeCrumb(entity.getX(), entity.getY(), entity.getZ(), (Patchcrumb.Direction) null, Patchcrumb.Source.ENTITY);
+                            makeCrumb(entity.getX(), entity.getY(), entity.getZ(), null, Patchcrumb.Source.ENTITY);
                             this.entities.forEach(CrumbEntity::setDead);
                             this.velocityEntities.clear();
                             this.entities.clear();
@@ -372,9 +390,9 @@ public class Patchcrumbs extends Module implements IRegistrable {
                 flag = false;
         }
         if (direction == null)
-            switch ((String) this.direction.getCurrentSelection()) {
+            switch (this.direction.getCurrentSelection()) {
                 case "N/S":
-                    direction = Patchcrumb.Direction.NORTH_SOUTH;
+                    direction = NORTH_SOUTH;
                     break;
                 case "E/W":
                     direction = Patchcrumb.Direction.EAST_WEST;
@@ -384,7 +402,7 @@ public class Patchcrumbs extends Module implements IRegistrable {
                         boolean northSouth = ((isSolid(pos.north()) || isSolid(pos.south())) && (isWater(pos.north(2)) || isWater(pos.south(2))) && (isSolid(pos.north(3)) || isSolid(pos.south(3))));
                         boolean eastWest = ((isSolid(pos.east()) || isSolid(pos.west())) && (isWater(pos.east(2)) || isWater(pos.west(2))) && (isSolid(pos.east(3)) || isSolid(pos.west(3))));
                         if (northSouth) {
-                            direction = Patchcrumb.Direction.NORTH_SOUTH;
+                            direction = NORTH_SOUTH;
                         } else if (eastWest) {
                             direction = Patchcrumb.Direction.EAST_WEST;
                         }
@@ -401,7 +419,7 @@ public class Patchcrumbs extends Module implements IRegistrable {
             this.currentCrumb = crumb;
             if (source != Patchcrumb.Source.GROUP) {
                 PacketPatchcrumbUpdate p = new PacketPatchcrumbUpdate(pos.getX(), MathHelper.floor_double(y), pos.getZ(), direction);
-                Client.sendPacket((Packet) p);
+                Client.sendPacket(p);
             }
         }
     }
@@ -431,7 +449,7 @@ public class Patchcrumbs extends Module implements IRegistrable {
         if (this.mc.theWorld == null)
             return false;
         Block block = this.mc.theWorld.getBlockState(pos).getBlock();
-        return (!(block instanceof net.minecraft.block.BlockLiquid) && block.getMaterial() != Material.air && !block.isReplaceable((World) this.mc.theWorld, pos));
+        return (!(block instanceof net.minecraft.block.BlockLiquid) && block.getMaterial() != Material.air && !block.isReplaceable(this.mc.theWorld, pos));
     }
 
     private boolean isWater(BlockPos pos) {

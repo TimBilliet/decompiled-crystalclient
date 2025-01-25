@@ -54,6 +54,19 @@ public class RenderOverlayEvent extends Event {
             this.screen = screen;
         }
     }
+
+    public static class Title extends RenderOverlayEvent {
+        private final String title;
+        private final String subTitle;
+        public String getSubTitle(){
+            return subTitle;
+        }
+        public Title(String title, String subTitle, float partialTicks) {
+            super(partialTicks);
+            this.title= title;
+            this.subTitle = subTitle;
+        }
+    }
 }
 
 

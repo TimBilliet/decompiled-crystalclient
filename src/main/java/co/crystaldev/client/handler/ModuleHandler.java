@@ -170,6 +170,9 @@ public class ModuleHandler implements IRegistrable {
         registerModule(WorldEditCUI.class);
         registerModule(WorldName.class);
         registerModule(Zoom.class);
+        registerModule(AutoFish.class);
+        registerModule(FloatFinder.class);
+        registerModule(AutoSell.class);
         modules.sort(Comparator.comparing(m -> m.priority));
         for (Module module : modules) {
             for (Field field : module.getClass().getFields()) {

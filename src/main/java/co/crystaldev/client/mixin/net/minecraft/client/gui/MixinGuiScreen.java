@@ -1,12 +1,15 @@
 package co.crystaldev.client.mixin.net.minecraft.client.gui;
 
 import co.crystaldev.client.Client;
+import co.crystaldev.client.feature.settings.ClientOptions;
 import co.crystaldev.client.util.CallbackClickEvent;
-import co.crystaldev.client.util.RenderUtils;
 import co.crystaldev.client.util.objects.resources.ImageSelection;
 import co.crystaldev.client.util.task.ScreenshotTask;
-import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.inventory.GuiInventory;
 import net.minecraft.event.ClickEvent;
 import net.minecraft.util.IChatComponent;
 import org.lwjgl.input.Keyboard;
@@ -21,12 +24,14 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.awt.*;
 import java.awt.datatransfer.Transferable;
-import java.util.List;
 
 @Mixin({GuiScreen.class})
 public abstract class MixinGuiScreen {
     @Shadow
     public int height;
+
+    @Shadow
+    public Minecraft mc;
 
     @Redirect(method = {"handleKeyboardInput"}, at = @At(value = "INVOKE", target = "Lorg/lwjgl/input/Keyboard;getEventKeyState()Z", remap = false))
     private boolean checkCharacter() {
@@ -68,5 +73,13 @@ public abstract class MixinGuiScreen {
             event.getConsumer().accept(component);
             ci.setReturnValue(Boolean.TRUE);
         }
+    }
+
+    @Inject(method = {"drawWorldBackground"}, at = {@At("HEAD")}, cancellable = true)
+    public void drawWorldBackground(int tint, CallbackInfo ci) {
+        if (Minecraft.getMinecraft().theWorld != null && (ClientOptions.getInstance().clearMenuBackground && (mc.currentScreen instanceof GuiIngameMenu))
+        || (ClientOptions.getInstance().clearInventoryBackground && mc.currentScreen instanceof GuiInventory)
+        || ClientOptions.getInstance().clearContainerBackground && mc.currentScreen instanceof GuiContainer && !(mc.currentScreen instanceof GuiInventory))
+            ci.cancel();
     }
 }

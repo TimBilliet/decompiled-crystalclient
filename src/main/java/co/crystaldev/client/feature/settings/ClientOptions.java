@@ -67,6 +67,16 @@ public class ClientOptions extends Module implements IRegistrable {
     @Slider(label = "Blur Radius", minimum = 1.0D, maximum = 15.0D, standard = 8.0D, integers = true)
     public int radius = 8;
 
+    @PageBreak(label = "Remove MC Gui Tint")
+    @Toggle(label = "Inventory Background")
+    public boolean clearInventoryBackground = true;
+
+    @Toggle(label = "Container Background")
+    public boolean clearContainerBackground = true;
+
+    @Toggle(label = "Menu Background")
+    public boolean clearMenuBackground = true;
+
     @PageBreak(label = "Menu Scroll")
     @Toggle(label = "Invert Scroll Direction")
     public boolean invertScrollDirection = false;

@@ -1,6 +1,6 @@
 # Working original forge version of crystalclient
 
-This branch has some minor tweaks and fixed but no added features from the original
+This branch has some minor tweaks and fixed but no added features
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"

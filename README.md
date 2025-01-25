@@ -1,7 +1,6 @@
-# Working decompiled forge version of crystalclient
+# Working forge version of crystalclient
 
-## Things that currently don't work (yet)
-- alt manager (never worked in the original one anyway)
+Has some minor fixes but is almost unchanged from the original forge version.
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"

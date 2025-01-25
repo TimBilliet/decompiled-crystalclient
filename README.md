@@ -1,12 +1,6 @@
-# Working decompiled forge version of crystalclient with extra features
+# Working original forge version of crystalclient
 
-## Extra added features
-- Ingame account switcher and ability to use offline accounts
-- Auto fish for SaicoPvP
-- Float finder
-- Clear menu/inventory/container backgrounds
-- Keep crosshair in spectator mode
-- Auto sell for collection chests 
+This branch has some minor tweaks and fixed but no added features from the original
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"

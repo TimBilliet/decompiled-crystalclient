@@ -204,7 +204,7 @@ public class ScreenPlayerTabOverlay extends GuiPlayerTabOverlay {
                     if (l5 - k5 > 5)
                         drawScoreboardValues(scoreObjectiveIn, k2, gameprofile.getName(), k5, l5, networkplayerinfo1);
                 }
-                j2 -= isOnCrystal ? 11 : 0;
+                j2 -= (isOnCrystal|| isOnOrbit) ? 11 : 0;
                 drawPing(i1, j2 - (flag ? 9 : 0), k2, networkplayerinfo1);
             }
         }

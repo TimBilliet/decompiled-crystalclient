@@ -77,6 +77,9 @@ public class FloatFinder extends Module implements IRegistrable {
     private BlockPos previousFloat = new BlockPos(0, 0, 0);
     private static FloatFinder INSTANCE;
     public String shootDirection;
+    private boolean incorrectBarrelDirSent = false;
+    private boolean incorrectVerticalSent = false;
+    private boolean incorrectHorizontalSent = false;
 
     public FloatFinder() {
         this.enabled = false;
@@ -157,30 +160,48 @@ public class FloatFinder extends Module implements IRegistrable {
         if (barrelDirection == null) {
             vertical = null;
             horizontal = null;
+            if (GroupOptions.getInstance().sharedFloatPos && !incorrectBarrelDirSent) {
+                Client.sendPacket(new PacketGroupChat("ZQX_D"));
+                incorrectBarrelDirSent = true;
+            }
             if (calledFromKeybind)
                 Client.sendMessage("&fInvalid barrel block or state", true);
+            previousFloat = null;
             return;
         }
         barrelNextBlockPos = determinePosNextToBarrel();
         vertical = verticalScan();
         if (vertical == null) {
+            if (GroupOptions.getInstance().sharedFloatPos && !incorrectVerticalSent) {
+                Client.sendPacket(new PacketGroupChat("ZQX_V"));
+                incorrectVerticalSent = true;
+            }
             if (calledFromKeybind)
                 Client.sendMessage("&fCould not find a top block", true);
+            previousFloat = null;
             return;
         }
         horizontal = horizontalScan();
         if (horizontal == null) {
+            if (GroupOptions.getInstance().sharedFloatPos && !incorrectHorizontalSent) {
+                Client.sendPacket(new PacketGroupChat("ZQX_H"));
+                incorrectHorizontalSent = true;
+            }
             if (calledFromKeybind)
                 Client.sendMessage("&fCould not find a side block", true);
+            previousFloat = null;
             return;
         }
-        if (calledFromKeybind || !previousFloat.equals(horizontal)) {
+        if (calledFromKeybind || previousFloat == null || !previousFloat.equals(horizontal)) {
             Client.sendMessage(String.format("&fFloat position set to &bx%s y%s z%s.", horizontal.getX(), horizontal.getY(), horizontal.getZ()), true);
-            if(GroupOptions.getInstance().sharedFloatPos){
-                Client.sendPacket(new PacketGroupChat(String.format("ZQX_%s_%s_%s_%s_%s_%s_%s", horizontal.getX(),horizontal.getY(),horizontal.getZ(), barrelBlockPos.getX(), barrelBlockPos.getY(), barrelBlockPos.getZ(), shootDirection)));
+            if (GroupOptions.getInstance().sharedFloatPos) {
+                Client.sendPacket(new PacketGroupChat(String.format("ZQX_%s_%s_%s_%s_%s_%s_%s", horizontal.getX(), horizontal.getY(), horizontal.getZ(), barrelBlockPos.getX(), barrelBlockPos.getY(), barrelBlockPos.getZ(), shootDirection)));
             }
             //Client.sendPacket(new PacketFloatFinder());
         }
+        incorrectVerticalSent = false;
+        incorrectHorizontalSent = false;
+        incorrectBarrelDirSent = false;
         previousFloat = horizontal;
     }
 

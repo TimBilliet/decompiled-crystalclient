@@ -79,6 +79,9 @@ public class Patchcrumbs extends Module implements IRegistrable {
     @Toggle(label = "Use Float Finder")
     public boolean useFloatFinder = false;
 
+    @Toggle(label = "Announce Received Coords")
+    public boolean announceReceivedCoords = false;
+
     @PageBreak(label = "Crumb Configuration")
     @Slider(label = "Timeout", placeholder = "{value}s", minimum = 1.0D, maximum = 30.0D, standard = 10.0D, integers = true)
     public int timeout = 10;
@@ -154,6 +157,11 @@ public class Patchcrumbs extends Module implements IRegistrable {
         this.enabled = false;
     }
 
+    public void configPostInit() {
+        super.configPostInit();
+        setOptionVisibility("Announce Received Coords", f -> this.useFloatFinder);
+    }
+
     private void onPacketReceive(PacketReceivedEvent.Post event) {
         if (!useFloatFinder && this.useSandStacks && event.packet instanceof S22PacketMultiBlockChange) {
             S22PacketMultiBlockChange packet = (S22PacketMultiBlockChange) event.packet;
@@ -167,6 +175,12 @@ public class Patchcrumbs extends Module implements IRegistrable {
                     }
             }
         }
+    }
+
+    public void clearCrumbFromFloatFinder(){
+        currentCrumb = null;
+        entities.clear();
+        velocityEntities.clear();
     }
 
     public void setCrumbsFromFloatFinder(int x, int y, int z, String direction) {

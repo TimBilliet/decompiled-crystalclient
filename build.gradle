@@ -18,9 +18,9 @@ plugins {
 apply plugin: "net.minecraftforge.gradle.forge"
 apply plugin: 'org.spongepowered.mixin'
 
-version = "1.0.0"
+version = "1.0.1"
 group = "co.crystaldev"
-archivesBaseName = "CrystalClient"
+archivesBaseName = "CrystalClient_Improved"
 
 sourceCompatibility = targetCompatibility = 1.8
 compileJava.options.encoding = "UTF-8"

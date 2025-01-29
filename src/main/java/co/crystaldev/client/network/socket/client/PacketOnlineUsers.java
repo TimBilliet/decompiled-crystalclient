@@ -42,7 +42,7 @@ public class PacketOnlineUsers extends Packet {
         PlayerHandler.getInstance().getOnlineUsers().addAll(this.uuids);
         for (NetworkPlayerInfo player : Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap()) {
             if (this.uuids.contains(player.getGameProfile().getId()))
-                ((NetworkPlayerInfoExt) player).setOnlineStatus(true);
+                ((NetworkPlayerInfoExt) player).setCrystalOnlineStatus(true);
         }
     }
 }

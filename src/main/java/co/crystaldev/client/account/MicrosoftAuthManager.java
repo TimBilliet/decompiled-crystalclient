@@ -31,7 +31,7 @@ public class MicrosoftAuthManager {
     }
 
     private static String acquireAccessToken(String authCode) throws IOException {
-        Request pr = new Request("https://login.live.com/oauth20_token.srf");
+        Request pr = new Request("https://login.live.com/oauth20_token.srf", false);
         pr.header("Content-Type", "application/x-www-form-urlencoded");
         HashMap<Object, Object> req = new HashMap<>();
         req.put("client_id", "54fd49e4-2103-4044-9603-2b028c814ec3");
@@ -50,7 +50,7 @@ public class MicrosoftAuthManager {
     }
 
     private static String acquireXBLToken(String accessToken) throws IOException {
-        Request pr = new Request("https://user.auth.xboxlive.com/user/authenticate");
+        Request pr = new Request("https://user.auth.xboxlive.com/user/authenticate", true);
         pr.header("Content-Type", "application/json");
         pr.header("Accept", "application/json");
         JsonObject req = new JsonObject();
@@ -71,7 +71,7 @@ public class MicrosoftAuthManager {
     }
 
     private static Tuple<String, String> acquireXstsToken(String xblToken) throws IOException, AuthenticationException {
-        Request pr = new Request("https://xsts.auth.xboxlive.com/xsts/authorize");
+        Request pr = new Request("https://xsts.auth.xboxlive.com/xsts/authorize", true);
         pr.header("Content-Type", "application/json");
         pr.header("Accept", "application/json");
         JsonObject req = new JsonObject();
@@ -96,7 +96,7 @@ public class MicrosoftAuthManager {
     }
 
     private static String acquireMinecraftToken(String xblUhs, String xstsToken) throws IOException {
-        Request pr = new Request("https://api.minecraftservices.com/authentication/login_with_xbox");
+        Request pr = new Request("https://api.minecraftservices.com/authentication/login_with_xbox", true);
         pr.header("Content-Type", "application/json");
         pr.header("Accept", "application/json");
         JsonObject req = new JsonObject();

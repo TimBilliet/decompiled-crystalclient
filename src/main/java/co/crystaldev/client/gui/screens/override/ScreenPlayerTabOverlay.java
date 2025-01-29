@@ -77,11 +77,12 @@ public class ScreenPlayerTabOverlay extends GuiPlayerTabOverlay {
         int j = 0;
         for (NetworkPlayerInfo networkplayerinfo : list) {
             boolean isOnCrystal = ((NetworkPlayerInfoExt) networkplayerinfo).isOnCrystalClient();
+            boolean isOnOrbit = ((NetworkPlayerInfoExt) networkplayerinfo).isOnOrbitClient();
             int k = this.mc.fontRendererObj.getStringWidth(getPlayerName(networkplayerinfo));
-            i = Math.max(i, k + (isOnCrystal ? 10 : 0));
+            i = Math.max(i, k + ((isOnCrystal || isOnOrbit) ? 10 : 0));
             if (scoreObjectiveIn != null && scoreObjectiveIn.getRenderType() != IScoreObjectiveCriteria.EnumRenderType.HEARTS) {
                 k = this.mc.fontRendererObj.getStringWidth(" " + scoreboardIn.getValueFromObjective(networkplayerinfo.getGameProfile().getName(), scoreObjectiveIn).getScorePoints());
-                j = Math.max(j, k + (isOnCrystal ? 10 : 0));
+                j = Math.max(j, k + ((isOnCrystal || isOnOrbit) ? 10 : 0));
             }
         }
         List<NetworkPlayerInfo> list = this.list.subList(0, Math.min(this.list.size(), 80));
@@ -156,6 +157,7 @@ public class ScreenPlayerTabOverlay extends GuiPlayerTabOverlay {
                 String s1 = getPlayerName(networkplayerinfo1);
                 GameProfile gameprofile = networkplayerinfo1.getGameProfile();
                 boolean isOnCrystal = ((NetworkPlayerInfoExt) networkplayerinfo1).isOnCrystalClient();
+                boolean isOnOrbit = ((NetworkPlayerInfoExt) networkplayerinfo1).isOnOrbitClient();
                 if (flag) {
                     EntityPlayer entityplayer = this.mc.theWorld.getPlayerEntityByUUID(gameprofile.getId());
                     this.mc.getTextureManager().bindTexture(networkplayerinfo1.getLocationSkin());
@@ -169,7 +171,7 @@ public class ScreenPlayerTabOverlay extends GuiPlayerTabOverlay {
                     }
                     j2 += 9;
                 }
-                if (isOnCrystal) {
+                if (isOnCrystal || isOnOrbit) {
                     CosmeticPlayer cp = CosmeticCache.getInstance().fromId(gameprofile.getId());
                     Color color = (cp == null) ? null : (Color) cp.getColor();
                     if (cp != null && color != null) {
@@ -180,7 +182,11 @@ public class ScreenPlayerTabOverlay extends GuiPlayerTabOverlay {
                     } else {
                         GlStateManager.resetColor();
                     }
-                    this.mc.getTextureManager().bindTexture(Resources.LOGO_WHITE);
+                    if (isOnCrystal) {
+                        this.mc.getTextureManager().bindTexture(Resources.LOGO_WHITE);
+                    } else {
+                        this.mc.getTextureManager().bindTexture(Resources.LOGO_ORBIT);
+                    }
                     Gui.drawScaledCustomSizeModalRect(j2, k2 - 1, 0.0F, 0.0F, 10, 10, 10, 10, 10.0F, 10.0F);
                     ShaderManager.getInstance().disableShader();
                     GlStateManager.resetColor();
@@ -306,6 +312,7 @@ public class ScreenPlayerTabOverlay extends GuiPlayerTabOverlay {
                 return ComparisonChain.start()
                         .compareTrueFirst((p1.getGameType() != WorldSettings.GameType.SPECTATOR), (p2.getGameType() != WorldSettings.GameType.SPECTATOR))
                         .compare(((NetworkPlayerInfoExt) p2).isOnCrystalClient(), ((NetworkPlayerInfoExt) p1).isOnCrystalClient())
+                        .compare(((NetworkPlayerInfoExt) p2).isOnOrbitClient(), ((NetworkPlayerInfoExt) p1).isOnOrbitClient())
                         .compare((tm1 != null) ? tm1.getRegisteredName() : "", (tm2 != null) ? tm2.getRegisteredName() : "")
                         .compare(p1.getGameProfile().getName(), p2.getGameProfile().getName())
                         .result();

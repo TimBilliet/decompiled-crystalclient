@@ -1,7 +1,9 @@
 package co.crystaldev.client.duck;
 
 public interface NetworkPlayerInfoExt {
-    void setOnlineStatus(boolean paramBoolean);
+    void setCrystalOnlineStatus(boolean paramBoolean);
+    void setOrbitOnlineStatus(boolean paramBoolean);
 
     boolean isOnCrystalClient();
+    boolean isOnOrbitClient();
 }

@@ -10,7 +10,7 @@ import co.crystaldev.client.util.ColorObject;
 
 @ModuleInfo(name = "Tab Editor", description = "Modify the default Minecraft Player overlay", category = Category.ALL)
 public class TabEditor extends Module {
-    @Toggle(label = "Sort by Players on Crystal Client")
+    @Toggle(label = "Sort by Crystal & Orbit players")
     public boolean sortByCrystalPlayers = true;
 
     @Toggle(label = "Show Ping as Number")

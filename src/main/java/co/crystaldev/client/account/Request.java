@@ -1,28 +1,95 @@
 package co.crystaldev.client.account;
 
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.net.HttpURLConnection;
+import co.crystaldev.client.Reference;
+import co.crystaldev.client.gui.screens.ScreenLogin;
+
+import javax.net.ssl.*;
+import java.io.*;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.security.KeyStore;
+import java.security.SecureRandom;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.*;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class Request {
-    public HttpURLConnection conn;
+    public HttpsURLConnection conn;
+    public static final SSLContext FIXED_CONTEXT;
+    static {
+        SSLContext ctx = null;
+        try {
+            KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());
+            try (InputStream in = MicrosoftAuthManager.class.getResourceAsStream("/iasjavafix.jks")) {
+                ks.load(in, "iasjavafix".toCharArray());
+            }
+            TrustManagerFactory customTmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            customTmf.init(ks);
+            TrustManagerFactory defaultTmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+            defaultTmf.init((KeyStore) null);
+            final List<X509TrustManager> managers = new ArrayList<>();
+            managers.addAll(Arrays.stream(customTmf.getTrustManagers()).filter(tm -> tm instanceof X509TrustManager)
+                    .map(tm -> (X509TrustManager) tm).collect(Collectors.toList()));
+            managers.addAll(Arrays.stream(defaultTmf.getTrustManagers()).filter(tm -> tm instanceof X509TrustManager)
+                    .map(tm -> (X509TrustManager) tm).collect(Collectors.toList()));
+            TrustManager multiManager = new X509TrustManager() {
+                public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                    CertificateException wrapper = new CertificateException("Unable to validate via any trust manager.");
+                    for (X509TrustManager manager : managers) {
+                        try {
+                            manager.checkClientTrusted(chain, authType);
+                            return;
+                        } catch (Throwable t) {
+                            wrapper.addSuppressed(t);
+                        }
+                    }
+                    throw wrapper;
+                }
 
-    public Request(String url) throws IOException {
-        this.conn = (HttpURLConnection) (new URL(url)).openConnection();
+                public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+                    CertificateException wrapper = new CertificateException("Unable to validate via any trust manager.");
+                    for (X509TrustManager manager : managers) {
+                        try {
+                            manager.checkServerTrusted(chain, authType);
+                            return;
+                        } catch (Throwable t) {
+                            wrapper.addSuppressed(t);
+                        }
+                    }
+                    throw wrapper;
+                }
+
+                public X509Certificate[] getAcceptedIssuers() {
+                    List<X509Certificate> certificates = new ArrayList<>();
+                    for (X509TrustManager manager : managers)
+                        certificates.addAll(Arrays.asList(manager.getAcceptedIssuers()));
+                    return certificates.toArray(new X509Certificate[0]);
+                }
+            };
+            ctx = SSLContext.getInstance("TLS");
+            ctx.init(null, new TrustManager[]{multiManager}, new SecureRandom());
+            Reference.LOGGER.info("Using shared SSL context. (behavior: default; custom + default certificates)");
+        } catch (Throwable t) {
+            Reference.LOGGER.error("Unable to init SSL context.", t);
+            ScreenLogin.feedback = t.toString();
+        }
+        FIXED_CONTEXT = ctx;
+    }
+
+    public Request(String url, boolean ssl) throws IOException {
+        this.conn = (HttpsURLConnection) (new URL(url)).openConnection();
+        if (ssl && FIXED_CONTEXT != null) {
+            this.conn.setSSLSocketFactory(FIXED_CONTEXT.getSocketFactory());
+        }
         this.conn.setDoOutput(true);
         this.conn.setDoInput(true);
-        this.conn.setConnectTimeout(6000);
-        this.conn.setReadTimeout(6000);
+        this.conn.setConnectTimeout(8000);
+        this.conn.setReadTimeout(8000);
     }
 
     public void header(String key, String value) {

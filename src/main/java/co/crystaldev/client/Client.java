@@ -55,7 +55,6 @@ import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
 import net.minecraft.util.Timer;
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -411,6 +410,11 @@ public class Client {
     public static boolean isOnCrystalClient(Entity entity) {
         NetworkPlayerInfo info = (entity instanceof net.minecraft.client.entity.AbstractClientPlayer) ? ((MixinAbstractClientPlayer) entity).invokeGetPlayerInfo() : null;
         return (info != null && ((NetworkPlayerInfoExt) info).isOnCrystalClient());
+    }
+
+    public static boolean isOnOrbitClient(Entity entity) {
+        NetworkPlayerInfo info = (entity instanceof net.minecraft.client.entity.AbstractClientPlayer) ? ((MixinAbstractClientPlayer) entity).invokeGetPlayerInfo() : null;
+        return (info != null && ((NetworkPlayerInfoExt) info).isOnOrbitClient());
     }
 
     public static UUID getUniqueID() {

@@ -7,6 +7,10 @@ public class Resources {
 
     public static final ResourceLocation LOGO_WHITE = new ResourceLocation("crystalclient", "logo_white.png");
 
+    public static final ResourceLocation LOGO_ORBIT = new ResourceLocation("crystalclient", "orbit_logo_new.png");
+
+    public static final ResourceLocation LOGO_ORBIT_ORIGINAL = new ResourceLocation("crystalclient", "orbit_logo_trans_2.png");
+
     public static final ResourceLocation LOGO_FAVICON = new ResourceLocation("crystalclient", "logo_favicon.png");
 
     public static final ResourceLocation LOGO_BACKGROUND = new ResourceLocation("crystalclient", "logo_background.png");

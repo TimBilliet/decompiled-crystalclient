@@ -6,7 +6,7 @@
 - Float finder
 - Clear menu/inventory/container backgrounds
 - Keep crosshair in spectator mode
-- Auto sell for collection chests
+- Auto sell and deposit for collection chests
 - Show orbit players on tab and on nametag
 
 ## How to generate a working jar

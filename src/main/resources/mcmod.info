@@ -1,7 +1,7 @@
 [
   {
     "modid": "crystalclient",
-    "name": "Forge CrystalClient",
+    "name": "Forge Crystal Client",
     "description": "Improved version of Forge Crystal Client with extra features",
     "version": "${version}",
     "mcversion": "${mcversion}",

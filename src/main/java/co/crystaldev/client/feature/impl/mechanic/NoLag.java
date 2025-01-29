@@ -123,6 +123,7 @@ public class NoLag extends Module implements IRegistrable {
     @ReloadRenderers
     public boolean animatedEndPortal = true;
 
+    @HoverOverlay({"DO NOT ENABLE, MAY CAUSE STACKOVERFLOW"})
     @Toggle(label = "Disable Slab Rendering")
     @ReloadRenderers
     public boolean disableSlabRendering = false;
@@ -234,9 +235,3 @@ public class NoLag extends Module implements IRegistrable {
         });
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\feature\impl\mechanic\NoLag.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

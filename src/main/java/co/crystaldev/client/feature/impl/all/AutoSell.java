@@ -3,11 +3,14 @@ package co.crystaldev.client.feature.impl.all;
 import co.crystaldev.client.Reference;
 import co.crystaldev.client.event.EventBus;
 import co.crystaldev.client.event.IRegistrable;
+import co.crystaldev.client.event.impl.network.ChatReceivedEvent;
 import co.crystaldev.client.event.impl.tick.ClientTickEvent;
 import co.crystaldev.client.feature.annotations.properties.ModuleInfo;
+import co.crystaldev.client.feature.annotations.properties.Toggle;
 import co.crystaldev.client.feature.base.Category;
 import co.crystaldev.client.feature.base.Module;
 
+import co.crystaldev.client.util.ReflectionHelper;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.gui.inventory.GuiEditSign;
@@ -22,6 +25,9 @@ import java.lang.reflect.Field;
 
 public class AutoSell extends Module implements IRegistrable {
 
+    @Toggle(label = "Auto Deposit")
+    public boolean autoDeposit = true;
+
     private boolean clickedCollectionChest = false;
     private boolean clickedSellGUI = false;
     private boolean handledSignGUI = false;
@@ -32,13 +38,13 @@ public class AutoSell extends Module implements IRegistrable {
         this.enabled = false;
     }
 
-    private void onClienTick(ClientTickEvent.Post ev) {
+    private void onClientTick(ClientTickEvent.Post ev) {
         if (mc.currentScreen instanceof GuiContainer) {
             GuiContainer gui = ((GuiContainer) mc.currentScreen);
             String inv = getInventoryName(gui);
             if (inv.contains("Collection Chest")) {
                 colOpenForXTicks++;
-                if(!clickedCollectionChest && colOpenForXTicks > 1){
+                if (!clickedCollectionChest && colOpenForXTicks > 1) {
                     colOpenForXTicks = 0;
                     clickedCollectionChest = true;
                     ItemStack itemStack = ((GuiContainer) mc.currentScreen).inventorySlots.getSlot(0).getStack();
@@ -46,7 +52,8 @@ public class AutoSell extends Module implements IRegistrable {
                         return;
                     String quantityInfo = itemStack.getTagCompound().getCompoundTag("display").getTagList("Lore", 8).get(4).toString();
                     try {
-                        quantity = Integer.parseInt(quantityInfo.substring(22, quantityInfo.length() - 2));
+                        String amountS = quantityInfo.split("Quantity: ")[1].replaceAll("[^0-9]", "");
+                        quantity = Integer.parseInt(amountS);
                     } catch (Exception exception) {
                         Reference.LOGGER.error("Failed to parse head quantity");
                     }
@@ -60,7 +67,7 @@ public class AutoSell extends Module implements IRegistrable {
             handledSignGUI = true;
             GuiEditSign guiEditSign = (GuiEditSign) mc.currentScreen;
             try {
-                Field field = GuiEditSign.class.getDeclaredField("tileSign");
+                Field field = ReflectionHelper.findField(GuiEditSign.class, "tileSign", "field_146848_f");
                 field.setAccessible(true);
                 TileEntitySign sign = (TileEntitySign) field.get(guiEditSign);
                 sign.signText[0] = new ChatComponentText(String.valueOf(quantity));
@@ -91,6 +98,21 @@ public class AutoSell extends Module implements IRegistrable {
 
     @Override
     public void registerEvents() {
-        EventBus.register(this, ClientTickEvent.Post.class, this::onClienTick);
+        EventBus.register(this, ClientTickEvent.Post.class, this::onClientTick);
+        EventBus.register(this, ChatReceivedEvent.class, ev -> {
+            if (!autoDeposit)
+                return;
+            String message = ev.message.getUnformattedText();
+            if (message.contains("Head -")) {
+                String[] parts = message.split("Head -");
+                try {
+                    String amountS = parts[1].replaceAll("[$\\s,]+", "");
+                    double amountD = Double.parseDouble(amountS);
+                    mc.thePlayer.sendChatMessage("/f deposit " + (int) amountD);
+                } catch (NumberFormatException | ArrayIndexOutOfBoundsException ignored) {
+                    Reference.LOGGER.warn("Failed to parse sale amount from " + message);
+                }
+            }
+        });
     }
 }

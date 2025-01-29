@@ -46,7 +46,7 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
 
     private static final int aMods = Loader.instance().getActiveModList().size();
 
-    private static final String CC_VERSION = String.format("%s v%s (%s/%s)", "Timmeke_ Crystal Client", "1.1.16-projectassfucker", "37aa61d", "offline");
+    private static final String CC_VERSION = String.format("%s v%s", "Timmeke_ Crystal Client", "1.1.1");
 
     private static final String MC_COPYRIGHT = "Copyright Mojang Studios. Do not distribute!";
 
@@ -94,14 +94,9 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
         x = 5;
         if (Reflector.isReplaymodLoaded()) {
             addButton(new ResourceButton(20, x, 5, h, h, Resources.REPLAY_MOD), b -> b.setOnClick(Reflector::openReplayGui));
-            x += h;
+            x += h + 2;
         }
         addButton(new AccountButton(21, x, 5, this));
-//        addButton(new ResourceButton(22, x, 5, h, h, Resources.ADD_PERSON), b -> {
-//            b.setOnClick(() -> {
-//                this.addOverlay(new OverlayOfflineAccount());
-//            });
-//        });
     }
 
     public void onButtonInteract(Button button, int mouseX, int mouseY, int mouseButton) {

@@ -2,10 +2,10 @@
   {
     "modid": "crystalclient",
     "name": "Forge CrystalClient",
-    "description": "",
+    "description": "Improved version of Forge Crystal Client with extra features",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://github.com/TimBilliet/decompiled-crystalclient/tree/original",
+    "url": "https://github.com/TimBilliet/decompiled-crystalclient",
     "authorList": ["Timmeke_"],
     "logoFile": "",
     "screenshots": [],

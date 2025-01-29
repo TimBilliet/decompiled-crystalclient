@@ -7,8 +7,10 @@ import co.crystaldev.client.event.impl.init.InitializationEvent;
 import co.crystaldev.client.event.impl.network.ServerDisconnectEvent;
 import co.crystaldev.client.event.impl.render.RenderPlayerEvent;
 import co.crystaldev.client.event.impl.world.WorldEvent;
+import co.crystaldev.client.feature.annotations.HoverOverlay;
 import co.crystaldev.client.feature.annotations.properties.Keybind;
 import co.crystaldev.client.feature.annotations.properties.ModuleInfo;
+import co.crystaldev.client.feature.annotations.properties.Toggle;
 import co.crystaldev.client.feature.base.Category;
 import co.crystaldev.client.feature.base.Module;
 import net.minecraft.block.*;
@@ -21,6 +23,10 @@ import java.util.List;
 public class CannonView extends Module implements IRegistrable {
     @Keybind(label = "Toggle Keybinding")
     public KeyBinding keybind = new KeyBinding("crystalclient.key.toggle_cannon_view", 0, "Crystal Client");
+
+    @HoverOverlay({"Still render players while having cannonview enabled"})
+    @Toggle(label = "Render Players")
+    public boolean renderPlayers = true;
 
     private static CannonView INSTANCE;
 
@@ -51,14 +57,11 @@ public class CannonView extends Module implements IRegistrable {
 
     public void registerEvents() {
         EventBus.register(this, InitializationEvent.class, ev -> this.enabled = false);
-        EventBus.register(this, RenderPlayerEvent.Pre.class, ev -> ev.setCancelled(!ev.player.getUniqueID().equals(this.mc.thePlayer.getUniqueID())));
+        EventBus.register(this, RenderPlayerEvent.Pre.class, ev -> {
+            if (!renderPlayers)
+                ev.setCancelled(!ev.player.getUniqueID().equals(this.mc.thePlayer.getUniqueID()));
+        });
         EventBus.register(this, WorldEvent.Load.class, ev -> disable());
         EventBus.register(this, ServerDisconnectEvent.class, ev -> disable());
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\feature\impl\factions\CannonView.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

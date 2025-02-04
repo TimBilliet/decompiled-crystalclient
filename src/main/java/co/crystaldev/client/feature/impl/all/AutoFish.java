@@ -141,7 +141,7 @@ public class AutoFish extends Module implements IRegistrable {
                     }
                 }
             }
-            if (!autoStore || mc.theWorld == null)
+            if (!autoStore || mc.theWorld == null || !isPlayerHoldingRod())
                 return;
             if (mc.currentScreen instanceof GuiContainer) {
                 GuiContainer guiContainer = (GuiContainer) mc.currentScreen;

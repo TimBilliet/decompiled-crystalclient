@@ -31,7 +31,7 @@ public class AutoSell extends Module implements IRegistrable {
     private boolean clickedCollectionChest = false;
     private boolean clickedSellGUI = false;
     private boolean handledSignGUI = false;
-    private int quantity = 0;
+    private double quantity = 0;
     private int colOpenForXTicks = 0;
 
     public AutoSell() {
@@ -52,8 +52,10 @@ public class AutoSell extends Module implements IRegistrable {
                         return;
                     String quantityInfo = itemStack.getTagCompound().getCompoundTag("display").getTagList("Lore", 8).get(4).toString();
                     try {
-                        String amountS = quantityInfo.split("Quantity: ")[1].replaceAll("[^0-9]", "");
-                        quantity = Integer.parseInt(amountS);
+                        String amountS = quantityInfo.split("Quantity: ")[1].replaceAll("[^\\d.]", "");
+                        quantity = Double.parseDouble(amountS);
+                        if (quantityInfo.endsWith("Mx\""))
+                            quantity *= 1000000;
                     } catch (Exception exception) {
                         Reference.LOGGER.error("Failed to parse head quantity");
                     }

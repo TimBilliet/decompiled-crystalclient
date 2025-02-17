@@ -46,7 +46,7 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
 
     private static final int aMods = Loader.instance().getActiveModList().size();
 
-    private static final String CC_VERSION = String.format("%s v%s", "Timmeke_ Crystal Client", "1.1.3");
+    private static final String CC_VERSION = String.format("%s v%s", "Timmeke_ Crystal Client", "1.2.0");
 
     private static final String MC_COPYRIGHT = "Copyright Mojang Studios. Do not distribute!";
 

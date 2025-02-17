@@ -49,6 +49,9 @@ public class FloatFinder extends Module implements IRegistrable {
     @HoverOverlay({"Maximum amount of blocks to check sideways"})
     @Slider(label = "Max sideways blocks", placeholder = "{value} blocks", minimum = 10.0D, maximum = 600.0D, standard = 250, integers = true)
     public int checkBlocksSideways = 250;
+    @HoverOverlay({"Allows the usage of a barrel that can shoot at even an odd Y levels"})
+    @Toggle(label = "Any Y Barrel")
+    public boolean anyYAdjust = false;
 
     @PageBreak(label = "Visuals Customization")
     @Colour(label = "Line Color")
@@ -98,14 +101,37 @@ public class FloatFinder extends Module implements IRegistrable {
     private BlockPos verticalScan() {
         BlockPos top = null;
         for (int i = 1; i < 255; i++) {
-            BlockPos currentAbove = barrelBlockPos.add(0, i, 0);
-            BlockPos curentNextAbove = barrelNextBlockPos.add(0, i, 0);
+            BlockPos currentAbove = null;
+            BlockPos curentNextAbove = null;
+            if (anyYAdjust) {
+                if (barrelDirection == EnumFacing.WEST && !(getBlockAtPos(barrelBlockPos.add(1, 0, 0)) instanceof BlockCarpet)) {
+                    currentAbove = barrelBlockPos.add(0, i, -1);
+                    curentNextAbove = barrelNextBlockPos.add(0, i, -1);
+                } else if (barrelDirection == EnumFacing.EAST && !(getBlockAtPos(barrelBlockPos.add(-1, 0, 0)) instanceof BlockCarpet)) {
+                    currentAbove = barrelBlockPos.add(0, i, 1);
+                    curentNextAbove = barrelNextBlockPos.add(0, i, 1);
+                } else if (barrelDirection == EnumFacing.SOUTH && !(getBlockAtPos(barrelBlockPos.add(-1, 0, 0)) instanceof BlockCarpet)) {
+                    currentAbove = barrelBlockPos.add(-1, i, 0);
+                    curentNextAbove = barrelNextBlockPos.add(-1, i, 0);
+                } else if (barrelDirection == EnumFacing.NORTH && !(getBlockAtPos(barrelBlockPos.add(0, 0, 1)) instanceof BlockCarpet)) {
+                    currentAbove = barrelBlockPos.add(1, i, 0);
+                    curentNextAbove = barrelNextBlockPos.add(1, i, 0);
+                }
+            }
+            if (currentAbove == null || curentNextAbove == null) {
+                currentAbove = barrelBlockPos.add(0, i, 0);
+                curentNextAbove = barrelNextBlockPos.add(0, i, 0);
+            }
             if (cantPassThroughBlock(currentAbove, false) || cantPassThroughBlock(curentNextAbove, false)) {
                 top = currentAbove.add(0, -1, 0);
                 break;
             }
         }
         return top;
+    }
+
+    private Block getBlockAtPos(BlockPos pos) {
+        return mc.theWorld.getBlockState(pos).getBlock();
     }
 
     private BlockPos horizontalScanIteration(int x, int z) {

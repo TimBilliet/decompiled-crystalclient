@@ -56,7 +56,6 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -173,6 +172,7 @@ public class ModuleHandler implements IRegistrable {
         registerModule(AutoFish.class);
         registerModule(FloatFinder.class);
         registerModule(AutoSell.class);
+        registerModule(LookingAtCoords.class);
         modules.sort(Comparator.comparing(m -> m.priority));
         for (Module module : modules) {
             for (Field field : module.getClass().getFields()) {

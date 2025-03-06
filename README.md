@@ -8,6 +8,7 @@
 - Keep crosshair in spectator mode
 - Auto sell and deposit for collection chests
 - Show orbit players on tab and on nametag
+- Looking at block coordinates hud
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"

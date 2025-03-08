@@ -22,14 +22,16 @@ public class LookingAtCoords extends HudModuleBackground {
 
     public String getDisplayText() {
         StringBuilder out = new StringBuilder();
-        BlockPos pos = this.mc.objectMouseOver.getBlockPos();
-        if(pos!= null){
-            if (showX)
-                out.append("X: ").append(pos.getX()).append(" ");
-            if (showY)
-                out.append("Y: ").append(pos.getY()).append(" ");
-            if (showZ)
-                out.append("Z: ").append(pos.getZ());
+        if(this.mc != null && this.mc.objectMouseOver != null){
+            BlockPos pos = this.mc.objectMouseOver.getBlockPos();
+            if(pos!= null){
+                if (showX)
+                    out.append("X: ").append(pos.getX()).append(" ");
+                if (showY)
+                    out.append("Y: ").append(pos.getY()).append(" ");
+                if (showZ)
+                    out.append("Z: ").append(pos.getZ());
+            }
         }
         return out.toString();
     }

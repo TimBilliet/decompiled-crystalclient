@@ -173,6 +173,7 @@ public class ModuleHandler implements IRegistrable {
         registerModule(FloatFinder.class);
         registerModule(AutoSell.class);
         registerModule(LookingAtCoords.class);
+        registerModule(WallCheck.class);
         modules.sort(Comparator.comparing(m -> m.priority));
         for (Module module : modules) {
             for (Field field : module.getClass().getFields()) {

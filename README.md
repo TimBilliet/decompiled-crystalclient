@@ -9,6 +9,7 @@
 - Auto sell and deposit for collection chests
 - Show orbit players on tab and on nametag
 - Looking at block coordinates hud
+- Auto wall check for SaicoPvP
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"

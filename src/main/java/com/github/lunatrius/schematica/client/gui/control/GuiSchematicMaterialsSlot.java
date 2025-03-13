@@ -1,8 +1,8 @@
 package com.github.lunatrius.schematica.client.gui.control;
 
-import co.crystaldev.client.gui.override.CustomGuiSlot;
 import com.github.lunatrius.core.client.gui.GuiHelper;
 import com.github.lunatrius.schematica.client.util.BlockList;
+import com.github.timmekeclient.gui.override.CustomGuiSlot;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
@@ -59,9 +59,3 @@ class GuiSchematicMaterialsSlot extends CustomGuiSlot {
         }
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematica\client\gui\control\GuiSchematicMaterialsSlot.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

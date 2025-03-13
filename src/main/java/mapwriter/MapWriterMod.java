@@ -1,7 +1,8 @@
 package mapwriter;
 
-import co.crystaldev.client.Client;
-import co.crystaldev.client.feature.impl.hud.MapWriter;
+import com.github.timmekeclient.Client;
+import com.github.timmekeclient.feature.impl.hud.MapWriter;
+import com.github.timmekeclient.gui.screens.ScreenMapWriter;
 import mapwriter.config.Config;
 import mapwriter.config.ConfigurationHandler;
 import mapwriter.config.WorldConfig;
@@ -167,7 +168,7 @@ public class MapWriterMod {
     }
 
     public void draw() {
-        if (isReady() && !(this.mc.currentScreen instanceof co.crystaldev.client.gui.screens.ScreenMapWriter)) {
+        if (isReady() && !(this.mc.currentScreen instanceof ScreenMapWriter)) {
             this.miniMap.view.setViewCentreScaled(this.playerX, this.playerZ, this.playerDimension);
             this.miniMap.drawCurrentMap();
         }

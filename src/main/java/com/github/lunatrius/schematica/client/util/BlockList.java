@@ -1,20 +1,18 @@
 package com.github.lunatrius.schematica.client.util;
 
-import co.crystaldev.client.util.BlockUtils;
 import com.github.lunatrius.core.util.BlockPosHelper;
 import com.github.lunatrius.core.util.MBlockPos;
 import com.github.lunatrius.schematica.block.state.BlockStateHelper;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.reference.Reference;
+import com.github.timmekeclient.util.BlockUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3i;
 import net.minecraft.world.World;
 
 import java.util.ArrayList;

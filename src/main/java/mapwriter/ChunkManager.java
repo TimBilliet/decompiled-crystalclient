@@ -1,6 +1,6 @@
 package mapwriter;
 
-import co.crystaldev.client.feature.impl.hud.MapWriter;
+import com.github.timmekeclient.feature.impl.hud.MapWriter;
 import mapwriter.config.Config;
 import mapwriter.region.MwChunk;
 import mapwriter.tasks.SaveChunkTask;

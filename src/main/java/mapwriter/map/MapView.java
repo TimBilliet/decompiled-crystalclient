@@ -1,6 +1,6 @@
 package mapwriter.map;
 
-import co.crystaldev.client.feature.impl.hud.MapWriter;
+import com.github.timmekeclient.feature.impl.hud.MapWriter;
 import mapwriter.MapWriterMod;
 import mapwriter.api.MwAPI;
 import mapwriter.config.Config;

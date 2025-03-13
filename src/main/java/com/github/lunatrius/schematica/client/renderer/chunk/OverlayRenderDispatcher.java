@@ -1,7 +1,7 @@
 package com.github.lunatrius.schematica.client.renderer.chunk;
 
-import co.crystaldev.client.mixin.accessor.net.minecraft.client.renderer.chunk.MixinChunkRenderDispatcher;
 import com.github.lunatrius.schematica.client.renderer.chunk.overlay.RenderOverlayList;
+import com.github.timmekeclient.mixin.accessor.net.minecraft.client.renderer.chunk.MixinChunkRenderDispatcher;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import net.minecraft.client.Minecraft;

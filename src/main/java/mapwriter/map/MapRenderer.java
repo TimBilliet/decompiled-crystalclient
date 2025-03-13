@@ -1,6 +1,7 @@
 package mapwriter.map;
 
-import co.crystaldev.client.feature.impl.hud.MapWriter;
+import com.github.timmekeclient.feature.impl.hud.MapWriter;
+import com.github.timmekeclient.gui.screens.ScreenMapWriter;
 import mapwriter.MapWriterMod;
 import mapwriter.api.IMwChunkOverlay;
 import mapwriter.api.MwAPI;
@@ -180,7 +181,7 @@ public class MapRenderer {
     }
 
     public void draw() {
-        boolean isGui = (this.mc.currentScreen instanceof co.crystaldev.client.gui.screens.ScreenMapWriter || this.mapMode instanceof mapwriter.map.mapmode.LargeMapMode);
+        boolean isGui = (this.mc.currentScreen instanceof ScreenMapWriter || this.mapMode instanceof mapwriter.map.mapmode.LargeMapMode);
         this.mapMode.update();
         this.mapView.setMapWH(this.mapMode);
         this.mapView.setTextureSize(this.mapWriterMod.textureSize);

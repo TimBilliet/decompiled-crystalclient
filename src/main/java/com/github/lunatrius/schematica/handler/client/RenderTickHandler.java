@@ -1,9 +1,9 @@
 package com.github.lunatrius.schematica.handler.client;
 
-import co.crystaldev.client.event.SubscribeEvent;
-import co.crystaldev.client.event.impl.render.RenderTickEvent;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
+import com.github.timmekeclient.event.SubscribeEvent;
+import com.github.timmekeclient.event.impl.render.RenderTickEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.MovingObjectPosition;

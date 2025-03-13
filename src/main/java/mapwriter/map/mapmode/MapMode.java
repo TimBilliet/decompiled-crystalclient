@@ -1,6 +1,7 @@
 package mapwriter.map.mapmode;
 
-import co.crystaldev.client.feature.impl.hud.MapWriter;
+import com.github.timmekeclient.feature.impl.hud.MapWriter;
+import com.github.timmekeclient.gui.screens.ScreenMapWriter;
 import mapwriter.MapWriterMod;
 import mapwriter.config.MapModeConfig;
 import mapwriter.map.MapView;
@@ -45,7 +46,7 @@ public class MapMode {
     }
 
     public void update() {
-        if (this.mc.currentScreen instanceof co.crystaldev.client.gui.screens.ScreenMapWriter) {
+        if (this.mc.currentScreen instanceof ScreenMapWriter) {
             this.wPixels = this.mc.displayWidth;
             this.hPixels = this.mc.displayHeight;
             this.w = this.wPixels >> 1;

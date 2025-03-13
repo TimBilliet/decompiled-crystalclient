@@ -1,14 +1,14 @@
 package com.github.lunatrius.schematica.client.gui.load;
 
-import co.crystaldev.client.Client;
-import co.crystaldev.client.Reference;
-import co.crystaldev.client.Resources;
-import co.crystaldev.client.gui.GuiOptions;
-import co.crystaldev.client.gui.override.CustomGuiSlot;
-import co.crystaldev.client.util.RenderUtils;
-import co.crystaldev.client.util.SchematicUploader;
-import co.crystaldev.client.util.objects.FadingColor;
 import com.github.lunatrius.core.client.gui.GuiHelper;
+import com.github.timmekeclient.Client;
+import com.github.timmekeclient.Reference;
+import com.github.timmekeclient.Resources;
+import com.github.timmekeclient.gui.GuiOptions;
+import com.github.timmekeclient.gui.override.CustomGuiSlot;
+import com.github.timmekeclient.util.RenderUtils;
+import com.github.timmekeclient.util.SchematicUploader;
+import com.github.timmekeclient.util.objects.FadingColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -113,9 +113,3 @@ public class GuiSchematicLoadSlot extends CustomGuiSlot {
         this.guiSchematicLoad.drawString(this.minecraft.fontRendererObj, schematicName, x + 24, y + 6, 16777215);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematica\client\gui\load\GuiSchematicLoadSlot.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

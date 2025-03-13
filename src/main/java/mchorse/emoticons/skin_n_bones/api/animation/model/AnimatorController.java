@@ -1,8 +1,8 @@
 package mchorse.emoticons.skin_n_bones.api.animation.model;
 
-import co.crystaldev.client.util.javax.Matrix4f;
-import co.crystaldev.client.util.javax.Tuple4f;
-import co.crystaldev.client.util.javax.Vector4f;
+import com.github.timmekeclient.util.javax.Matrix4f;
+import com.github.timmekeclient.util.javax.Tuple4f;
+import com.github.timmekeclient.util.javax.Vector4f;
 import mchorse.emoticons.client.RenderLightmap;
 import mchorse.emoticons.skin_n_bones.api.animation.Animation;
 import mchorse.emoticons.skin_n_bones.api.animation.AnimationManager;

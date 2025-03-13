@@ -1,9 +1,5 @@
 package com.github.lunatrius.schematica.client.printer;
 
-import co.crystaldev.client.Reference;
-import co.crystaldev.client.feature.impl.factions.Schematica;
-import co.crystaldev.client.mixin.accessor.net.minecraft.block.MixinBlockRedstoneDiode;
-import co.crystaldev.client.mixin.accessor.net.minecraft.util.MixinEnumFacing;
 import com.github.lunatrius.core.util.BlockPosHelper;
 import com.github.lunatrius.core.util.MBlockPos;
 import com.github.lunatrius.schematica.block.state.BlockStateHelper;
@@ -15,6 +11,10 @@ import com.github.lunatrius.schematica.client.util.BlockStateToItemStack;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
+import com.github.timmekeclient.Reference;
+import com.github.timmekeclient.feature.impl.factions.Schematica;
+import com.github.timmekeclient.mixin.accessor.net.minecraft.block.MixinBlockRedstoneDiode;
+import com.github.timmekeclient.mixin.accessor.net.minecraft.util.MixinEnumFacing;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;

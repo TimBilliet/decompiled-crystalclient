@@ -93,9 +93,3 @@ public class ResourcePackListProcessor {
         return (this.textFilter == null || this.textFilter.matcher(entryText.toLowerCase(Locale.ENGLISH)).find());
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\chylex\chylex.respack\packs\ResourcePackListProcessor.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

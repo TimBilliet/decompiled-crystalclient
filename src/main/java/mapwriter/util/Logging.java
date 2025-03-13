@@ -1,6 +1,6 @@
 package mapwriter.util;
 
-import co.crystaldev.client.Reference;
+import com.github.timmekeclient.Reference;
 
 public class Logging {
     public static void logInfo(String s, Object... args) {

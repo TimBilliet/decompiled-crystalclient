@@ -1,7 +1,7 @@
 package mchorse.emoticons.client;
 
-import co.crystaldev.client.event.SubscribeEvent;
-import co.crystaldev.client.event.impl.render.RenderPlayerEvent;
+import com.github.timmekeclient.event.SubscribeEvent;
+import com.github.timmekeclient.event.impl.render.RenderPlayerEvent;
 import mchorse.emoticons.cosmetic.emote.IUserEmoteData;
 import mchorse.emoticons.cosmetic.emote.UserEmoticonData;
 import net.minecraft.entity.Entity;

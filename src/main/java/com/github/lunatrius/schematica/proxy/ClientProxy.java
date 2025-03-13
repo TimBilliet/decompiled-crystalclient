@@ -1,12 +1,5 @@
 package com.github.lunatrius.schematica.proxy;
 
-import co.crystaldev.client.Client;
-import co.crystaldev.client.event.EventBus;
-import co.crystaldev.client.feature.impl.factions.Schematica;
-import co.crystaldev.client.feature.settings.ClientOptions;
-import co.crystaldev.client.gui.screens.schematica.ScreenSchematicControl;
-import co.crystaldev.client.util.objects.Schematic;
-import co.crystaldev.client.util.objects.Transformation;
 import com.github.lunatrius.core.util.MBlockPos;
 import com.github.lunatrius.core.util.vector.Vector3d;
 import com.github.lunatrius.schematica.api.ISchematic;
@@ -20,6 +13,13 @@ import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.util.LoadedSchematic;
 import com.github.lunatrius.schematica.world.schematic.SchematicFormat;
 import com.github.lunatrius.schematica.world.schematic.SchematicUtil;
+import com.github.timmekeclient.Client;
+import com.github.timmekeclient.event.EventBus;
+import com.github.timmekeclient.feature.impl.factions.Schematica;
+import com.github.timmekeclient.feature.settings.ClientOptions;
+import com.github.timmekeclient.gui.screens.schematica.ScreenSchematicControl;
+import com.github.timmekeclient.util.objects.Schematic;
+import com.github.timmekeclient.util.objects.Transformation;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

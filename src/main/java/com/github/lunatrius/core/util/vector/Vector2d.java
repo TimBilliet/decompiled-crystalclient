@@ -153,9 +153,3 @@ public class Vector2d {
         return String.format("[%s, %s]", new Object[]{Double.valueOf(this.x), Double.valueOf(this.y)});
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\cor\\util\vector\Vector2d.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

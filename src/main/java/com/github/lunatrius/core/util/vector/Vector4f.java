@@ -137,12 +137,6 @@ public class Vector4f extends Vector3f {
     }
 
     public String toString() {
-        return String.format("[%s, %s, %s, %s]", new Object[]{Float.valueOf(this.x), Float.valueOf(this.y), Float.valueOf(this.z), Float.valueOf(this.w)});
+        return String.format("[%s, %s, %s, %s]", this.x, this.y, this.z, this.w);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\cor\\util\vector\Vector4f.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

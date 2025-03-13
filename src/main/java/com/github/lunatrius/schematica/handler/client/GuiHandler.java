@@ -1,8 +1,8 @@
 package com.github.lunatrius.schematica.handler.client;
 
-import co.crystaldev.client.event.SubscribeEvent;
-import co.crystaldev.client.event.impl.render.GuiScreenEvent;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
+import com.github.timmekeclient.event.SubscribeEvent;
+import com.github.timmekeclient.event.impl.render.GuiScreenEvent;
 
 public class GuiHandler {
     public static final GuiHandler INSTANCE = new GuiHandler();

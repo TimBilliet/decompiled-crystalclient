@@ -1,6 +1,6 @@
 package mapwriter.region;
 
-import co.crystaldev.client.Resources;
+import com.github.timmekeclient.Resources;
 import mapwriter.util.Logging;
 import mapwriter.util.Render;
 import net.minecraft.block.Block;
@@ -269,9 +269,3 @@ public class BlockColors {
         public BlockType type = BlockType.NORMAL;
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\mapwriter\region\BlockColors.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

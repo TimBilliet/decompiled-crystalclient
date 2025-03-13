@@ -1,9 +1,9 @@
 package mchorse.emoticons.skin_n_bones.api.bobj;
 
-import co.crystaldev.client.util.javax.Matrix4f;
-import co.crystaldev.client.util.javax.Tuple4f;
-import co.crystaldev.client.util.javax.Vector3f;
-import co.crystaldev.client.util.javax.Vector4f;
+import com.github.timmekeclient.util.javax.Matrix4f;
+import com.github.timmekeclient.util.javax.Tuple4f;
+import com.github.timmekeclient.util.javax.Vector3f;
+import com.github.timmekeclient.util.javax.Vector4f;
 
 public class BOBJBoneModifier {
     public BOBJBone target;

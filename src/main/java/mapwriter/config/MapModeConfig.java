@@ -1,6 +1,6 @@
 package mapwriter.config;
 
-import co.crystaldev.client.feature.impl.hud.MapWriter;
+import com.github.timmekeclient.feature.impl.hud.MapWriter;
 
 public class MapModeConfig {
     public boolean rotate = false;

@@ -1,6 +1,6 @@
 package mapwriter.region;
 
-import co.crystaldev.client.feature.impl.hud.MapWriter;
+import com.github.timmekeclient.feature.impl.hud.MapWriter;
 
 public class ChunkRender {
     public static final byte FLAG_UNPROCESSED = 0;

@@ -1,7 +1,7 @@
 package com.github.lunatrius.schematica.client.renderer.chunk.proxy;
 
-import co.crystaldev.client.mixin.accessor.net.minecraft.client.renderer.chunk.MixinRenderChunk;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
+import com.github.timmekeclient.mixin.accessor.net.minecraft.client.renderer.chunk.MixinRenderChunk;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.chunk.ChunkCompileTaskGenerator;
 import net.minecraft.client.renderer.chunk.CompiledChunk;
@@ -36,9 +36,3 @@ public class SchematicRenderChunkList extends ListedRenderChunk {
         super.rebuildChunk(x, y, z, generator);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematica\client\renderer\chunk\proxy\SchematicRenderChunkList.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

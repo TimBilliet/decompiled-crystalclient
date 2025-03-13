@@ -1,6 +1,6 @@
 package wdl;
 
-import co.crystaldev.client.Client;
+import com.github.timmekeclient.Client;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.ListMultimap;

@@ -1,7 +1,7 @@
 package com.github.lunatrius.schematica.util;
 
-import co.crystaldev.client.util.objects.Transformation;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
+import com.github.timmekeclient.util.objects.Transformation;
 import net.minecraft.util.EnumFacing;
 
 import java.io.File;
@@ -42,9 +42,3 @@ public class LoadedSchematic {
         return this.name;
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematic\\util\LoadedSchematic.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

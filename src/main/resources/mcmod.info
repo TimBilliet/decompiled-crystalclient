@@ -1,11 +1,11 @@
 [
   {
-    "modid": "crystalclient",
-    "name": "Forge Crystal Client",
-    "description": "Improved version of Forge Crystal Client with extra features",
+    "modid": "timmekeclient",
+    "name": "Forge Timmeke_ Client",
+    "description": "Minecraft forge factions client based on Crystal Client",
     "version": "${version}",
     "mcversion": "${mcversion}",
-    "url": "https://github.com/TimBilliet/decompiled-crystalclient",
+    "url": "https://github.com/TimBilliet/timmeke-client",
     "authorList": ["Timmeke_"],
     "logoFile": "",
     "screenshots": [],

@@ -1,8 +1,8 @@
 package com.github.lunatrius.core.handler;
 
-import co.crystaldev.client.event.EventBus;
-import co.crystaldev.client.event.SubscribeEvent;
-import co.crystaldev.client.event.impl.tick.ClientTickEvent;
+import com.github.timmekeclient.event.EventBus;
+import com.github.timmekeclient.event.SubscribeEvent;
+import com.github.timmekeclient.event.impl.tick.ClientTickEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 

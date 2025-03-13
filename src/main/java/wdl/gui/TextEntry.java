@@ -36,9 +36,3 @@ class TextEntry implements GuiListExtended.IGuiListEntry {
     public void setSelected(int slotIndex, int p_178011_2_, int p_178011_3_) {
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\wdl\gui\TextEntry.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

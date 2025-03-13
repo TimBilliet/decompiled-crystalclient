@@ -1,7 +1,6 @@
 package com.github.lunatrius.schematica.client.gui.control;
 
 import com.github.lunatrius.core.client.gui.GuiScreenBase;
-//import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.gui.buttons.GuiUnicodeGlyphButton;
 import com.github.lunatrius.schematica.client.util.BlockList;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
@@ -9,6 +8,7 @@ import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.util.ItemStackSortType;
+import com.github.timmekeclient.feature.impl.factions.Schematica;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -17,7 +17,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.apache.commons.io.IOUtils;
-import co.crystaldev.client.feature.impl.factions.Schematica;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -140,9 +139,3 @@ public class GuiSchematicMaterials extends GuiScreenBase {
         }
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematica\client\gui\control\GuiSchematicMaterials.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

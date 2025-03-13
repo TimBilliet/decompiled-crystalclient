@@ -1,7 +1,7 @@
 package mchorse.emoticons.cosmetic.emote;
 
-import co.crystaldev.client.command.ThumbnailCommand;
-import co.crystaldev.client.util.javax.Vector4f;
+import com.github.timmekeclient.command.ThumbnailCommand;
+import com.github.timmekeclient.util.javax.Vector4f;
 import mchorse.emoticons.api.animation.model.AnimatorEmoticonsController;
 import mchorse.emoticons.common.EmoteAPI;
 import mchorse.emoticons.common.emotes.Emote;

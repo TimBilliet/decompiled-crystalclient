@@ -1,6 +1,6 @@
 package mchorse.mclib.utils;
 
-import co.crystaldev.client.util.javax.Matrix4f;
+import com.github.timmekeclient.util.javax.Matrix4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 

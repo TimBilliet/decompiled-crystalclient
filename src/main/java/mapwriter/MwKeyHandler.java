@@ -1,11 +1,11 @@
 package mapwriter;
 
-import co.crystaldev.client.Client;
-import co.crystaldev.client.feature.impl.hud.MapWriter;
+import com.github.timmekeclient.Client;
+import com.github.timmekeclient.feature.impl.hud.MapWriter;
 import net.minecraft.client.settings.KeyBinding;
 
 public class MwKeyHandler {
-    private static final String category = "Crystal Client - " + (MapWriter.getInstance()).name;
+    private static final String category = "Timmeke_ Client - " + (MapWriter.getInstance()).name;
 
     public static KeyBinding keyMapGui = new KeyBinding("key.mw_open_gui", 50, category);
 
@@ -22,9 +22,3 @@ public class MwKeyHandler {
         Client.registerKeyBinding(keyMapMode);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\mapwriter\MwKeyHandler.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

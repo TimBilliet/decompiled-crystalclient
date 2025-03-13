@@ -1,8 +1,8 @@
 package mchorse.emoticons;
 
-import co.crystaldev.client.Client;
-import co.crystaldev.client.Reference;
-import co.crystaldev.client.event.EventBus;
+import com.github.timmekeclient.Client;
+import com.github.timmekeclient.Reference;
+import com.github.timmekeclient.event.EventBus;
 import mchorse.emoticons.client.EntityModelHandler;
 import mchorse.emoticons.client.RenderLightmap;
 import mchorse.emoticons.client.UserUpdateHandler;

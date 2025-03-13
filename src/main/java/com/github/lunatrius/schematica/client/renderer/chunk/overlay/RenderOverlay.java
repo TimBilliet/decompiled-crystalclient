@@ -1,8 +1,5 @@
 package com.github.lunatrius.schematica.client.renderer.chunk.overlay;
 
-import co.crystaldev.client.feature.impl.factions.Schematica;
-import co.crystaldev.client.mixin.accessor.net.minecraft.client.renderer.chunk.MixinRenderChunk;
-import co.crystaldev.client.util.type.Tuple;
 import com.github.lunatrius.core.client.renderer.GeometryTessellator;
 import com.github.lunatrius.schematica.block.state.BlockStateHelper;
 import com.github.lunatrius.schematica.client.renderer.chunk.CompiledOverlay;
@@ -10,6 +7,9 @@ import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Reference;
+import com.github.timmekeclient.feature.impl.factions.Schematica;
+import com.github.timmekeclient.mixin.accessor.net.minecraft.client.renderer.chunk.MixinRenderChunk;
+import com.github.timmekeclient.util.type.Tuple;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.material.Material;

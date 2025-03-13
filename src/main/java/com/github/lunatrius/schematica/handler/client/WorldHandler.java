@@ -1,12 +1,12 @@
 package com.github.lunatrius.schematica.handler.client;
 
-import co.crystaldev.client.event.SubscribeEvent;
-import co.crystaldev.client.event.impl.init.ShutdownEvent;
-import co.crystaldev.client.event.impl.world.WorldEvent;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.renderer.RenderSchematic;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Reference;
+import com.github.timmekeclient.event.SubscribeEvent;
+import com.github.timmekeclient.event.impl.init.ShutdownEvent;
+import com.github.timmekeclient.event.impl.world.WorldEvent;
 import net.minecraft.world.IWorldAccess;
 import net.minecraft.world.World;
 

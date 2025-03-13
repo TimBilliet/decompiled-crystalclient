@@ -1,0 +1,78 @@
+package com.github.timmekeclient.mixin.net.minecraft.client.network;
+
+import com.github.timmekeclient.Resources;
+import com.github.timmekeclient.command.ThumbnailCommand;
+import com.github.timmekeclient.duck.NetworkPlayerInfoExt;
+import com.github.timmekeclient.handler.PlayerHandler;
+import com.mojang.authlib.GameProfile;
+import net.minecraft.client.network.NetworkPlayerInfo;
+import net.minecraft.network.play.server.S38PacketPlayerListItem;
+import net.minecraft.util.ResourceLocation;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+
+@Mixin({NetworkPlayerInfo.class})
+public abstract class MixinNetworkPlayerInfo implements NetworkPlayerInfoExt {
+    @Shadow
+    @Final
+    private GameProfile gameProfile;
+
+    @Unique
+    private boolean crystal$onlineStatus = false;
+
+    @Unique
+    private boolean orbit$onlineStatus = false;
+
+    @Inject(method = {"getSkinType"}, cancellable = true, at = {@At("HEAD")})
+    private void getSkinType(CallbackInfoReturnable<String> ci) {
+        if (ThumbnailCommand.isRendering())
+            ci.setReturnValue("default");
+    }
+
+    @Inject(method = {"getLocationSkin"}, cancellable = true, at = {@At("HEAD")})
+    private void getLocationSkin(CallbackInfoReturnable<ResourceLocation> ci) {
+        if (ThumbnailCommand.isRendering())
+            ci.setReturnValue(Resources.DEFAULT_SKIN);
+    }
+
+    @Inject(method = {"getLocationCape"}, cancellable = true, at = {@At("HEAD")})
+    private void getLocationCape(CallbackInfoReturnable<ResourceLocation> ci) {
+        if (ThumbnailCommand.isRendering())
+            ci.setReturnValue(null);
+    }
+
+    @Inject(method = {"<init>(Lcom/mojang/authlib/GameProfile;)V"}, at = {@At("RETURN")})
+    public void constructor$1(GameProfile p_i46294_1_, CallbackInfo ci) {
+        setCrystalOnlineStatus(PlayerHandler.getInstance().getOnlineUsers().contains(this.gameProfile.getId()));
+        setOrbitOnlineStatus(PlayerHandler.getInstance().getOrbitUsers().contains(this.gameProfile.getId()));
+
+    }
+
+    @Inject(method = {"<init>(Lnet/minecraft/network/play/server/S38PacketPlayerListItem$AddPlayerData;)V"}, at = {@At("RETURN")})
+    public void constructor$2(S38PacketPlayerListItem.AddPlayerData p_i46295_1_, CallbackInfo ci) {
+        setCrystalOnlineStatus(PlayerHandler.getInstance().getOnlineUsers().contains(this.gameProfile.getId()));
+        setOrbitOnlineStatus(PlayerHandler.getInstance().getOrbitUsers().contains(this.gameProfile.getId()));
+    }
+
+    public void setCrystalOnlineStatus(boolean online) {
+        this.crystal$onlineStatus = online;
+    }
+
+    public void setOrbitOnlineStatus(boolean online) {
+        this.orbit$onlineStatus = online;
+    }
+
+    public boolean isOnCrystalClient() {
+        return this.crystal$onlineStatus;
+    }
+
+    public boolean isOnOrbitClient() {
+        return this.orbit$onlineStatus;
+    }
+}

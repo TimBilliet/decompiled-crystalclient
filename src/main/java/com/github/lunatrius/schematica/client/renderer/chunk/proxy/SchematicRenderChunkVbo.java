@@ -1,7 +1,7 @@
 package com.github.lunatrius.schematica.client.renderer.chunk.proxy;
 
-import co.crystaldev.client.mixin.accessor.net.minecraft.client.renderer.chunk.MixinRenderChunk;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
+import com.github.timmekeclient.mixin.accessor.net.minecraft.client.renderer.chunk.MixinRenderChunk;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.chunk.ChunkCompileTaskGenerator;
 import net.minecraft.client.renderer.chunk.CompiledChunk;

@@ -1,8 +1,8 @@
 package mchorse.emoticons.skin_n_bones.api.bobj;
 
-import co.crystaldev.client.util.javax.Matrix4f;
-import co.crystaldev.client.util.javax.Vector2f;
-import co.crystaldev.client.util.javax.Vector3f;
+import com.github.timmekeclient.util.javax.Matrix4f;
+import com.github.timmekeclient.util.javax.Vector2f;
+import com.github.timmekeclient.util.javax.Vector3f;
 import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.BufferedReader;

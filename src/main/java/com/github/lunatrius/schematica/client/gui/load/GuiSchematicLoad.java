@@ -1,7 +1,5 @@
 package com.github.lunatrius.schematica.client.gui.load;
 
-import co.crystaldev.client.Client;
-import co.crystaldev.client.util.enums.ChatColor;
 import com.github.lunatrius.core.client.gui.GuiScreenBase;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.gui.buttons.LoadedSchematicButton;
@@ -10,6 +8,8 @@ import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.util.FileFilterSchematic;
 import com.github.lunatrius.schematica.util.LoadedSchematic;
+import com.github.timmekeclient.Client;
+import com.github.timmekeclient.util.enums.ChatColor;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
@@ -153,7 +153,7 @@ public class GuiSchematicLoad extends GuiScreenBase {
 
     protected void keyTyped(char typedChar, int keyCode) throws IOException {
         super.keyTyped(typedChar, keyCode);
-        if (this.moduleSearchBar.isFocused() && (this.moduleSearchBar.getText().length() != 0 || keyCode != (co.crystaldev.client.feature.impl.factions.Schematica.getInstance()).loadSchematic.getKeyCode())) {
+        if (this.moduleSearchBar.isFocused() && (this.moduleSearchBar.getText().length() != 0 || keyCode != (com.github.timmekeclient.feature.impl.factions.Schematica.getInstance()).loadSchematic.getKeyCode())) {
             this.moduleSearchBar.textboxKeyTyped(typedChar, keyCode);
             searchString = this.moduleSearchBar.getText();
             initGui();
@@ -236,9 +236,3 @@ public class GuiSchematicLoad extends GuiScreenBase {
         return text.toLowerCase().contains(this.moduleSearchBar.getText().toLowerCase());
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematica\client\gui\load\GuiSchematicLoad.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,8 +1,8 @@
 package com.github.lunatrius.schematica.handler;
 
-import co.crystaldev.client.event.SubscribeEvent;
-import co.crystaldev.client.event.impl.init.ConfigEvent;
 import com.github.lunatrius.schematica.Schematica;
+import com.github.timmekeclient.event.SubscribeEvent;
+import com.github.timmekeclient.event.impl.init.ConfigEvent;
 
 import java.io.File;
 import java.util.ArrayDeque;
@@ -75,7 +75,7 @@ public class ConfigurationHandler {
     public static String sortType = "";
 
     public static void loadConfiguration() {
-        co.crystaldev.client.feature.impl.factions.Schematica instance = co.crystaldev.client.feature.impl.factions.Schematica.getInstance();
+        com.github.timmekeclient.feature.impl.factions.Schematica instance = com.github.timmekeclient.feature.impl.factions.Schematica.getInstance();
         placeDelay = instance.placementDelay;
         timeout = instance.timeout;
         placeDistance = instance.placementDistance;
@@ -102,7 +102,7 @@ public class ConfigurationHandler {
 
     @SubscribeEvent
     public void onConfigurationChangedEvent(ConfigEvent.ModuleSave.Post event) {
-        if (event.getModule() instanceof co.crystaldev.client.feature.impl.factions.Schematica)
+        if (event.getModule() instanceof com.github.timmekeclient.feature.impl.factions.Schematica)
             loadConfiguration();
     }
 }

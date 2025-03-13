@@ -1,6 +1,6 @@
 package com.github.lunatrius.schematica.block.state;
 
-import co.crystaldev.client.feature.impl.factions.Schematica;
+import com.github.timmekeclient.feature.impl.factions.Schematica;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.UnmodifiableIterator;
 import net.minecraft.block.*;
@@ -67,9 +67,3 @@ public class BlockStateHelper {
         return (a == b);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematica\block\state\BlockStateHelper.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

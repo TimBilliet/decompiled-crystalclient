@@ -1,8 +1,6 @@
 package com.github.lunatrius.schematica.client.printer.nbtsync;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.network.INetHandler;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C12PacketUpdateSign;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySign;
@@ -25,9 +23,3 @@ public class NBTSyncSign extends NBTSync {
         return false;
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematica\client\printer\nbtsync\NBTSyncSign.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

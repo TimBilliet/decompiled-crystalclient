@@ -3,7 +3,6 @@ package com.github.lunatrius.schematica.util;
 import com.github.lunatrius.schematica.client.util.BlockList;
 import com.github.lunatrius.schematica.reference.Reference;
 
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 

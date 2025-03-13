@@ -1,7 +1,7 @@
 package mchorse.emoticons.skin_n_bones.api.animation;
 
-import co.crystaldev.client.Client;
-import co.crystaldev.client.util.javax.*;
+import com.github.timmekeclient.Client;
+import com.github.timmekeclient.util.javax.*;
 import mchorse.emoticons.skin_n_bones.api.bobj.BOBJArmature;
 import mchorse.emoticons.skin_n_bones.api.bobj.BOBJLoader;
 import net.minecraft.client.Minecraft;

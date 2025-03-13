@@ -1,4 +1,4 @@
-# Working forge version of crystalclient with extra features
+# Minecraft forge factions client based on Crystal Client
 
 ## Extra added features
 - Ingame account switcher and ability to use offline accounts
@@ -13,4 +13,4 @@
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"
-2. You can find the jar file at build/libs/CrystalClient_Improved-x.x.x.jar
+2. You can find the jar file at build/libs/Timmeke_Client-x.x.x.jar

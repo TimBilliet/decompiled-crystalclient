@@ -1,6 +1,6 @@
 package mapwriter.region;
 
-import co.crystaldev.client.Reference;
+import com.github.timmekeclient.Reference;
 import mapwriter.util.Logging;
 import org.apache.logging.log4j.Logger;
 

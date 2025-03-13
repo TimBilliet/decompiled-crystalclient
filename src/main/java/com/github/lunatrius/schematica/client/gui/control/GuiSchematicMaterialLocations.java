@@ -1,8 +1,8 @@
 package com.github.lunatrius.schematica.client.gui.control;
 
-import co.crystaldev.client.feature.impl.factions.Schematica;
 import com.github.lunatrius.core.client.gui.GuiScreenBase;
 import com.github.lunatrius.schematica.client.util.BlockList;
+import com.github.timmekeclient.feature.impl.factions.Schematica;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;
@@ -68,9 +68,3 @@ public class GuiSchematicMaterialLocations extends GuiScreenBase {
         super.drawScreen(x, y, partialTicks);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematica\client\gui\control\GuiSchematicMaterialLocations.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

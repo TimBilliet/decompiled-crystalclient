@@ -1,0 +1,30 @@
+#
+# Timmeke_ Client
+
+
+# Keybindings
+timmekeclient.key.open_gui=Open GUI
+timmekeclient.key.emote_wheel=Open Emote Wheel
+timmekeclient.key.create_waypoint=Create Waypoint
+timmekeclient.key.toggle_perspective_mod=Toggle Perspective Mod
+timmekeclient.key.toggle_chunk_borders=Toggle Chunk Borders
+timmekeclient.key.toggle_cannon_view=Toggle Cannon View
+timmekeclient.key.open_adjust_helper_gui=Open GUI
+timmekeclient.key.next_adjust=Next Available Adjust
+timmekeclient.key.shout_current_adjust=Shout Current Adjust
+timmekeclient.key.trace_all_materials=Trace All Materials
+timmekeclient.key.toggle_schem_tracers=Toggle Schematic ESP
+timmekeclient.key.toggle_schem_auto_bridge=Toggle Schematic Auto Bridge
+timmekeclient.key.toggle_group_chat=Toggle Group Chat
+timmekeclient.key.shout_current_location=Shout Location
+timmekeclient.key.ping_group_location=Ping Location To Group
+timmekeclient.key.shout_patchcrumb_location=Shout Location
+timmekeclient.key.start_stop_stopwatch=Start/Stop Stopwatch
+timmekeclient.key.reset_stopwatch=Reset Stopwatch
+timmekeclient.key.start_recording=Start Recording
+timmekeclient.key.reset_recording=Reset Recording
+timmekeclient.key.previous_frame=Previous Frame
+timmekeclient.key.next_frame=Next Frame
+timmekeclient.key.select_barrel_block=Select Barrel Block
+timmekeclient.key.select_power_block=Select Power Block
+timmekeclient.key.calc_float_location=Calculate Float Location

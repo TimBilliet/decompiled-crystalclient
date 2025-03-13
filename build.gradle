@@ -19,8 +19,8 @@ apply plugin: "net.minecraftforge.gradle.forge"
 apply plugin: 'org.spongepowered.mixin'
 
 version = "1.3.2"
-group = "co.crystaldev"
-archivesBaseName = "CrystalClient_Improved"
+group = "com.github.timmekeclient"
+archivesBaseName = "Timmeke_Client"
 
 sourceCompatibility = targetCompatibility = 1.8
 compileJava.options.encoding = "UTF-8"
@@ -87,18 +87,18 @@ reobf {
 
 jar {
     manifest.attributes(
-            "FMLCorePlugin": "co.crystaldev.client.ForgeCoreMod",
+            "FMLCorePlugin": "com.github.timmekeclient.ForgeCoreMod",
             "ForceLoadAsMod": true,
             "TweakOrder": 0,
             "ModSide": "CLIENT",
             'FMLCorePluginContainsFMLMod': true,
-            'TweakClass': 'co.crystaldev.client.tweaker.CrystalClientTweaker',
-            'MixinConfigs': 'mixins.crystalclient.json'
+            'TweakClass': 'com.github.timmekeclient.tweaker.TimmekeClientTweaker',
+            'MixinConfigs': 'mixins.timmekeclient.json'
     )
 }
 
 sourceSets {
     main {
-        ext.refMap = "mixins.crystalclient.refmap.json"
+        ext.refMap = "mixins.timmekeclient.refmap.json"
     }
 }

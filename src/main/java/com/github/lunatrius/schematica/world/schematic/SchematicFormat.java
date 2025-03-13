@@ -1,9 +1,9 @@
 package com.github.lunatrius.schematica.world.schematic;
 
-import co.crystaldev.client.mixin.accessor.net.minecraft.nbt.MixinNBTTagCompound;
 import com.github.lunatrius.schematica.api.ISchematic;
 import com.github.lunatrius.schematica.api.event.PostSchematicCaptureEvent;
 import com.github.lunatrius.schematica.reference.Reference;
+import com.github.timmekeclient.mixin.accessor.net.minecraft.nbt.MixinNBTTagCompound;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
@@ -75,9 +75,3 @@ public abstract class SchematicFormat {
 
     public static String FORMAT_DEFAULT = "Alpha";
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematica\world\schematic\SchematicFormat.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

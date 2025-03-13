@@ -1,7 +1,6 @@
 package com.github.lunatrius.schematica.block.state.pattern;
 
 import com.github.lunatrius.core.exceptions.LocalizedException;
-import com.google.common.base.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
@@ -113,9 +112,3 @@ public class BlockStateReplacer {
         }
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematica\block\state\pattern\BlockStateReplacer.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -1,6 +1,6 @@
 package mchorse.emoticons.common.emotes;
 
-import co.crystaldev.client.util.javax.Vector4f;
+import com.github.timmekeclient.util.javax.Vector4f;
 import mchorse.emoticons.api.animation.model.AnimatorEmoticonsController;
 import mchorse.emoticons.skin_n_bones.api.bobj.BOBJArmature;
 import mchorse.emoticons.skin_n_bones.api.bobj.BOBJBone;

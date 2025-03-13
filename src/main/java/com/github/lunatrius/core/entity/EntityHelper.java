@@ -43,9 +43,3 @@ public class EntityHelper {
         return vec.set((int) Math.floor(entity.posX), (int) Math.floor(entity.posY), (int) Math.floor(entity.posZ));
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\core\entity\EntityHelper.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

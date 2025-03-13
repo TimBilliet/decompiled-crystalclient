@@ -1,11 +1,5 @@
 package com.github.lunatrius.schematica.client.gui.control;
 
-import co.crystaldev.client.feature.settings.ClientOptions;
-import co.crystaldev.client.handler.SchematicHandler;
-import co.crystaldev.client.mixin.accessor.net.minecraft.util.MixinEnumFacing;
-import co.crystaldev.client.util.enums.ChatColor;
-import co.crystaldev.client.util.objects.Schematic;
-import co.crystaldev.client.util.objects.Transformation;
 import com.github.lunatrius.core.client.gui.GuiNumericField;
 import com.github.lunatrius.core.client.gui.GuiScreenBase;
 import com.github.lunatrius.schematica.Schematica;
@@ -20,6 +14,12 @@ import com.github.lunatrius.schematica.client.util.RotationHelper;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.util.LoadedSchematic;
+import com.github.timmekeclient.feature.settings.ClientOptions;
+import com.github.timmekeclient.handler.SchematicHandler;
+import com.github.timmekeclient.mixin.accessor.net.minecraft.util.MixinEnumFacing;
+import com.github.timmekeclient.util.enums.ChatColor;
+import com.github.timmekeclient.util.objects.Schematic;
+import com.github.timmekeclient.util.objects.Transformation;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.resources.I18n;

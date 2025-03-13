@@ -1,6 +1,6 @@
 package mapwriter.region;
 
-import co.crystaldev.client.Reference;
+import com.github.timmekeclient.Reference;
 import mapwriter.util.Logging;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTBase;

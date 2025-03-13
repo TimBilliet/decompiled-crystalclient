@@ -1,6 +1,6 @@
 package mchorse.mclib.utils;
 
-import co.crystaldev.client.util.javax.Vector3f;
+import com.github.timmekeclient.util.javax.Vector3f;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufInputStream;
 import io.netty.handler.codec.EncoderException;

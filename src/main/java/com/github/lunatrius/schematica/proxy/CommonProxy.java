@@ -1,15 +1,16 @@
 package com.github.lunatrius.schematica.proxy;
 
-import co.crystaldev.client.feature.impl.factions.Schematica;
 import com.github.lunatrius.core.util.MBlockPos;
 import com.github.lunatrius.schematica.api.ISchematic;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.handler.QueueTickHandler;
 import com.github.lunatrius.schematica.nbt.NBTConversionException;
 import com.github.lunatrius.schematica.nbt.NBTHelper;
+import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.world.chunk.SchematicContainer;
 import com.github.lunatrius.schematica.world.schematic.SchematicUtil;
 import com.github.lunatrius.schematica.world.storage.Schematic;
+import com.github.timmekeclient.feature.impl.factions.Schematica;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.block.state.IBlockState;
@@ -20,7 +21,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;
 import net.minecraft.world.World;
-import com.github.lunatrius.schematica.reference.Reference;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,7 +32,7 @@ public abstract class CommonProxy {
     public boolean isLoadEnabled = true;
 
     public void init() {
-        Reference.logger = co.crystaldev.client.Reference.LOGGER;
+        Reference.logger = com.github.timmekeclient.Reference.LOGGER;
     }
 
     public void createFolders() {
@@ -164,9 +164,3 @@ public abstract class CommonProxy {
 
     public abstract File getPlayerSchematicDirectory(EntityPlayer paramEntityPlayer, boolean paramBoolean);
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\com\github\lunatrius\schematica\proxy\CommonProxy.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

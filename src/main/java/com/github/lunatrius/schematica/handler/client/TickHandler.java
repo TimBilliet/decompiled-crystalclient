@@ -1,14 +1,14 @@
 package com.github.lunatrius.schematica.handler.client;
 
-import co.crystaldev.client.event.SubscribeEvent;
-import co.crystaldev.client.event.impl.network.ServerDisconnectEvent;
-import co.crystaldev.client.event.impl.tick.ClientTickEvent;
 import com.github.lunatrius.schematica.Schematica;
 import com.github.lunatrius.schematica.client.printer.SchematicPrinter;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.handler.ConfigurationHandler;
 import com.github.lunatrius.schematica.proxy.ClientProxy;
 import com.github.lunatrius.schematica.reference.Reference;
+import com.github.timmekeclient.event.SubscribeEvent;
+import com.github.timmekeclient.event.impl.network.ServerDisconnectEvent;
+import com.github.timmekeclient.event.impl.tick.ClientTickEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.WorldClient;
@@ -23,7 +23,7 @@ public class TickHandler {
     @SubscribeEvent
     public void onClientDisconnect(ServerDisconnectEvent event) {
         Reference.logger.info("Scheduling client settings reset.");
-        if (!(co.crystaldev.client.feature.impl.factions.Schematica.getInstance()).persist)
+        if (!(com.github.timmekeclient.feature.impl.factions.Schematica.getInstance()).persist)
             ClientProxy.isPendingReset = true;
     }
 

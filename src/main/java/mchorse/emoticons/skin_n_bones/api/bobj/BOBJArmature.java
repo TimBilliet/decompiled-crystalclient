@@ -1,6 +1,6 @@
 package mchorse.emoticons.skin_n_bones.api.bobj;
 
-import co.crystaldev.client.util.javax.Matrix4f;
+import com.github.timmekeclient.util.javax.Matrix4f;
 
 import java.util.*;
 

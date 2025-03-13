@@ -1,8 +1,5 @@
 package com.github.lunatrius.schematica.client.util;
 
-import co.crystaldev.client.handler.NotificationHandler;
-import co.crystaldev.client.mixin.accessor.net.minecraft.util.MixinEnumFacing;
-import co.crystaldev.client.util.enums.ChatColor;
 import com.github.lunatrius.core.util.BlockPosHelper;
 import com.github.lunatrius.core.util.MBlockPos;
 import com.github.lunatrius.schematica.api.ISchematic;
@@ -10,23 +7,22 @@ import com.github.lunatrius.schematica.block.state.BlockStateHelper;
 import com.github.lunatrius.schematica.client.world.SchematicWorld;
 import com.github.lunatrius.schematica.reference.Reference;
 import com.github.lunatrius.schematica.world.storage.Schematic;
+import com.github.timmekeclient.handler.NotificationHandler;
+import com.github.timmekeclient.mixin.accessor.net.minecraft.util.MixinEnumFacing;
+import com.github.timmekeclient.util.enums.ChatColor;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLever;
 import net.minecraft.block.BlockLog;
+import net.minecraft.block.BlockLog.EnumAxis;
 import net.minecraft.block.BlockQuartz;
+import net.minecraft.block.BlockQuartz.EnumType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
-import java.util.List;
-
-import net.minecraft.block.BlockLog.EnumAxis;
-import net.minecraft.block.BlockQuartz.EnumType;
-import net.minecraft.util.BlockPos;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.RegistryNamespacedDefaultedByKey;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Vec3i;
+import net.minecraft.util.*;
 import net.minecraft.util.EnumFacing.Axis;
+
+import java.util.List;
 
 public class RotationHelper {
     public static final RotationHelper INSTANCE = new RotationHelper();

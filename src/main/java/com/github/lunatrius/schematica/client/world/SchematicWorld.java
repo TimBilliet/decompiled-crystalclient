@@ -1,12 +1,12 @@
 package com.github.lunatrius.schematica.client.world;
 
-import co.crystaldev.client.util.type.Tuple;
 import com.github.lunatrius.core.util.BlockPosHelper;
 import com.github.lunatrius.core.util.MBlockPos;
 import com.github.lunatrius.schematica.api.ISchematic;
 import com.github.lunatrius.schematica.block.state.pattern.BlockStateReplacer;
 import com.github.lunatrius.schematica.client.world.chunk.ChunkProviderSchematic;
 import com.github.lunatrius.schematica.reference.Reference;
+import com.github.timmekeclient.util.type.Tuple;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;

@@ -349,7 +349,7 @@ public class FloatFinder extends Module implements IRegistrable {
     }
 
     public void selectBarrelBlock() {
-        if (mc.thePlayer == null)
+        if (mc.thePlayer == null || mc.objectMouseOver.getBlockPos() == null)
             return;
         barrelBlockPos = mc.objectMouseOver.getBlockPos();
         horizontal = null;

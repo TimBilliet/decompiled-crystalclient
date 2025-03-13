@@ -358,7 +358,7 @@ public class FloatFinder extends Module implements IRegistrable {
     }
 
     public void selectPowerBlock() {
-        if (mc.thePlayer == null)
+        if (mc.thePlayer == null || mc.objectMouseOver.getBlockPos() == null)
             return;
         powerBlockPos = mc.objectMouseOver.getBlockPos().up();
         horizontal = null;

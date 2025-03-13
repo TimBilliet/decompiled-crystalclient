@@ -6,11 +6,11 @@
 - Float finder
 - Clear menu/inventory/container backgrounds
 - Keep crosshair in spectator mode
-- Auto sell and deposit for collection chests
+- Auto sell and deposit for collection chests on SaicoPvP
 - Show orbit players on tab and on nametag
 - Looking at block coordinates hud
 - Auto wall check for SaicoPvP
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"
-2. You can find the jar file at build/libs/client-1.0.jar
+2. You can find the jar file at build/libs/CrystalClient_Improved-x.x.x.jar

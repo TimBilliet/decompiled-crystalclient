@@ -133,7 +133,7 @@ public class ScreenMapWriter extends Screen {
             {
                 onClick = ()->{
                     PacketClearChunkHighlights packet = new PacketClearChunkHighlights();
-                    Client.sendPacket(packet);
+//                    Client.sendPacket(packet);
                     MwAPI.getDataProvider(GroupChunkProvider.class).setAwaitingUpdate(true);
                     field.setText("");
                 };

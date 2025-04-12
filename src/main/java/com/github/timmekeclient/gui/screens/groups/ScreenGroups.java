@@ -14,6 +14,7 @@ import com.github.timmekeclient.gui.buttons.groups.GroupAddButton;
 import com.github.timmekeclient.gui.buttons.groups.GroupButton;
 import com.github.timmekeclient.gui.screens.ScreenBase;
 import com.github.timmekeclient.gui.screens.screen_overlay.OverlayCreateGroup;
+import com.github.timmekeclient.handler.NotificationHandler;
 import com.github.timmekeclient.util.RenderUtils;
 import com.github.timmekeclient.util.enums.GroupCategory;
 import net.minecraft.client.Minecraft;
@@ -114,7 +115,9 @@ public class ScreenGroups extends ScreenBase {
     public void onButtonInteract(Button button, int mouseX, int mouseY, int mouseButton) {
         super.onButtonInteract(button, mouseX, mouseY, mouseButton);
         if (button instanceof GroupAddButton)
-            addOverlay((Screen) new OverlayCreateGroup(this.pane.x + this.pane.width / 2 - 100, this.pane.y + this.pane.height / 2, 200));
+            NotificationHandler.addNotification("Group functionality is currently disabled");
+
+//            addOverlay((Screen) new OverlayCreateGroup(this.pane.x + this.pane.width / 2 - 100, this.pane.y + this.pane.height / 2, 200));
     }
 
     public void keyTyped(char charTyped, int keyCode) {

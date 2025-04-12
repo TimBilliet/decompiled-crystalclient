@@ -15,7 +15,7 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class RPCHandler implements IPCListener {
-    private static final long APPLICATION_ID = 798721912616124416L;
+    private static final long APPLICATION_ID = 1360635950786416813L;
 
     private static final long UPDATE_PERIOD = 120000L;
 
@@ -41,7 +41,7 @@ public class RPCHandler implements IPCListener {
                 if (isActive())
                     return;
                 this.startTimestamp = OffsetDateTime.now();
-                this.client = new IPCClient(798721912616124416L);
+                this.client = new IPCClient(APPLICATION_ID);
                 this.client.setListener(this);
                 try {
                     this.client.connect(new com.jagrosh.discordipc.entities.DiscordBuild[0]);
@@ -95,7 +95,7 @@ public class RPCHandler implements IPCListener {
             public void run() {
                 RPCHandler.this.updatePresence();
             }
-        }, 0L, 120000L);
+        }, 0L, UPDATE_PERIOD);
     }
 
     public void onClose(IPCClient client, JSONObject json) {

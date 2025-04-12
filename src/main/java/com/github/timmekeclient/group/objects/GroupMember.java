@@ -79,16 +79,17 @@ public class GroupMember {
     }
 
     public boolean isOnline() {
-        if (System.currentTimeMillis() - this.lastUpdate > 5000L) {
-            boolean result = false;
-            for (NetworkPlayerInfo player : Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap()) {
-                if (player.getGameProfile().getId().equals(this.uuid) && ((NetworkPlayerInfoExt) player).isOnCrystalClient())
-                    result = true;
-            }
-            this.lastUpdate = System.currentTimeMillis();
-            return this.online = result;
-        }
-        return this.online;
+//        if (System.currentTimeMillis() - this.lastUpdate > 5000L) {
+//            boolean result = false;
+//            for (NetworkPlayerInfo player : Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap()) {
+//                if (player.getGameProfile().getId().equals(this.uuid) && ((NetworkPlayerInfoExt) player).isOnCrystalClient())
+//                    result = true;
+//            }
+//            this.lastUpdate = System.currentTimeMillis();
+//            return this.online = result;
+//        }
+//        return this.online;
+        return false;
     }
 
     public boolean isAdmin() {

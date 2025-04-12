@@ -22,7 +22,7 @@ public class NetHandlerClient implements INetHandler {
             ByteBuf buf = Packet.getPacketBuf(packet);
             WebClient.getInstance().send(buf.array());
         } catch (WebsocketNotConnectedException ex) {
-            Client.getInstance().connectToSocket(true);
+//            Client.getInstance().connectToSocket(true);
         }
     }
 }

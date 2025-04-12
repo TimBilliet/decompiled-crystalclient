@@ -7,8 +7,6 @@ import com.github.timmekeclient.feature.base.Module;
 
 @ModuleInfo(name = "Nametag Editor", description = "Edit entity nameplates", category = Category.ALL)
 public class NametagEditor extends Module {
-    @Toggle(label = "Show Crystal Client Logo")
-    public boolean showCrystalClientLogo = true;
 
     @Toggle(label = "Show Orbit Client Logo")
     public boolean showOrbitClientLogo = true;

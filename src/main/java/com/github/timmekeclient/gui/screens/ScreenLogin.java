@@ -109,8 +109,12 @@ public class ScreenLogin extends ScreenPanorama {
             this.microsoftButton.setEnabled(false);
              this.thread =  new Thread(() -> {
                 try {
-                    httpServer = HttpServer.create(new InetSocketAddress(59125), 0);
-                    feedback = "HTTP server started...";
+                    try {
+                        httpServer = HttpServer.create(new InetSocketAddress(59125), 0);
+                    } catch (Exception ex){
+                        feedback = "Error: " + ex.getMessage() + "!";
+                    }
+                        feedback = "HTTP server started...";
                     httpServer.createContext("/", exchange -> {
                         try {
                             exchange.getResponseHeaders().add("Location", "http://localhost:59125/end");
@@ -141,7 +145,7 @@ public class ScreenLogin extends ScreenPanorama {
                     });
                     httpServer.start();
                     Sys.openURL("https://login.live.com/oauth20_authorize.srf?client_id=54fd49e4-2103-4044-9603-2b028c814ec3&response_type=code&scope=XboxLive.signin%20XboxLive.offline_access&redirect_uri=http://localhost:59125&prompt=select_account");
-                } catch (IOException ex) {
+                } catch (Exception ex) {
                     Reference.LOGGER.error("Unable to start MS auth server", ex);
                     if (httpServer != null) {
                         httpServer.stop(0);

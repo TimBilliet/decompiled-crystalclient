@@ -36,13 +36,13 @@ public class PacketOnlineUsers extends Packet {
     }
 
     public void process(INetHandler handler) {
-        Minecraft mc = Minecraft.getMinecraft();
-        if (mc.theWorld == null || mc.isSingleplayer() || mc.getNetHandler() == null)
-            return;
-        PlayerHandler.getInstance().getOnlineUsers().addAll(this.uuids);
-        for (NetworkPlayerInfo player : Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap()) {
-            if (this.uuids.contains(player.getGameProfile().getId()))
-                ((NetworkPlayerInfoExt) player).setCrystalOnlineStatus(true);
-        }
+//        Minecraft mc = Minecraft.getMinecraft();
+//        if (mc.theWorld == null || mc.isSingleplayer() || mc.getNetHandler() == null)
+//            return;
+//        PlayerHandler.getInstance().getOnlineUsers().addAll(this.uuids);
+//        for (NetworkPlayerInfo player : Minecraft.getMinecraft().getNetHandler().getPlayerInfoMap()) {
+//            if (this.uuids.contains(player.getGameProfile().getId()))
+//                ((NetworkPlayerInfoExt) player).setCrystalOnlineStatus(true);
+//        }
     }
 }

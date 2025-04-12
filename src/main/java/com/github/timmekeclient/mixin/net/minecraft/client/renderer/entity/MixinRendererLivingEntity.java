@@ -108,7 +108,7 @@ public abstract class MixinRendererLivingEntity<T extends EntityLivingBase> exte
                 String s = entityLivingBase.getDisplayName().getFormattedText();
                 GlStateManager.alphaFunc(516, 0.1F);
                 if (entityLivingBase.isSneaking()) {
-                    boolean isCrystalClient = ((NametagEditor.getInstance()).enabled && (NametagEditor.getInstance()).showCrystalClientLogo && Client.isOnCrystalClient(entityLivingBase));
+//                    boolean isCrystalClient = ((NametagEditor.getInstance()).enabled && (NametagEditor.getInstance()).showCrystalClientLogo && Client.isOnCrystalClient(entityLivingBase));
                     boolean isOrbitClient = NametagEditor.getInstance().enabled && NametagEditor.getInstance().showOrbitClientLogo && Client.isOnOrbitClient(entityLivingBase);
                     FontRenderer fontrenderer = getFontRendererFromRenderManager();
                     GlStateManager.pushMatrix();
@@ -124,7 +124,7 @@ public abstract class MixinRendererLivingEntity<T extends EntityLivingBase> exte
                     GlStateManager.disableTexture2D();
                     GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
                     int i = fontrenderer.getStringWidth(s) / 2;
-                    if (isCrystalClient || isOrbitClient)
+                    if (isOrbitClient)
                         i += 5;
                     Tessellator tessellator = Tessellator.getInstance();
                     WorldRenderer worldrenderer = tessellator.getWorldRenderer();
@@ -137,9 +137,9 @@ public abstract class MixinRendererLivingEntity<T extends EntityLivingBase> exte
                     GlStateManager.enableTexture2D();
                     GlStateManager.depthMask(true);
                     int x1 = -fontrenderer.getStringWidth(s) / 2;
-                    if (isCrystalClient || isOrbitClient)
+                    if (isOrbitClient)
                         x1 += 5;
-                    if (isCrystalClient || isOrbitClient) {
+                    if (isOrbitClient) {
                         CosmeticPlayer cp = ((AbstractClientPlayerExt) entityLivingBase).crystal$getCosmeticPlayer();
                         Color color = (cp == null) ? null : (Color) cp.getColor();
                         if (cp != null && color != null) {
@@ -150,9 +150,7 @@ public abstract class MixinRendererLivingEntity<T extends EntityLivingBase> exte
                         } else {
                             RenderUtils.setGlColor(16777215, 64);
                         }
-                        if (isCrystalClient)
-                            RenderUtils.drawCustomSizedResource(Resources.LOGO_WHITE, x1 - 10, -1, 9, 9);
-                        else RenderUtils.drawCustomSizedResource(Resources.LOGO_ORBIT_ORIGINAL, x1 - 10, -1, 9, 9);
+                        RenderUtils.drawCustomSizedResource(Resources.LOGO_ORBIT_ORIGINAL, x1 - 10, -1, 9, 9);
                         GlStateManager.enableBlend();
                         ShaderManager.getInstance().disableShader();
                     }

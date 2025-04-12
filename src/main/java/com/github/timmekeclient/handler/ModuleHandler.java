@@ -127,7 +127,7 @@ public class ModuleHandler implements IRegistrable {
         registerModule(Farming.class);
         registerModule(FPS.class);
         registerModule(Fullbright.class);
-        registerModule(GroupStatus.class);
+//        registerModule(GroupStatus.class);
         registerModule(HitColor.class);
         registerModule(InfoHud.class);
         registerModule(Keystrokes.class);
@@ -357,7 +357,7 @@ public class ModuleHandler implements IRegistrable {
         });
 
         EventBus.register(this, SessionUpdateEvent.class, ev -> {
-            Client.getInstance().connectToSocket(true);
+//            Client.getInstance().connectToSocket(true);
             Client.getInstance().setCurrentUuid(UUIDTypeAdapter.fromString(ev.getSession().getPlayerID()));
         });
 

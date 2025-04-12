@@ -4,6 +4,6 @@ public interface NetworkPlayerInfoExt {
     void setCrystalOnlineStatus(boolean paramBoolean);
     void setOrbitOnlineStatus(boolean paramBoolean);
 
-    boolean isOnCrystalClient();
+//    boolean isOnCrystalClient();
     boolean isOnOrbitClient();
 }

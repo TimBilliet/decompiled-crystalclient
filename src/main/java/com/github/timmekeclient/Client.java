@@ -279,36 +279,36 @@ public class Client {
             SplashScreen.renderSplash(this.mc.getTextureManager());
     }
 
-    public void connectToSocket(boolean blocking) {
-        if (this.webClient != null && !this.webClient.isClosed())
-            try {
-                this.webClient.closeBlocking();
-            } catch (InterruptedException ex) {
-                Reference.LOGGER.error("Unable to initiate closing handshake", ex);
-            }
-        ImmutableMap immutableMap = (new Builder()).put("playerId", Minecraft.getMinecraft().getSession().getProfile().getId().toString()).put("username", Minecraft.getMinecraft().getSession().getUsername()).put("client", String.format("%s-v%s-%s/%s", "crystalclient", "1.1.12", "cbd77ac", "main")).put("clientVersion", "1.1.12").put("gitCommitId", "cbd77ac1ae06d9986b554a7a9709972587397126").put("gitCommitIdAbbr", "cbd77ac").put("gitBranch", "main").build();
+//    public void connectToSocket(boolean blocking) {
+//        if (this.webClient != null && !this.webClient.isClosed())
+//            try {
+//                this.webClient.closeBlocking();
+//            } catch (InterruptedException ex) {
+//                Reference.LOGGER.error("Unable to initiate closing handshake", ex);
+//            }
+//        ImmutableMap immutableMap = (new Builder()).put("playerId", Minecraft.getMinecraft().getSession().getProfile().getId().toString()).put("username", Minecraft.getMinecraft().getSession().getUsername()).put("client", String.format("%s-v%s-%s/%s", "crystalclient", "1.1.12", "cbd77ac", "main")).put("clientVersion", "1.1.12").put("gitCommitId", "cbd77ac1ae06d9986b554a7a9709972587397126").put("gitCommitIdAbbr", "cbd77ac").put("gitBranch", "main").build();
+//
+//        try {
+//            this.webClient = new WebClient(new URI("ws://websocket.crystalclient.net:25565"), immutableMap);
+//            if (blocking) {
+//                this.webClient.connectBlocking();
+//            } else {
+//                this.webClient.connect();
+//            }
+//        } catch (Throwable ex) {
+//            Reference.LOGGER.error("Unable to connect to WebSocket", ex);
+//        }
+//    }
 
-        try {
-            this.webClient = new WebClient(new URI("ws://websocket.crystalclient.net:25565"), immutableMap);
-            if (blocking) {
-                this.webClient.connectBlocking();
-            } else {
-                this.webClient.connect();
-            }
-        } catch (Throwable ex) {
-            Reference.LOGGER.error("Unable to connect to WebSocket", ex);
-        }
-    }
-
-    public NetHandlerClient getNetHandler() {
-        if (getWebClient() == null || getWebClient().isClosed())
-            connectToSocket(true);
-        return getWebClient().getHandler();
-    }
+//    public NetHandlerClient getNetHandler() {
+//        if (getWebClient() == null || getWebClient().isClosed())
+//            connectToSocket(true);
+//        return getWebClient().getHandler();
+//    }
 
     public static void sendPacket(Packet packet) {
 //        if(AltManager.isLoggedIn()) {
-           getInstance().getNetHandler().sendPacket(packet);
+//           getInstance().getNetHandler().sendPacket(packet);
 //        }
     }
 
@@ -396,10 +396,10 @@ public class Client {
         return CLIENT_RUN_DIRECTORY;
     }
 
-    public static boolean isOnCrystalClient(Entity entity) {
-        NetworkPlayerInfo info = (entity instanceof net.minecraft.client.entity.AbstractClientPlayer) ? ((MixinAbstractClientPlayer) entity).invokeGetPlayerInfo() : null;
-        return (info != null && ((NetworkPlayerInfoExt) info).isOnCrystalClient());
-    }
+//    public static boolean isOnCrystalClient(Entity entity) {
+//        NetworkPlayerInfo info = (entity instanceof net.minecraft.client.entity.AbstractClientPlayer) ? ((MixinAbstractClientPlayer) entity).invokeGetPlayerInfo() : null;
+//        return (info != null && ((NetworkPlayerInfoExt) info).isOnCrystalClient());
+//    }
 
     public static boolean isOnOrbitClient(Entity entity) {
         NetworkPlayerInfo info = (entity instanceof net.minecraft.client.entity.AbstractClientPlayer) ? ((MixinAbstractClientPlayer) entity).invokeGetPlayerInfo() : null;

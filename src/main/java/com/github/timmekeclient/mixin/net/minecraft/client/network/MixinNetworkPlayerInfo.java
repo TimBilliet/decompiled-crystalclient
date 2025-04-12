@@ -49,28 +49,28 @@ public abstract class MixinNetworkPlayerInfo implements NetworkPlayerInfoExt {
 
     @Inject(method = {"<init>(Lcom/mojang/authlib/GameProfile;)V"}, at = {@At("RETURN")})
     public void constructor$1(GameProfile p_i46294_1_, CallbackInfo ci) {
-        setCrystalOnlineStatus(PlayerHandler.getInstance().getOnlineUsers().contains(this.gameProfile.getId()));
+//        setCrystalOnlineStatus(PlayerHandler.getInstance().getOnlineUsers().contains(this.gameProfile.getId()));
         setOrbitOnlineStatus(PlayerHandler.getInstance().getOrbitUsers().contains(this.gameProfile.getId()));
 
     }
 
     @Inject(method = {"<init>(Lnet/minecraft/network/play/server/S38PacketPlayerListItem$AddPlayerData;)V"}, at = {@At("RETURN")})
     public void constructor$2(S38PacketPlayerListItem.AddPlayerData p_i46295_1_, CallbackInfo ci) {
-        setCrystalOnlineStatus(PlayerHandler.getInstance().getOnlineUsers().contains(this.gameProfile.getId()));
+//        setCrystalOnlineStatus(PlayerHandler.getInstance().getOnlineUsers().contains(this.gameProfile.getId()));
         setOrbitOnlineStatus(PlayerHandler.getInstance().getOrbitUsers().contains(this.gameProfile.getId()));
     }
 
-    public void setCrystalOnlineStatus(boolean online) {
-        this.crystal$onlineStatus = online;
-    }
+//    public void setCrystalOnlineStatus(boolean online) {
+//        this.crystal$onlineStatus = online;
+//    }
 
     public void setOrbitOnlineStatus(boolean online) {
         this.orbit$onlineStatus = online;
     }
 
-    public boolean isOnCrystalClient() {
-        return this.crystal$onlineStatus;
-    }
+//    public boolean isOnCrystalClient() {
+//        return this.crystal$onlineStatus;
+//    }
 
     public boolean isOnOrbitClient() {
         return this.orbit$onlineStatus;

@@ -115,6 +115,7 @@ public class ClientOptions extends Module implements IRegistrable {
 
     @Toggle(label = "Red String")
     public boolean redString = false;
+    //TODO fix redstring
 
     public boolean optimizedFontRenderer = true;
 

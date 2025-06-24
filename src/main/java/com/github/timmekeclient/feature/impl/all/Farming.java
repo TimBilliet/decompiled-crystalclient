@@ -11,12 +11,18 @@ import com.github.timmekeclient.feature.base.Category;
 import com.github.timmekeclient.feature.base.Module;
 import com.github.timmekeclient.handler.NotificationHandler;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 
 @ModuleInfo(name = "Farming", description = "Helpful features for farming crops", category = Category.ALL)
 public class Farming extends Module implements IRegistrable {
     @Toggle(label = "Avoid Breaking Bottom Cane")
     public boolean avoidBreakingBottomCane = true;
+
+    @Toggle(label = "Cac Mod")
+    public boolean cacMod = false;
 
     @ReloadRenderers
     @Toggle(label = "Cactus Mode")
@@ -62,6 +68,27 @@ public class Farming extends Module implements IRegistrable {
         return flag;
     }
 
+    public boolean onPlayerRightClick(BlockPos loc, EnumFacing dir) {
+        if (cacMod) {
+            if (mc.thePlayer == null)
+                return false;
+            ItemStack stack = mc.thePlayer.getHeldItem();
+            if (stack != null) {
+                Item item = stack.getItem();
+                if (item != null) {
+                    Block block = this.mc.theWorld.getBlockState(loc).getBlock();
+                    return (Item.getIdFromItem(item) == 12 && (block instanceof net.minecraft.block.BlockCactus || block instanceof net.minecraft.block.BlockSand || (block instanceof net.minecraft.block.BlockTripWire && !dir.equals(EnumFacing.UP))))
+                            || (Item.getIdFromItem(item) == 287 && (block instanceof net.minecraft.block.BlockTripWire || block instanceof net.minecraft.block.BlockSand || (block instanceof net.minecraft.block.BlockCactus && dir.equals(EnumFacing.UP))))
+                            || (Item.getIdFromItem(item) == 81 && (block instanceof net.minecraft.block.BlockCactus));
+
+                }
+            }
+
+        }
+        return false;
+    }
+
+
     public void enable() {
         super.enable();
         if (Client.isCallingFromMainThread())
@@ -92,9 +119,3 @@ public class Farming extends Module implements IRegistrable {
         });
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\feature\impl\all\Farming.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

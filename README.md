@@ -10,6 +10,7 @@
 - Show orbit players on tab and on nametag
 - Looking at block coordinates hud
 - Auto wall check for SaicoPvP
+- Cactus placement helper mod
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"

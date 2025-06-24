@@ -3,7 +3,9 @@ package com.github.timmekeclient.mixin.net.minecraft.client.multiplayer;
 import com.github.timmekeclient.feature.impl.all.Farming;
 import com.github.timmekeclient.feature.impl.combat.OldAnimations;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.multiplayer.PlayerControllerMP;
+import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.network.NetHandlerPlayClient;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -11,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -35,6 +38,12 @@ public abstract class MixinPlayerControllerMP {
     @Inject(method = {"clickBlock"}, cancellable = true, at = {@At("HEAD")})
     private void clickBlock(BlockPos loc, EnumFacing face, CallbackInfoReturnable<Boolean> cir) {
         if (Farming.getInstance().onClickBlock(loc))
+            cir.setReturnValue(Boolean.FALSE);
+    }
+
+    @Inject(method = {"onPlayerRightClick"}, cancellable = true, at = {@At("HEAD")})
+    private void onPlayerRightClick(EntityPlayerSP p_onPlayerRightClick_1_, WorldClient p_onPlayerRightClick_2_, ItemStack p_onPlayerRightClick_3_, BlockPos pos, EnumFacing dir, Vec3 p_onPlayerRightClick_6_, CallbackInfoReturnable<Boolean> cir) {
+        if (Farming.getInstance().onPlayerRightClick(pos, dir))
             cir.setReturnValue(Boolean.FALSE);
     }
 

@@ -51,7 +51,6 @@ public class AutoFish extends Module implements IRegistrable {
     private static final int TICKS_PER_SECOND = 20;
     private String previousTitle = "Watch";
     private final Set<String> disabledSounds = new HashSet<>(Arrays.asList(SOUND_NAME, "random.bow", "game.neutral.swim", "game.neutral.swim.splash", "random.orb"));
-    private boolean isGuiOpened = false;
 
     public AutoFish() {
         this.enabled = false;
@@ -153,8 +152,6 @@ public class AutoFish extends Module implements IRegistrable {
                         mc.playerController.windowClick(guiContainer.inventorySlots.windowId, hotbarSlotIndex, 0, 1, this.mc.thePlayer);
                     }
                 }
-            } else if (this.isGuiOpened) {
-                this.isGuiOpened = false;
             }
         });
         EventBus.register(this, RenderOverlayEvent.Title.class, ev -> {

@@ -219,7 +219,7 @@ public class ScreenPlayerTabOverlay extends GuiPlayerTabOverlay {
 
     protected void drawPing(int offset, int xPosition, int yPosition, NetworkPlayerInfo info) {
         if ((TabEditor.getInstance()).enabled && (TabEditor.getInstance()).showPingAsNumber) {
-            FontRenderer fr = Fonts.PT_SANS_BOLD_12;
+            FontRenderer fr = Fonts.PT_SANS_BOLD_16;
             int ping = info.getResponseTime();
             int x = xPosition + offset - fr.getStringWidth(String.valueOf(ping)) - 2;
             int y = yPosition + this.mc.fontRendererObj.FONT_HEIGHT / 2 - fr.getStringHeight() / 2;

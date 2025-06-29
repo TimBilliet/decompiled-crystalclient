@@ -5,6 +5,7 @@ import com.github.timmekeclient.Client;
 import com.github.timmekeclient.event.EventBus;
 import com.github.timmekeclient.event.IRegistrable;
 import com.github.timmekeclient.event.impl.entity.EntitySpawnEvent;
+import com.github.timmekeclient.event.impl.network.PacketReceivedEvent;
 import com.github.timmekeclient.event.impl.tick.ClientTickEvent;
 import com.github.timmekeclient.feature.annotations.HoverOverlay;
 import com.github.timmekeclient.feature.annotations.ReloadRenderers;
@@ -14,9 +15,6 @@ import com.github.timmekeclient.feature.annotations.properties.Slider;
 import com.github.timmekeclient.feature.annotations.properties.Toggle;
 import com.github.timmekeclient.feature.base.Category;
 import com.github.timmekeclient.feature.base.Module;
-import com.github.timmekeclient.handler.ModuleHandler;
-import it.unimi.dsi.fastutil.doubles.AbstractDoubleList;
-import it.unimi.dsi.fastutil.doubles.DoubleArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHalfStoneSlab;
 import net.minecraft.block.BlockHalfStoneSlabNew;
@@ -24,6 +22,10 @@ import net.minecraft.block.BlockHalfWoodSlab;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.item.EntityTNTPrimed;
+import net.minecraft.network.play.server.S0EPacketSpawnObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @ModuleInfo(name = "No Lag", nameAliases = {"FPS"}, description = "Improve game performance", category = Category.MECHANIC)
 public class NoLag extends Module implements IRegistrable {
@@ -35,14 +37,6 @@ public class NoLag extends Module implements IRegistrable {
     @HoverOverlay({"Stops Falling Blocks from rendering."})
     @Toggle(label = "Hide Sand")
     public boolean hideSand = false;
-
-    @HoverOverlay({"Remove the flashing effect from TNT while ignited."})
-    @Toggle(label = "Disable TNT Flash")
-    public boolean disableTNTFlash = false;
-
-    @HoverOverlay({"Prevents TNT entities from expanding prior to detonation."})
-    @Toggle(label = "Disable TNT Expansion")
-    public boolean disableTNTExpansion = false;
 
     @HoverOverlay({"Only display a minimal amount of TNT/Sand."})
     @Toggle(label = "Minimal TNT/Sand")
@@ -154,16 +148,13 @@ public class NoLag extends Module implements IRegistrable {
 
     private static NoLag INSTANCE;
 
-    private static final long LONG_BITS = Double.doubleToLongBits(0.0D);
-
-    private final AbstractDoubleList minimalTnt = new DoubleArrayList(2048);
-
-    private final AbstractDoubleList minimalSand = new DoubleArrayList(2048);
-
-    private long lastClearTime = System.currentTimeMillis();
+    private final List<Spedtity> spawnedEntities;
+    private final List<Duplicates> duplicates;
 
     public NoLag() {
         this.enabled = true;
+        spawnedEntities = new ArrayList<>();
+        duplicates = new ArrayList<>();
         INSTANCE = this;
     }
 
@@ -175,7 +166,8 @@ public class NoLag extends Module implements IRegistrable {
 
     public void disable() {
         super.disable();
-        this.minimalTnt.clear();
+        spawnedEntities.clear();
+        duplicates.clear();
         if (Client.isCallingFromMainThread())
             this.mc.renderGlobal.loadRenderers();
     }
@@ -198,38 +190,54 @@ public class NoLag extends Module implements IRegistrable {
 
     public void registerEvents() {
         EventBus.register(this, ClientTickEvent.Post.class, ev -> {
-            long currentMs = System.currentTimeMillis();
-            if (currentMs - this.lastClearTime > 5000L) {
-                this.minimalTnt.clear();
-                this.minimalSand.clear();
-                this.lastClearTime = currentMs;
+            spawnedEntities.clear();
+            duplicates.clear();
+        });
+        EventBus.register(this, ClientTickEvent.Pre.class, ev -> {
+            if (minimal && mc.thePlayer != null && mc.theWorld != null) {
+                List<EntityTNTPrimed> tnts = mc.theWorld.getEntities(EntityTNTPrimed.class, tnt -> true);
+                for(EntityTNTPrimed tnt : tnts){
+                    int ticks = minimal ? 79 : tnt.ticksExisted;
+                    Duplicates duplicate = new Duplicates(50,ticks,tnt.posX, tnt.posY, tnt.posZ);
+                    if(duplicates.contains(duplicate)){
+                        tnt.setDead();
+                        continue;
+                    }
+                    duplicates.add(duplicate);
+                }
+                List<EntityFallingBlock> sands = mc.theWorld.getEntities(EntityFallingBlock.class, sand -> true);
+                for(EntityFallingBlock sand : sands){
+                    int ticks = minimal ? 79 : sand.ticksExisted;
+                    Duplicates duplicate = new Duplicates(70,ticks,sand.posX, sand.posY, sand.posZ);
+                    if(duplicates.contains(duplicate)){
+                        sand.setDead();
+                        continue;
+                    }
+                    duplicates.add(duplicate);
+                }
+            }
+        });
+        EventBus.register(this, PacketReceivedEvent.Pre.class, ev -> {
+            if (ev.packet instanceof S0EPacketSpawnObject) {
+                S0EPacketSpawnObject p = (S0EPacketSpawnObject) ev.packet;
+                Spedtity spedtity = new Spedtity(p.getX(), p.getY(), p.getZ(), p.getType());
+                if (spawnedEntities.contains(spedtity)) {
+                    ev.setCancelled(true);
+                }
+                spawnedEntities.add(spedtity);
             }
         });
         EventBus.register(this, EntitySpawnEvent.Pre.class, ev -> {
             if (this.minimal) {
                 Entity entity = ev.getEntity();
-                double hash = 0.0D;
-                if (entity instanceof EntityTNTPrimed) {
-                    hash = 17.0D;
-                    hash = 31.0D * hash + ((int) entity.posX & 0xFFFFFFFE);
-                    hash = 31.0D * hash + ((int) entity.posZ & 0xFFFFFFFE);
-                    hash = 31.0D * hash + (int) entity.posY;
-                    hash = 31.0D * hash + ModuleHandler.getTotalTicks();
-                    hash = 31.0D * hash + ((EntityTNTPrimed) entity).fuse;
-                } else if (entity instanceof EntityFallingBlock) {
-                    hash = 23.0D;
-                    hash = 47.0D * hash + ((int) entity.posX & 0xFFFFFFFE);
-                    hash = 47.0D * hash + ((int) entity.posZ & 0xFFFFFFFE);
-                    hash = 47.0D * hash + (int) entity.posY;
-                    hash = 47.0D * hash + ModuleHandler.getTotalTicks();
-                }
-                if (Double.doubleToLongBits(hash) != LONG_BITS) {
-                    AbstractDoubleList list = (entity instanceof EntityTNTPrimed) ? this.minimalTnt : this.minimalSand;
-                    if (list.contains(hash)) {
+                if (entity instanceof EntityTNTPrimed || entity instanceof EntityFallingBlock) {
+                    int type = entity instanceof EntityTNTPrimed ? 50 : 70;
+                    Spedtity spedtity = new Spedtity(entity.posX, entity.posY, entity.posZ, type);
+                    if (spawnedEntities.contains(spedtity)) {
+                        entity.setDead();
                         ev.setCancelled(true);
-                        return;
                     }
-                    list.add(hash);
+                    spawnedEntities.add(spedtity);
                 }
             }
         });

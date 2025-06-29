@@ -12,6 +12,8 @@
 - Auto wall check for SaicoPvP
 - Cactus placement helper mod
 
+##Incompatible with Optifine's dynamic lights
+
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"
 2. You can find the jar file at build/libs/Timmeke_Client-x.x.x.jar

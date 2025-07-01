@@ -130,7 +130,6 @@ public class AccountButton extends Button {
                             }
                             if (!res) {
                                 this.loginScreen = true;
-                                AltManager.getInstance().removeAccount(b.data);
                                 AltManager.getInstance().saveAltManager();
                             }
                         }

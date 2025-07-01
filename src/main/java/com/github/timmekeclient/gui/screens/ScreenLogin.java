@@ -95,26 +95,26 @@ public class ScreenLogin extends ScreenPanorama {
         y += h + 8;
         addButton(this.microsoftButton = new MenuResourceButton(-1, x, y, w, h, "Sign-in with Microsoft", Resources.MICROSOFT, h - 6));
         offlineAccountButton.onClick = (() -> {
-            new Thread(() ->{
+            new Thread(() -> {
                 if (!offlineName.getText().isEmpty()) {
                     feedback = "Logging in...";
-                    AltManager.getInstance().addAccount(new AccountData(null,offlineName.getText(), UUID.nameUUIDFromBytes(("Offline:" + offlineName.getText()).getBytes()).toString()));
+                    AltManager.getInstance().addAccount(new AccountData(null, offlineName.getText(), UUID.nameUUIDFromBytes(("Offline:" + offlineName.getText()).getBytes()).toString()));
                     shouldExit = true;
                 }
-            }) .start();
+            }).start();
         });
         this.microsoftButton.onClick = (() -> {
             this.microsoftButton.displayText = "Sign-in window opened";
-           feedback = "Logging in;";
+            feedback = "Logging in;";
             this.microsoftButton.setEnabled(false);
-             this.thread =  new Thread(() -> {
+            this.thread = new Thread(() -> {
                 try {
                     try {
                         httpServer = HttpServer.create(new InetSocketAddress(59125), 0);
-                    } catch (Exception ex){
+                    } catch (Exception ex) {
                         feedback = "Error: " + ex.getMessage() + "!";
                     }
-                        feedback = "HTTP server started...";
+                    feedback = "HTTP server started...";
                     httpServer.createContext("/", exchange -> {
                         try {
                             exchange.getResponseHeaders().add("Location", "http://localhost:59125/end");
@@ -133,7 +133,7 @@ public class ScreenLogin extends ScreenPanorama {
                             outputStream.write(b);
                             outputStream.flush();
                             outputStream.close();
-                            if(httpServer != null){
+                            if (httpServer != null) {
                                 httpServer.stop(0);
                             }
                         } catch (Exception ex) {
@@ -173,8 +173,7 @@ public class ScreenLogin extends ScreenPanorama {
             this.thread.interrupt();
             this.thread = null;
         }
-        if (this.parent != null)
-            this.returnButton.drawButton(mouseX, mouseY, this.returnButton.isHovered(mouseX, mouseY));
+        this.returnButton.drawButton(mouseX, mouseY, this.returnButton.isHovered(mouseX, mouseY));
         if (this.shouldExit)
             this.mc.displayGuiScreen(AltManager.isLoggedIn() ? this.parent : null);
     }
@@ -219,7 +218,7 @@ public class ScreenLogin extends ScreenPanorama {
                 shouldExit = true;
             }
         } catch (Exception ex) {
-           feedback = "Error: " + ex.getMessage() + "!";
+            feedback = "Error: " + ex.getMessage() + "!";
             Reference.LOGGER.error("Login failed!", ex);
         }
         microsoftButton.setEnabled(true);

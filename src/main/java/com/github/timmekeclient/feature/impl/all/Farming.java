@@ -69,7 +69,7 @@ public class Farming extends Module implements IRegistrable {
     }
 
     public boolean onPlayerRightClick(BlockPos loc, EnumFacing dir) {
-        if (cacMod) {
+        if (enabled && cacMod) {
             if (mc.thePlayer == null)
                 return false;
             ItemStack stack = mc.thePlayer.getHeldItem();

@@ -16,6 +16,7 @@ import com.github.timmekeclient.feature.base.Dropdown;
 import com.github.timmekeclient.feature.base.Module;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemFishingRod;
 import net.minecraft.item.ItemStack;
@@ -146,10 +147,13 @@ public class AutoFish extends Module implements IRegistrable {
                 GuiContainer guiContainer = (GuiContainer) mc.currentScreen;
                 String inventoryName = getInventoryName(guiContainer);
                 if (inventoryName != null && (inventoryName.contains("Vault #") || inventoryName.contains("Ender Chest"))) {
-                    int hotbarSlotIndex = (inventoryName.contains("Vault #") ? 80 : 53) + hotbarSlot;
-                    ItemStack stack = mc.thePlayer.inventory.getStackInSlot(hotbarSlot - 1);
-                    if (stack != null && stack.getItem() != null && stack.stackSize > 0) {
-                        mc.playerController.windowClick(guiContainer.inventorySlots.windowId, hotbarSlotIndex, 0, 1, this.mc.thePlayer);
+                    Container container = mc.thePlayer.openContainer;
+                    if (container != null) {
+                        int hotbarSlotIndex = container.inventorySlots.size() - 10 + hotbarSlot;
+                        ItemStack stack = mc.thePlayer.inventory.getStackInSlot(hotbarSlot - 1);
+                        if (stack != null && stack.getItem() != null && stack.stackSize > 0) {
+                            mc.playerController.windowClick(guiContainer.inventorySlots.windowId, hotbarSlotIndex, 0, 1, this.mc.thePlayer);
+                        }
                     }
                 }
             }

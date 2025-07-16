@@ -221,7 +221,7 @@ public class Client {
     public Client() {
         INSTANCE = this;
         CLIENT_RUN_DIRECTORY = new File((this.mc = Minecraft.getMinecraft()).mcDataDir, "timmekeclient");
-        Reference.LOGGER.info("{} version {} is being initialized.", "Timmeke_ Client", "1.5.0");
+        Reference.LOGGER.info("{} version {} is being initialized.", "Timmeke_ Client", "1.5.1");
         SplashScreen.setProgress(1, "Registering Modules...");
         EventBus.register(this.moduleHandler = new ModuleHandler());
         SplashScreen.setProgress(2, "Registering Handlers...");
@@ -272,7 +272,7 @@ public class Client {
             ((MixinRendererLivingEntity) render).callAddLayer(new LayerCloak());
             ((MixinRendererLivingEntity) render).callAddLayer(new LayerWings());
         }
-        Reference.LOGGER.info("{} version {} has been initialized.", "Timmeke_ Client", "1.5.0");
+        Reference.LOGGER.info("{} version {} has been initialized.", "Timmeke_ Client", "1.5.1");
         (new InitializationEvent(this)).call();
         SplashScreen.markComplete();
         while (!SplashScreen.isComplete())

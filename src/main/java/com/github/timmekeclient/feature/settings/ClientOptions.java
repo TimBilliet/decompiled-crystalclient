@@ -223,7 +223,7 @@ public class ClientOptions extends Module implements IRegistrable {
         if (this.dontOverrideDisplayTitle) {
             Display.setTitle("Minecraft " + Client.getMinecraftVersion().getVersionString());
         } else {
-            Display.setTitle(String.format("Minecraft %s | %s (v%s)", Client.getMinecraftVersion().getVersionString(),"Timmeke_ Client", "1.5.0"));
+            Display.setTitle(String.format("Minecraft %s | %s (v%s)", Client.getMinecraftVersion().getVersionString(),"Timmeke_ Client", "1.5.1"));
         }
     }
 

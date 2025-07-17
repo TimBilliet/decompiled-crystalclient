@@ -3,6 +3,7 @@ package com.github.timmekeclient.feature.impl.all;
 import com.github.timmekeclient.Reference;
 import com.github.timmekeclient.event.EventBus;
 import com.github.timmekeclient.event.IRegistrable;
+import com.github.timmekeclient.event.impl.network.ChatReceivedEvent;
 import com.github.timmekeclient.event.impl.render.RenderOverlayEvent;
 import com.github.timmekeclient.event.impl.tick.ClientTickEvent;
 import com.github.timmekeclient.event.impl.world.PlaySoundEvent;
@@ -16,6 +17,7 @@ import com.github.timmekeclient.feature.base.Dropdown;
 import com.github.timmekeclient.feature.base.Module;
 import net.minecraft.client.gui.inventory.GuiChest;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemFishingRod;
@@ -47,11 +49,20 @@ public class AutoFish extends Module implements IRegistrable {
     @Slider(label = "Hotbar slot", minimum = 1.0D, maximum = 9.0D, standard = 3.0D, integers = true)
     public int hotbarSlot = 3;
 
+    @HoverOverlay({"Automatically sell your inventory when a certain amount of slots are filled in your inventory"})
+    @Toggle(label = "Auto sell")
+    public boolean autoSell = false;
+
+    @HoverOverlay({"Amount of slots before selling"})
+    @Slider(label = "Filled Slot Amount", minimum = 1.0D, maximum = 36.0D, standard = 9.0D, integers = true)
+    public int slotAmount = 9;
+
     private static final String SOUND_NAME = "random.splash";
     private long castScheduledAt = 0L;
     private static final int TICKS_PER_SECOND = 20;
     private String previousTitle = "Watch";
     private final Set<String> disabledSounds = new HashSet<>(Arrays.asList(SOUND_NAME, "random.bow", "game.neutral.swim", "game.neutral.swim.splash", "random.orb"));
+    private int previousAmount = -1;
 
     public AutoFish() {
         this.enabled = false;
@@ -59,7 +70,8 @@ public class AutoFish extends Module implements IRegistrable {
 
     public void configPostInit() {
         super.configPostInit();
-        setOptionVisibility("Hotbar slot", f -> this.autoStore);
+        setOptionVisibility("Hotbar slot", f -> autoStore);
+        setOptionVisibility("Filled Slot Amount", f -> autoSell);
     }
 
     private boolean isPlayerHoldingRod() {
@@ -141,9 +153,22 @@ public class AutoFish extends Module implements IRegistrable {
                     }
                 }
             }
-            if (!autoStore || mc.theWorld == null || !isPlayerHoldingRod())
-                return;
-            if (mc.currentScreen instanceof GuiContainer) {
+            if (autoSell && mc.thePlayer != null) {
+                InventoryPlayer inv = mc.thePlayer.inventory;
+                int amount = 0;
+                for (int i = 0; i < inv.getSizeInventory(); i++) {
+                    ItemStack stack = inv.getStackInSlot(i);
+                    if (stack != null && stack.stackSize > 0) {
+                        amount++;
+                    }
+                }
+                if(previousAmount != amount){
+                    if(amount >= slotAmount){
+                        mc.thePlayer.sendChatMessage("/sell inv");
+                    }
+                    previousAmount = amount;
+            }
+            if (autoStore && mc.theWorld != null && isPlayerHoldingRod() && mc.currentScreen instanceof GuiContainer) {
                 GuiContainer guiContainer = (GuiContainer) mc.currentScreen;
                 String inventoryName = getInventoryName(guiContainer);
                 if (inventoryName != null && (inventoryName.contains("Vault #") || inventoryName.contains("Ender Chest"))) {
@@ -165,6 +190,12 @@ public class AutoFish extends Module implements IRegistrable {
                     scheduleNextCast();
                 }
                 previousTitle = ev.getSubTitle();
+            }
+        });
+        EventBus.register(this, ChatReceivedEvent.class, ev -> {
+            String message = ev.message.getUnformattedText();
+            if (!mc.isGamePaused() && mc.thePlayer != null && isRodCast() && message.contains("(!) Removed ")) {
+                playerUseRod();
             }
         });
     }

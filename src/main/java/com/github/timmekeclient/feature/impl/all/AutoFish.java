@@ -162,11 +162,12 @@ public class AutoFish extends Module implements IRegistrable {
                         amount++;
                     }
                 }
-                if(previousAmount != amount){
-                    if(amount >= slotAmount){
+                if(previousAmount != amount) {
+                    if (amount >= slotAmount) {
                         mc.thePlayer.sendChatMessage("/sell inv");
                     }
                     previousAmount = amount;
+                }
             }
             if (autoStore && mc.theWorld != null && isPlayerHoldingRod() && mc.currentScreen instanceof GuiContainer) {
                 GuiContainer guiContainer = (GuiContainer) mc.currentScreen;

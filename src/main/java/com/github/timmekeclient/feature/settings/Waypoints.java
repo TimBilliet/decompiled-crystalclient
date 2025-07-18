@@ -19,8 +19,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Vec3i;
 
-import java.awt.*;
-
 public class Waypoints implements IRegistrable {
     private static final ColorObject BLACK = new ColorObject(0, 0, 0, 255);
 
@@ -29,7 +27,7 @@ public class Waypoints implements IRegistrable {
     private void renderWaypoint(Waypoint wp) {
         Vec3d vec = RenderUtils.normalize(wp.getPos());
         double maxDistance = this.mc.gameSettings.renderDistanceChunks * 12.0D;
-        double distance = wp.distanceTo((Vec3i) this.mc.thePlayer.getPosition());
+        double distance = wp.distanceTo(this.mc.thePlayer.getPosition());
         String text = wp.getName() + " [" + Math.round(distance) + "m]";
         int width = this.mc.fontRendererObj.getStringWidth(text) / 2;
         int tagAlpha = (distance < 16.0D) ? ((distance >= 4.0D) ? (int) Math.round(180.0D * (distance - 4.0D) / 12.0D) : 0) : 180;
@@ -44,7 +42,7 @@ public class Waypoints implements IRegistrable {
         GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
         if (distance < maxDistance) {
-            RenderUtils.setGlColor((Color) wp.getColor().setAlpha(beamAlpha));
+            RenderUtils.setGlColor(wp.getColor().setAlpha(beamAlpha));
             if (wp.getColor().isChroma())
                 ShaderManager.getInstance().enableShader(ChromaScreenShader.class);
             int x = wp.getPos().getX();

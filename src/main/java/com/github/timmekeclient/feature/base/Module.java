@@ -46,8 +46,6 @@ public abstract class Module {
 
     public KeyBinding toggleKeyBinding = null;
 
-    public boolean forceDisabled = false;
-
     public boolean wasEnabled = false;
 
     public boolean canBeDisabled = true;
@@ -61,7 +59,7 @@ public abstract class Module {
     public final Client client = Client.getInstance();
 
     public Module() {
-        ModuleInfo info = getClass().<ModuleInfo>getAnnotation(ModuleInfo.class);
+        ModuleInfo info = getClass().getAnnotation(ModuleInfo.class);
         this.name = info.name();
         this.nameAliases = info.nameAliases();
         this.description = info.description();
@@ -85,8 +83,6 @@ public abstract class Module {
     }
 
     public void enable() {
-        if (this.forceDisabled)
-            return;
         if (!this.enabled) {
             this.enabled = true;
             EventBus.register(this);
@@ -113,12 +109,6 @@ public abstract class Module {
                 this.enabled = true;
                 EventBus.register(this);
             }
-            return;
-        }
-        if (this.forceDisabled) {
-            NotificationHandler.addNotification(this.name + " is disabled by the current server");
-            if (this.enabled)
-                disable();
             return;
         }
         if (this.enabled) {
@@ -182,22 +172,6 @@ public abstract class Module {
 
     public void setOptionVisibility(String option, Predicate<Field> predicate) {
         this.optionVisibility.put(Config.getInstance().format(option), predicate);
-    }
-
-    public void setForceDisabled(boolean forceDisabled) {
-        this.forceDisabled = forceDisabled;
-        if (this.forceDisabled) {
-            this.wasEnabled = this.enabled;
-            disable();
-        } else {
-            if (this.wasEnabled)
-                enable();
-            this.wasEnabled = false;
-        }
-    }
-
-    public boolean getDefaultForceDisabledState() {
-        return false;
     }
 
     public boolean equals(Object object) {

@@ -36,43 +36,22 @@ public abstract class MixinNetworkManager {
     private static Logger logger;
 
     /**
-     * @author
+     * @author Timmeke_
      */
     @Overwrite(aliases = {"exceptionCaught"})
     public void exceptionCaught(ChannelHandlerContext channelHandlerContext, Throwable throwable) {
         if (throwable instanceof io.netty.handler.timeout.TimeoutException) {
             ChatComponentTranslation component = new ChatComponentTranslation("disconnect.timeout");
-            closeChannel((IChatComponent) component);
+            closeChannel(component);
             return;
         }
         logger.error("Exception caught in channel", throwable);
-        ChatComponentText upload = new ChatComponentText(ChatColor.translate("&nClick Here&f"));
-        upload.getChatStyle().setChatClickEvent((ClickEvent) new CallbackClickEvent(comp -> {
-            try {
-                String link = "dummylink";
-
-                StringSelection selection = new StringSelection(link);
-                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(selection, selection);
-                Client.sendMessage("Uploaded & copied to clipboard", true);
-                throw new IOException();
-            } catch (IOException ex) {
-                Client.sendErrorMessage("Unable to upload", true);
-            }
-        }));
-        ChatComponentText disconnect = new ChatComponentText(ChatColor.translate("&nClick Here&f"));
-        disconnect.getChatStyle().setChatClickEvent((ClickEvent) new CallbackClickEvent(comp -> closeChannel((IChatComponent) new ChatComponentTranslation("disconnect.genericReason", new Object[]{"Internal Exception: " + throwable}))));
-        ChatComponentText discord = new ChatComponentText(ChatColor.translate("&nClick Here&f"));
-        discord.getChatStyle().setChatClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://discord.gg/mmVWkk93E9"));
         ChatComponentText chatComponentText1 = new ChatComponentText(ChatColor.translate(Client.getErrorPrefix() + " An error occurred within the connection to the connected server (" + throwable + ")"));
-        ChatComponentText chatComponentText2 = new ChatComponentText(ChatColor.translate("  &7&l* &fYour connection to the server may be unstable, this error should be reported"));
-        IChatComponent opt1 = (new ChatComponentText(ChatColor.translate("  &7&l* &f"))).appendSibling((IChatComponent) upload).appendText(" to upload the error");
-        IChatComponent opt2 = (new ChatComponentText(ChatColor.translate("  &7&l* &f"))).appendSibling((IChatComponent) disconnect).appendText(" to disconnect from the server");
+        ChatComponentText chatComponentText2 = new ChatComponentText(ChatColor.translate("  &7&l* &fYour connection to the server may be unstable"));
         if ((Minecraft.getMinecraft()).thePlayer != null) {
             EntityPlayerSP entityPlayerSP = (Minecraft.getMinecraft()).thePlayer;
-            entityPlayerSP.addChatMessage((IChatComponent) chatComponentText1);
-            entityPlayerSP.addChatMessage((IChatComponent) chatComponentText2);
-            entityPlayerSP.addChatMessage(opt1);
-            entityPlayerSP.addChatMessage(opt2);
+            entityPlayerSP.addChatMessage(chatComponentText1);
+            entityPlayerSP.addChatMessage(chatComponentText2);
         }
     }
 

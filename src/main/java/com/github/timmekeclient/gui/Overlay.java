@@ -35,14 +35,6 @@ public abstract class Overlay {
 
     protected boolean overrideKeyboard = false;
 
-    public boolean isOverrideKeyboard() {
-        return this.overrideKeyboard;
-    }
-
-    public void setOverrideKeyboard(boolean overrideKeyboard) {
-        this.overrideKeyboard = overrideKeyboard;
-    }
-
     protected final List<Button> buttons = new ArrayList<>();
 
     public List<Button> getButtons() {
@@ -65,10 +57,6 @@ public abstract class Overlay {
 
     public KeyBinding getHoldKey() {
         return this.holdKey;
-    }
-
-    public void setHoldKey(KeyBinding holdKey) {
-        this.holdKey = holdKey;
     }
 
     public Overlay() {
@@ -104,15 +92,6 @@ public abstract class Overlay {
     public float getScaledScreen() {
         int s = ((this.sr == null) ? (this.sr = new ScaledResolution(this.mc)) : this.sr).getScaleFactor();
         return 1.0F / (0.5F * s);
-    }
-
-    public void onResize(ScaledResolution sr) {
-        this.scaledWidth = sr.getScaledWidth();
-        this.scaledHeight = sr.getScaledHeight();
-        this.width = this.mc.displayWidth / 2;
-        this.height = this.mc.displayHeight / 2;
-        this.sr = sr;
-        init();
     }
 
     public void keyPressed(int keyCode, char keyTyped) {
@@ -205,9 +184,3 @@ public abstract class Overlay {
 
     public abstract void draw(int paramInt1, int paramInt2, float paramFloat);
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\Overlay.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

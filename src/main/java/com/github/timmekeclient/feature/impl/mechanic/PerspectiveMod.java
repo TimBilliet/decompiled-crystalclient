@@ -1,6 +1,5 @@
 package com.github.timmekeclient.feature.impl.mechanic;
 
-import com.github.timmekeclient.Client;
 import com.github.timmekeclient.event.EventBus;
 import com.github.timmekeclient.event.IRegistrable;
 import com.github.timmekeclient.event.impl.render.GuiScreenEvent;
@@ -45,10 +44,6 @@ public class PerspectiveMod extends Module implements IRegistrable {
     public void disable() {
         resetPerspective();
         super.disable();
-    }
-
-    public boolean getDefaultForceDisabledState() {
-        return Client.isOnHypixel();
     }
 
     public void onPressed(boolean state) {

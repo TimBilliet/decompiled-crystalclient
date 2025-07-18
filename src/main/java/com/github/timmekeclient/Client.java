@@ -221,7 +221,7 @@ public class Client {
     public Client() {
         INSTANCE = this;
         CLIENT_RUN_DIRECTORY = new File((this.mc = Minecraft.getMinecraft()).mcDataDir, "timmekeclient");
-        Reference.LOGGER.info("{} version {} is being initialized.", "Timmeke_ Client", "1.5.2");
+        Reference.LOGGER.info("{} version {} is being initialized.", "Timmeke_ Client", "1.5.3");
         SplashScreen.setProgress(1, "Registering Modules...");
         EventBus.register(this.moduleHandler = new ModuleHandler());
         SplashScreen.setProgress(2, "Registering Handlers...");
@@ -272,7 +272,7 @@ public class Client {
             ((MixinRendererLivingEntity) render).callAddLayer(new LayerCloak());
             ((MixinRendererLivingEntity) render).callAddLayer(new LayerWings());
         }
-        Reference.LOGGER.info("{} version {} has been initialized.", "Timmeke_ Client", "1.5.2");
+        Reference.LOGGER.info("{} version {} has been initialized.", "Timmeke_ Client", "1.5.3");
         (new InitializationEvent(this)).call();
         SplashScreen.markComplete();
         while (!SplashScreen.isComplete())
@@ -352,11 +352,6 @@ public class Client {
         return Minecraft.getMinecraft().isCallingFromMinecraftThread();
     }
 
-    public static boolean isOnHypixel() {
-        String server = formatConnectedServerIp();
-        return (server != null && server.toLowerCase().endsWith("hypixel.net"));
-    }
-
     public static String formatConnectedServerIp() {
         return formatConnectedServerIp(true);
     }
@@ -395,11 +390,6 @@ public class Client {
             CLIENT_RUN_DIRECTORY.mkdirs();
         return CLIENT_RUN_DIRECTORY;
     }
-
-//    public static boolean isOnCrystalClient(Entity entity) {
-//        NetworkPlayerInfo info = (entity instanceof net.minecraft.client.entity.AbstractClientPlayer) ? ((MixinAbstractClientPlayer) entity).invokeGetPlayerInfo() : null;
-//        return (info != null && ((NetworkPlayerInfoExt) info).isOnCrystalClient());
-//    }
 
     public static boolean isOnOrbitClient(Entity entity) {
         NetworkPlayerInfo info = (entity instanceof net.minecraft.client.entity.AbstractClientPlayer) ? ((MixinAbstractClientPlayer) entity).invokeGetPlayerInfo() : null;

@@ -25,7 +25,7 @@ public abstract class MixinGuiOverlayDebug {
         List<String> values = ((com.github.timmekeclient.mixin.accessor.net.minecraft.client.gui.MixinGuiOverlayDebug) instance).invokeCall();
         values.add("");
         values.add(ChatColor.translate(String.format("&b%s Debug Info", "Timmeke_ Client")));
-        values.add("Client Version: " + Client.getMinecraftVersion().getVersionString() + "/" + "1.5.2");
+        values.add("Client Version: " + Client.getMinecraftVersion().getVersionString() + "/" + "1.5.3");
         values.add("Client brand: " + this.mc.thePlayer.getClientBrand());
         values.add("Server TPS: " + String.format("%.2f", ModuleHandler.getTps()));
         values.add("");

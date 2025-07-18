@@ -79,17 +79,11 @@ public class ModuleHandler implements IRegistrable {
         return totalTicks;
     }
 
-    public static ModuleAPI getModuleApi() {
-        return moduleApi;
-    }
-
     public static void setModuleApi(ModuleAPI moduleApi) {
         ModuleHandler.moduleApi = moduleApi;
     }
 
     private final Minecraft mc = Minecraft.getMinecraft();
-
-    private boolean awaitingModuleForceDisableReset = false;
 
     private long prevTime;
 
@@ -127,7 +121,6 @@ public class ModuleHandler implements IRegistrable {
         registerModule(Farming.class);
         registerModule(FPS.class);
         registerModule(Fullbright.class);
-//        registerModule(GroupStatus.class);
         registerModule(HitColor.class);
         registerModule(InfoHud.class);
         registerModule(Keystrokes.class);
@@ -173,7 +166,7 @@ public class ModuleHandler implements IRegistrable {
                     if (annotation instanceof Keybind)
                         try {
                             Client.registerKeyBinding((KeyBinding) field.get(module));
-                        } catch (IllegalAccessException illegalAccessException) {
+                        } catch (IllegalAccessException ignored) {
                         }
                 }
             }
@@ -253,11 +246,12 @@ public class ModuleHandler implements IRegistrable {
                     !module.enabled && (!(this.mc.currentScreen instanceof ScreenEditLocations) || !((HudModule) module).displayWhileDisabled || !(ClientOptions.getInstance()).showDisabledModulesInEditHUD)))
                 continue;
             HudModule hudModule = (HudModule) module;
-            if (hudModule instanceof HudModuleText)
+            if (hudModule instanceof HudModuleText) {
                 ((HudModuleText) hudModule).drawingDefaultText = def;
-            if ((InfoHud.getInstance()).enabled && !InfoHud.getInstance().shouldModuleRender(hudModule)) {
-                ((HudModuleText) hudModule).awaitingInfoHudRender = true;
-                continue;
+                if ((InfoHud.getInstance()).enabled && !InfoHud.getInstance().shouldModuleRender(hudModule)) {
+                    ((HudModuleText) hudModule).awaitingInfoHudRender = true;
+                    continue;
+                }
             }
             GL11.glPushMatrix();
             GL11.glScaled(2.0D / res.getScaleFactor(), 2.0D / res.getScaleFactor(), 1.0D);
@@ -272,20 +266,10 @@ public class ModuleHandler implements IRegistrable {
         }
     }
 
-    public void onRenderWorld(RenderWorldEvent.Post event) {
-        if (this.awaitingModuleForceDisableReset) {
-            this.awaitingModuleForceDisableReset = false;
-            for (Module module : modules)
-                module.setForceDisabled(module.getDefaultForceDisabledState());
-        }
-    }
-
     public void onDisconnect(ServerDisconnectEvent event) {
         ((MixinMinecraft) this.mc).setCurrentServerData(null);
         Client.setCurrentServerIp(null);
         Client.setCurrentWorld(null);
-        for (Module module : modules)
-            module.setForceDisabled(module.getDefaultForceDisabledState());
     }
 
     public void registerAll() {
@@ -317,7 +301,7 @@ public class ModuleHandler implements IRegistrable {
         try {
             Module module = clazz.getDeclaredConstructor(new Class[0]).newInstance();
             modules.add(module);
-        } catch (IllegalStateException illegalStateException) {
+        } catch (IllegalStateException ignored) {
 
         } catch (Exception ex) {
             Reference.LOGGER.error("Exception raised while registering module '" + clazz.getName() + "'", ex);
@@ -356,15 +340,10 @@ public class ModuleHandler implements IRegistrable {
             }
         });
 
-        EventBus.register(this, SessionUpdateEvent.class, ev -> {
-//            Client.getInstance().connectToSocket(true);
-            Client.getInstance().setCurrentUuid(UUIDTypeAdapter.fromString(ev.getSession().getPlayerID()));
-        });
+        EventBus.register(this, SessionUpdateEvent.class, ev -> Client.getInstance().setCurrentUuid(UUIDTypeAdapter.fromString(ev.getSession().getPlayerID())));
 
         EventBus.register(this, ShutdownEvent.class, ev -> {
             ((MixinMinecraft) this.mc).setCurrentServerData(null);
-            for (Module module : modules)
-                module.setForceDisabled(module.getDefaultForceDisabledState());
             Config.getInstance().saveModuleConfig();
         });
         EventBus.register(this, RenderOverlayEvent.Gui.class, ev -> {
@@ -377,7 +356,6 @@ public class ModuleHandler implements IRegistrable {
             }
         });
         EventBus.register(this, PacketReceivedEvent.Pre.class, (byte) 0, this::onPacketReceived);
-        EventBus.register(this, ServerConnectEvent.class, ev -> this.awaitingModuleForceDisableReset = true);
         EventBus.register(this, InputEvent.Key.class, ev -> handleKeyBindings());
         EventBus.register(this, InputEvent.Mouse.class, ev -> handleKeyBindings());
         EventBus.register(this, ServerDisconnectEvent.class, this::onDisconnect);

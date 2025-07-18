@@ -37,10 +37,6 @@ public class ModuleButton extends Button {
 
     private final FadingColor statusColor2;
 
-    private final FadingColor statusFD1;
-
-    private final FadingColor statusFD2;
-
     public ModuleButton(Module module, int x, int y, int width, int height) {
         super(-1, x, y, width, height, module.name);
         this.module = module;
@@ -49,8 +45,6 @@ public class ModuleButton extends Button {
         this.textColor = new FadingColor(this.opts.neutralTextColor, this.opts.hoveredTextColor);
         this.statusColor1 = new FadingColor(this.opts.mainDisabled, this.opts.getColor(this.opts.mainEnabled, 255));
         this.statusColor2 = new FadingColor(this.opts.secondaryDisabled, this.opts.getColor(this.opts.secondaryEnabled, 255));
-        this.statusFD1 = new FadingColor(this.opts.unselectedTextColor.darker(), this.opts.getColor(this.opts.neutralTextColor.darker(), 255));
-        this.statusFD2 = new FadingColor(this.opts.unselectedTextColor, this.opts.getColor(this.opts.neutralTextColor, 255));
         int buttonSize = (int) (this.height * 0.3D);
         this.settingsButton = new ResourceSubButton(-1, this.x + this.width - 8 - buttonSize, this.y + this.height - 8 - buttonSize, buttonSize, buttonSize, Resources.COG);
         this.settingsButton.setDrawBackground(false);
@@ -71,16 +65,9 @@ public class ModuleButton extends Button {
         Screen.scissorStart(this.scissorPane);
         this.backgroundColor.fade(hovered);
         this.textColor.fade(hovered);
-        if (!this.module.forceDisabled) {
-            (status1 = this.statusColor1).fade(this.module.enabled);
-            (status2 = this.statusColor2).fade(this.module.enabled);
-        } else {
-            (status1 = this.statusFD1).fade(true);
-            (status2 = this.statusFD2).fade(true);
-        }
-        RenderUtils.drawRoundedRectWithGradientBorder(this.x, this.y, (this.x + this.width), (this.y + this.height), 14.0D, 4.5F, status1
-                .getCurrentColor().getRGB(), status2.getCurrentColor().getRGB(), this.backgroundColor
-                .getCurrentColor().getRGB());
+        (status1 = this.statusColor1).fade(this.module.enabled);
+        (status2 = this.statusColor2).fade(this.module.enabled);
+        RenderUtils.drawRoundedRectWithGradientBorder(this.x, this.y, (this.x + this.width), (this.y + this.height), 14.0D, 4.5F, status1.getCurrentColor().getRGB(), status2.getCurrentColor().getRGB(), this.backgroundColor.getCurrentColor().getRGB());
         Color textColor = this.textColor.getCurrentColor();
         if (this.icon != null) {
             int w = (int) (this.height * 0.6D);
@@ -88,12 +75,9 @@ public class ModuleButton extends Button {
             RenderUtils.drawCustomSizedResource(this.icon, this.x + 6, this.y + this.height / 2 - w / 2, w, w);
         }
         FontRenderer fr = Fonts.NUNITO_SEMI_BOLD_20;
-        if (fr.getStringWidth(this.module.name) >= this.width * 0.6D)
-            fr = Fonts.NUNITO_SEMI_BOLD_18;
-        if (fr.getStringWidth(this.module.name) >= this.width * 0.6D)
-            fr = Fonts.NUNITO_SEMI_BOLD_16;
-        fr.drawString(this.module.name, this.x + this.width - 8 - fr.getStringWidth(this.module.name), this.y + 5, textColor
-                .getRGB());
+        if (fr.getStringWidth(this.module.name) >= this.width * 0.6D) fr = Fonts.NUNITO_SEMI_BOLD_18;
+        if (fr.getStringWidth(this.module.name) >= this.width * 0.6D) fr = Fonts.NUNITO_SEMI_BOLD_16;
+        fr.drawString(this.module.name, this.x + this.width - 8 - fr.getStringWidth(this.module.name), this.y + 5, textColor.getRGB());
         this.settingsButton.drawButton(mouseX, mouseY, (this.module.isConfigurable() && this.settingsButton.isHovered(mouseX, mouseY)));
         this.hoistButton.drawButton(mouseX, mouseY, this.hoistButton.isHovered(mouseX, mouseY));
         Screen.scissorEnd(this.scissorPane);
@@ -106,11 +90,11 @@ public class ModuleButton extends Button {
                 return;
             }
             if (this.module instanceof InfoHud) {
-                this.mc.displayGuiScreen((GuiScreen) new ScreenInfoHudSettings(this.mc.currentScreen));
+                this.mc.displayGuiScreen(new ScreenInfoHudSettings(this.mc.currentScreen));
             } else if (this.module instanceof CrosshairSettings) {
-                this.mc.displayGuiScreen((GuiScreen) new ScreenCrosshairSettings(this.mc.currentScreen));
+                this.mc.displayGuiScreen(new ScreenCrosshairSettings(this.mc.currentScreen));
             } else {
-                this.mc.displayGuiScreen((GuiScreen) new ScreenSettings(this.module, this.mc.currentScreen));
+                this.mc.displayGuiScreen(new ScreenSettings(this.module, this.mc.currentScreen));
             }
         } else if (this.hoistButton.isHovered(mouseX, mouseY)) {
             this.module.hoisted = !this.module.hoisted;
@@ -125,8 +109,7 @@ public class ModuleButton extends Button {
 
         public HoistSubButton(int id, int x, int y, int width, int height, ResourceLocation resourceLocation) {
             super(id, x, y, width, height, resourceLocation);
-            this
-                    .fc = new FadingColor(new Color(253, 192, 28, this.fadingColor.getColor1().getAlpha()), new Color(255, 233, 0, this.fadingColor.getColor2().getAlpha()));
+            this.fc = new FadingColor(new Color(253, 192, 28, this.fadingColor.getColor1().getAlpha()), new Color(255, 233, 0, this.fadingColor.getColor2().getAlpha()));
         }
 
         public void drawButton(int mouseX, int mouseY, boolean hovered) {
@@ -150,9 +133,3 @@ public class ModuleButton extends Button {
         }
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\gui\buttons\ModuleButton.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

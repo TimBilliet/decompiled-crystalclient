@@ -139,7 +139,7 @@ public abstract class MixinMinecraft {
     @Inject(method = {"startGame"}, at = {@At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;info(Ljava/lang/String;)V", shift = At.Shift.BEFORE)})
     private void logClientVersion(CallbackInfo ci) {
         Reference.LOGGER.info("");
-        Reference.LOGGER.info("  {} v{}", "Timmeke_ Client", "1.5.2");
+        Reference.LOGGER.info("  {} v{}", "Timmeke_ Client", "1.5.3");
         Reference.LOGGER.info("");
     }
 
@@ -155,7 +155,7 @@ public abstract class MixinMinecraft {
 
     @Redirect(method = {"launchIntegratedServer"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;displayGuiScreen(Lnet/minecraft/client/gui/GuiScreen;)V"))
     private void launchIntegratedServer(Minecraft minecraft, GuiScreen guiScreenIn) {
-        minecraft.displayGuiScreen((GuiScreen) new GuiScreenWorking());
+        minecraft.displayGuiScreen(new GuiScreenWorking());
     }
 
     @Redirect(method = {"run", "freeMemory", "shutdownMinecraftApplet", "launchIntegratedServer", "loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V"}, at = @At(value = "INVOKE", target = "Ljava/lang/System;gc()V", remap = false))
@@ -212,7 +212,7 @@ public abstract class MixinMinecraft {
 
     @Redirect(method = {"runTick"}, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/Minecraft;refreshResources()V", ordinal = 0))
     private void separateSoundReloading(Minecraft minecraft) {
-        this.mcSoundHandler.onResourceManagerReload((IResourceManager) this.mcResourceManager);
+        this.mcSoundHandler.onResourceManagerReload(this.mcResourceManager);
     }
 
     @Inject(method = {"loadWorld(Lnet/minecraft/client/multiplayer/WorldClient;Ljava/lang/String;)V"}, at = {@At("HEAD")})
@@ -330,7 +330,7 @@ public abstract class MixinMinecraft {
     @Inject(method = {"clickMouse"}, cancellable = true, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerControllerMP;attackEntity(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/entity/Entity;)V", shift = At.Shift.BEFORE)})
     public void onEntityAttackPre(CallbackInfo ci) {
         Entity entityHit = this.objectMouseOver.entityHit;
-        Event event = (new EntityAttackEvent.Pre((Entity) this.thePlayer, entityHit, this.objectMouseOver.hitVec.distanceTo(new Vec3(entityHit.posX, entityHit.posY, entityHit.posZ)))).call();
+        Event event = (new EntityAttackEvent.Pre(this.thePlayer, entityHit, this.objectMouseOver.hitVec.distanceTo(new Vec3(entityHit.posX, entityHit.posY, entityHit.posZ)))).call();
         if (event.isCancelled())
             ci.cancel();
     }
@@ -338,7 +338,7 @@ public abstract class MixinMinecraft {
     @Inject(method = {"clickMouse"}, at = {@At(value = "INVOKE", target = "Lnet/minecraft/client/multiplayer/PlayerControllerMP;attackEntity(Lnet/minecraft/entity/player/EntityPlayer;Lnet/minecraft/entity/Entity;)V", shift = At.Shift.AFTER)})
     public void onEntityAttackPost(CallbackInfo ci) {
         Entity entityHit = this.objectMouseOver.entityHit;
-        (new EntityAttackEvent.Post((Entity) this.thePlayer, entityHit, this.objectMouseOver.hitVec.distanceTo(new Vec3(entityHit.posX, entityHit.posY, entityHit.posZ)))).call();
+        (new EntityAttackEvent.Post(this.thePlayer, entityHit, this.objectMouseOver.hitVec.distanceTo(new Vec3(entityHit.posX, entityHit.posY, entityHit.posZ)))).call();
     }
 
     @Inject(method = {"shutdownMinecraftApplet"}, at = {@At("HEAD")})

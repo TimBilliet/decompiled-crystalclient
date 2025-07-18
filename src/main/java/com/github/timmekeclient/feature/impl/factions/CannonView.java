@@ -28,6 +28,10 @@ public class CannonView extends Module implements IRegistrable {
     @Toggle(label = "Render Players")
     public boolean renderPlayers = true;
 
+    @HoverOverlay({"Show a message in chat when toggling the mod"})
+    @Toggle(label = "Show Toggle Tessage")
+    public boolean showInChat = false;
+
     private static CannonView INSTANCE;
 
     public static final List<Class<? extends Block>> BLOCKS = Arrays.asList(BlockButtonStone.class, BlockButtonWood.class, BlockCarpet.class, BlockLadder.class, BlockLever.class, BlockPistonBase.class, BlockPistonExtension.class, BlockPistonMoving.class, BlockRedstoneComparator.class, BlockRedstoneRepeater.class,
@@ -49,6 +53,12 @@ public class CannonView extends Module implements IRegistrable {
         super.disable();
         if (Client.isCallingFromMainThread())
             this.mc.renderGlobal.loadRenderers();
+    }
+
+    @Override
+    public void onModuleToggle() {
+        if(showInChat)
+            Client.sendMessage(getToggleMessage(this.name, this.enabled), true);
     }
 
     public static CannonView getInstance() {

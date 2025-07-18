@@ -219,11 +219,11 @@ public class ClientOptions extends Module implements IRegistrable {
         super.configPostInit();
         updateTheme();
         loadSchematicHistory();
-        this.emoteWheel = (this.emoteCache == null || this.emoteCache.equals("null")) ? new EmoteWheel() : (EmoteWheel) Reference.GSON.fromJson(this.emoteCache, EmoteWheel.class);
+        this.emoteWheel = (this.emoteCache == null || this.emoteCache.equals("null")) ? new EmoteWheel() : Reference.GSON.fromJson(this.emoteCache, EmoteWheel.class);
         if (this.dontOverrideDisplayTitle) {
             Display.setTitle("Minecraft " + Client.getMinecraftVersion().getVersionString());
         } else {
-            Display.setTitle(String.format("Minecraft %s | %s (v%s)", Client.getMinecraftVersion().getVersionString(),"Timmeke_ Client", "1.5.2"));
+            Display.setTitle(String.format("Minecraft %s | %s (v%s)", Client.getMinecraftVersion().getVersionString(),"Timmeke_ Client", "1.5.3"));
         }
     }
 
@@ -234,7 +234,7 @@ public class ClientOptions extends Module implements IRegistrable {
                 if (element.isJsonObject()) {
                     JsonObject obj = element.getAsJsonObject();
                     if (obj.has("file") && obj.has("id")) {
-                        File file = (File) Reference.GSON.fromJson(obj.get("file").getAsString(), File.class);
+                        File file = Reference.GSON.fromJson(obj.get("file").getAsString(), File.class);
                         if (file.exists())
                             this.schematicHistory.add(new Schematic(file, null, obj.get("id").getAsString(), obj));
                     }
@@ -248,7 +248,7 @@ public class ClientOptions extends Module implements IRegistrable {
 
     public void updateTheme() {
         for (GuiOptions.Theme theme : GuiOptions.Theme.values()) {
-            if (theme.name.equalsIgnoreCase((String) this.theme.getCurrentSelection())) {
+            if (theme.name.equalsIgnoreCase(this.theme.getCurrentSelection())) {
                 theme.setTheme();
                 if (this.mc.currentScreen instanceof ScreenSettings) {
                     ScreenSettings settings = (ScreenSettings) this.mc.currentScreen;
@@ -349,7 +349,7 @@ public class ClientOptions extends Module implements IRegistrable {
                 jsonObject.addProperty("x", t.getX());
                 jsonObject.addProperty("y", t.getY());
                 jsonObject.addProperty("z", t.getZ());
-                transformations.add((JsonElement) jsonObject);
+                transformations.add(jsonObject);
             }
             JsonObject obj = new JsonObject();
             obj.addProperty("name", schem.getName());
@@ -358,8 +358,8 @@ public class ClientOptions extends Module implements IRegistrable {
             obj.addProperty("x", schem.getX());
             obj.addProperty("y", schem.getY());
             obj.addProperty("z", schem.getZ());
-            obj.add("transformations", (JsonElement) transformations);
-            arr.add((JsonElement) obj);
+            obj.add("transformations", transformations);
+            arr.add(obj);
         }
         this.schematicHistoryCache = Reference.GSON.toJson(arr, JsonArray.class);
     }

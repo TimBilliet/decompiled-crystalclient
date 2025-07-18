@@ -153,7 +153,7 @@ public class AutoFish extends Module implements IRegistrable {
                     }
                 }
             }
-            if (autoSell && mc.thePlayer != null) {
+            if (autoSell && mc.thePlayer != null && isPlayerHoldingRod()) {
                 InventoryPlayer inv = mc.thePlayer.inventory;
                 int amount = 0;
                 for (int i = 0; i < inv.getSizeInventory(); i++) {
@@ -169,7 +169,7 @@ public class AutoFish extends Module implements IRegistrable {
                     previousAmount = amount;
                 }
             }
-            if (autoStore && mc.theWorld != null && isPlayerHoldingRod() && mc.currentScreen instanceof GuiContainer) {
+            if (autoStore && mc.thePlayer != null && isPlayerHoldingRod() && mc.currentScreen instanceof GuiContainer) {
                 GuiContainer guiContainer = (GuiContainer) mc.currentScreen;
                 String inventoryName = getInventoryName(guiContainer);
                 if (inventoryName != null && (inventoryName.contains("Vault #") || inventoryName.contains("Ender Chest"))) {

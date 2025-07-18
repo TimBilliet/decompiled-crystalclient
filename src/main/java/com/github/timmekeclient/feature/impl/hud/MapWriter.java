@@ -1,6 +1,5 @@
 package com.github.timmekeclient.feature.impl.hud;
 
-import com.github.timmekeclient.Client;
 import com.github.timmekeclient.Reference;
 import com.github.timmekeclient.event.EventBus;
 import com.github.timmekeclient.event.IRegistrable;
@@ -26,7 +25,6 @@ import mapwriter.MwKeyHandler;
 import mapwriter.api.IMwDataProvider;
 import mapwriter.api.MwAPI;
 import mapwriter.config.ConfigurationHandler;
-import net.minecraft.client.gui.GuiScreen;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -90,10 +88,6 @@ public class MapWriter extends HudModule implements IRegistrable {
 
     private final Set<String> enabledDataProviders = new HashSet<>();
 
-    public Set<String> getEnabledDataProviders() {
-        return this.enabledDataProviders;
-    }
-
     public MapWriter() {
         this.enabled = true;
         this.position = new ModulePosition(AnchorRegion.TOP_RIGHT, 10.0F, 10.0F);
@@ -121,9 +115,6 @@ public class MapWriter extends HudModule implements IRegistrable {
         ConfigurationHandler.loadConfig();
     }
 
-    public boolean getDefaultForceDisabledState() {
-        return Client.isOnHypixel();
-    }
 
     private void onClientInit(InitializationEvent event) {
         MwAPI.registerDataProvider("Chunk Highlighting", new GroupChunkProvider(), true);
@@ -168,7 +159,7 @@ public class MapWriter extends HudModule implements IRegistrable {
         EventBus.register(this, InputEvent.Key.class, ev -> {
             if (ev.isKeyDown() && this.mapwriter.ready)
                 if (MwKeyHandler.keyMapGui.isPressed()) {
-                    this.mc.displayGuiScreen((GuiScreen) new ScreenMapWriter(this.mapwriter));
+                    this.mc.displayGuiScreen(new ScreenMapWriter(this.mapwriter));
                 } else if (MwKeyHandler.keyZoomIn.isPressed()) {
                     this.mapwriter.miniMap.view.adjustZoomLevel(-1);
                 } else if (MwKeyHandler.keyZoomOut.isPressed()) {
@@ -183,9 +174,3 @@ public class MapWriter extends HudModule implements IRegistrable {
         return INSTANCE;
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\feature\impl\hud\MapWriter.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -31,7 +31,7 @@ public class UsernameTask implements Runnable {
             HttpURLConnection conn = (HttpURLConnection) (new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + this.uuid.toString().replaceAll("-", ""))).openConnection();
             conn.setRequestMethod("GET");
             conn.setConnectTimeout(15000);
-            conn.setRequestProperty("User-Agent", "CrystalClient-1.1.16-projectassfucker");
+            conn.setRequestProperty("User-Agent", "Timmeke_Client-1.5.3");
             conn.setRequestProperty("Content-Type", "application/json");
             if (conn.getResponseCode() != 200) {
                 this.username = this.uuid.toString();
@@ -45,11 +45,11 @@ public class UsernameTask implements Runnable {
                 content.append(str);
             in.close();
             conn.disconnect();
-            JsonObject obj = (JsonObject) Reference.GSON.fromJson(content.toString(), JsonObject.class);
+            JsonObject obj = Reference.GSON.fromJson(content.toString(), JsonObject.class);
             this.username = obj.get("name").getAsString();
             this.fetching = false;
         } catch (Exception ex) {
-            Reference.LOGGER.info("Exception raised in UsernameTask fetching username for UUID {}", new Object[]{this.uuid, ex});
+            Reference.LOGGER.info("Exception raised in UsernameTask fetching username for UUID {}", this.uuid, ex);
             this.username = this.uuid.toString();
             this.fetching = false;
         }
@@ -59,9 +59,3 @@ public class UsernameTask implements Runnable {
         return (this.username == null) ? this.uuid.toString() : this.username;
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\clien\\util\task\UsernameTask.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -142,8 +142,7 @@ public class CustomScoreboard extends HudModule implements IRegistrable {
                 scoreobjective = scoreboard.getObjectiveInDisplaySlot(3 + i1);
             }
         }
-        ScoreObjective scoreobjective1 = (scoreobjective != null) ? scoreobjective : scoreboard.getObjectiveInDisplaySlot(1);
-        return scoreobjective1;
+        return (scoreobjective != null) ? scoreobjective : scoreboard.getObjectiveInDisplaySlot(1);
     }
 
 

@@ -82,8 +82,8 @@ public class PlayerHandler implements IRegistrable {
                         ((NetworkPlayerInfoExt) player).setOrbitOnlineStatus(true);
                     }
                 }
-            } catch (Exception var7) {
-                var7.printStackTrace();
+            } catch (Exception ignored) {
+
             } finally {
                 if (connection != null) {
                     connection.disconnect();

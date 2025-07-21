@@ -193,11 +193,12 @@ public class AutoFish extends Module implements IRegistrable {
                 previousTitle = ev.getSubTitle();
             }
         });
-        EventBus.register(this, ChatReceivedEvent.class, ev -> {
-            String message = ev.message.getUnformattedText();
-            if (!mc.isGamePaused() && mc.thePlayer != null && isRodCast() && message.contains("(!) Removed ")) {
-                playerUseRod();
-            }
-        });
+//        EventBus.register(this, ChatReceivedEvent.class, ev -> {
+//            String message = ev.message.getUnformattedText();
+//            if (!mc.isGamePaused() && mc.thePlayer != null && isRodCast() && message.contains("(!) Removed ")) {
+//                //playerUseRod();
+//                System.out.println("clearlag");
+//            }
+//        });
     }
 }

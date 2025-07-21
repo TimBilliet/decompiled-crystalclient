@@ -59,7 +59,7 @@ public class PackDisplay extends HudModuleBackground implements IRegistrable {
     }
 
     public Tuple<String, String> getInfoHud() {
-        return new Tuple("Resource Pack", ChatColor.stripColor(this.packName));
+        return new Tuple<>("Resource Pack", ChatColor.stripColor(this.packName));
     }
 
     public void draw() {

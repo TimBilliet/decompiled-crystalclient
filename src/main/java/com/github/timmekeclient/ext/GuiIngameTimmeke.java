@@ -322,6 +322,7 @@ public class GuiIngameTimmeke extends GuiIngameForge {
     }
 
     public void renderFood(int width, int height) {
+        //TODO fix black background
         if (!pre(RenderGameOverlayEvent.ElementType.FOOD)) {
             this.mc.mcProfiler.startSection("food");
             EntityPlayer player = (EntityPlayer) this.mc.getRenderViewEntity();

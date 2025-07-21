@@ -77,8 +77,6 @@ public abstract class MixinRendererLivingEntity<T extends EntityLivingBase> exte
         if (entity instanceof EntityPlayer && (flag || entity.getEntityId() != entityplayersp.getEntityId())) {
             Team team = entity.getTeam();
             Team team1 = entityplayersp.getTeam();
-            if (entity.isInvisible())
-                return false;
             if (flag)
                 return true;
             if (team != null) {

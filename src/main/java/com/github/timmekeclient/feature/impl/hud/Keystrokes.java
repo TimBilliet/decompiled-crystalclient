@@ -82,9 +82,7 @@ public class Keystrokes extends HudModule implements IRegistrable {
             updateKeys();
         }
         synchronized (this.keys) {
-            Iterator<Key> iterator = this.keys.iterator();
-            while (iterator.hasNext())
-                ((Key) iterator.next()).draw();
+            for (Key key : this.keys) key.draw();
         }
     }
 
@@ -95,12 +93,12 @@ public class Keystrokes extends HudModule implements IRegistrable {
     }
 
     private int getLeftCps() {
-        this.clickListLeft.removeIf(x -> (x.longValue() < System.currentTimeMillis() - 1000L));
+        this.clickListLeft.removeIf(x -> (x < System.currentTimeMillis() - 1000L));
         return this.clickListLeft.size();
     }
 
     private int getRightCps() {
-        this.clickListRight.removeIf(x -> (x.longValue() < System.currentTimeMillis() - 1000L));
+        this.clickListRight.removeIf(x -> (x < System.currentTimeMillis() - 1000L));
         return this.clickListRight.size();
     }
 
@@ -131,9 +129,9 @@ public class Keystrokes extends HudModule implements IRegistrable {
     public void registerEvents() {
         EventBus.register(this, InputEvent.Mouse.class, ev -> {
             if (ev.buttonState && ev.button == 0) {
-                this.clickListLeft.add(Long.valueOf(System.currentTimeMillis()));
+                this.clickListLeft.add(System.currentTimeMillis());
             } else if (ev.buttonState && ev.button == 1) {
-                this.clickListRight.add(Long.valueOf(System.currentTimeMillis()));
+                this.clickListRight.add(System.currentTimeMillis());
             }
         });
     }
@@ -163,7 +161,7 @@ public class Keystrokes extends HudModule implements IRegistrable {
             this.height = height;
             this.keybind = keybind;
             this.fadingColor = color;
-            this.textColor = new FadingColor((Color) ks.textColor, (Color) ks.pressedColor, color.getFadeTimeMs());
+            this.textColor = new FadingColor(ks.textColor, ks.pressedColor, color.getFadeTimeMs());
         }
 
         public void draw() {

@@ -330,10 +330,8 @@ public class GuiIngameTimmeke extends GuiIngameForge {
             int left = width / 2 + 91;
             int top = height - right_height;
             right_height += 10;
-            boolean unused = false;
             FoodStats stats = this.mc.thePlayer.getFoodStats();
             int level = stats.getFoodLevel();
-            int levelLast = stats.getPrevFoodLevel();
             for (int i = 0; i < 10; i++) {
                 int idx = i * 2 + 1;
                 int x = left - i * 8 - 9;
@@ -344,17 +342,9 @@ public class GuiIngameTimmeke extends GuiIngameForge {
                     icon += 36;
                     backgound = 13;
                 }
-                if (unused)
-                    backgound = 1;
                 if (player.getFoodStats().getSaturationLevel() <= 0.0F && this.updateCounter % (level * 3 + 1) == 0)
                     y = top + this.rand.nextInt(3) - 1;
                 drawTexturedModalRect(x, y, 16 + backgound * 9, 27, 9, 9);
-                if (unused)
-                    if (idx < levelLast) {
-                        drawTexturedModalRect(x, y, icon + 54, 27, 9, 9);
-                    } else if (idx == levelLast) {
-                        drawTexturedModalRect(x, y, icon + 63, 27, 9, 9);
-                    }
                 if (idx < level) {
                     drawTexturedModalRect(x, y, icon + 36, 27, 9, 9);
                 } else if (idx == level) {
@@ -412,8 +402,7 @@ public class GuiIngameTimmeke extends GuiIngameForge {
                 this.mc.mcProfiler.endSection();
                 if (this.mc.playerController.gameIsSurvivalOrAdventure() && this.mc.thePlayer.experienceLevel > 0) {
                     this.mc.mcProfiler.startSection("expLevel");
-                    boolean flag1 = false;
-                    int color = flag1 ? 16777215 : 8453920;
+                    int color = 8453920;
                     String text = "" + this.mc.thePlayer.experienceLevel;
                     int x = (width - this.fontrenderer.getStringWidth(text)) / 2;
                     int y = height - 31 - 4;
@@ -653,7 +642,6 @@ public class GuiIngameTimmeke extends GuiIngameForge {
         if (tmp instanceof EntityLivingBase) {
             bind(icons);
             if (!pre(RenderGameOverlayEvent.ElementType.HEALTHMOUNT)) {
-                boolean unused = false;
                 int left_align = width / 2 + 91;
                 this.mc.mcProfiler.endStartSection("mountHealth");
                 GlStateManager.enableBlend();
@@ -665,7 +653,7 @@ public class GuiIngameTimmeke extends GuiIngameForge {
                     hearts = 30;
                 }
 
-                int BACKGROUND = 52 + (unused ? 1 : 0);
+                int BACKGROUND = 52;
 
                 for (int heart = 0; hearts > 0; heart += 20) {
                     int top = height - right_height;

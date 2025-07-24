@@ -26,6 +26,10 @@ import java.util.List;
 @ModuleInfo(name = "Boss Focus", description = "Draw a colored box around the boss mob", category = Category.FACTIONS)
 public class BossFocus extends Module implements IRegistrable {
 
+    public BossFocus(){
+        enabled = false;
+    }
+
     @PageBreak(label = "Color")
     @Colour(label = "Box Color")
     public ColorObject boxColor = ColorObject.fromColor(GuiOptions.getInstance().getColor((GuiOptions.getInstance()).secondaryRed, 255));

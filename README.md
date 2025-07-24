@@ -14,6 +14,7 @@
 - Parkour mod
 - Sound alert when player nearby
 - Boss mob focus hitbox for SaicoPvP
+- Potion effect running out alert
 
 ## Incompatible with Optifine's dynamic lights(will crash)
 

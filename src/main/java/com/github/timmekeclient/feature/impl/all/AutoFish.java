@@ -129,6 +129,49 @@ public class AutoFish extends Module implements IRegistrable {
         return null;
     }
 
+    private void onClientTick(ClientTickEvent.Post ev){
+        if (!mc.isGamePaused() && mc.thePlayer != null) {
+            if (isPlayerHoldingRod() || waitingToRecast()) {
+                if (isTimeToCast()) {
+                    if (isPlayerHoldingRod()) {
+                        playerUseRod();
+                    }
+                    castScheduledAt = 0L;
+                }
+            }
+        }
+        if (autoSell && mc.thePlayer != null && isPlayerHoldingRod()) {
+            InventoryPlayer inv = mc.thePlayer.inventory;
+            int amount = 0;
+            for (int i = 0; i < inv.getSizeInventory(); i++) {
+                ItemStack stack = inv.getStackInSlot(i);
+                if (stack != null && stack.stackSize > 0) {
+                    amount++;
+                }
+            }
+            if(previousAmount != amount) {
+                if (amount >= slotAmount) {
+                    mc.thePlayer.sendChatMessage("/sell inv");
+                }
+                previousAmount = amount;
+            }
+        }
+        if (autoStore && mc.thePlayer != null && isPlayerHoldingRod() && mc.currentScreen instanceof GuiContainer) {
+            GuiContainer guiContainer = (GuiContainer) mc.currentScreen;
+            String inventoryName = getInventoryName(guiContainer);
+            if (inventoryName != null && (inventoryName.contains("Vault #") || inventoryName.contains("Ender Chest"))) {
+                Container container = mc.thePlayer.openContainer;
+                if (container != null) {
+                    int hotbarSlotIndex = container.inventorySlots.size() - 10 + hotbarSlot;
+                    ItemStack stack = mc.thePlayer.inventory.getStackInSlot(hotbarSlot - 1);
+                    if (stack != null && stack.getItem() != null && stack.stackSize > 0) {
+                        mc.playerController.windowClick(guiContainer.inventorySlots.windowId, hotbarSlotIndex, 0, 1, this.mc.thePlayer);
+                    }
+                }
+            }
+        }
+    }
+
     @Override
     public void registerEvents() {
         EventBus.register(this, PlaySoundEvent.class, ev -> {
@@ -142,48 +185,7 @@ public class AutoFish extends Module implements IRegistrable {
                 scheduleNextCast();
             }
         });
-        EventBus.register(this, ClientTickEvent.Post.class, ev -> {
-            if (!mc.isGamePaused() && mc.thePlayer != null) {
-                if (isPlayerHoldingRod() || waitingToRecast()) {
-                    if (isTimeToCast()) {
-                        if (isPlayerHoldingRod()) {
-                            playerUseRod();
-                        }
-                        castScheduledAt = 0L;
-                    }
-                }
-            }
-            if (autoSell && mc.thePlayer != null && isPlayerHoldingRod()) {
-                InventoryPlayer inv = mc.thePlayer.inventory;
-                int amount = 0;
-                for (int i = 0; i < inv.getSizeInventory(); i++) {
-                    ItemStack stack = inv.getStackInSlot(i);
-                    if (stack != null && stack.stackSize > 0) {
-                        amount++;
-                    }
-                }
-                if(previousAmount != amount) {
-                    if (amount >= slotAmount) {
-                        mc.thePlayer.sendChatMessage("/sell inv");
-                    }
-                    previousAmount = amount;
-                }
-            }
-            if (autoStore && mc.thePlayer != null && isPlayerHoldingRod() && mc.currentScreen instanceof GuiContainer) {
-                GuiContainer guiContainer = (GuiContainer) mc.currentScreen;
-                String inventoryName = getInventoryName(guiContainer);
-                if (inventoryName != null && (inventoryName.contains("Vault #") || inventoryName.contains("Ender Chest"))) {
-                    Container container = mc.thePlayer.openContainer;
-                    if (container != null) {
-                        int hotbarSlotIndex = container.inventorySlots.size() - 10 + hotbarSlot;
-                        ItemStack stack = mc.thePlayer.inventory.getStackInSlot(hotbarSlot - 1);
-                        if (stack != null && stack.getItem() != null && stack.stackSize > 0) {
-                            mc.playerController.windowClick(guiContainer.inventorySlots.windowId, hotbarSlotIndex, 0, 1, this.mc.thePlayer);
-                        }
-                    }
-                }
-            }
-        });
+        EventBus.register(this, ClientTickEvent.Post.class, this::onClientTick);
         EventBus.register(this, RenderOverlayEvent.Title.class, ev -> {
             if (mc.thePlayer != null && detectionMode.isSelected("Text")) {
                 if (previousTitle.contains("Watch") && ev.getSubTitle().contains("Biting") && isPlayerHoldingRod()) {

@@ -139,7 +139,7 @@ public abstract class MixinMinecraft {
     @Inject(method = {"startGame"}, at = {@At(value = "INVOKE", target = "Lorg/apache/logging/log4j/Logger;info(Ljava/lang/String;)V", shift = At.Shift.BEFORE)})
     private void logClientVersion(CallbackInfo ci) {
         Reference.LOGGER.info("");
-        Reference.LOGGER.info("  {} v{}", "Timmeke_ Client", "1.5.3");
+        Reference.LOGGER.info("  {} v{}", "Timmeke_ Client", "1.6.0");
         Reference.LOGGER.info("");
     }
 

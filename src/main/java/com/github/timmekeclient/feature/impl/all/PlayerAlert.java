@@ -33,6 +33,9 @@ public class PlayerAlert extends Module implements IRegistrable {
     private long lastSoundPlayedTime = 0;
     private int soundPlayedAmount = 0;
 
+    public PlayerAlert(){
+        enabled = false;
+    }
     public void enable() {
         super.enable();
         triggered = false;

@@ -160,6 +160,8 @@ public class ModuleHandler implements IRegistrable {
         registerModule(LookingAtCoords.class);
         registerModule(WallCheck.class);
         registerModule(ParkourMod.class);
+        registerModule(PlayerAlert.class);
+        registerModule(BossFocus.class);
         modules.sort(Comparator.comparing(m -> m.priority));
         for (Module module : modules) {
             for (Field field : module.getClass().getFields()) {

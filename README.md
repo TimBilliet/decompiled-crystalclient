@@ -11,8 +11,11 @@
 - Looking at block coordinates hud
 - Auto wall check for SaicoPvP
 - Cactus placement helper mod
+- Parkour mod
+- Sound alert when player nearby
+- Boss mob focus hitbox for SaicoPvP
 
-##Incompatible with Optifine's dynamic lights
+## Incompatible with Optifine's dynamic lights(will crash)
 
 ## How to generate a working jar
 1. Run the gradle task "reobfShadowJar"

@@ -25,7 +25,7 @@ public class WallCheck extends Module implements IRegistrable {
     @Slider(label = "Random delay range", placeholder = "{value}s", minimum = 0, maximum = 300, standard = 60, integers = true)
     public int randomTime = 60;
 
-    @HoverOverlay({"The amount of times an anvil sound is placed when the mod detects you're getting raided"})
+    @HoverOverlay({"The amount of times an anvil sound is played when the mod detects you're getting raided"})
     @Slider(label = "Amount of sounds played ", minimum = 1, maximum = 150, standard = 20, integers = true)
     public int maxSoundAmount = 20;
 

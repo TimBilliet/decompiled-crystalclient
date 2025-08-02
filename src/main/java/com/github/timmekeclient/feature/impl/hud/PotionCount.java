@@ -13,14 +13,14 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
 @ConfigurableSize
-@ModuleInfo(name = "Potion Count", description = "Displays the amount of Obsidian in your inventory onscreen", category = Category.HUD)
+@ModuleInfo(name = "Potion Count", description = "Displays the amount of healing pots in your inventory onscreen", category = Category.HUD)
 public class PotionCount extends HudModuleBackground {
     public String getDisplayText() {
         return getPotionCount((EntityPlayer) this.mc.thePlayer) + " pots";
     }
 
     public Tuple<String, String> getInfoHud() {
-        return new Tuple("Potions", Integer.toString(getPotionCount((EntityPlayer) this.mc.thePlayer)));
+        return new Tuple<>("Potions", Integer.toString(getPotionCount((EntityPlayer) this.mc.thePlayer)));
     }
 
     public static int getPotionCount(EntityPlayer player) {

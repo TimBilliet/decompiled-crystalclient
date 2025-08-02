@@ -220,7 +220,8 @@ public class Schematica extends Module implements IRegistrable {
     public final List<MissingSchematicBlock> missingBlocks = new GlueList<>();
 
     public final Map<BlockPos, AxisAlignedBB> wrongMetaBlocks = new ConcurrentHashMap<>(), incorrectBlocks = new ConcurrentHashMap<>();
-
+    //TODO fix rendering of stairs in schematic
+    //TODO fix schematic esp showing even after pressing untrace all
     public Schematica() {
         INSTANCE = this;
         SCHEMATICA_MOD_INSTANCE = new com.github.lunatrius.schematica.Schematica();

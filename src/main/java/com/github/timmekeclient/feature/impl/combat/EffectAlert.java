@@ -32,17 +32,16 @@ public class EffectAlert extends Module implements IRegistrable {
                 Set<PotionEffect> currentEffects = new HashSet<>(mc.thePlayer.getActivePotionEffects());
                 for (PotionEffect effect : previousEffects) {
                     if (!currentEffects.contains(effect)) {
-                        System.out.println("Effect " + effect.getEffectName() + " wore off");
                         if (effects.isSelected("Speed") && effect.getEffectName().equals("potion.moveSpeed")) {
                             mc.ingameGUI.displayTitle("Speed ran out!", "", 0, 0, 0);
                         } else if (effects.isSelected("Invisibility") && effect.getEffectName().equals("potion.invisibility")) {
-                            mc.ingameGUI.displayTitle("Invisibility ran out!", "", 0, 0, 0);
+                            mc.ingameGUI.displayTitle("Invis ran out!", "", 0, 0, 0);
                         } else if (effects.isSelected("Fire resistance") && effect.getEffectName().equals("potion.fireResistance")) {
-                            mc.ingameGUI.displayTitle("Fire resistance ran out!", "", 0, 0, 0);
+                            mc.ingameGUI.displayTitle("Fire res ran out!", "", 0, 0, 0);
                         } else if (effects.isSelected("Strength 2") && effect.getEffectName().equals("potion.damageBoost") && effect.getAmplifier() == 1) {
                             mc.ingameGUI.displayTitle("Strength 2 ran out!", "", 0, 0, 0);
                         } else if (effects.isSelected("Regeneration 5") && effect.getEffectName().equals("potion.regeneration") && effect.getAmplifier() == 4) {
-                            mc.ingameGUI.displayTitle("Regeneration 5 ran out!", "", 0, 0, 0);
+                            mc.ingameGUI.displayTitle("Gap removed!", "", 0, 0, 0);
                         }
                     }
                 }

@@ -25,7 +25,7 @@ public class ParkourMod extends Module implements IRegistrable {
     @Override
     public void registerEvents() {
         EventBus.register(this, ClientTickEvent.Post.class, ev -> {
-            if (!mc.thePlayer.onGround || mc.gameSettings.keyBindJump.isPressed()) {
+            if (mc.thePlayer == null || !mc.thePlayer.onGround || mc.gameSettings.keyBindJump.isPressed()) {
                 return;
             }
             if (mc.thePlayer.isSneaking() || mc.gameSettings.keyBindSneak.isPressed()) {

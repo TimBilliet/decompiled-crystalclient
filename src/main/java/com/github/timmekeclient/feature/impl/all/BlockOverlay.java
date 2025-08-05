@@ -14,8 +14,7 @@ import com.github.timmekeclient.shader.ShaderManager;
 import com.github.timmekeclient.shader.chroma.ChromaScreenShader;
 import com.github.timmekeclient.util.ColorObject;
 import com.github.timmekeclient.util.RenderUtils;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockStairs;
+import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.util.AxisAlignedBB;
@@ -53,18 +52,7 @@ public class BlockOverlay extends Module implements IRegistrable {
                 BlockPos pos = ev.getTarget().getBlockPos();
                 IBlockState state = this.mc.theWorld.getBlockState(pos);
                 Block b = state.getBlock();
-                Block superBlock = b;
-                if(b.getCollisionBoundingBox(this.mc.theWorld, pos, state) == null) {
-                    superBlock = new Block(b.getMaterial());
-                    superBlock.setBlockBounds((float) b.getBlockBoundsMinX(), (float) b.getBlockBoundsMinY(), (float) b.getBlockBoundsMinZ(), (float) b.getBlockBoundsMaxX(), (float) b.getBlockBoundsMaxY(), (float) b.getBlockBoundsMaxZ());
-                } else {
-                    if(b instanceof BlockStairs) {
-                         superBlock.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-                    } else {
-                        superBlock.setBlockBoundsBasedOnState(mc.theWorld, pos);
-                    }
-                }
-                AxisAlignedBB bb = RenderUtils.normalize(superBlock.getCollisionBoundingBox(this.mc.theWorld, pos, state).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D));
+                AxisAlignedBB bb = RenderUtils.normalize(b.getSelectedBoundingBox(this.mc.theWorld, pos).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D));
                 if (this.color.isChroma())
                     ShaderManager.getInstance().enableShader(ChromaScreenShader.class);
                 if (this.mode.isSelected("Outline")) {

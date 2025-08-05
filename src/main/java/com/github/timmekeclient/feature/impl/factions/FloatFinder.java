@@ -11,9 +11,7 @@ import com.github.timmekeclient.feature.annotations.HoverOverlay;
 import com.github.timmekeclient.feature.annotations.properties.*;
 import com.github.timmekeclient.feature.base.Category;
 import com.github.timmekeclient.feature.base.Module;
-import com.github.timmekeclient.feature.settings.GroupOptions;
 import com.github.timmekeclient.gui.GuiOptions;
-import com.github.timmekeclient.network.socket.client.group.PacketGroupChat;
 import com.github.timmekeclient.shader.ShaderManager;
 import com.github.timmekeclient.shader.chroma.ChromaScreenShader;
 import com.github.timmekeclient.util.ColorObject;
@@ -188,10 +186,10 @@ public class FloatFinder extends Module implements IRegistrable {
         if (barrelDirection == null) {
             vertical = null;
             horizontal = null;
-            if (GroupOptions.getInstance().sharedFloatPos && !incorrectBarrelDirSent) {
-                Client.sendPacket(new PacketGroupChat("ZQX_D"));
-                incorrectBarrelDirSent = true;
-            }
+//            if (GroupOptions.getInstance().sharedFloatPos && !incorrectBarrelDirSent) {
+//                Client.sendPacket(new PacketGroupChat("ZQX_D"));
+//                incorrectBarrelDirSent = true;
+//            }
             if (calledFromKeybind)
                 Client.sendMessage("&fInvalid barrel block or state", true);
             previousFloat = null;
@@ -200,10 +198,10 @@ public class FloatFinder extends Module implements IRegistrable {
         barrelNextBlockPos = determinePosNextToBarrel();
         vertical = verticalScan();
         if (vertical == null) {
-            if (GroupOptions.getInstance().sharedFloatPos && !incorrectVerticalSent) {
-                Client.sendPacket(new PacketGroupChat("ZQX_V"));
-                incorrectVerticalSent = true;
-            }
+//            if (GroupOptions.getInstance().sharedFloatPos && !incorrectVerticalSent) {
+//                Client.sendPacket(new PacketGroupChat("ZQX_V"));
+//                incorrectVerticalSent = true;
+//            }
             if (calledFromKeybind)
                 Client.sendMessage("&fCould not find a top block", true);
             previousFloat = null;
@@ -211,10 +209,10 @@ public class FloatFinder extends Module implements IRegistrable {
         }
         horizontal = horizontalScan();
         if (horizontal == null) {
-            if (GroupOptions.getInstance().sharedFloatPos && !incorrectHorizontalSent) {
-                Client.sendPacket(new PacketGroupChat("ZQX_H"));
-                incorrectHorizontalSent = true;
-            }
+//            if (GroupOptions.getInstance().sharedFloatPos && !incorrectHorizontalSent) {
+//                Client.sendPacket(new PacketGroupChat("ZQX_H"));
+//                incorrectHorizontalSent = true;
+//            }
             if (calledFromKeybind)
                 Client.sendMessage("&fCould not find a side block", true);
             previousFloat = null;
@@ -222,10 +220,9 @@ public class FloatFinder extends Module implements IRegistrable {
         }
         if (calledFromKeybind || previousFloat == null || !previousFloat.equals(horizontal)) {
             Client.sendMessage(String.format("&fFloat position set to &bx%s y%s z%s.", horizontal.getX(), horizontal.getY(), horizontal.getZ()), true);
-            if (GroupOptions.getInstance().sharedFloatPos) {
-                Client.sendPacket(new PacketGroupChat(String.format("ZQX_%s_%s_%s_%s_%s_%s_%s", horizontal.getX(), horizontal.getY(), horizontal.getZ(), barrelBlockPos.getX(), barrelBlockPos.getY(), barrelBlockPos.getZ(), shootDirection)));
-            }
-            //Client.sendPacket(new PacketFloatFinder());
+//            if (GroupOptions.getInstance().sharedFloatPos) {
+//                Client.sendPacket(new PacketGroupChat(String.format("ZQX_%s_%s_%s_%s_%s_%s_%s", horizontal.getX(), horizontal.getY(), horizontal.getZ(), barrelBlockPos.getX(), barrelBlockPos.getY(), barrelBlockPos.getZ(), shootDirection)));
+//            }
         }
         incorrectVerticalSent = false;
         incorrectHorizontalSent = false;

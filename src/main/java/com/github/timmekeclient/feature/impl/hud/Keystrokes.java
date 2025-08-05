@@ -64,7 +64,7 @@ public class Keystrokes extends HudModule implements IRegistrable {
     public Keystrokes() {
         this.position = new ModulePosition(AnchorRegion.TOP_RIGHT, 5.0F, 19.0F);
     }
-
+    //TODO fix
     public void configPostInit() {
         super.configPostInit();
         setOptionVisibility("Background Color (Pressed)", f -> this.drawBackground);

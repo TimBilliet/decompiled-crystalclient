@@ -48,37 +48,37 @@ public class PacketGroupChat extends Packet {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.theWorld == null)
             return;
-        if (message.startsWith("ZQX_")) {
-            FloatFinder floatInst = FloatFinder.getInstance();
-            Patchcrumbs patchInst = Patchcrumbs.getInstance();
-            if (floatInst.enabled && mc.thePlayer != null && !ign.equals(mc.thePlayer.getName())) {
-                if (message.equals("ZQX_V") || message.equals("ZQX_H") || message.equals("ZQX_D")) {
-                    floatInst.horizontal = null;
-                    floatInst.vertical = null;
-                    patchInst.clearCrumbFromFloatFinder();
-                    return;
-                }
-                String[] coords = message.substring(4).split("_");
-                if (coords.length == 7) {
-                    int hX = Integer.parseInt(coords[0]);
-                    int hY = Integer.parseInt(coords[1]);
-                    int hZ = Integer.parseInt(coords[2]);
-                    int bX = Integer.parseInt(coords[3]);
-                    int bY = Integer.parseInt(coords[4]);
-                    int bZ = Integer.parseInt(coords[5]);
-                    floatInst.horizontal = new BlockPos(hX, hY, hZ);
-                    floatInst.barrelBlockPos = new BlockPos(bX, bY, bZ);
-                    floatInst.vertical = new BlockPos(bX, hY, bZ);
-                    if (patchInst.enabled && patchInst.useFloatFinder) {
-                        patchInst.setCrumbsFromFloatFinder(hX, hY, hZ, coords[6]);
-                        if (!patchInst.announceReceivedCoords)
-                            return;
-                    }
-                    Client.sendMessage(String.format("&fReceived shared float position at &bx%s y%s z%s.", hX, hY, hZ), true);
-                }
-            }
-            return;
-        }
+//        if (message.startsWith("ZQX_")) {
+//            FloatFinder floatInst = FloatFinder.getInstance();
+//            Patchcrumbs patchInst = Patchcrumbs.getInstance();
+//            if (floatInst.enabled && mc.thePlayer != null && !ign.equals(mc.thePlayer.getName())) {
+//                if (message.equals("ZQX_V") || message.equals("ZQX_H") || message.equals("ZQX_D")) {
+//                    floatInst.horizontal = null;
+//                    floatInst.vertical = null;
+//                    patchInst.clearCrumbFromFloatFinder();
+//                    return;
+//                }
+//                String[] coords = message.substring(4).split("_");
+//                if (coords.length == 7) {
+//                    int hX = Integer.parseInt(coords[0]);
+//                    int hY = Integer.parseInt(coords[1]);
+//                    int hZ = Integer.parseInt(coords[2]);
+//                    int bX = Integer.parseInt(coords[3]);
+//                    int bY = Integer.parseInt(coords[4]);
+//                    int bZ = Integer.parseInt(coords[5]);
+//                    floatInst.horizontal = new BlockPos(hX, hY, hZ);
+//                    floatInst.barrelBlockPos = new BlockPos(bX, bY, bZ);
+//                    floatInst.vertical = new BlockPos(bX, hY, bZ);
+//                    if (patchInst.enabled && patchInst.useFloatFinder) {
+//                        patchInst.setCrumbsFromFloatFinder(hX, hY, hZ, coords[6]);
+//                        if (!patchInst.announceReceivedCoords)
+//                            return;
+//                    }
+//                    Client.sendMessage(String.format("&fReceived shared float position at &bx%s y%s z%s.", hX, hY, hZ), true);
+//                }
+//            }
+//            return;
+//        }
 
         ChatComponentText ch = new ChatComponentText(ChatColor.translate('&', "&8[&b&lGroup Chat&8] &r" + this.ign + ": "));
         ChatComponentText ch1 = new ChatComponentText(ChatColor.translate('&', "&f" + this.message));

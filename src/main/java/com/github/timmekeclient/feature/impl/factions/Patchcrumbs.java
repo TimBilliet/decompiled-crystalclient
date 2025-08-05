@@ -74,9 +74,9 @@ public class Patchcrumbs extends Module implements IRegistrable {
     @Toggle(label = "Use Explosions")
     public boolean useExplosions = false;
 
-    @HoverOverlay("Ignores all other detection methods")
-    @Toggle(label = "Use Float Finder")
-    public boolean useFloatFinder = false;
+//    @HoverOverlay("Ignores all other detection methods")
+//    @Toggle(label = "Use Float Finder")
+//    public boolean useFloatFinder = false;
 
     @Toggle(label = "Announce Received Coords")
     public boolean announceReceivedCoords = false;
@@ -144,7 +144,7 @@ public class Patchcrumbs extends Module implements IRegistrable {
     private double lastYLevel;
 
     private boolean checkDirty;
-
+//TODO add exclusion zone(cannon box)
     public Patchcrumbs() {
         this.currentCrumb = null;
         this.entities = new ArrayList<>();
@@ -158,11 +158,11 @@ public class Patchcrumbs extends Module implements IRegistrable {
 
     public void configPostInit() {
         super.configPostInit();
-        setOptionVisibility("Announce Received Coords", f -> this.useFloatFinder);
+//        setOptionVisibility("Announce Received Coords", f -> this.useFloatFinder);
     }
 
     private void onPacketReceive(PacketReceivedEvent.Post event) {
-        if (!useFloatFinder && this.useSandStacks && event.packet instanceof S22PacketMultiBlockChange) {
+        if (this.useSandStacks && event.packet instanceof S22PacketMultiBlockChange) {
             S22PacketMultiBlockChange packet = (S22PacketMultiBlockChange) event.packet;
             for (S22PacketMultiBlockChange.BlockUpdateData data : packet.getChangedBlocks()) {
                 if (data.getBlockState() != null && data.getBlockState().getBlock() instanceof net.minecraft.block.BlockFalling)
@@ -176,35 +176,35 @@ public class Patchcrumbs extends Module implements IRegistrable {
         }
     }
 
-    public void clearCrumbFromFloatFinder(){
-        currentCrumb = null;
-        entities.clear();
-        velocityEntities.clear();
-    }
-
-    public void setCrumbsFromFloatFinder(int x, int y, int z, String direction) {
-        Patchcrumb.Direction dir = Patchcrumb.Direction.fromString(direction);
-        double newX = x;
-        double newZ = z;
-        if (dir == Patchcrumb.Direction.NORTH_SOUTH) {
-            newZ = mc.thePlayer.posZ;
-        } else if (dir == Patchcrumb.Direction.EAST_WEST) {
-            newX = mc.thePlayer.posX;
-        }
-        BlockPos pos = new BlockPos(newX, y, newZ);
-        currentCrumb = new Patchcrumb(pos, new AxisAlignedBB(pos, pos.add(1, 1, 1)), dir, Patchcrumb.Source.FLOATFINDER);
-        entities.clear();
-        velocityEntities.clear();
-    }
+//    public void clearCrumbFromFloatFinder(){
+//        currentCrumb = null;
+//        entities.clear();
+//        velocityEntities.clear();
+//    }
+//
+//    public void setCrumbsFromFloatFinder(int x, int y, int z, String direction) {
+//        Patchcrumb.Direction dir = Patchcrumb.Direction.fromString(direction);
+//        double newX = x;
+//        double newZ = z;
+//        if (dir == Patchcrumb.Direction.NORTH_SOUTH) {
+//            newZ = mc.thePlayer.posZ;
+//        } else if (dir == Patchcrumb.Direction.EAST_WEST) {
+//            newX = mc.thePlayer.posX;
+//        }
+//        BlockPos pos = new BlockPos(newX, y, newZ);
+//        currentCrumb = new Patchcrumb(pos, new AxisAlignedBB(pos, pos.add(1, 1, 1)), dir, Patchcrumb.Source.FLOATFINDER);
+//        entities.clear();
+//        velocityEntities.clear();
+//    }
 
     private void onRenderWorld(RenderWorldEvent.Post event) {
         if (this.currentCrumb == null)
             return;
-        if (this.currentCrumb.expired() && !useFloatFinder) {
+        if (this.currentCrumb.expired()) {
             this.currentCrumb = null;
             return;
         }
-        if (this.tracers && !useFloatFinder)
+        if (this.tracers)
             RenderUtils.drawTracer(Vec3d.getNormalizedFromBlockPos(this.currentCrumb.getPos()), this.tracerColor, this.mc.thePlayer, event.partialTicks);
         GlStateManager.pushMatrix();
         GlStateManager.enableBlend();
@@ -244,12 +244,12 @@ public class Patchcrumbs extends Module implements IRegistrable {
         GlStateManager.enableDepth();
         GlStateManager.resetColor();
         GlStateManager.popMatrix();
-        if (this.showText && !useFloatFinder)
+        if (this.showText)
             renderText();
     }
 
     private void onClientTick(ClientTickEvent.Post event) {
-        if (this.mc.theWorld == null || useFloatFinder)
+        if (this.mc.theWorld == null)
             return;
         if (currentCrumb != null && currentCrumb.getSource() == Patchcrumb.Source.FLOATFINDER)
             currentCrumb = null;

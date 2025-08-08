@@ -88,7 +88,7 @@ public class RenderOverlay extends RenderChunk {
                 Block mcBlock = mcBlockState.getBlock();
                 boolean isSchAirBlock = schematic.isAirBlock(pos);
                 boolean isMcAirBlock = worldClient.isAirBlock(mcPos);
-                if (!isMcAirBlock && isSchAirBlock && (Schematica.getInstance()).highlightAir) {
+                if (!isMcAirBlock && isSchAirBlock && !(Schematica.getInstance()).highlightAir) {
                     render = true;
                     color = 12517567;
                     sides = getSides(mcBlock, worldClient, mcPos, sides);
@@ -98,19 +98,12 @@ public class RenderOverlay extends RenderChunk {
                         if (!isMcAirBlock) {
                             if (schBlock != mcBlock) {
                                 Material material = mcBlock.getMaterial();
-                                if (!(Schematica.getInstance()).highlightInLiquid || (material != Material.water && material != Material.lava)) {
+                                if ((Schematica.getInstance()).highlightInLiquid || (material != Material.water && material != Material.lava)) {
                                     render = true;
                                     color = 16711680;
                                     if (!(Schematica.getInstance()).trayMode || mcPos.getY() != 253) {
-                                        Block superBlock = mcBlock;
-                                        if (mcBlock.getCollisionBoundingBox(worldClient, mcPos, mcBlockState) == null) {
-                                            superBlock = new Block(material);
-                                            if (!(mcBlock instanceof BlockStairs)) {
-                                                superBlock.setBlockBounds((float) mcBlock.getBlockBoundsMinX(), (float) mcBlock.getBlockBoundsMinY(), (float) mcBlock.getBlockBoundsMinZ(), (float) mcBlock.getBlockBoundsMaxX(), (float) mcBlock.getBlockBoundsMaxY(), (float) mcBlock.getBlockBoundsMaxZ());
-                                            }
-                                        }
-                                        superBlock.setBlockBoundsBasedOnState(worldClient, mcPos);
-                                        AxisAlignedBB aabb = superBlock.getCollisionBoundingBox(worldClient, mcPos, mcBlockState).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
+                                        mcBlock.setBlockBoundsBasedOnState(worldClient, mcPos);
+                                        AxisAlignedBB aabb = mcBlock.getSelectedBoundingBox(worldClient,mcPos).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
                                         tracers.put(mcPos, new Tuple<>(RenderType.INCORRECT_BLOCK, aabb));
                                     }
                                 }
@@ -118,15 +111,8 @@ public class RenderOverlay extends RenderChunk {
                                 render = true;
                                 color = 12541696;
                                 if (!(Schematica.getInstance()).trayMode || mcPos.getY() != 253) {
-                                    Block superBlock = mcBlock;
-                                    if (mcBlock.getCollisionBoundingBox(worldClient, mcPos, mcBlockState) == null) {
-                                        superBlock = new Block(mcBlock.getMaterial());
-                                        if (!(mcBlock instanceof BlockStairs)) {
-                                            superBlock.setBlockBounds((float) mcBlock.getBlockBoundsMinX(), (float) mcBlock.getBlockBoundsMinY(), (float) mcBlock.getBlockBoundsMinZ(), (float) mcBlock.getBlockBoundsMaxX(), (float) mcBlock.getBlockBoundsMaxY(), (float) mcBlock.getBlockBoundsMaxZ());
-                                        }
-                                    }
-                                    superBlock.setBlockBoundsBasedOnState(worldClient, mcPos);
-                                    AxisAlignedBB aabb = superBlock.getCollisionBoundingBox(worldClient, mcPos, mcBlockState).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
+                                    mcBlock.setBlockBoundsBasedOnState(worldClient, mcPos);
+                                    AxisAlignedBB aabb = mcBlock.getSelectedBoundingBox(worldClient, mcPos).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
                                     tracers.put(mcPos, new Tuple<>(RenderType.WRONG_META, aabb));
                                 }
                             }
@@ -146,15 +132,8 @@ public class RenderOverlay extends RenderChunk {
                         if (ClientProxy.currentSchematic.totalBlocks > 7000) {
                             GeometryTessellator.drawCuboid(worldRenderer, pos, sides, 0x3F000000 | color);
                         } else {
-                            Block superBlock = schBlock;
-                            if (schBlock.getCollisionBoundingBox(schematic, pos, schBlockState) == null) {
-                                superBlock = new Block(schBlock.getMaterial());
-                                if (!(schBlock instanceof BlockStairs)) {
-                                    superBlock.setBlockBounds((float) schBlock.getBlockBoundsMinX(), (float) schBlock.getBlockBoundsMinY(), (float) schBlock.getBlockBoundsMinZ(), (float) schBlock.getBlockBoundsMaxX(), (float) schBlock.getBlockBoundsMaxY(), (float) schBlock.getBlockBoundsMaxZ());
-                                }
-                            }
-                            superBlock.setBlockBoundsBasedOnState(schematic, pos);
-                            AxisAlignedBB aabb = superBlock.getCollisionBoundingBox(schematic, pos, schBlockState).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
+                            schBlock.setBlockBoundsBasedOnState(schematic,pos);
+                            AxisAlignedBB aabb = schBlock.getSelectedBoundingBox(schematic,pos).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D);
                             GeometryTessellator.drawCuboid(worldRenderer, aabb, sides, 0x3F000000 | color);
                         }
                         cuboids++;

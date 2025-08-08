@@ -1,6 +1,7 @@
 package com.github.timmekeclient.handler;
 
 import chylex.respack.gui.GuiCustomResourcePacks;
+import com.github.lunatrius.schematica.client.renderer.RenderSchematic;
 import com.github.timmekeclient.Client;
 import com.github.timmekeclient.Config;
 import com.github.timmekeclient.Reference;
@@ -13,17 +14,16 @@ import com.github.timmekeclient.event.impl.init.SessionUpdateEvent;
 import com.github.timmekeclient.event.impl.init.ShutdownEvent;
 import com.github.timmekeclient.event.impl.network.PacketReceivedEvent;
 import com.github.timmekeclient.event.impl.network.PacketSendEvent;
-import com.github.timmekeclient.event.impl.network.ServerConnectEvent;
 import com.github.timmekeclient.event.impl.network.ServerDisconnectEvent;
 import com.github.timmekeclient.event.impl.player.InputEvent;
 import com.github.timmekeclient.event.impl.player.PlayerEvent;
 import com.github.timmekeclient.event.impl.render.GuiScreenEvent;
 import com.github.timmekeclient.event.impl.render.RenderOverlayEvent;
-import com.github.timmekeclient.event.impl.render.RenderWorldEvent;
 import com.github.timmekeclient.event.impl.tick.ClientTickEvent;
 import com.github.timmekeclient.event.impl.tick.ServerTickEvent;
 import com.github.timmekeclient.feature.annotations.ReloadModels;
 import com.github.timmekeclient.feature.annotations.ReloadRenderers;
+import com.github.timmekeclient.feature.annotations.ReloadSchematic;
 import com.github.timmekeclient.feature.annotations.properties.Keybind;
 import com.github.timmekeclient.feature.base.HudModule;
 import com.github.timmekeclient.feature.base.HudModuleText;
@@ -195,6 +195,8 @@ public class ModuleHandler implements IRegistrable {
             this.mc.renderGlobal.loadRenderers();
         } else if (event.getField().isAnnotationPresent(ReloadModels.class)) {
             this.mc.refreshResources();
+        } else if(event.getField().isAnnotationPresent(ReloadSchematic.class)){
+            RenderSchematic.INSTANCE.refresh();
         }
     }
 

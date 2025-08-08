@@ -216,7 +216,7 @@ public class Client {
     public Client() {
         INSTANCE = this;
         CLIENT_RUN_DIRECTORY = new File((this.mc = Minecraft.getMinecraft()).mcDataDir, "timmekeclient");
-        Reference.LOGGER.info("{} version {} is being initialized.", "Timmeke_ Client", "1.6.0");
+        Reference.LOGGER.info("{} version {} is being initialized.", "Timmeke_ Client", "1.6.1");
         SplashScreen.setProgress(1, "Registering Modules...");
         EventBus.register(this.moduleHandler = new ModuleHandler());
         SplashScreen.setProgress(2, "Registering Handlers...");
@@ -248,7 +248,6 @@ public class Client {
         ChannelRegistry.getInstance().newChannel("CC|Module", new ModuleApiHandler());
         ChannelRegistry.getInstance().newChannel("CC|API", new ClientApiHandler());
         ChannelRegistry.getInstance().newChannel("WECUI", new WorldEditCuiHandler());
-        this.commandHandler.registerCommand(new GroupCommand());
         this.commandHandler.registerCommand(new FlyboostCommand());
         this.commandHandler.registerCommand(new SudoCommand());
         this.commandHandler.registerCommand(new FindSandCommand());
@@ -259,6 +258,7 @@ public class Client {
         this.commandHandler.registerCommand(new CrashCommand());
         this.commandHandler.registerCommand(new DupeCommand());
         this.commandHandler.registerCommand(new FloatFinderCommand());
+        this.commandHandler.registerCommand(new PatchcrumbsCommand());
         if (!OBFUSCATED) {
             this.commandHandler.registerCommand(new ThumbnailCommand());
             Log4jPatch.patchLogger();
@@ -267,7 +267,7 @@ public class Client {
             ((MixinRendererLivingEntity) render).callAddLayer(new LayerCloak());
             ((MixinRendererLivingEntity) render).callAddLayer(new LayerWings());
         }
-        Reference.LOGGER.info("{} version {} has been initialized.", "Timmeke_ Client", "1.6.0");
+        Reference.LOGGER.info("{} version {} has been initialized.", "Timmeke_ Client", "1.6.1");
         (new InitializationEvent(this)).call();
         SplashScreen.markComplete();
         while (!SplashScreen.isComplete())

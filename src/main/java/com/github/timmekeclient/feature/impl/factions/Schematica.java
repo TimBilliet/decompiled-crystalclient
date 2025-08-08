@@ -22,6 +22,7 @@ import com.github.timmekeclient.event.impl.render.GuiScreenEvent;
 import com.github.timmekeclient.event.impl.render.RenderWorldEvent;
 import com.github.timmekeclient.event.impl.tick.ClientTickEvent;
 import com.github.timmekeclient.feature.annotations.HoverOverlay;
+import com.github.timmekeclient.feature.annotations.ReloadSchematic;
 import com.github.timmekeclient.feature.annotations.properties.*;
 import com.github.timmekeclient.feature.base.Category;
 import com.github.timmekeclient.feature.base.Dropdown;
@@ -64,7 +65,7 @@ public class Schematica extends Module implements IRegistrable {
     @Toggle(label = "Auto Break Misplaced Blocks")
     public boolean autoBreak = false;
 
-    @HoverOverlay({"When a portion of the schematic is isolated from other solid blocks, Timmeke_ Client", "will build over to the isolated area.", " ", "&lNote: &rThis option may misplace more blocks with certain schematics"})
+    @HoverOverlay({"When a portion of the schematic is isolated from other solid blocks, the client", "will build over to the isolated area.", " ", "&lNote: &rThis option may misplace more blocks with certain schematics"})
     @Toggle(label = "Bridge to Unreachable Blocks")
     public boolean autoBridge = false;
 
@@ -107,12 +108,15 @@ public class Schematica extends Module implements IRegistrable {
     public int timeout = 2;
 
     @PageBreak(label = "Rendering Settings")
+    @ReloadSchematic
     @Toggle(label = "Fix Dispenser Meta")
     public boolean dispenserMetaFix = true;
 
+    @ReloadSchematic
     @Toggle(label = "Highlight Air")
     public boolean highlightAir = true;
 
+    @ReloadSchematic
     @Toggle(label = "Highlight Schematic in Liquids")
     public boolean highlightInLiquid = true;
 
@@ -220,8 +224,8 @@ public class Schematica extends Module implements IRegistrable {
     public final List<MissingSchematicBlock> missingBlocks = new GlueList<>();
 
     public final Map<BlockPos, AxisAlignedBB> wrongMetaBlocks = new ConcurrentHashMap<>(), incorrectBlocks = new ConcurrentHashMap<>();
-    //TODO fix rendering of stairs in schematic
-    //TODO add setting to disable air highlighting esp
+
+    private transient long cooldown = 0L;
     public Schematica() {
         INSTANCE = this;
         SCHEMATICA_MOD_INSTANCE = new com.github.lunatrius.schematica.Schematica();
@@ -359,93 +363,96 @@ public class Schematica extends Module implements IRegistrable {
     private void onSchematicArrowKeyPress(InputEvent.Key event) {
         if (!this.arrowKeys || ClientProxy.currentSchematic.schematic == null || this.mc.currentScreen != null)
             return;
-        EnumFacing facing = this.mc.thePlayer.getHorizontalFacing();
-        boolean sneaking = this.mc.thePlayer.isSneaking();
-        boolean changed = false;
-        if (Keyboard.getEventKeyState())
-            switch (Keyboard.getEventKey()) {
-                case 200:
-                    if (sneaking) {
-                        ClientProxy.currentSchematic.schematic.position.y++;
-                    } else {
+        if (cooldown <= System.currentTimeMillis()) {
+            EnumFacing facing = this.mc.thePlayer.getHorizontalFacing();
+            boolean sneaking = this.mc.thePlayer.isSneaking();
+            boolean changed = false;
+            if (Keyboard.getEventKeyState())
+                switch (Keyboard.getEventKey()) {
+                    case 200:
+                        if (sneaking) {
+                            ClientProxy.currentSchematic.schematic.position.y++;
+                        } else {
+                            switch (facing) {
+                                case NORTH:
+                                    ClientProxy.currentSchematic.schematic.position.z--;
+                                    break;
+                                case SOUTH:
+                                    ClientProxy.currentSchematic.schematic.position.z++;
+                                    break;
+                                case EAST:
+                                    ClientProxy.currentSchematic.schematic.position.x++;
+                                    break;
+                                case WEST:
+                                    ClientProxy.currentSchematic.schematic.position.x--;
+                                    break;
+                            }
+                        }
+                        changed = true;
+                        break;
+                    case 208:
+                        if (sneaking) {
+                            ClientProxy.currentSchematic.schematic.position.y--;
+                        } else {
+                            switch (facing) {
+                                case NORTH:
+                                    ClientProxy.currentSchematic.schematic.position.z++;
+                                    break;
+                                case SOUTH:
+                                    ClientProxy.currentSchematic.schematic.position.z--;
+                                    break;
+                                case EAST:
+                                    ClientProxy.currentSchematic.schematic.position.x--;
+                                    break;
+                                case WEST:
+                                    ClientProxy.currentSchematic.schematic.position.x++;
+                                    break;
+                            }
+                        }
+                        changed = true;
+                        break;
+                    case 203:
                         switch (facing) {
                             case NORTH:
-                                ClientProxy.currentSchematic.schematic.position.z--;
-                                break;
-                            case SOUTH:
-                                ClientProxy.currentSchematic.schematic.position.z++;
-                                break;
-                            case EAST:
-                                ClientProxy.currentSchematic.schematic.position.x++;
-                                break;
-                            case WEST:
                                 ClientProxy.currentSchematic.schematic.position.x--;
                                 break;
+                            case SOUTH:
+                                ClientProxy.currentSchematic.schematic.position.x++;
+                                break;
+                            case EAST:
+                                ClientProxy.currentSchematic.schematic.position.z--;
+                                break;
+                            case WEST:
+                                ClientProxy.currentSchematic.schematic.position.z++;
+                                break;
                         }
-                    }
-                    changed = true;
-                    break;
-                case 208:
-                    if (sneaking) {
-                        ClientProxy.currentSchematic.schematic.position.y--;
-                    } else {
+                        changed = true;
+                        break;
+                    case 205:
                         switch (facing) {
                             case NORTH:
-                                ClientProxy.currentSchematic.schematic.position.z++;
-                                break;
-                            case SOUTH:
-                                ClientProxy.currentSchematic.schematic.position.z--;
-                                break;
-                            case EAST:
-                                ClientProxy.currentSchematic.schematic.position.x--;
-                                break;
-                            case WEST:
                                 ClientProxy.currentSchematic.schematic.position.x++;
                                 break;
+                            case SOUTH:
+                                ClientProxy.currentSchematic.schematic.position.x--;
+                                break;
+                            case EAST:
+                                ClientProxy.currentSchematic.schematic.position.z++;
+                                break;
+                            case WEST:
+                                ClientProxy.currentSchematic.schematic.position.z--;
+                                break;
                         }
-                    }
-                    changed = true;
-                    break;
-                case 203:
-                    switch (facing) {
-                        case NORTH:
-                            ClientProxy.currentSchematic.schematic.position.x--;
-                            break;
-                        case SOUTH:
-                            ClientProxy.currentSchematic.schematic.position.x++;
-                            break;
-                        case EAST:
-                            ClientProxy.currentSchematic.schematic.position.z--;
-                            break;
-                        case WEST:
-                            ClientProxy.currentSchematic.schematic.position.z++;
-                            break;
-                    }
-                    changed = true;
-                    break;
-                case 205:
-                    switch (facing) {
-                        case NORTH:
-                            ClientProxy.currentSchematic.schematic.position.x++;
-                            break;
-                        case SOUTH:
-                            ClientProxy.currentSchematic.schematic.position.x--;
-                            break;
-                        case EAST:
-                            ClientProxy.currentSchematic.schematic.position.z++;
-                            break;
-                        case WEST:
-                            ClientProxy.currentSchematic.schematic.position.z--;
-                            break;
-                    }
-                    changed = true;
-                    break;
+                        changed = true;
+                        break;
+                }
+            if (changed) {
+                clearTracerLists();
+                RenderSchematic.INSTANCE.refresh();
+                SchematicPrinter.INSTANCE.refresh();
             }
-        if (changed) {
-            clearTracerLists();
-            RenderSchematic.INSTANCE.refresh();
-            SchematicPrinter.INSTANCE.refresh();
         }
+        cooldown = System.currentTimeMillis() + 25L;
     }
 
     public void onUpdate() {

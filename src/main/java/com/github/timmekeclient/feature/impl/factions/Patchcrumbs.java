@@ -12,7 +12,6 @@ import com.github.timmekeclient.event.impl.player.InputEvent;
 import com.github.timmekeclient.event.impl.render.RenderWorldEvent;
 import com.github.timmekeclient.event.impl.tick.ClientTickEvent;
 import com.github.timmekeclient.event.impl.world.ExplosionEvent;
-import com.github.timmekeclient.feature.annotations.HoverOverlay;
 import com.github.timmekeclient.feature.annotations.properties.*;
 import com.github.timmekeclient.feature.base.Category;
 import com.github.timmekeclient.feature.base.Dropdown;
@@ -64,6 +63,9 @@ public class Patchcrumbs extends Module implements IRegistrable {
     @Slider(label = "Y-Offset", placeholder = "{value} blocks", minimum = -20.0D, maximum = 20.0D, standard = 0.0D, integers = true)
     public int offset = 0;
 
+    @Toggle(label = "Enable Exclusion Zone")
+    public boolean exclusionZone = false;
+
     @PageBreak(label = "Detection Methods")
     @Toggle(label = "ABC")
     public boolean useSandStacks = true;
@@ -73,13 +75,6 @@ public class Patchcrumbs extends Module implements IRegistrable {
 
     @Toggle(label = "Use Explosions")
     public boolean useExplosions = false;
-
-//    @HoverOverlay("Ignores all other detection methods")
-//    @Toggle(label = "Use Float Finder")
-//    public boolean useFloatFinder = false;
-
-    @Toggle(label = "Announce Received Coords")
-    public boolean announceReceivedCoords = false;
 
     @PageBreak(label = "Crumb Configuration")
     @Slider(label = "Timeout", placeholder = "{value}s", minimum = 1.0D, maximum = 30.0D, standard = 10.0D, integers = true)
@@ -144,7 +139,10 @@ public class Patchcrumbs extends Module implements IRegistrable {
     private double lastYLevel;
 
     private boolean checkDirty;
-//TODO add exclusion zone(cannon box)
+
+    private BlockPos exclusionPos1;
+    private BlockPos exclusionPos2;
+
     public Patchcrumbs() {
         this.currentCrumb = null;
         this.entities = new ArrayList<>();
@@ -158,7 +156,6 @@ public class Patchcrumbs extends Module implements IRegistrable {
 
     public void configPostInit() {
         super.configPostInit();
-//        setOptionVisibility("Announce Received Coords", f -> this.useFloatFinder);
     }
 
     private void onPacketReceive(PacketReceivedEvent.Post event) {
@@ -176,26 +173,36 @@ public class Patchcrumbs extends Module implements IRegistrable {
         }
     }
 
-//    public void clearCrumbFromFloatFinder(){
-//        currentCrumb = null;
-//        entities.clear();
-//        velocityEntities.clear();
-//    }
-//
-//    public void setCrumbsFromFloatFinder(int x, int y, int z, String direction) {
-//        Patchcrumb.Direction dir = Patchcrumb.Direction.fromString(direction);
-//        double newX = x;
-//        double newZ = z;
-//        if (dir == Patchcrumb.Direction.NORTH_SOUTH) {
-//            newZ = mc.thePlayer.posZ;
-//        } else if (dir == Patchcrumb.Direction.EAST_WEST) {
-//            newX = mc.thePlayer.posX;
-//        }
-//        BlockPos pos = new BlockPos(newX, y, newZ);
-//        currentCrumb = new Patchcrumb(pos, new AxisAlignedBB(pos, pos.add(1, 1, 1)), dir, Patchcrumb.Source.FLOATFINDER);
-//        entities.clear();
-//        velocityEntities.clear();
-//    }
+    public void setExclusionZonePos(boolean pos1) {
+        if (pos1) {
+            if (mc.thePlayer == null || mc.objectMouseOver.getBlockPos() == null)
+                return;
+            exclusionPos1 = mc.objectMouseOver.getBlockPos();
+            Client.sendMessage(String.format("&fExclusion position 1 set to &bx%s y%s z%s.", exclusionPos1.getX(), exclusionPos1.getY(), exclusionPos1.getZ()), true);
+        } else {
+            if (mc.thePlayer == null || mc.objectMouseOver.getBlockPos() == null)
+                return;
+            exclusionPos2 = mc.objectMouseOver.getBlockPos();
+            Client.sendMessage(String.format("&f Exclusion position 2 set to &bx%s y%s z%s.", exclusionPos2.getX(), exclusionPos2.getY(), exclusionPos2.getZ()), true);
+
+        }
+    }
+    public static boolean isInside(BlockPos pos1, BlockPos pos2, BlockPos crumb) {
+        if(pos1 == null || pos2 == null || crumb == null)
+            return false;
+        int minX = Math.min(pos1.getX(), pos2.getX());
+        int maxX = Math.max(pos1.getX(), pos2.getX());
+
+        int minY = Math.min(pos1.getY(), pos2.getY());
+        int maxY = Math.max(pos1.getY(), pos2.getY());
+
+        int minZ = Math.min(pos1.getZ(), pos2.getZ());
+        int maxZ = Math.max(pos1.getZ(), pos2.getZ());
+
+        return crumb.getX() >= minX && crumb.getX() <= maxX &&
+                crumb.getY() >= minY && crumb.getY() <= maxY &&
+                crumb.getZ() >= minZ && crumb.getZ() <= maxZ;
+    }
 
     private void onRenderWorld(RenderWorldEvent.Post event) {
         if (this.currentCrumb == null)
@@ -251,8 +258,6 @@ public class Patchcrumbs extends Module implements IRegistrable {
     private void onClientTick(ClientTickEvent.Post event) {
         if (this.mc.theWorld == null)
             return;
-        if (currentCrumb != null && currentCrumb.getSource() == Patchcrumb.Source.FLOATFINDER)
-            currentCrumb = null;
         Iterator<CrumbEntity> iterator = this.entities.iterator();
         while (iterator.hasNext()) {
             CrumbEntity entity = iterator.next();
@@ -429,6 +434,8 @@ public class Patchcrumbs extends Module implements IRegistrable {
         Patchcrumb crumb = new Patchcrumb(pos, new AxisAlignedBB(pos, pos.add(1, 1, 1)), direction, source);
         if (this.currentCrumb == null || flag) {
             updateStatus();
+            if(isInside(exclusionPos1, exclusionPos2, pos) && exclusionZone)
+                return;
             this.currentCrumb = crumb;
             if (source != Patchcrumb.Source.GROUP) {
                 PacketPatchcrumbUpdate p = new PacketPatchcrumbUpdate(pos.getX(), MathHelper.floor_double(y), pos.getZ(), direction);

@@ -44,6 +44,7 @@ public class SpotifyStats extends HudModuleBackground implements SpotifyListener
         position = new ModulePosition(AnchorRegion.TOP_CENTER, 0.0F, 5.0F);
         spotifyAPI = SpotifyAPIFactory.createInitialized();
         spotifyAPI.registerListener(this);
+        currentTrack = new Track("", "", "No song playing", 0, null);
     }
 
     @Override
@@ -73,18 +74,26 @@ public class SpotifyStats extends HudModuleBackground implements SpotifyListener
             if (drawBackground)
                 drawBackground(x, y, x + width, y + height);
             int iconSize = 45;
-            y+=4;
-            RenderUtils.drawString(currentTrack.getName(), x + iconSize, y, textColor);
-            y+=10;
-            RenderUtils.drawString(currentTrack.getArtist(), x + iconSize, y, textColor);
-            y+=10;
-            if(isPlaying)
-                RenderUtils.drawString("Playing...", x + iconSize, y, textColor);
+            y += 4;
+            if (currentTrack.getName().equals("Unknown"))
+                RenderUtils.drawString("", x + iconSize, y, textColor);
             else
-                RenderUtils.drawString("Paused...", x + iconSize, y, textColor);
-            y+=13;
-            RenderUtils.drawString(String.valueOf(progress), x + 10, y, textColor);
-            RenderUtils.drawString(String.valueOf(length), x + 50, y, textColor);
+                RenderUtils.drawString(currentTrack.getName(), x + iconSize, y, textColor);
+
+            y += 10;
+            RenderUtils.drawString(currentTrack.getArtist(), x + iconSize, y, textColor);
+            y += 10;
+            if (!currentTrack.getName().equals("Unknown") && !currentTrack.getName().equals("")) {
+                if (isPlaying)
+                    RenderUtils.drawString("Playing...", x + iconSize, y, textColor);
+                else
+                    RenderUtils.drawString("Paused...", x + iconSize, y, textColor);
+            }
+            y += 13;
+            if(showProgress){
+                RenderUtils.drawString(String.valueOf(progress), x + 10, y, textColor);
+                RenderUtils.drawString(String.valueOf(length), x + 70, y, textColor);
+            }
             if (showCover && cover != null) {
                 GlStateManager.enableBlend();
                 GlStateManager.resetColor();

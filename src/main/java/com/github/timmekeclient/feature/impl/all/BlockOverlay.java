@@ -50,8 +50,8 @@ public class BlockOverlay extends Module implements IRegistrable {
                 GL11.glDepthMask(true);
                 GL11.glLineWidth(this.lineWidth);
                 BlockPos pos = ev.getTarget().getBlockPos();
-                IBlockState state = this.mc.theWorld.getBlockState(pos);
-                Block b = state.getBlock();
+                Block b = mc.theWorld.getBlockState(pos).getBlock();
+                b.setBlockBoundsBasedOnState(mc.theWorld, pos);
                 AxisAlignedBB bb = RenderUtils.normalize(b.getSelectedBoundingBox(this.mc.theWorld, pos).expand(0.0020000000949949026D, 0.0020000000949949026D, 0.0020000000949949026D));
                 if (this.color.isChroma())
                     ShaderManager.getInstance().enableShader(ChromaScreenShader.class);

@@ -17,6 +17,7 @@ import com.github.timmekeclient.gui.buttons.SearchButton;
 import com.github.timmekeclient.gui.buttons.settings.DropdownButton;
 import com.github.timmekeclient.gui.screens.screen_overlay.OverlayRemoveSchematic;
 import com.github.timmekeclient.util.RenderUtils;
+import com.github.timmekeclient.util.SchematicUploader;
 import com.github.timmekeclient.util.enums.ChatColor;
 import com.github.timmekeclient.util.enums.SchematicaGuiType;
 import net.minecraft.nbt.NBTTagCompound;
@@ -169,12 +170,16 @@ public class ScreenLoadSchematic extends ScreenSchematicaBase {
                     });
                     addButton(new MenuButton(-1, x, this.schematicInfo.y + this.schematicInfo.height - 8 - 41, w, h, "Upload to WorldEdit"), b -> {
                         b.addAttribute("schematic_info_entry");
-                        b.setOnClick(new Runnable() {
-                            @Override
-                            public void run() {
-                                //TODO
-                            }
-                        });
+                        b.onClick  = () -> {
+                            Client.getInstance().getExecutor().execute(() -> {
+                                try {
+                                    SchematicUploader.upload(this.selected);
+                                } catch (IOException exception) {
+                                    Reference.LOGGER.error(exception);
+                                }
+                            });
+                            this.mc.displayGuiScreen(null);
+                        };
                     });
                 }
                 loadedY = this.schematicInfo.y + this.schematicInfo.height - 8 - ((schematic == null) ? 18 : 64);

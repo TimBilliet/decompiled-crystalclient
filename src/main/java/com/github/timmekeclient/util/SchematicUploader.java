@@ -11,21 +11,16 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 public class SchematicUploader {
     private static final String DEFAULT_UPLOAD_URL = "http://athion.net/fawe/";
 
-    private static final Map<String, String> CUSTOM_UPLOAD_URLS = (Map<String, String>) ImmutableMap.of("crystaldev", "https://upload.crystaldev.co/fawe/", "thearchon", "https://www.buildersrefuge.com/schematics/");
-
     public static void upload(File schematic) throws IOException {
         ServerData serverData = Minecraft.getMinecraft().getCurrentServerData();
-        String serverIp = (serverData == null) ? "" : serverData.serverIP;
         UUID id = UUID.randomUUID();
-        String url = getUploadUrl(serverIp) + "upload.php?" + id;
+        String url = DEFAULT_UPLOAD_URL + "upload.php?" + id;
         Client.sendMessage("&fUploading schematic...", true);
         MultipartUploader uploader = new MultipartUploader(url, true);
         uploader.addPart("schematicFile", schematic);
@@ -45,11 +40,4 @@ public class SchematicUploader {
         }
     }
 
-    private static String getUploadUrl(String serverIp) {
-        for (String key : CUSTOM_UPLOAD_URLS.keySet()) {
-            if (serverIp.toLowerCase().contains(key))
-                return CUSTOM_UPLOAD_URLS.get(key);
-        }
-        return "http://athion.net/fawe/";
-    }
 }

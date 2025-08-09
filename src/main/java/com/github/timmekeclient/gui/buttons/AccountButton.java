@@ -119,6 +119,7 @@ public class AccountButton extends Button {
                             expandedSize = 20;
                         } else {
                             boolean res = false;
+                            //TODO use refresh token for already saved accounts (longer life)
                             try {
                                 if (b.data.isOffline()) {
                                     AltManager.getInstance().addAccount(new AccountData(null, b.data.getName(), b.data.getUnformattedId()));

@@ -78,7 +78,6 @@ public class ColorPicker extends SettingButton<ColorObject> {
         this.backgroundColor = new FadingColor(this.opts.neutralButtonBackground, this.opts.neutralButtonBackground);
 
     }
-    //TODO fix text color buttons
     public ColorPicker(int id, int x, int y, int width, int height, String displayText, final ColorObject currentValue, boolean textOptions) {
         super(id, x, y, width, height, displayText, currentValue);
         this.originalHeight = this.height;
@@ -119,7 +118,7 @@ public class ColorPicker extends SettingButton<ColorObject> {
                 this.hue.hue = hue;
                 this.saturation.saturation = saturation;
                 this.saturation.brightness = brightness;
-            } catch (NumberFormatException numberFormatException) {
+            } catch (NumberFormatException ignored) {
 
             }
         });
@@ -130,15 +129,39 @@ public class ColorPicker extends SettingButton<ColorObject> {
             sbx += 3;
             sbw = this.chroma.width / 3 - 6;
             this.bold = new MenuButton(-1, sbx, sby, sbw, 18, "&lB", currentValue.isBold() ? this.opts.mainColor.getRGB() : -1) {
-
+                {
+                    this.selected = currentValue.isBold();
+                    this.onClick = () -> {
+                        this.selected = !this.selected;
+                        this.outlineColor = this.selected ? this.opts.mainColor.getRGB() : -1;
+                    };
+                    this.setUseMinecraftFR(true);
+                    this.setTextColor(new FadingColor(this.opts.getColor(this.opts.mainColor, 100), this.opts.getColor(this.opts.mainColor, 180)));
+                }
             };
             sbx += sbw + 6;
             this.italic = new MenuButton(-1, sbx, sby, sbw, 18, "&oI", currentValue.isItalic() ? this.opts.mainColor.getRGB() : -1) {
-
+                {
+                    this.selected = currentValue.isItalic();
+                    this.onClick = () -> {
+                        this.selected = !this.selected;
+                        this.outlineColor = this.selected ? this.opts.mainColor.getRGB() : -1;
+                    };
+                    this.setUseMinecraftFR(true);
+                    this.setTextColor(new FadingColor(this.opts.getColor(this.opts.mainColor, 100), this.opts.getColor(this.opts.mainColor, 180)));
+                }
             };
             sbx += sbw + 6;
             this.underline = new MenuButton(-1, sbx, sby, sbw, 18, "&nU", currentValue.isUnderline() ? this.opts.mainColor.getRGB() : -1) {
-
+                {
+                    this.selected = currentValue.isUnderline();
+                    this.onClick = () -> {
+                        this.selected = !this.selected;
+                        this.outlineColor = this.selected ? this.opts.mainColor.getRGB() : -1;
+                    };
+                    this.setUseMinecraftFR(true);
+                    this.setTextColor(new FadingColor(this.opts.getColor(this.opts.mainColor, 100), this.opts.getColor(this.opts.mainColor, 180)));
+                }
             };
         } else {
             this.bold = this.underline = this.italic = null;
@@ -166,7 +189,7 @@ public class ColorPicker extends SettingButton<ColorObject> {
         this.hexInputLabel.y = this.hexInputLabel.y + 9 - Fonts.NUNITO_REGULAR_20.getStringHeight() / 2;
         this.chroma.y += 23;
         if (this.bold != null)
-            this.underline.y = this.y + this.originalHeight + 5 + 46;
+            this.bold.y = this.italic.y = this.underline.y = this.y + this.originalHeight + 5 + 46;
         updateScissorPanes();
     }
 
@@ -308,7 +331,7 @@ public class ColorPicker extends SettingButton<ColorObject> {
                         ScrollPane sp = (ScrollPane) field.get(this.mc.currentScreen);
                         sp.updateMaxScroll((Screen) this.mc.currentScreen, sp.getLastMarginInc());
                     }
-                } catch (IllegalAccessException | SecurityException illegalAccessException) {
+                } catch (IllegalAccessException | SecurityException ignored) {
                 }
             }
         }

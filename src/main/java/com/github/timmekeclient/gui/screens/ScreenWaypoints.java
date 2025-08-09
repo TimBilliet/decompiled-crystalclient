@@ -12,7 +12,10 @@ public class ScreenWaypoints extends ScreenBase {
         initWaypoints();
     }
 
-    //TODO add scroll functionality (draw & addScrollBarToScreen)
+    public void draw(int mouseX, int mouseY, float partialTicks) {
+        super.draw(mouseX, mouseY, partialTicks);
+        this.content.scroll(this, mouseX, mouseY);
+    }
 
     public void initWaypoints() {
         removeButton(b -> b.hasAttribute("waypoint_button"));
@@ -28,7 +31,7 @@ public class ScreenWaypoints extends ScreenBase {
             if (waypoint.isSameServer() && waypoint.isSameWorld()) {
                 addButton(new WaypointButton(waypoint, (index % 2 == 0) ? x : (x + w + 10), y, w, h), b -> {
                     b.addAttribute("waypoint_button");
-//          b.setScissorPane(scissor);
+                    b.setScissorPane(scissor);
                 });
                 if (index % 2 != 0)
                     y += h + 5;
@@ -37,6 +40,7 @@ public class ScreenWaypoints extends ScreenBase {
         }
         if (index == 0)
             addScreenMessage("There are currently no waypoints created for this server");
-        this.content.updateMaxScroll(this, 5);
+        this.content.updateMaxScroll(this, 0);
+        this.content.addScrollbarToScreen(this);
     }
 }

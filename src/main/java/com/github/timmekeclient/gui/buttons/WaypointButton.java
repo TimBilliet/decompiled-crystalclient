@@ -41,7 +41,7 @@ public class WaypointButton extends Button {
 
     public void onUpdate() {
         int bSize = this.height - 6;
-        this.edit.y = this.y + this.height / 2 - bSize / 2;
+        this.remove.y = this.edit.y = this.y + this.height / 2 - bSize / 2;
     }
 
     public void drawButton(int mouseX, int mouseY, boolean hovered) {
@@ -71,6 +71,4 @@ public class WaypointButton extends Button {
             this.waypoint.setVisible(!this.waypoint.isVisible());
         }
     }
-
-
 }

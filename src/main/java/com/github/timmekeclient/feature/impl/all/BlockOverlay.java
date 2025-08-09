@@ -15,7 +15,6 @@ import com.github.timmekeclient.shader.chroma.ChromaScreenShader;
 import com.github.timmekeclient.util.ColorObject;
 import com.github.timmekeclient.util.RenderUtils;
 import net.minecraft.block.*;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.BlockPos;

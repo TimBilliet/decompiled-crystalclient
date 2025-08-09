@@ -17,6 +17,7 @@ import com.github.timmekeclient.util.objects.Vec3d;
 import com.github.timmekeclient.util.objects.crumbs.Breadcrumb;
 import com.github.timmekeclient.util.type.GlueList;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityEnderPearl;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
@@ -30,6 +31,9 @@ public class Breadcrumbs extends Module implements IRegistrable {
     @Toggle(label = "Show Sand")
     public boolean showSand = true;
 
+    @Toggle(label = "Show Ender Pearls")
+    public boolean showPearls = true;
+
     @Slider(label = "Timeout", placeholder = "{value}s", minimum = 1.0D, maximum = 30.0D, standard = 10.0D, integers = true)
     public int timeout = 10;
 
@@ -42,9 +46,12 @@ public class Breadcrumbs extends Module implements IRegistrable {
     @Colour(label = "Sand Color")
     public ColorObject sandColour = new ColorObject(255, 255, 85, 125);
 
+    @Colour(label = "Ender Pearl Color")
+    public ColorObject pearlColour = new ColorObject(55, 255, 55, 125);
+
     private static Breadcrumbs INSTANCE;
 
-    private final GlueList<Breadcrumb> crumbList = new GlueList();
+    private final GlueList<Breadcrumb> crumbList = new GlueList<>();
 
     private final HashSet<Breadcrumb> removeList = new HashSet<>();
 
@@ -57,6 +64,7 @@ public class Breadcrumbs extends Module implements IRegistrable {
         super.configPostInit();
         setOptionVisibility("TNT Color", f -> this.showTnt);
         setOptionVisibility("Sand Color", f -> this.showSand);
+        setOptionVisibility("Ender Pearl Color", f -> this.showPearls);
     }
 
     private void onRenderWorld(RenderWorldEvent.Post event) {
@@ -74,6 +82,8 @@ public class Breadcrumbs extends Module implements IRegistrable {
                 type = Breadcrumb.Type.TNT;
             } else if (entity instanceof net.minecraft.entity.item.EntityFallingBlock) {
                 type = Breadcrumb.Type.SAND;
+            } else if (entity instanceof EntityEnderPearl){
+                type = Breadcrumb.Type.ENDER_PEARL;
             }
             if (type != null) {
                 int id = entity.getEntityId();
@@ -87,7 +97,7 @@ public class Breadcrumbs extends Module implements IRegistrable {
                     }
                 }
                 if (created) {
-                    ((Breadcrumb) this.crumbList.get(index)).addLocation(entity.posX, entity.posY, entity.posZ);
+                    this.crumbList.get(index).addLocation(entity.posX, entity.posY, entity.posZ);
                     continue;
                 }
                 this.crumbList.add(new Breadcrumb(id, entity.posX, entity.posY, entity.posZ, type));
@@ -124,6 +134,16 @@ public class Breadcrumbs extends Module implements IRegistrable {
                     GL11.glVertex3d(location.x, location.y, location.z);
                 }
                 GL11.glEnd();
+            } else if(crumb.type == Breadcrumb.Type.ENDER_PEARL && showPearls){
+                if(pearlColour.isChroma())
+                    ShaderManager.getInstance().enableShader(ChromaScreenShader.class);
+                RenderUtils.setGlColor(pearlColour);
+                GL11.glBegin(3);
+                for (Vec3d location : crumb.locations) {
+                    location = RenderUtils.normalize(location);
+                    GL11.glVertex3d(location.x, location.y, location.z);
+                }
+                GL11.glEnd();
             }
             ShaderManager.getInstance().disableShader();
             GL11.glDisable(3042);
@@ -143,9 +163,3 @@ public class Breadcrumbs extends Module implements IRegistrable {
         EventBus.register(this, RenderWorldEvent.Post.class, this::onRenderWorld);
     }
 }
-
-
-/* Location:              C:\Users\Tim\AppData\Roaming\.minecraft\mods\temp\Crystal_Client-1.1.16-projectassfucker_1.jar!\co\crystaldev\client\feature\impl\factions\Breadcrumbs.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */

@@ -64,7 +64,7 @@ public class Keystrokes extends HudModule implements IRegistrable {
     public Keystrokes() {
         this.position = new ModulePosition(AnchorRegion.TOP_RIGHT, 5.0F, 19.0F);
     }
-    //TODO fix background not changing when pressing the buttons
+
     public void configPostInit() {
         super.configPostInit();
         setOptionVisibility("Background Color (Pressed)", f -> this.drawBackground);
@@ -168,8 +168,8 @@ public class Keystrokes extends HudModule implements IRegistrable {
             GL11.glPushMatrix();
             GL11.glTranslated(this.ks.getRenderX(), this.ks.getRenderY(), 0.0D);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-            this.fadingColor.fade(this.keybind.isPressed());
-            this.textColor.fade(this.keybind.isPressed());
+            this.fadingColor.fade(this.keybind.isKeyDown());
+            this.textColor.fade(this.keybind.isKeyDown());
             if (this.ks.drawBackground) {
                 RenderUtils.drawRect(this.x, this.y, (this.x + this.width), (this.y + this.height), this.fadingColor
                         .getCurrentColorObject());

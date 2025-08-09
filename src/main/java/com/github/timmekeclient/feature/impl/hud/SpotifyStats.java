@@ -91,6 +91,7 @@ public class SpotifyStats extends HudModuleBackground implements SpotifyListener
         return "";
     }
     //TODO add scrolling text for titles/artists that are too long
+    //TODO fix screen color flash when joining world/server
     public void draw() {
         if (currentTrack != null) {
             int x = getRenderX();

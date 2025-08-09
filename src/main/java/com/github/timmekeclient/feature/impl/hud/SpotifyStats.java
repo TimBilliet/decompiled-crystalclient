@@ -1,10 +1,13 @@
 package com.github.timmekeclient.feature.impl.hud;
 
 import com.github.timmekeclient.Reference;
-import com.github.timmekeclient.feature.annotations.properties.ModuleInfo;
-import com.github.timmekeclient.feature.annotations.properties.Toggle;
+import com.github.timmekeclient.event.EventBus;
+import com.github.timmekeclient.event.IRegistrable;
+import com.github.timmekeclient.event.impl.tick.ClientTickEvent;
+import com.github.timmekeclient.feature.annotations.properties.*;
 import com.github.timmekeclient.feature.base.Category;
 import com.github.timmekeclient.feature.base.HudModuleBackground;
+import com.github.timmekeclient.gui.GuiOptions;
 import com.github.timmekeclient.util.ColorObject;
 import com.github.timmekeclient.util.RenderUtils;
 import com.github.timmekeclient.util.enums.AnchorRegion;
@@ -22,7 +25,7 @@ import java.awt.image.BufferedImage;
 
 @ModuleInfo(name = "Spotify Stats", description = "Show the spotify song that's currently playing", category = Category.HUD)
 
-public class SpotifyStats extends HudModuleBackground implements SpotifyListener {
+public class SpotifyStats extends HudModuleBackground implements SpotifyListener, IRegistrable {
 
     @Toggle(label = "Show Album Cover")
     public boolean showCover = true;
@@ -31,7 +34,17 @@ public class SpotifyStats extends HudModuleBackground implements SpotifyListener
     public boolean showProgress = true;
 
     @Toggle(label = "Periodically Update Progress")
-    public boolean updateProgress = false;
+    public boolean updateProgress = true;
+
+    @Slider(label = "Update Interval", placeholder = "{value}s", minimum = 1.0D, maximum = 20.0D, standard = 5.0D, integers = true)
+    public int updateInterval = 5;
+
+    @PageBreak(label = "Progress Bar Color Settings")
+    @Colour(label = "Progress Color")
+    public ColorObject progressColor = ColorObject.fromColor(GuiOptions.getInstance().getColor((GuiOptions.getInstance()).secondaryRed, 255));
+
+    @Colour(label = "Total Length Color")
+    public ColorObject totalLengthColor = ColorObject.fromColor(GuiOptions.getInstance().getColor((GuiOptions.getInstance()).mainColor, 180));
 
     private SpotifyAPI spotifyAPI;
     private Track currentTrack;
@@ -39,6 +52,7 @@ public class SpotifyStats extends HudModuleBackground implements SpotifyListener
     private int progress;
     private ResourceLocation cover;
     private boolean isPlaying = true;
+    private long lastProgressUpdate;
 
     public SpotifyStats() {
         enabled = false;
@@ -55,12 +69,12 @@ public class SpotifyStats extends HudModuleBackground implements SpotifyListener
     public void configPostInit() {
         super.configPostInit();
         setOptionVisibility("Periodically Update Progress", f -> this.showProgress);
+        setOptionVisibility("Update Interval", f -> this.updateProgress && this.showProgress);
     }
 
     @Override
     public void enable() {
         super.enable();
-        System.out.println("on enable spotifystats");
         spotifyAPI = SpotifyAPIFactory.createInitialized();
         spotifyAPI.registerListener(this);
     }
@@ -76,44 +90,54 @@ public class SpotifyStats extends HudModuleBackground implements SpotifyListener
     public String getDisplayText() {
         return "";
     }
-
+    //TODO add scrolling text for titles/artists that are too long
     public void draw() {
         if (currentTrack != null) {
             int x = getRenderX();
             int y = getRenderY();
             if (drawBackground)
                 drawBackground(x, y, x + width, y + height);
-            int iconSize = 45;
+            int iconSize = 0;
+            if (showCover && cover != null)
+                iconSize = 45;
+            if(showProgress){
+                height = 52;
+            } else {
+                height = 39;
+            }
             y += 4;
             if (currentTrack.getName().equals("Unknown"))
-                RenderUtils.drawString("", x + iconSize - 3, y, textColor);
+                RenderUtils.drawString("", x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
             else
-                RenderUtils.drawString(currentTrack.getName(), x + iconSize - 3, y, textColor);
+                RenderUtils.drawString(currentTrack.getName(), x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
 
             y += 10;
-            RenderUtils.drawString(currentTrack.getArtist(), x + iconSize - 3, y, textColor);
+            RenderUtils.drawString(currentTrack.getArtist(), x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
             y += 10;
             if (!currentTrack.getName().equals("Unknown") && !currentTrack.getName().equals("")) {
                 if (isPlaying)
-                    RenderUtils.drawString("Playing...", x + iconSize - 3, y, textColor);
+                    RenderUtils.drawString("Playing...", x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
                 else
-                    RenderUtils.drawString("Paused...", x + iconSize - 3, y, textColor);
+                    RenderUtils.drawString("Paused...", x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
             }
-            y += 18;
+            y += 17;
             if (showProgress && !currentTrack.getName().equals("Unknown") && !currentTrack.getName().equals("")) {
-
-                RenderUtils.drawString(String.format("%02d:%02d", spotifyAPI.getPosition() / 1000 / 60, spotifyAPI.getPosition() / 1000 % 60), x + 5, y, textColor);
-                RenderUtils.drawString(String.format("%02d:%02d", currentTrack.getLength() / 1000 / 60, currentTrack.getLength() / 1000 % 60), x + 150, y, textColor);
-                int startx = x + 35;
-                RenderUtils.drawRoundedRect(startx, y - 1, x + 145, y + 8, 3, new ColorObject(150, 0, 150, 200).getRGB());
-                RenderUtils.drawRoundedRect(startx, y - 1, startx + 110 * ((float) spotifyAPI.getPosition() / currentTrack.getLength()), y + 8, 3, new ColorObject(255, 255, 255, 200).getRGB());
+                RenderUtils.drawString(String.format("%02d:%02d", progress / 1000 / 60, progress / 1000 % 60), x + 5, y, textColor);
+                RenderUtils.drawString(String.format("%02d:%02d", length / 1000 / 60, length / 1000 % 60), x + width - 30, y, textColor);
+                double startx = x + 35;
+                RenderUtils.drawRoundedRect(startx, y - 1, x + width - 35, y + 8, 2, new ColorObject(150, 0, 150, 200).getRGB());
+                if ((double) progress / length > 0.01)
+                    RenderUtils.drawRoundedRect(startx, y - 1, startx + (width - 70) * ((double) progress / length), y + 8, 2, new ColorObject(255, 255, 255, 200).getRGB());
             }
             if (showCover && cover != null) {
                 GlStateManager.enableBlend();
                 GlStateManager.resetColor();
                 this.mc.getTextureManager().bindTexture(cover);
-                Gui.drawModalRectWithCustomSizedTexture(x - 3, y - 40, 0.0F, 0.0F, iconSize, iconSize - 9, iconSize, iconSize);
+                Gui.drawModalRectWithCustomSizedTexture(x - 3, y - 39, 0.0F, 0.0F, iconSize, iconSize - 9, iconSize, iconSize - 8.25F);
                 GlStateManager.disableBlend();
+                width = 180;
+            } else {
+                width = 150;
             }
         }
     }
@@ -137,7 +161,6 @@ public class SpotifyStats extends HudModuleBackground implements SpotifyListener
     public void onTrackChanged(Track track) {
         currentTrack = track;
         convertCoverImage();
-        System.out.println(currentTrack.getLength() / 1000 / 60 + ":" + currentTrack.getLength() / 1000 % 60);
         progress = spotifyAPI.getPosition();
         length = currentTrack.getLength();
     }
@@ -167,4 +190,13 @@ public class SpotifyStats extends HudModuleBackground implements SpotifyListener
     public void onDisconnect(Exception exception) {
     }
 
+    @Override
+    public void registerEvents() {
+        EventBus.register(this, ClientTickEvent.Post.class, ev -> {
+            if (updateProgress && System.currentTimeMillis() - lastProgressUpdate > updateInterval * 1000L) {
+                lastProgressUpdate = System.currentTimeMillis();
+                progress = spotifyAPI.getPosition();
+            }
+        });
+    }
 }

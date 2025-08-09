@@ -78,7 +78,7 @@ public class ColorPicker extends SettingButton<ColorObject> {
         this.backgroundColor = new FadingColor(this.opts.neutralButtonBackground, this.opts.neutralButtonBackground);
 
     }
-
+    //TODO fix text color buttons
     public ColorPicker(int id, int x, int y, int width, int height, String displayText, final ColorObject currentValue, boolean textOptions) {
         super(id, x, y, width, height, displayText, currentValue);
         this.originalHeight = this.height;

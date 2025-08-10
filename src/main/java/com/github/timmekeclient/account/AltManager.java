@@ -5,6 +5,8 @@ import com.github.timmekeclient.Reference;
 import com.github.timmekeclient.event.impl.init.SessionUpdateEvent;
 import com.github.timmekeclient.mixin.accessor.net.minecraft.client.MixinMinecraft;
 import com.github.timmekeclient.util.FileUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.util.UUIDTypeAdapter;
@@ -106,7 +108,7 @@ public class AltManager {
         if (file.exists())
             try {
                 FileReader fr = new FileReader(file);
-                JsonObject obj = Reference.GSON.fromJson(fr, JsonObject.class);
+                JsonObject obj = Reference.GSON_PRETTY.fromJson(fr, JsonObject.class);
                 fr.close();
                 if (obj.has("accounts")) {
                     JsonObject accounts = obj.get("accounts").getAsJsonObject();
@@ -169,7 +171,7 @@ public class AltManager {
         try {
             String json = null;
             while (json == null || !FileUtils.isValidJson(json))
-                json = Reference.GSON.toJson(obj);
+                json = Reference.GSON_PRETTY.toJson(obj);
             FileWriter fileWriter = new FileWriter(getAltManagerFile());
             fileWriter.write(json);
             fileWriter.close();

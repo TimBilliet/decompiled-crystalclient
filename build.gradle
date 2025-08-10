@@ -53,10 +53,6 @@ dependencies {
         exclude module: 'log4j-core'
     }
     implementation 'org.jetbrains:annotations:24.0.0'
-//    implementation 'com.github.LabyStudio:java-spotify-api:1.4.5'
-//    shade 'com.github.LabyStudio:java-spotify-api:1.4.5'
-//    shade 'com.github.LabyStudio:java-spotify-api:1.4.5'
-    shade 'net.java.dev.jna:jna-platform:5.13.0'
     shade 'com.github.ben-manes.caffeine:caffeine:2.9.3'
     shade 'net.objecthunter:exp4j:0.4.8'
     shade 'it.unimi.dsi:fastutil:8.3.1'

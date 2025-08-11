@@ -15,6 +15,9 @@
 - Sound alert when player nearby
 - Boss mob focus hitbox for SaicoPvP
 - Potion effect running out alert
+- Exclusion zone for patchcrumbs (command)
+- Ender pearl breadcrumbs
+- Spotify stats hud(only works in dev env for now)
 
 ## Incompatible with Optifine's dynamic lights(will crash)
 

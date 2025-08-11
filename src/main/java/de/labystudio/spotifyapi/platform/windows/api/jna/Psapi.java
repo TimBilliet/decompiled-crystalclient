@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface Psapi extends WinNT, StdCallLibrary {
 
-    Psapi INSTANCE = Native.load("psapi", Psapi.class, W32APIOptions.UNICODE_OPTIONS);
+    Psapi INSTANCE = (Psapi) Native.loadLibrary("psapi", Psapi.class, W32APIOptions.UNICODE_OPTIONS);
 
     boolean EnumProcessModulesEx(HANDLE hProcess, Pointer[] lphModule, int cb, IntByReference lpcbNeeded, int dwFilterFlag);
 

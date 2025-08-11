@@ -58,7 +58,7 @@ public class MediaControlPlaybackAccessor implements PlaybackAccessor {
         if (titlePtr == null) {
             throw new IllegalStateException("Track title pointer is null");
         }
-        this.title = titlePtr.getString(0, "UTF-8");
+        this.title = titlePtr.getString(0, false);
         this.mediaControl.freeString(titlePtr);
 
         // Get the artist name
@@ -66,7 +66,7 @@ public class MediaControlPlaybackAccessor implements PlaybackAccessor {
         if (artistPtr == null) {
             throw new IllegalStateException("Artist name pointer is null");
         }
-        this.artist = artistPtr.getString(0, "UTF-8");
+        this.artist = artistPtr.getString(0, false);
         this.mediaControl.freeString(artistPtr);
 
         // Get the cover art

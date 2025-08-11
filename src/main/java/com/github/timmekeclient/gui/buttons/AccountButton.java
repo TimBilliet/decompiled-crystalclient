@@ -82,7 +82,7 @@ public class AccountButton extends Button {
             if (data.isOffline()) {
                 RenderUtils.drawCustomSizedResource(Resources.OFFLINE, this.x + 4, this.y + 2, this.height - 4, this.height - 4);
             } else {
-                RenderUtils.drawCustomSizedResource(SkinCache.getInstance().getCachedSkin(data.getId()).getResourceLocation(), this.x + 4, this.y + 2, this.height - 4, this.height - 4);
+                RenderUtils.drawCustomSizedResource(SkinCache.getInstance().getCachedSkin(data.getUuid()).getResourceLocation(), this.x + 4, this.y + 2, this.height - 4, this.height - 4);
             }
         }
         if (this.expanded) {
@@ -119,10 +119,9 @@ public class AccountButton extends Button {
                             expandedSize = 20;
                         } else {
                             boolean res = false;
-                            //TODO use refresh token for already saved accounts (longer life)
                             try {
                                 if (b.data.isOffline()) {
-                                    AltManager.getInstance().addAccount(new AccountData(null, b.data.getName(), b.data.getUnformattedId()));
+                                    AltManager.getInstance().addAccount(new AccountData(b.data.getName(), b.data.getUuidString()));
                                     res = true;
                                 } else {
                                     res = AuthManager.login(b.data);
@@ -169,7 +168,7 @@ public class AccountButton extends Button {
         }
 
         public void drawButton(int mouseX, int mouseY, boolean hovered) {
-            boolean selected = (AltManager.getCurrentAccount() != null && this.data != null && AltManager.getCurrentAccount().getId().equals(this.data.getId()));
+            boolean selected = (AltManager.getCurrentAccount() != null && this.data != null && AltManager.getCurrentAccount().getUuid().equals(this.data.getUuid()));
             this.fadingColor.fade(hovered);
             this.textColor.fade((hovered || selected));
             RenderUtils.drawRoundedRect(this.x, this.y, (this.x + AccountButton.this.width - 4), (this.y + this.height), 9.0D, this.fadingColor
@@ -179,7 +178,7 @@ public class AccountButton extends Button {
             if (data.isOffline()) {
                 RenderUtils.drawCustomSizedResource(Resources.OFFLINE, this.x + 2, this.y + 2, this.height - 4, this.height - 4);
             } else {
-                RenderUtils.drawCustomSizedResource(SkinCache.getInstance().getCachedSkin(this.data.getId()).getResourceLocation(), this.x + 2, this.y + 2, this.height - 4, this.height - 4);
+                RenderUtils.drawCustomSizedResource(SkinCache.getInstance().getCachedSkin(this.data.getUuid()).getResourceLocation(), this.x + 2, this.y + 2, this.height - 4, this.height - 4);
             }
             if (hovered)
                 this.removeAccountButton.drawButton(mouseX, mouseY, removeAccountButton.isHovered(mouseX, mouseY));

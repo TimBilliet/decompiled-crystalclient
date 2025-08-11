@@ -98,7 +98,7 @@ public class ScreenLogin extends ScreenPanorama {
             new Thread(() -> {
                 if (!offlineName.getText().isEmpty()) {
                     feedback = "Logging in...";
-                    AltManager.getInstance().addAccount(new AccountData(null, offlineName.getText(), UUID.nameUUIDFromBytes(("Offline:" + offlineName.getText()).getBytes()).toString()));
+                    AltManager.getInstance().addAccount(new AccountData(offlineName.getText(), UUID.nameUUIDFromBytes(("Offline:" + offlineName.getText()).getBytes()).toString()));
                     shouldExit = true;
                 }
             }).start();
@@ -113,6 +113,7 @@ public class ScreenLogin extends ScreenPanorama {
                         httpServer = HttpServer.create(new InetSocketAddress(59125), 0);
                     } catch (Exception ex) {
                         feedback = "Error: " + ex.getMessage() + "!";
+                        return;
                     }
                     feedback = "HTTP server started...";
                     httpServer.createContext("/", exchange -> {

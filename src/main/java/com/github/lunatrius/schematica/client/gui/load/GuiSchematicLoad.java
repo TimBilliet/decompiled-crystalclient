@@ -63,7 +63,6 @@ public class GuiSchematicLoad extends GuiScreenBase {
 
     public GuiSchematicLoad(GuiScreen guiScreen) {
         super(guiScreen);
-        System.out.println("guischematicload");
     }
 
     public void initGui() {
@@ -101,10 +100,8 @@ public class GuiSchematicLoad extends GuiScreenBase {
     }
 
     protected void actionPerformed(GuiButton guiButton) {
-        System.out.println("actionperformed guischematicload");
         if (guiButton.enabled) {
             if (guiButton instanceof LoadedSchematicButton) {
-                System.out.println("loadschembutton");
                 ClientProxy.currentSchematic = ((LoadedSchematicButton) guiButton).schematic;
                 if (ClientProxy.currentSchematic.schematic != null) {
                     ClientProxy.currentSchematic.schematic.isRendering = true;

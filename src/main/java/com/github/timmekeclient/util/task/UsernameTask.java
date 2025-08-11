@@ -31,7 +31,7 @@ public class UsernameTask implements Runnable {
             HttpURLConnection conn = (HttpURLConnection) (new URL("https://sessionserver.mojang.com/session/minecraft/profile/" + this.uuid.toString().replaceAll("-", ""))).openConnection();
             conn.setRequestMethod("GET");
             conn.setConnectTimeout(15000);
-            conn.setRequestProperty("User-Agent", "Timmeke_Client-1.6.1");
+            conn.setRequestProperty("User-Agent", "Timmeke_Client-1.7.0");
             conn.setRequestProperty("Content-Type", "application/json");
             if (conn.getResponseCode() != 200) {
                 this.username = this.uuid.toString();

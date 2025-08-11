@@ -196,7 +196,8 @@ public class SpotifyStats extends HudModuleBackground implements SpotifyListener
         EventBus.register(this, ClientTickEvent.Post.class, ev -> {
             if (updateProgress && System.currentTimeMillis() - lastProgressUpdate > updateInterval * 1000L) {
                 lastProgressUpdate = System.currentTimeMillis();
-                progress = spotifyAPI.getPosition();
+                if(spotifyAPI.hasPosition())
+                    progress = spotifyAPI.getPosition();
             }
         });
     }

@@ -2,11 +2,12 @@ package com.github.timmekeclient.account;
 
 import com.github.timmekeclient.Reference;
 import com.github.timmekeclient.gui.screens.ScreenLogin;
-import com.github.timmekeclient.util.type.Tuple;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.mojang.authlib.exceptions.AuthenticationException;
+import com.mojang.util.UUIDTypeAdapter;
+import org.apache.commons.lang3.tuple.Pair;
 
 import javax.security.auth.login.FailedLoginException;
 import java.io.BufferedReader;
@@ -16,24 +17,28 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class MicrosoftAuthManager {
 
     public static void login(String authCode) throws IOException, FailedLoginException, AuthenticationException {
-        ScreenLogin.feedback = "Acquiring access token...";
-        String liveAccessToken = acquireAccessToken(authCode);
+        ScreenLogin.feedback = "Acquiring access & refresh token...";
+        Pair<String, String> tokens = acquireAccessAndRefreshToken(authCode);
+        String refreshToken = tokens.getRight();
+        String liveAccessToken = tokens.getLeft();
         ScreenLogin.feedback = "Acquiring xbl token...";
         String xblToken = acquireXBLToken(liveAccessToken);
         ScreenLogin.feedback = "Acquiring xsts token...";
-        Tuple<String, String> xsts = acquireXstsToken(xblToken);
+        Pair<String, String> xsts = acquireXstsToken(xblToken);
         ScreenLogin.feedback = "Acquiring Minecraft token...";
-        String minecraftAccessToken = acquireMinecraftToken(xsts.getItem2(), xsts.getItem1());
+        String minecraftAccessToken = acquireMinecraftToken(xsts.getRight(), xsts.getLeft());
         ScreenLogin.feedback = "Checking for game ownership...";
-        checkProfile(minecraftAccessToken);
+        checkProfile(minecraftAccessToken, refreshToken);
         ScreenLogin.feedback = "Login complete!";
     }
 
-    private static String acquireAccessToken(String authCode) throws IOException {
+    private static Pair<String, String> acquireAccessAndRefreshToken(String authCode) throws IOException {
         Request pr = new Request("https://login.live.com/oauth20_token.srf", false);
         pr.header("Content-Type", "application/x-www-form-urlencoded");
         HashMap<Object, Object> req = new HashMap<>();
@@ -46,13 +51,56 @@ public class MicrosoftAuthManager {
         pr.post(req);
         if (pr.response() >= 200 && pr.response() < 300) {
             JsonObject resp = Reference.GSON.fromJson(pr.body(), JsonObject.class);
-            return resp.get("access_token").getAsString();
+            return Pair.of(resp.get("access_token").getAsString(), resp.get("refresh_token").getAsString());
         } else {
-            throw new IllegalArgumentException("acquireAccessToken response: " + pr.response());
+            throw new IllegalArgumentException("acquireAccessAndRefreshToken response: " + pr.response());
         }
     }
 
-    private static String acquireXBLToken(String accessToken) throws IOException {
+    public static Pair<String, String> refreshToken(String refreshToken) throws IOException {
+        Request r = new Request("https://login.live.com/oauth20_token.srf", true);
+        r.get();
+        Map<Object, Object> req = new HashMap<>();
+        req.put("client_id", "54fd49e4-2103-4044-9603-2b028c814ec3");
+        req.put("refresh_token", refreshToken);
+        req.put("grant_type", "refresh_token");
+        req.put("redirect_uri", "http://localhost:59125");
+        req.put("prompt", "select_account");
+        r.post(req);
+        if (r.response() >= 200 && r.response() < 300) {
+            JsonObject resp = Reference.GSON.fromJson(r.body(), JsonObject.class);
+            return Pair.of(resp.get("access_token").getAsString(), resp.get("refresh_token").getAsString());
+        } else {
+            throw new IllegalArgumentException("refreshToken response: " + r.response());
+        }
+    }
+
+    public static void checkGameOwnerShip(String accessToken) throws IOException, FailedLoginException {
+        Request pr = new Request("https://api.minecraftservices.com/entitlements/mcstore", true);
+        pr.header("Authorization", "Bearer " + accessToken);
+        pr.get();
+        if (pr.response() >= 200 && pr.response() < 300) {
+            if ((Reference.GSON.fromJson(pr.body(), JsonObject.class)).getAsJsonArray("items").size() == 0) {
+                throw new FailedLoginException("This Microsoft account does not own Minecraft.");
+            }
+        } else {
+            throw new IllegalArgumentException("checkGameOwnership response: " + pr.response());
+        }
+    }
+
+    public static Pair<UUID,String> getProfile(String accessToken) throws IOException {
+        Request pr = new Request("https://api.minecraftservices.com/minecraft/profile",true);
+        pr.header("Authorization", "Bearer " + accessToken);
+        pr.get();
+        if (pr.response() >= 200 && pr.response() < 300) {
+            JsonObject resp = Reference.GSON.fromJson(pr.body(), JsonObject.class);
+            return Pair.of(UUIDTypeAdapter.fromString(resp.get("id").getAsString()), resp.get("name").getAsString());
+        } else {
+            throw new IllegalArgumentException("getProfile response: " + pr.response());
+        }
+    }
+
+    public static String acquireXBLToken(String accessToken) throws IOException {
         Request pr = new Request("https://user.auth.xboxlive.com/user/authenticate", true);
         pr.header("Content-Type", "application/json");
         pr.header("Accept", "application/json");
@@ -73,7 +121,7 @@ public class MicrosoftAuthManager {
         }
     }
 
-    private static Tuple<String, String> acquireXstsToken(String xblToken) throws IOException, AuthenticationException {
+    public static Pair<String, String> acquireXstsToken(String xblToken) throws IOException, AuthenticationException {
         Request pr = new Request("https://xsts.auth.xboxlive.com/xsts/authorize", true);
         pr.header("Content-Type", "application/json");
         pr.header("Accept", "application/json");
@@ -92,13 +140,13 @@ public class MicrosoftAuthManager {
             throw new AuthenticationException("Error 401");
         } else if (pr.response() >= 200 && pr.response() < 300) {
             JsonObject resp = Reference.GSON.fromJson(pr.body(), JsonObject.class);
-            return new Tuple<>(resp.get("Token").getAsString(), resp.getAsJsonObject("DisplayClaims").getAsJsonArray("xui").get(0).getAsJsonObject().get("uhs").getAsString());
+            return Pair.of(resp.get("Token").getAsString(), resp.getAsJsonObject("DisplayClaims").getAsJsonArray("xui").get(0).getAsJsonObject().get("uhs").getAsString());
         } else {
             throw new IllegalArgumentException("acquireXstsToken response: " + pr.response());
         }
     }
 
-    private static String acquireMinecraftToken(String xblUhs, String xstsToken) throws IOException {
+    public static String acquireMinecraftToken(String xblUhs, String xstsToken) throws IOException {
         Request pr = new Request("https://api.minecraftservices.com/authentication/login_with_xbox", true);
         pr.header("Content-Type", "application/json");
         pr.header("Accept", "application/json");
@@ -112,7 +160,7 @@ public class MicrosoftAuthManager {
         }
     }
 
-    private static void checkProfile(String mcAccessToken) throws IOException, FailedLoginException {
+    private static void checkProfile(String mcAccessToken, String refreshToken) throws IOException, FailedLoginException {
         URL url = new URL("https://api.minecraftservices.com/minecraft/profile");
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestProperty("Authorization", "Bearer " + mcAccessToken);
@@ -132,6 +180,6 @@ public class MicrosoftAuthManager {
         JsonObject obj = Reference.GSON.fromJson(response.toString(), JsonObject.class);
         String name = obj.get("name").getAsString();
         String uuid = obj.get("id").getAsString();
-        AltManager.getInstance().addAccount(new AccountData(mcAccessToken, name, uuid));
+        AltManager.getInstance().addAccount(new AccountData(mcAccessToken, refreshToken, name, uuid));
     }
 }

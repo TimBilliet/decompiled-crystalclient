@@ -2,7 +2,7 @@
   {
     "modid": "timmekeclient",
     "name": "Forge Timmeke_ Client",
-    "description": "Minecraft forge factions client based on Crystal Client",
+    "description": "Minecraft 1.8.9 forge factions client based on Crystal Client",
     "version": "${version}",
     "mcversion": "${mcversion}",
     "url": "https://github.com/TimBilliet/timmeke-client",

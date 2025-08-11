@@ -281,13 +281,11 @@ public class ClientProxy extends CommonProxy {
         } catch (IOException ex) {
             Reference.logger.error("Unable to read tag compound", ex);
         }
-        System.out.println("reading blocks complete");
         SchematicWorld world = new SchematicWorld(schematic);
         Reference.logger.debug("Loaded {} [w:{},h:{},l:{}]", filename, world.getWidth(), world.getHeight(), world.getLength());
         currentSchematic.schematic = world;
         world.isRendering = true;
         this.awaitingChange = true;
-        System.out.println("returning in loadschematic");
         return true;
     }
 

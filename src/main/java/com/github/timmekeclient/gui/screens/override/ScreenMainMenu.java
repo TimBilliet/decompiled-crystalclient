@@ -50,6 +50,9 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
     private static final String FORGE_MODS = String.format("%d mod%s loaded, %d mod%s active", lMods, (lMods == 1) ? "" : "s", aMods, (aMods == 1) ? "" : "s");
 
     private static final long buttonOutlineColor = 0xff1b72f4;
+    private boolean replayModLoaded = false;
+
+    private static final String[] loggingInString = {"Logging in", "Logging in.", "Logging in..", "Logging in..."};
 
     public ScreenMainMenu() {
         super(Resources.PANORAMA_IMAGES, 256);
@@ -90,6 +93,7 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
         });
         x = 5;
         if (Reflector.isReplaymodLoaded()) {
+            replayModLoaded = true;
             addButton(new ResourceButton(20, x, 5, h, h, Resources.REPLAY_MOD), b -> b.setOnClick(Reflector::openReplayGui));
             x += h + 2;
         }
@@ -129,6 +133,9 @@ public class ScreenMainMenu extends ScreenPanorama implements GuiYesNoCallback {
         fontRenderer.drawString(CC_VERSION, 5, height - 5 - fontRenderer.getStringHeight(CC_VERSION), textColor);
         fontRenderer.drawString(FORGE_MODS, 5, height - 5 - fontRenderer.getStringHeight(CC_VERSION) - 5 - fontRenderer.getStringHeight(FORGE_MODS), textColor);
         fontRenderer.drawString(MC_COPYRIGHT, width - fontRenderer.getStringWidth(MC_COPYRIGHT) - 5, height - 5 - fontRenderer.getStringHeight(MC_COPYRIGHT), textColor);
+        if (AccountButton.loggingIn) {
+            fontRenderer.drawString(loggingInString[(int) (System.currentTimeMillis() / 200L % loggingInString.length)], 135 + (replayModLoaded ? 20 : 0), (14 - fontRenderer.getStringHeight() / 2), textColor);
+        }
         FontRenderer fr = Fonts.NUNITO_SEMI_BOLD_24;
         int size = 90;
         int y = this.topButtonY - 10 - fr.getStringHeight("TIMMEKE_ CLIENT");

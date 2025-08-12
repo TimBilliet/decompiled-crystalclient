@@ -32,6 +32,8 @@ public class AccountButton extends Button {
 
     private final List<Button> buttons;
 
+    public static boolean loggingIn = false;
+
     public AccountButton(int id, int x, int y, Screen parent) {
         super(id, x, y, 0, 18);
         this.fontRenderer = Fonts.NUNITO_REGULAR_20;
@@ -118,17 +120,19 @@ public class AccountButton extends Button {
                             expanded = false;
                             expandedSize = 20;
                         } else {
-                            boolean res = false;
+                            boolean loginSuccess = false;
                             try {
+                                loggingIn = true;
                                 if (b.data.isOffline()) {
                                     AltManager.getInstance().addAccount(new AccountData(b.data.getName(), b.data.getUuidString()));
-                                    res = true;
+                                    loginSuccess = true;
                                 } else {
-                                    res = AuthManager.login(b.data);
+                                    loginSuccess = AuthManager.login(b.data);
                                 }
                             } catch (IOException ignored) {
                             }
-                            if (!res) {
+                            loggingIn = false;
+                            if (!loginSuccess) {
                                 this.loginScreen = true;
                                 AltManager.getInstance().saveAltManager();
                             }

@@ -12,6 +12,7 @@ import com.github.timmekeclient.event.impl.player.InputEvent;
 import com.github.timmekeclient.event.impl.render.RenderWorldEvent;
 import com.github.timmekeclient.event.impl.tick.ClientTickEvent;
 import com.github.timmekeclient.event.impl.world.ExplosionEvent;
+import com.github.timmekeclient.feature.annotations.HoverOverlay;
 import com.github.timmekeclient.feature.annotations.properties.*;
 import com.github.timmekeclient.feature.base.Category;
 import com.github.timmekeclient.feature.base.Dropdown;
@@ -63,6 +64,7 @@ public class Patchcrumbs extends Module implements IRegistrable {
     @Slider(label = "Y-Offset", placeholder = "{value} blocks", minimum = -20.0D, maximum = 20.0D, standard = 0.0D, integers = true)
     public int offset = 0;
 
+    @HoverOverlay("/exclude")
     @Toggle(label = "Enable Exclusion Zone")
     public boolean exclusionZone = false;
 

@@ -17,7 +17,8 @@
 - Potion effect running out alert
 - Exclusion zone for patchcrumbs (command)
 - Ender pearl breadcrumbs
-- Spotify stats hud(only works in dev env for now)
+- Spotify stats hud
+- Click settings module (hold right/left click)
 
 ## Incompatible with Optifine's dynamic lights(will crash)
 

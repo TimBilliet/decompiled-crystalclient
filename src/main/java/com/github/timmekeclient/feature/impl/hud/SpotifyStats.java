@@ -77,6 +77,9 @@ public class SpotifyStats extends HudModuleBackground implements SpotifyListener
         super.enable();
         spotifyAPI = SpotifyAPIFactory.createInitialized();
         spotifyAPI.registerListener(this);
+        if(spotifyAPI.hasTrack()){
+            currentTrack = spotifyAPI.getTrack();
+        }
     }
 
     @Override
@@ -90,62 +93,62 @@ public class SpotifyStats extends HudModuleBackground implements SpotifyListener
     public String getDisplayText() {
         return "";
     }
-    //TODO add scrolling text for titles/artists that are too long
-    //TODO fix screen color flash when joining world/server
-    public void draw() {
-        if (currentTrack != null) {
-            int x = getRenderX();
-            int y = getRenderY();
-            if (drawBackground)
-                drawBackground(x, y, x + width, y + height);
-            int iconSize = 0;
-            if (showCover && cover != null)
-                iconSize = 45;
-            if(showProgress){
-                height = 52;
-            } else {
-                height = 39;
-            }
-            y += 4;
-            if (currentTrack.getName().equals("Unknown"))
-                RenderUtils.drawString("", x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
-            else
-                RenderUtils.drawString(currentTrack.getName(), x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
 
-            y += 10;
-            RenderUtils.drawString(currentTrack.getArtist(), x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
-            y += 10;
-            if (!currentTrack.getName().equals("Unknown") && !currentTrack.getName().equals("")) {
-                if (isPlaying)
-                    RenderUtils.drawString("Playing...", x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
-                else
-                    RenderUtils.drawString("Paused...", x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
-            }
-            y += 17;
-            if (showProgress && !currentTrack.getName().equals("Unknown") && !currentTrack.getName().equals("")) {
-                RenderUtils.drawString(String.format("%02d:%02d", progress / 1000 / 60, progress / 1000 % 60), x + 5, y, textColor);
-                RenderUtils.drawString(String.format("%02d:%02d", length / 1000 / 60, length / 1000 % 60), x + width - 30, y, textColor);
-                double startx = x + 35;
-                RenderUtils.drawRoundedRect(startx, y - 1, x + width - 35, y + 8, 2, new ColorObject(150, 0, 150, 200).getRGB());
-                if ((double) progress / length > 0.01)
-                    RenderUtils.drawRoundedRect(startx, y - 1, startx + (width - 70) * ((double) progress / length), y + 8, 2, new ColorObject(255, 255, 255, 200).getRGB());
-            }
-            if (showCover && cover != null) {
-                GlStateManager.enableBlend();
-                GlStateManager.resetColor();
-                this.mc.getTextureManager().bindTexture(cover);
-                Gui.drawModalRectWithCustomSizedTexture(x - 3, y - 39, 0.0F, 0.0F, iconSize, iconSize - 9, iconSize, iconSize - 8.25F);
-                GlStateManager.disableBlend();
-                width = 180;
-            } else {
-                width = 150;
-            }
+    //TODO add scrolling text for titles/artists that are too long
+    public void draw() {
+        int x = getRenderX();
+        int y = getRenderY();
+        if (drawBackground)
+            drawBackground(x, y, x + width, y + height);
+        int iconSize = 0;
+        if (showCover && cover != null)
+            iconSize = 45;
+        if (showProgress) {
+            height = 52;
+        } else {
+            height = 39;
+        }
+        y += 4;
+        if (currentTrack.getName().equals("Unknown"))
+            RenderUtils.drawString("", x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
+        else
+            RenderUtils.drawString(currentTrack.getName(), x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
+
+        y += 10;
+        RenderUtils.drawString(currentTrack.getArtist(), x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
+        y += 10;
+        if (!currentTrack.getName().equals("Unknown") && !currentTrack.getName().equals("")) {
+            if (isPlaying)
+                RenderUtils.drawString("Playing...", x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
+            else
+                RenderUtils.drawString("Paused...", x + iconSize + ((showCover && cover != null) ? -3 : 5), y, textColor);
+        }
+        y += 17;
+        if (showProgress && !currentTrack.getName().equals("Unknown") && !currentTrack.getName().equals("")) {
+            RenderUtils.drawString(String.format("%02d:%02d", progress / 1000 / 60, progress / 1000 % 60), x + 5, y, textColor);
+            RenderUtils.drawString(String.format("%02d:%02d", length / 1000 / 60, length / 1000 % 60), x + width - 30, y, textColor);
+            double startx = x + 35;
+            RenderUtils.drawRoundedRect(startx, y - 1, x + width - 35, y + 8, 2, new ColorObject(150, 0, 150, 200).getRGB());
+            if ((double) progress / length > 0.01)
+                RenderUtils.drawRoundedRect(startx, y - 1, startx + (width - 70) * ((double) progress / length), y + 8, 2, new ColorObject(255, 255, 255, 200).getRGB());
+        }
+        if (showCover && cover != null && !currentTrack.getName().equals("")) {
+            GlStateManager.enableBlend();
+            GlStateManager.resetColor();
+            this.mc.getTextureManager().bindTexture(cover);
+            Gui.drawModalRectWithCustomSizedTexture(x - 3, y - 39, 0.0F, 0.0F, iconSize, iconSize - 9, iconSize, iconSize - 8.25F);
+            GlStateManager.disableBlend();
+            width = 180;
+        } else {
+            width = 150;
         }
     }
 
     private void convertCoverImage() {
         mc.addScheduledTask(() -> {
             BufferedImage coverBI = currentTrack.getCoverArt();
+            if(coverBI == null)
+                return;;
             coverBI = coverBI.getSubimage(0, 0, coverBI.getWidth(), coverBI.getHeight() - 55);
             DynamicTexture dynamicTexture = new DynamicTexture(coverBI);
             mc.getTextureManager().loadTexture(new ResourceLocation("timmekeclient", "spotify_track"), dynamicTexture);
@@ -184,11 +187,11 @@ public class SpotifyStats extends HudModuleBackground implements SpotifyListener
 
     @Override
     public void onSync() {
-
     }
 
     @Override
     public void onDisconnect(Exception exception) {
+        currentTrack = new Track("", "", "No song playing", 0, null);
     }
 
     @Override
@@ -196,7 +199,7 @@ public class SpotifyStats extends HudModuleBackground implements SpotifyListener
         EventBus.register(this, ClientTickEvent.Post.class, ev -> {
             if (updateProgress && System.currentTimeMillis() - lastProgressUpdate > updateInterval * 1000L) {
                 lastProgressUpdate = System.currentTimeMillis();
-                if(spotifyAPI.hasPosition())
+                if (spotifyAPI.hasPosition())
                     progress = spotifyAPI.getPosition();
             }
         });

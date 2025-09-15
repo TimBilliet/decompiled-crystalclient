@@ -259,6 +259,7 @@ public class Client {
         this.commandHandler.registerCommand(new DupeCommand());
         this.commandHandler.registerCommand(new FloatFinderCommand());
         this.commandHandler.registerCommand(new PatchcrumbsCommand());
+        this.commandHandler.registerCommand(new ClickCommand());
         if (!OBFUSCATED) {
             this.commandHandler.registerCommand(new ThumbnailCommand());
             Log4jPatch.patchLogger();
